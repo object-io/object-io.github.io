@@ -2420,6 +2420,11 @@ is on stable storage; nothing trades durability for speed.</p>
 <td>Multi-meta on kind via helm; multi-host chaos (cloud VMs)</td>
 </tr>
 <tr>
+<td><strong>Next</strong></td>
+<td>S3</td>
+<td>After the production guide (A8): IAM API (A15), S3 Select (A16), bucket logging (A12); then the release candidate (A9)</td>
+</tr>
+<tr>
 <td><strong>Later</strong></td>
 <td>S3</td>
 <td>Replication phases 2 (resync, bandwidth) and 3 (two-way)</td>
@@ -2427,12 +2432,7 @@ is on stable storage; nothing trades durability for speed.</p>
 <tr>
 <td><strong>Later</strong></td>
 <td>S3</td>
-<td>Tenant audit options: own bucket, export, viewer, bucket logging, Kafka (A10–A13)</td>
-</tr>
-<tr>
-<td><strong>Later</strong></td>
-<td>S3</td>
-<td>IAM API (A15), S3 Select (A16)</td>
+<td>Tenant audit options: own bucket, export, viewer, Kafka (A10, A11, A13)</td>
 </tr>
 <tr>
 <td><strong>Later</strong></td>
@@ -3222,9 +3222,27 @@ when the code is written.</p>
 <td>⬜</td>
 </tr>
 <tr>
+<td>A15</td>
+<td>IAM API</td>
+<td>Users, groups, user/group policies, access keys and roles through the AWS IAM query API (aws-cli <code>iam</code>, boto3), tenant-scoped, the same records as the admin API; STS AssumeRole, GetSessionToken, GetCallerIdentity on top; the ceph s3-tests IAM and STS tests pass</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>A16</td>
+<td>S3 Select</td>
+<td><code>SelectObjectContent</code> on CSV, JSON and Parquet objects (SQL subset as AWS, event-stream response); the ceph s3-tests S3 Select tests pass</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>A12</td>
+<td>Bucket logging (<code>?logging</code>)</td>
+<td><code>PutBucketLogging</code> delivers S3 access-log-format objects; the ceph s3-tests logging tests pass</td>
+<td>⬜</td>
+</tr>
+<tr>
 <td>A9</td>
 <td>Release candidate</td>
-<td>A1–A8c, B2–B5 green on one commit</td>
+<td>A1–A8c, A8, A15, A16, A12, B2–B5 green on one commit</td>
 <td>⬜</td>
 </tr>
 <tr>
@@ -3246,27 +3264,9 @@ when the code is written.</p>
 <td>⬜</td>
 </tr>
 <tr>
-<td>A12</td>
-<td>Bucket logging (<code>?logging</code>)</td>
-<td><code>PutBucketLogging</code> delivers S3 access-log-format objects; the ceph s3-tests logging tests pass</td>
-<td>⬜</td>
-</tr>
-<tr>
 <td>A13</td>
 <td>Kafka target; tamper evidence</td>
 <td>Events to Kafka at least once; a removed or altered event is detected by the hash chain</td>
-<td>⬜</td>
-</tr>
-<tr>
-<td>A15</td>
-<td>IAM API</td>
-<td>Users, groups, user/group policies, access keys and roles through the AWS IAM query API (aws-cli <code>iam</code>, boto3), tenant-scoped, the same records as the admin API; STS AssumeRole, GetSessionToken, GetCallerIdentity on top; the ceph s3-tests IAM and STS tests pass</td>
-<td>⬜</td>
-</tr>
-<tr>
-<td>A16</td>
-<td>S3 Select</td>
-<td><code>SelectObjectContent</code> on CSV, JSON and Parquet objects (SQL subset as AWS, event-stream response); the ceph s3-tests S3 Select tests pass</td>
 <td>⬜</td>
 </tr>
 </tbody>
