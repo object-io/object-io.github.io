@@ -1,0 +1,3016 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://object-io.github.io/dev/developer-guide/features/">
+      
+      
+        <link rel="prev" href="../api-reference/">
+      
+      
+        <link rel="next" href="../sdk/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>ObjectIO — Feature Reference - ObjectIO</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#objectio-feature-reference" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="ObjectIO" class="md-header__button md-logo" aria-label="ObjectIO" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ObjectIO
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              ObjectIO — Feature Reference
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/object-io/objectio" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    object-io/objectio
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="ObjectIO" class="md-nav__button md-logo" aria-label="ObjectIO" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    ObjectIO
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/object-io/objectio" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    object-io/objectio
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ObjectIO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ROADMAP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ObjectIO — features and roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Developer guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Developer guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Developer Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ObjectIO — Feature Reference
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ObjectIO — Feature Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#whats-new-recently-shipped" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What's new — recently shipped
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What&#39;s new — recently shipped">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#audit-stream" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Audit stream
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#identity-public-access-and-where-requests-come-from" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Identity, public access and where requests come from
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gateway-side-grep-for-s3-objects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gateway-side grep for S3 objects
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#io_uring-backend-for-shard-io" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        io_uring backend for shard I/O
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alignedbuf-correct-by-construction-aligned-buffer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AlignedBuf — correct-by-construction aligned buffer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unity-catalog-rest-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unity Catalog REST API
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#operational-additions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Operational additions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdk/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Management SDKs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S3 compatibility
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    S3 compatibility
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../s3-compatibility/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S3 compatibility: ceph s3-tests
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_2" id="__nav_3_5_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026 10 02
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2026 10 02
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../s3-compatibility/2026-10-02/summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ceph s3-tests against ObjectIO, run 2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operations guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Operations guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operations Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Administration
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Administration
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/administration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Administration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/administration/audit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audit Stream
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/administration/authentication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Authentication
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/administration/cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI (objectio-cli)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/administration/grep/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gateway-side grep — searching objects without downloading
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/administration/iam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Identity and Access
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/administration/iceberg-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Iceberg REST Catalog API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/administration/public-access/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Public Access
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/administration/replication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bucket replication
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/administration/s3-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S3 API Operations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Installation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/installation/configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/installation/deployment-options/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ObjectIO Deployment Options
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/installation/docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/installation/kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kubernetes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/installation/linux/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/installation/macos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    macOS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/installation/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/installation/topologies/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment Topologies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_4" id="__nav_4_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operations
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Operations
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/operations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operations Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/operations/failure-recovery/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Failure Recovery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/operations/meta-ha/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Meta high availability
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/operations/metrics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Metrics reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/operations/monitoring/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Monitoring
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/operations/upgrades/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Upgrades
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#whats-new-recently-shipped" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What's new — recently shipped
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What&#39;s new — recently shipped">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#audit-stream" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Audit stream
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#identity-public-access-and-where-requests-come-from" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Identity, public access and where requests come from
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gateway-side-grep-for-s3-objects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gateway-side grep for S3 objects
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#io_uring-backend-for-shard-io" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        io_uring backend for shard I/O
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alignedbuf-correct-by-construction-aligned-buffer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AlignedBuf — correct-by-construction aligned buffer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unity-catalog-rest-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unity Catalog REST API
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#operational-additions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Operational additions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="objectio-feature-reference">ObjectIO — Feature Reference<a class="headerlink" href="#objectio-feature-reference" title="Permanent link">&para;</a></h1>
+<p>What ObjectIO does today, and how. This page describes what is built;
+what is planned, and every feature's status, is in
+<a href="../../ROADMAP/">ROADMAP.md</a> only.</p>
+<p>ObjectIO is a unified software-defined storage (SDS) platform: several storage paradigms on a single erasure-coded backend.</p>
+<table>
+<thead>
+<tr>
+<th>Paradigm</th>
+<th>Protocol</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Object Storage</strong></td>
+<td>S3 API</td>
+<td>Unstructured data, backups, media, ML datasets</td>
+</tr>
+<tr>
+<td><strong>Data Lakehouse</strong></td>
+<td>Iceberg REST Catalog + Unity Catalog + Delta Sharing</td>
+<td>Analytics warehouses, three-level governance, Spark/Trino/Databricks-SDK queries, cross-org data sharing</td>
+</tr>
+<tr>
+<td><strong>Block Storage</strong></td>
+<td>gRPC + NBD</td>
+<td>Databases, VMs, thin-provisioned volumes with snapshots</td>
+</tr>
+</tbody>
+</table>
+<p>All share the same underlying erasure-coded storage layer, IAM, multi-tenancy, and web console. File access (NFS) is planned on the same layer.</p>
+<hr />
+<h2 id="whats-new-recently-shipped">What's new — recently shipped<a class="headerlink" href="#whats-new-recently-shipped" title="Permanent link">&para;</a></h2>
+<p>A running catalogue of material additions since v0.1.0 that aren't
+otherwise called out in the API reference. Each links to the
+deep-dive doc with the full wire format, semantics, and trade-offs.</p>
+<h3 id="audit-stream">Audit stream<a class="headerlink" href="#audit-stream" title="Permanent link">&para;</a></h3>
+<ul>
+<li>One event per request — principal, client address and endpoint, action,
+  bucket and key, status and error code, bytes, duration, completeness —
+  with the request ID the client got (<code>x-amz-request-id</code>).</li>
+<li>Streamed to the operator's webhooks or stdout, a local file
+  (<code>--audit-log</code>), and each tenant's own webhooks (to operator-allowed
+  hosts). At-least-once, bounded, drops counted.
+  <a href="../../operations-guide/administration/audit/">Audit Stream</a></li>
+</ul>
+<h3 id="identity-public-access-and-where-requests-come-from">Identity, public access and where requests come from<a class="headerlink" href="#identity-public-access-and-where-requests-come-from" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>STS <code>AssumeRoleWithWebIdentity</code></strong> with per-scope identity providers:
+  the operator's OIDC provider for system roles, each tenant's own for its
+  roles. <a href="../../operations-guide/administration/iam/#temporary-credentials-from-an-oidc-token-sts">IAM</a></li>
+<li><strong>Per-tenant IAM</strong>: policies, groups and roles scoped to a tenant;
+  suspend users and deactivate keys.</li>
+<li><strong>Anonymous access and Block Public Access</strong> at bucket, tenant and
+  cluster level; new buckets start blocked.
+  <a href="../../operations-guide/administration/public-access/">Public Access</a></li>
+<li><strong>Named endpoints and client addresses</strong> for policies (<code>aws:SourceVpce</code>,
+  <code>aws:SourceIp</code>, trusted proxies) — "readable without keys from inside the
+  cluster only".</li>
+<li><strong>Owner-enforced ACLs</strong>, <strong>conditional writes</strong> (<code>If-None-Match: *</code>,
+  <code>If-Match</code>), and buckets that start clean (deleting one removes its
+  configuration).</li>
+<li><strong>Management SDKs</strong> for Go and Python cover the whole admin API.
+  <a href="../sdk/">SDKs</a></li>
+</ul>
+<h3 id="gateway-side-grep-for-s3-objects">Gateway-side grep for S3 objects<a class="headerlink" href="#gateway-side-grep-for-s3-objects" title="Permanent link">&para;</a></h3>
+<p><code>POST /{bucket}/{key}?grep</code> (single object) and <code>POST /{bucket}?grep</code>
+(prefix across many keys) — streams NDJSON match events with <strong>byte
+offsets</strong> in the source file, so an agent can follow up with a
+<code>Range:</code> fetch for surrounding context without redownloading. Built
+specifically for AI/LLM tool workloads where "10 GB file × 100
+agents all grepping" is otherwise 1 TB of egress.</p>
+<ul>
+<li>Streaming scanner — memory bounded to a 64 KiB BufReader
+  regardless of object size; validated on a 150 MiB file in 26 ms
+  server-side</li>
+<li>Line-oriented — <code>.txt</code>, <code>.md</code>, <code>.jsonl</code>, source code, logs</li>
+<li>Three regex engines (opt-in at build time):</li>
+<li><code>regex</code> (default, always available) — pure Rust, RE2, linear time</li>
+<li><code>pcre2</code> (Linux builds) — backrefs, lookaround, atomic groups</li>
+<li><code>hyperscan</code> (Linux amd64 builds) — Intel SIMD-accelerated</li>
+<li>Prefix scan across keys with <code>continuation_token</code> pagination</li>
+<li>Per-match: <code>line_number</code>, <code>offset</code>, <code>line_length</code>, <code>match_offset</code>,
+  <code>match_length</code>, <code>content</code>, <code>bucket</code>, <code>key</code></li>
+<li>Inherits SigV4 + bucket policy + SSE-C decryption from the
+  normal GetObject path</li>
+<li>MCP tool schema in the doc — paste straight into Claude Code /
+  OpenAI function calling / Anthropic MCP</li>
+</ul>
+<p><strong>Full doc:</strong> <a href="../../operations-guide/administration/grep/">operations-guide/administration/grep.md</a></p>
+<h3 id="io_uring-backend-for-shard-io">io_uring backend for shard I/O<a class="headerlink" href="#io_uring-backend-for-shard-io" title="Permanent link">&para;</a></h3>
+<p>Default <code>objectio-storage</code> shard I/O now goes through a pluggable
+<code>IoBackend</code> trait. On Linux + <code>--features io-uring</code> (included in
+release binaries), shard read/write uses <code>io_uring</code> directly instead
+of <code>tokio::spawn_blocking</code> + <code>pread</code>. Measured end-to-end:</p>
+<ul>
+<li><strong>-25% GET p99</strong> at small-object scale (1 MiB × 500 objects)</li>
+<li><strong>+25% throughput</strong> on 4 MiB primitive reads (single-host aio bench)</li>
+<li><strong>-90% p99.9</strong> on WAL-size writes</li>
+<li>No regression on any workload size</li>
+</ul>
+<p>Switchover is transparent — no API change, same wire format, same
+durability guarantees. macOS / Windows keep the pread path.</p>
+<h3 id="alignedbuf-correct-by-construction-aligned-buffer">AlignedBuf — correct-by-construction aligned buffer<a class="headerlink" href="#alignedbuf-correct-by-construction-aligned-buffer" title="Permanent link">&para;</a></h3>
+<p><code>AlignedBuf</code> is a new type underpinning the IoBackend trait:
+4 KiB-page-aligned owned byte buffer, drops with matching <code>Layout</code>
+(no UB), implements <code>tokio_uring::buf::{IoBuf, IoBufMut}</code> so
+submissions don't bounce through <code>Vec&lt;u8&gt;::with_capacity</code>'s
+allocator luck.</p>
+<p>Callers that previously depended on glibc's <code>malloc(&gt;= 128 KiB)</code>
+returning page-aligned memory can now depend on it explicitly. The
+<code>objectio-storage::DiskManager::{read,write}_block_async</code> hot path
+already uses it; WAL / bitmap migration can follow when metadata
+I/O becomes a hot-path concern.</p>
+<h3 id="unity-catalog-rest-api">Unity Catalog REST API<a class="headerlink" href="#unity-catalog-rest-api" title="Permanent link">&para;</a></h3>
+<p>Databricks-shape governance plane mounted at <code>/api/2.1/unity-catalog/*</code>.
+Three-level namespacing (<code>catalog.schema.table</code>) with the same access-control
+model as Iceberg — IAM-style policies, three-level policy walk
+(catalog → schema → table), and an admin override.</p>
+<ul>
+<li><strong>Full CRUD</strong> for catalogs, schemas, tables, functions, volumes, models,
+  and model versions; addressed by Databricks-style <code>full_name</code> strings</li>
+<li><strong>Policy management</strong> — <code>PUT /…/{entity}/policy</code> per level, <code>unity:</code>
+  action prefix (<code>unity:GetTable</code>, <code>unity:CreateFunction</code>,
+  <code>unity:SetTableSecurity</code>, …), <code>arn:obio:unity:::</code> resource ARNs</li>
+<li><strong>Row filters &amp; column masks</strong> — <code>PUT /…/tables/{full_name}/security</code>
+  binds a SQL UDF as a row filter and per-column masks. Engines
+  (Spark/Trino) read the binding off <code>GET /tables</code> and inject
+  <code>WHERE function(input_cols)</code> / <code>mask_function(col, …)</code> at query time.
+  Validates: row-filter UDF returns BOOLEAN; mask UDFs exist in same schema</li>
+<li><strong><code>/me</code> caller identity</strong> — <code>GET /api/2.1/unity-catalog/me</code> returns the
+  resolved principal context (<code>user_name</code>, <code>groups</code>, <code>is_admin</code>) so engines
+  can populate the SQL built-ins UDFs reference (<code>current_user()</code>,
+  <code>is_member()</code>, <code>is_account_group_member()</code>)</li>
+<li><strong>Default deny direct-S3 on backing buckets</strong> — every Unity catalog
+  auto-provisions a backing bucket (<code>unity-{catalog}</code>) with a default
+  bucket policy that denies any access where <code>obio:CredentialType != STS</code>,
+  forcing reads/writes through Unity-vended STS sessions and preventing
+  permanent-key holders from bypassing row filters / column masks</li>
+<li><strong>Vended credentials</strong> — <code>POST /…/temporary-table-credentials</code> and
+  <code>…/temporary-volume-credentials</code> mint scoped 1-hour STS sessions
+  (<code>obio:CredentialType: STS</code>) for engines to do data-plane reads</li>
+<li><strong>OIDC group bridging</strong> — Keycloak group claim "data-team" maps to IAM
+  group "data-team" by name; both group_arn (for direct policy attachment)
+  and group_id (for <code>list_attached_policies(group_id=…)</code>) are stitched onto
+  every authenticated request, so a single IAM policy attached to the IAM
+  group governs both SigV4 and OIDC users uniformly</li>
+<li><strong>Console UI</strong> — full CRUD across all six Unity entity types under the
+  Unity Catalog page; per-entity "Shield" button opens the IAM-style
+  policy editor; per-table "Filter" button opens the row-filter / column-mask
+  editor (turns green when an active binding exists)</li>
+</ul>
+<h3 id="operational-additions">Operational additions<a class="headerlink" href="#operational-additions" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Helm chart HA defaults</strong> — <code>gateway.replicas: 2</code>, <code>meta.replicas: 3</code>,
+  opt-in HPA on the gateway tier, PDBs on both tiers.</li>
+<li><strong><code>objectio-aio</code> single-binary</strong> — runs meta + OSD + gateway in one
+  tokio runtime, console SPA embedded, SSE master key auto-persisted.
+  Ideal for quick-start / dev / appliance deployments.</li>
+<li><strong>Manual release workflow</strong> — <code>workflow_dispatch</code>-triggered pipeline
+  that version-bumps, tags, builds binaries on 3 native runners (no
+  QEMU), publishes a multi-arch docker image via per-arch digest
+  manifest, and pushes the helm chart to OCI registry.</li>
+</ul>
+<hr />
+<h1 id="1-object-storage-s3-api">1. Object Storage (S3 API)<a class="headerlink" href="#1-object-storage-s3-api" title="Permanent link">&para;</a></h1>
+<h3 id="core-s3-api">Core S3 API<a class="headerlink" href="#core-s3-api" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Bucket operations</strong>: CreateBucket, DeleteBucket, HeadBucket, ListBuckets</li>
+<li><strong>Object operations</strong>: PutObject, GetObject, HeadObject, DeleteObject, DeleteObjects (batch)</li>
+<li><strong>Multipart upload</strong>: InitiateMultipartUpload, UploadPart, CompleteMultipartUpload, AbortMultipartUpload, ListParts, ListMultipartUploads</li>
+<li><strong>Range requests</strong>: HTTP Range header support (<code>bytes=0-99</code>, suffix ranges, open-ended ranges)</li>
+<li><strong>Copy object</strong>: Server-side copy via <code>x-amz-copy-source</code> header (metadata-only fast path when on same OSD)</li>
+<li><strong>User metadata</strong>: <code>x-amz-meta-*</code> headers stored and returned</li>
+<li><strong>S3 error responses</strong>: Standard XML error format with S3 error codes</li>
+</ul>
+<h3 id="bucket-versioning">Bucket Versioning<a class="headerlink" href="#bucket-versioning" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>PUT/GET /{bucket}?versioning</strong> — Enable, suspend, or query versioning state</li>
+<li><strong>Version-aware PUT</strong>: Generates UUID version ID when versioning enabled, returns <code>x-amz-version-id</code> header</li>
+<li><strong>Version-aware DELETE</strong>: Creates delete markers (new version with <code>is_delete_marker=true</code>) when no <code>?versionId</code> specified</li>
+<li><strong>Version-specific DELETE</strong>: Permanently deletes a specific version via <code>?versionId=</code></li>
+<li><strong>ListObjectVersions</strong>: <code>GET /{bucket}?versions</code> returns all versions including delete markers</li>
+<li><strong>Dual-key OSD storage</strong>: Current version at <code>m:{bucket}\0{key}</code>, version history at <code>v:{bucket}\0{key}\0{version_id}</code></li>
+</ul>
+<h3 id="object-locking-worm">Object Locking (WORM)<a class="headerlink" href="#object-locking-worm" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>PUT/GET /{bucket}?object-lock</strong> — Configure object lock with default retention</li>
+<li><strong>Retention modes</strong>: GOVERNANCE (bypassable with header) and COMPLIANCE (immutable until expiry)</li>
+<li><strong>PUT/GET /{bucket}/{key}?retention</strong> — Per-object retention (mode + retain-until-date)</li>
+<li><strong>PUT/GET /{bucket}/{key}?legal-hold</strong> — Per-object legal hold (ON/OFF)</li>
+<li><strong>Delete enforcement</strong>: Objects under retention or legal hold cannot be deleted (403 Forbidden)</li>
+<li><strong>Governance bypass</strong>: <code>x-amz-bypass-governance-retention: true</code> header allows deletion</li>
+<li><strong>Lock at creation</strong>: <code>x-amz-bucket-object-lock-enabled: true</code> on CreateBucket</li>
+</ul>
+<h3 id="cors-and-browser-uploads">CORS and browser uploads<a class="headerlink" href="#cors-and-browser-uploads" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>CORS</strong> (<code>?cors</code>): preflights answered without credentials, headers on matching requests and their errors. <a href="../../operations-guide/administration/s3-api/#cors">S3 API § CORS</a></li>
+<li><strong>POST Object</strong>: S3 HTML form uploads (<code>generate_presigned_post</code>), SigV4 policy signatures, every policy condition, authorized as the signer and written as a PUT. <a href="../../operations-guide/administration/s3-api/#post-object-browser-uploads">S3 API § POST Object</a></li>
+<li><strong>GET <code>response-*</code> overrides</strong> (e.g. <code>response-content-disposition</code> on a presigned link), and objects keep <code>Cache-Control</code>, <code>Content-Disposition</code>, <code>Content-Encoding</code>, <code>Content-Language</code>, <code>Expires</code>.</li>
+</ul>
+<h3 id="lifecycle-management">Lifecycle Management<a class="headerlink" href="#lifecycle-management" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>PUT/GET/DELETE /{bucket}?lifecycle</strong> — S3's lifecycle configuration, checked as S3 checks it and read back as written. See <a href="../../operations-guide/administration/s3-api/#lifecycle">S3 API § Lifecycle</a>.</li>
+<li><strong>Expiration</strong> by <code>Days</code> or <code>Date</code>: unversioned buckets delete; versioned ones add a delete marker, as a DELETE would.</li>
+<li><strong>NoncurrentVersionExpiration</strong> (<code>NoncurrentDays</code>, <code>NewerNoncurrentVersions</code>): old versions expire by how long they've been noncurrent, keeping the newest N.</li>
+<li><strong>ExpiredObjectDeleteMarker</strong>: removes a delete marker only when it's the key's only version — never one with versions behind it.</li>
+<li><strong>AbortIncompleteMultipartUpload</strong>.</li>
+<li><strong>Filters</strong>: prefix, tags, object size, and <code>&lt;And&gt;</code>.</li>
+<li><strong>Safe by construction</strong>: every action goes through the S3 delete path, so Object Lock is honoured, the listing is kept and space reclaimed; every action is an <a href="../../operations-guide/administration/audit/">audit event</a> by <code>lifecycle:&lt;rule id&gt;</code>.</li>
+<li><strong>One scanner</strong>: gateways take a lease in meta, so one scans at a time (<code>--lifecycle-interval-secs</code>, default hourly).</li>
+<li><strong>Not supported</strong>: transitions (one storage class) — refused with <code>InvalidStorageClass</code>.</li>
+</ul>
+<h3 id="bucket-policies">Bucket Policies<a class="headerlink" href="#bucket-policies" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>PUT/GET/DELETE /{bucket}?policy</strong> — IAM-style JSON bucket policies</li>
+<li><strong>Policy evaluation</strong>: Allow/Deny/ImplicitDeny decisions</li>
+<li><strong>ARN-based resources</strong>: <code>arn:obio:s3:::{bucket}</code> and <code>arn:obio:s3:::{bucket}/{key}</code></li>
+<li><strong>Condition keys</strong>: <code>s3:x-amz-server-side-encryption</code>, <code>s3:x-amz-server-side-encryption-aws-kms-key-id</code>, <code>aws:SecureTransport</code> — populated from PUT/GET/DELETE request headers, evaluated at request time</li>
+</ul>
+<h3 id="server-side-encryption-sse">Server-Side Encryption (SSE)<a class="headerlink" href="#server-side-encryption-sse" title="Permanent link">&para;</a></h3>
+<p>All three AWS S3 encryption modes are supported (SSE-S3, SSE-KMS, SSE-C). Encryption always happens <strong>before</strong> the erasure-coding stage so OSD shards only ever see ciphertext. Objects written without SSE remain plaintext; enabling SSE on a bucket does not retroactively encrypt existing objects. Ciphertext correctness is verified end-to-end in tests — grep for any plaintext marker on OSD shards returns zero matches when SSE is enabled.</p>
+<ul>
+<li><strong>PUT/GET/DELETE /{bucket}?encryption</strong> — Bucket default encryption configuration, AWS-compatible XML (<code>ServerSideEncryptionConfiguration</code>)</li>
+<li><strong>Per-request precedence</strong>: explicit <code>x-amz-server-side-encryption*</code> request header &gt; bucket default &gt; plaintext</li>
+<li><strong>ETag semantics</strong>: MD5 of plaintext for SSE-S3 / SSE-KMS (AWS-compatible). SSE-C uses the AWS multipart ETag format for multipart uploads</li>
+<li><strong>Response headers</strong>: <code>x-amz-server-side-encryption</code>, <code>x-amz-server-side-encryption-aws-kms-key-id</code>, <code>x-amz-server-side-encryption-customer-algorithm</code>, <code>x-amz-server-side-encryption-customer-key-md5</code></li>
+</ul>
+<h4 id="sse-s3-aes256">SSE-S3 (<code>AES256</code>)<a class="headerlink" href="#sse-s3-aes256" title="Permanent link">&para;</a></h4>
+<ul>
+<li>AES-256-CTR with a fresh per-object Data Encryption Key (DEK)</li>
+<li>DEK wrapped with the gateway's service master key via AES-256-GCM and stored in <code>ObjectMeta.encrypted_dek</code></li>
+<li>Service master key loaded from <code>OBJECTIO_MASTER_KEY</code> env var (base64 32 bytes); helm chart auto-generates one on first install and preserves it across <code>helm upgrade</code></li>
+<li>Range GETs and multipart uploads fully supported — each part/stripe uses its own IV so stripes decrypt independently</li>
+</ul>
+<h4 id="sse-kms-awskms">SSE-KMS (<code>aws:kms</code>)<a class="headerlink" href="#sse-kms-awskms" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Per-object DEK wrapped by a named KMS key (Key Encryption Key, KEK)</li>
+<li><strong>Local KMS provider</strong>: self-contained backend — KEK material is itself wrapped by the service master key before it reaches meta, so meta stores only encrypted blobs</li>
+<li><strong>Envelope encryption</strong>: client specifies KMS key via <code>x-amz-server-side-encryption-aws-kms-key-id</code> (full ARN or short id)</li>
+<li><strong>Encryption context</strong>: optional <code>x-amz-server-side-encryption-context</code> (base64 JSON) bound to the DEK wrap as AEAD associated data; decrypt fails if context differs</li>
+<li><strong>Multipart support</strong>: MPU picks the key at CreateMultipartUpload time; per-part stripe IVs</li>
+</ul>
+<h4 id="sse-c-customer-provided-keys">SSE-C (customer-provided keys)<a class="headerlink" href="#sse-c-customer-provided-keys" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Three headers: <code>x-amz-server-side-encryption-customer-algorithm: AES256</code>, <code>-customer-key</code> (base64 32 bytes), <code>-customer-key-md5</code> (base64 MD5 of the key)</li>
+<li>Key material is <strong>never persisted</strong> — object metadata stores only the algorithm marker + IV</li>
+<li>MD5 binding verified on every PUT/GET/HEAD; wrong MD5 → <code>InvalidArgument 400</code></li>
+<li><strong>Hard-blocked on warehouse buckets</strong> (<code>iceberg-*</code> and the configured warehouse bucket): query engines can't provide the customer key on every read, so writes are rejected at PUT rather than silently producing unreadable objects</li>
+<li><strong>Multipart upload</strong>: supported end-to-end. <code>CreateMultipartUpload</code> stores the customer-key MD5 in the MPU state; every <code>UploadPart</code> must resupply the same key, validated MD5-against-MD5 before encryption; <code>CompleteMultipartUpload</code> produces a standard AWS multipart ETag. The key itself never touches meta.</li>
+</ul>
+<h4 id="kms-administration-_adminkms">KMS Administration (<code>/_admin/kms/*</code>)<a class="headerlink" href="#kms-administration-_adminkms" title="Permanent link">&para;</a></h4>
+<p>AIStor-compatible KMS action model. Resource ARNs use <code>arn:obio:kms:::{key_id}</code>; the wildcard <code>arn:obio:kms:::*</code> matches all keys.</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Action</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET /_admin/kms/status</code></td>
+<td><code>kms:Status</code></td>
+<td>Backend state (enabled, local, master-key configured)</td>
+</tr>
+<tr>
+<td><code>GET /_admin/kms/version</code></td>
+<td><code>kms:Version</code></td>
+<td>Service version + protocol</td>
+</tr>
+<tr>
+<td><code>GET /_admin/kms/api</code></td>
+<td><code>kms:API</code></td>
+<td>Supported endpoints</td>
+</tr>
+<tr>
+<td><code>POST /_admin/kms/keys</code></td>
+<td><code>kms:CreateKey</code></td>
+<td>Create a new KMS key</td>
+</tr>
+<tr>
+<td><code>GET /_admin/kms/keys</code></td>
+<td><code>kms:ListKeys</code></td>
+<td>List KMS keys</td>
+</tr>
+<tr>
+<td><code>GET /_admin/kms/keys/{key_id}</code></td>
+<td><code>kms:KeyStatus</code></td>
+<td>Get a specific key</td>
+</tr>
+<tr>
+<td><code>DELETE /_admin/kms/keys/{key_id}</code></td>
+<td><code>kms:DeleteKey</code></td>
+<td>Delete + drop cached KEK</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Policy gating</strong>: every endpoint evaluates the caller's attached named IAM policies against <code>(action, resource)</code>. The built-in admin user and console sessions bypass policy evaluation.</li>
+<li><strong>Dual auth on admin endpoints</strong>: SigV4 (for API clients) <em>or</em> console session cookie (for web UI). Cookie requests pass through a pre-router layer that validates SigV4 only when an <code>Authorization</code> header is present.</li>
+</ul>
+<h4 id="kms-backend-selection">KMS Backend Selection<a class="headerlink" href="#kms-backend-selection" title="Permanent link">&para;</a></h4>
+<p>The gateway's KMS backend picks how SSE-KMS wrap/unwrap is performed.</p>
+<p><strong>Two configuration sources, meta wins:</strong>
+1. <strong>Meta <code>kms/config</code></strong> (console-writable) — the persisted config. Hot-swappable at runtime via <code>PUT /_admin/kms/config</code> with no gateway restart.
+2. <strong><code>--kms-backend</code> CLI flag + env vars</strong> — fallback used at first boot when meta has no entry. Useful for IaC-pinned deployments.</p>
+<p><strong>Backends:</strong>
+- <strong><code>local</code></strong> — self-contained. Each KMS key's master material is generated on the gateway, wrapped by the service master key, and persisted via meta. Admin endpoints under <code>/_admin/kms/keys</code> manage the key lifecycle. Most appropriate for on-prem deployments that don't have an external KMS.
+- <strong><code>vault</code></strong> — HashiCorp Vault's Transit secrets engine. Needs <code>addr</code> + <code>token</code> + <code>transit_path</code> (defaults to <code>transit</code>). The gateway calls <code>transit/datakey/plaintext/{key}</code> to generate per-object DEKs and <code>transit/decrypt/{key}</code> on GET. Per-object encryption context is canonicalized and base64-passed as Vault's context so decrypt fails on context mismatch (AEAD binding at the Vault layer). On external backends the <code>/_admin/kms/keys</code> endpoints return <code>NotImplemented</code> — manage keys directly in Vault.
+- <strong><code>disabled</code></strong> — SSE-KMS off; SSE-S3 still works if a service master key is set.</p>
+<p><strong>Runtime config API</strong> (all under <code>/_admin/kms/*</code>; gated by <code>kms:Status</code>/<code>CreateKey</code>/<code>DeleteKey</code>/<code>KeyStatus</code>):
+- <code>GET /_admin/kms/config</code> — current persisted backend (Vault token redacted; only <code>token_set: true</code> exposed).
+- <code>PUT /_admin/kms/config</code> — persist + hot-swap. Body is <code>{backend, addr?, transit_path?, token?}</code>. An empty <code>token</code> on update keeps the previously-stored one so admins can edit addr/path without re-entering secrets.
+- <code>DELETE /_admin/kms/config</code> — remove the persisted entry; next boot falls back to CLI/env.
+- <code>POST /_admin/kms/test</code> — run a throwaway <code>generate_data_key</code> + <code>decrypt</code> round-trip against the active backend. Returns <code>{ok: bool, error: string|null}</code> so the console can render a green/red indicator on the Save form.</p>
+<p><strong>Console</strong>: top-level <strong>Encryption</strong> page (admin-only) shows master-key status (read-only), backend selector (Disabled / Local / Vault), Vault addr + transit path + token-paste fields (token shown as <code>••••••••</code> when already stored), Save &amp; Apply button, and a Test-connection form.</p>
+<p><strong>Safety note</strong>: switching backends does <strong>not</strong> retroactively re-encrypt existing objects. Objects wrapped by the old backend stay readable only while that backend is still reachable; use <code>CopyObject</code> (phase 2f) to migrate them.</p>
+<h4 id="copyobject-with-encryption-transitions">CopyObject with encryption transitions<a class="headerlink" href="#copyobject-with-encryption-transitions" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Fast path (no data movement)</strong>: when source and destination share the same SSE algorithm (and same KMS key id for SSE-KMS), CopyObject does a metadata-only copy — shards are shared between source and dest until either is deleted.</li>
+<li><strong>Slow path (decrypt → re-encrypt)</strong>: when SSE settings differ (plaintext → SSE-S3, SSE-S3 → SSE-KMS, SSE-KMS → plaintext, SSE-KMS with different key, or explicit override via request headers), the gateway reads the source through its normal decrypt path, then re-PUTs through the normal encrypt path so the destination bucket's default — or the copy request's <code>x-amz-server-side-encryption*</code> headers — controls the new encryption.</li>
+<li><strong>SSE-C on copy</strong>: not yet supported; returns <code>NotImplemented 501</code> when either side is SSE-C (needs the AWS-specific <code>x-amz-copy-source-server-side-encryption-customer-*</code> header set).</li>
+</ul>
+<p>A re-encrypting CopyObject buffers the object in memory, as a single-part PUT does.</p>
+<hr />
+<h1 id="2-data-protection-erasure-coding">2. Data Protection (Erasure Coding)<a class="headerlink" href="#2-data-protection-erasure-coding" title="Permanent link">&para;</a></h1>
+<h3 id="reed-solomon-mds">Reed-Solomon (MDS)<a class="headerlink" href="#reed-solomon-mds" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Standard Maximum Distance Separable codes</li>
+<li>Configurable k (data) + m (parity) shards</li>
+<li>Any k shards can reconstruct the data</li>
+<li>Presets: 3+2, 4+2, 8+4</li>
+</ul>
+<h3 id="lrc-locally-repairable-codes">LRC (Locally Repairable Codes)<a class="headerlink" href="#lrc-locally-repairable-codes" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Local parity groups for faster single-shard recovery</li>
+<li>Three parameters: k (data) + local parity + global parity</li>
+<li>Presets: 6+2+1, 10+2+2</li>
+</ul>
+<h3 id="replication">Replication<a class="headerlink" href="#replication" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Simple N-way replication (no erasure coding)</li>
+<li>Configurable replica count (2-way, 3-way)</li>
+</ul>
+<h3 id="bucket-replication">Bucket replication<a class="headerlink" href="#bucket-replication" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Asynchronous replication of every new version to a bucket on another
+  ObjectIO cluster, configured by the bucket's owner with S3's
+  <code>PutBucketReplication</code>, naming a target (<code>/_admin/replication/targets</code>)
+  of the bucket's own tenant, which that tenant's admin manages.</li>
+<li>Replicas keep the source's version id and ETag; delete markers replicate
+  if a rule asks; version deletes never do; replicas aren't replicated on.</li>
+<li>Reliable by construction: the replication mark is written with the
+  version, a scanner finds anything the immediate send missed, and the
+  target stores a repeated send once.</li>
+<li><code>x-amz-replication-status</code>, backlog and lag metrics. Guide:
+  <code>operations-guide/administration/replication.md</code>.</li>
+</ul>
+<h3 id="small-object-packing">Small-object packing<a class="headerlink" href="#small-object-packing" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Small objects (above the 4 KiB inline cut-off, up to 64 KiB) are moved
+  into <strong>packs</strong>: one erasure-coded stripe of about 1 MiB holding many
+  objects. An 8 KiB object then takes about 1.6× its size on disk instead
+  of 3× at 4+2.</li>
+<li>Off by default. <code>--pack-interval-secs N</code> turns the packer on (aio and
+  gateway); <code>--pack-min-age-secs</code> (default 3600) leaves recently written
+  objects alone. One gateway packs at a time (a lease in meta).</li>
+<li>Nothing changes for clients: an object reads, ranges, copies, locks and
+  deletes the same packed or not. A pack is freed when its last object goes.</li>
+<li>Crash-safe: a pack is recorded before it's written and sealed before any
+  object points at it, and each pass reconciles what a packer that died
+  left half done. Repair and drain handle packs from their record.</li>
+<li>Compaction: a pack less than half live (its objects mostly deleted or
+  overwritten) has its survivors moved into a new pack, and its space
+  comes back. Packs shared by a copy are left alone.</li>
+<li>Metrics: <code>objectio_packs_written_total</code>, <code>objectio_pack_objects_total</code>,
+  <code>objectio_pack_bytes_saved_total</code>, <code>objectio_pack_reconciled_total{action}</code>,
+  <code>objectio_pack_compactions_total</code>, <code>objectio_pack_compacted_objects_total</code>.</li>
+</ul>
+<h3 id="storage-pools">Storage Pools<a class="headerlink" href="#storage-pools" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Independent erasure coding and placement per pool</li>
+<li>Failure domain configuration: OSD, node, rack, datacenter</li>
+<li>OSD tags for hardware-class targeting (e.g., <code>nvme</code>, <code>ssd</code>)</li>
+<li>Per-pool storage quotas</li>
+<li>Protection presets with automatic feasibility check (greyed out if insufficient nodes)</li>
+<li>Console shows efficiency %, min nodes, fault tolerance for each configuration</li>
+</ul>
+<hr />
+<ul>
+<li><strong>Buckets in pools</strong>: a bucket is created in a pool (<code>x-objectio-pool</code> on S3 CreateBucket, <code>pool</code> on the admin API, or the tenant's <code>default_pool</code>); tenants are limited to their <code>allowed_pools</code>; a pool in use can't be deleted. Pools currently select erasure coding and placement groups, not specific disks (OSD tags are planned).</li>
+</ul>
+<h1 id="2a-placement-engine-crush-placement-groups">2a. Placement Engine (CRUSH + Placement Groups)<a class="headerlink" href="#2a-placement-engine-crush-placement-groups" title="Permanent link">&para;</a></h1>
+<p>Two-hop placement: <code>object_id → pg_id → [osd_1..k+m]</code>. Replaces
+per-object CRUSH with a fixed set of placement groups (PGs), each
+PG mapped to a specific <code>(k+m)</code>-tuple of OSDs. Modelled on Ceph's
+PG model + Cidon/Stutsman copyset diversity.</p>
+<h3 id="two-placement-modes">Two placement modes<a class="headerlink" href="#two-placement-modes" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Legacy CRUSH2</strong> — per-object HRW hash picks OSDs on every write.
+  Pools created with <code>pg_count = 0</code> use this path for back-compat.</li>
+<li><strong>Placement groups</strong> <em>(recommended)</em> — pool created with <code>pg_count &gt; 0</code>
+  pre-allocates N PGs. Writes hash object key → PG via jump-consistent
+  hash; PG → OSDs is an explicit Meta lookup.</li>
+</ul>
+<h3 id="object-pg-routing">Object → PG routing<a class="headerlink" href="#object-pg-routing" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Algorithm</strong>: Lamping &amp; Veach jump consistent hash (Google 2014).
+  O(log N) multiplications per call (~100 ns).</li>
+<li><strong>Minimal remap</strong> property: growing <code>pg_count</code> by one only moves
+  <code>old/new</code> of keys, and every moving key lands on the new PG. Mostly
+  academic today — resize isn't live — but the property is preserved
+  for future PG-split support.</li>
+<li>Key = <code>xxh64(bucket/key)</code>.</li>
+</ul>
+<h3 id="pg-osd-assignment-copyset-allocator">PG → OSD assignment (copyset allocator)<a class="headerlink" href="#pg-osd-assignment-copyset-allocator" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Cidon/Stutsman copyset pattern</strong>: precompute a pool of valid
+  <code>(k+m)</code>-tuples of OSDs that respect the pool's failure-domain level.
+  PGs are sampled from this pool — dramatically reduces the number of
+  distinct copysets and the correlated-data-loss probability when
+  multiple OSDs fail simultaneously.</li>
+<li><strong>Failure-domain aware</strong>: every copyset spans distinct FD values
+  (host, rack, datacenter, zone, region, etc. as configured on the
+  pool).</li>
+<li><strong>Scatter width</strong> knob (<code>balancer/scatter_width</code>) — Cidon/Stutsman
+  recommend ~10. Lower = fewer distinct copysets, lower loss
+  probability, fewer choices for the balancer. Default 10.</li>
+<li>Deterministic: seeded by topology version × pool hash so the
+  copyset pool is reproducible across Meta replicas and restarts.</li>
+</ul>
+<h3 id="placement-groups-placementgroup-proto">Placement Groups (<code>PlacementGroup</code> proto)<a class="headerlink" href="#placement-groups-placementgroup-proto" title="Permanent link">&para;</a></h3>
+<ul>
+<li>One Raft-replicated row per PG: <code>(pool, pg_id, osd_ids, version,
+  updated_at, migrating_to_osd_ids)</code>.</li>
+<li>CAS-versioned — the balancer bumps <code>version</code> on every move.</li>
+<li>Cached in-memory on every Meta replica via the apply-listener;
+  hot reads don't hit redb.</li>
+<li>Listed via <code>GET /_admin/pools/{name}/placement-groups</code> (paginated).</li>
+</ul>
+<h3 id="balancer-descheduler-pattern">Balancer (descheduler pattern)<a class="headerlink" href="#balancer-descheduler-pattern" title="Permanent link">&para;</a></h3>
+<p>Leader-only background task. Evaluates every PG on each tick and
+commits moves via MultiCas when a PG is overloaded or underloaded.</p>
+<p><strong>Hysteresis gates</strong> (prevents thrash):</p>
+<ul>
+<li><strong>Overload</strong>: trigger a move when any OSD in the PG holds ≥
+  <code>overload_multiplier × target</code> PGs. Default 1.20 (20% above fair
+  share).</li>
+<li><strong>Underload</strong> <em>(optional)</em>: also trigger when any OSD in the
+  cluster holds ≤ <code>underload_multiplier × target</code> PGs. Default 0.70
+  (30% below fair share); set to 0 to disable.</li>
+<li><strong>Improvement factor</strong>: candidate copyset's total load must be
+  ≤ <code>improvement_factor × current</code>. Default 0.90 (≥10% improvement
+  required to commit).</li>
+</ul>
+<p><strong>Concurrency cap</strong>: <code>max(3, osds/3)</code> moves per pool per tick by
+default. Bounds background churn. Override via <code>balancer/per_tick_cap</code>.</p>
+<p><strong>Greenfield mode</strong>: ObjectIO today has no live data migration.
+Balancer commits <code>osd_ids</code> directly — orphan shards on OSDs that
+dropped out of a PG are collected by the terminal-loss GC in the
+drain observer. If production data lands, the <code>migrating_to_osd_ids</code>
+field on <code>PlacementGroup</code> becomes the migration signal and the
+migrator task (not yet implemented) consumes it before committing
+the transition.</p>
+<h3 id="hot-reloadable-tuning-via-_adminconfigbalancer">Hot-reloadable tuning (via <code>/_admin/config/balancer/*</code>)<a class="headerlink" href="#hot-reloadable-tuning-via-_adminconfigbalancer" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Default</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>balancer/sweep_interval_seconds</code></td>
+<td>60</td>
+<td>Tick cadence (clamped 5–3600)</td>
+</tr>
+<tr>
+<td><code>balancer/overload_multiplier</code></td>
+<td>1.20</td>
+<td>Overload trigger threshold</td>
+</tr>
+<tr>
+<td><code>balancer/underload_multiplier</code></td>
+<td>0.0</td>
+<td>Underload trigger (0 = off)</td>
+</tr>
+<tr>
+<td><code>balancer/improvement_factor</code></td>
+<td>0.90</td>
+<td>Min improvement to commit</td>
+</tr>
+<tr>
+<td><code>balancer/scatter_width</code></td>
+<td>10</td>
+<td>Copyset-pool diversity</td>
+</tr>
+<tr>
+<td><code>balancer/per_tick_cap</code></td>
+<td>0 (auto)</td>
+<td>Moves per pool per tick</td>
+</tr>
+<tr>
+<td><code>balancer/paused</code></td>
+<td>false</td>
+<td>Halt all commits</td>
+</tr>
+</tbody>
+</table>
+<p>Each knob re-reads on every tick — no restart required. Ticks
+themselves are skipped when the sweep interval changes so the
+clock stays monotonic.</p>
+<h3 id="sizing-guidance">Sizing guidance<a class="headerlink" href="#sizing-guidance" title="Permanent link">&para;</a></h3>
+<p>Rule of thumb (Ceph / AIStor convention):</p>
+<div class="highlight"><pre><span></span><code>pg_count ≈ 100 × active_osds / (k+m), rounded to power of 2
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Cluster shape</th>
+<th>Suggested <code>pg_count</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>9 OSDs, 2+1 EC</td>
+<td>256 or 512</td>
+</tr>
+<tr>
+<td>24 OSDs, 4+2 EC</td>
+<td>512</td>
+</tr>
+<tr>
+<td>100 OSDs, 4+2 EC</td>
+<td>2048</td>
+</tr>
+<tr>
+<td>1,000 OSDs, 8+4 EC</td>
+<td>8192</td>
+</tr>
+</tbody>
+</table>
+<p>Cost: ~200 bytes per PG row; <code>pg_count=4096</code> is ~1 MB of Meta
+state per pool. Hard cap is 65,536 per pool (plan invariant).</p>
+<h3 id="scaling-without-pg-split">Scaling without PG split<a class="headerlink" href="#scaling-without-pg-split" title="Permanent link">&para;</a></h3>
+<p><code>pg_count</code> is fixed at pool creation (v1 non-goal: growable
+pg_count). Three escape hatches cover the scale range without
+bolting on split:</p>
+<ol>
+<li><strong>Size for target</strong>. Pick <code>pg_count</code> for the cluster you expect
+   to reach, not the one you start at — cost is trivial.</li>
+<li><strong>New pool per expansion</strong> (MinIO "server pool" pattern). When a
+   pool's PG count becomes tight, create a new pool with more PGs
+   and point new bucket creations at it. Existing buckets keep
+   working on the old pool untouched. Zero-downtime because pool
+   selection is per-bucket, recorded in <code>BucketMeta</code> at create time.</li>
+<li><strong>Multiple pools per tier from day 1</strong>. <code>nvme-1</code>, <code>nvme-2</code>, …
+   Buckets round-robin or least-full across siblings. Failure
+   isolation + admin-op blast-radius containment come for free.</li>
+</ol>
+<p>Iceberg workloads effectively <strong>never</strong> need PG split — the
+catalog indirection makes "move data to a new pool" a
+metadata-only flip rather than a full copy. Long-lived
+bucket-scoped workloads where the bucket name is the permanent
+client API are the only case where split is cheaper than
+migration; not a v1 concern.</p>
+<h3 id="console-visualization">Console visualization<a class="headerlink" href="#console-visualization" title="Permanent link">&para;</a></h3>
+<p><code>/cluster/pools/{name}</code> drill-down shows:
+- Stat cards (pg_count, k+m, target PGs/OSD, active OSDs).
+- Per-OSD PG-membership bar chart — red/amber coloring for
+  overloaded/underloaded OSDs, target marker line.
+- PG × OSD matrix — scrollable grid, blue cell = OSD is a member,
+  amber = migrating-to. Click a column to filter to one OSD's
+  PGs; click a row to pin a single PG.</p>
+<p>All backed by <code>GET /_admin/pools/{name}/placement-groups</code> +
+<code>GET /_admin/nodes</code> — no new data plane, just a read view.</p>
+<h3 id="live-status">Live status<a class="headerlink" href="#live-status" title="Permanent link">&para;</a></h3>
+<p><code>GET /_admin/rebalance-status</code> returns a unified view (legacy
+drift-rebalance fields + new PG counters):
+- <code>pgs_moved_total</code> — cumulative PG moves since process start
+- <code>pg_candidates_last_tick</code> — PGs flagged for a move in the last tick
+- <code>pgs_scanned_last_tick</code> — total PGs evaluated per tick
+- <code>paused</code> — merged signal of <code>rebalance/paused</code> OR <code>balancer/paused</code></p>
+<p>The console's Topology banner and the new <strong>Cluster → Balancing</strong>
+tab both consume this.</p>
+<hr />
+<h1 id="3-data-lakehouse-iceberg-tables-delta-sharing">3. Data Lakehouse (Iceberg Tables + Delta Sharing)<a class="headerlink" href="#3-data-lakehouse-iceberg-tables-delta-sharing" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>Create analytics warehouses, manage Iceberg tables, query with Spark/Trino, and share data across organizations via the Delta Sharing protocol.</p>
+</blockquote>
+<p>The Iceberg Tables and Table Sharing sections below describe the full data lakehouse capabilities.</p>
+<hr />
+<h1 id="4-multi-tenancy">4. Multi-Tenancy<a class="headerlink" href="#4-multi-tenancy" title="Permanent link">&para;</a></h1>
+<h3 id="tenant-management">Tenant Management<a class="headerlink" href="#tenant-management" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Create/List/Update/Delete tenants</strong> via <code>/_admin/tenants</code> API and console</li>
+<li><strong>Per-tenant configuration</strong>: Default pool, allowed pools, OIDC provider, admin users</li>
+<li><strong>Tenant quotas</strong>: Storage bytes, max buckets, max objects</li>
+<li><strong>Tenant labels</strong>: Arbitrary key-value metadata</li>
+</ul>
+<h3 id="tenant-scoped-resources">Tenant-Scoped Resources<a class="headerlink" href="#tenant-scoped-resources" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Users</strong>: Created with <code>tenant</code> field, ARN includes tenant (<code>arn:objectio:iam::{tenant}:user/{name}</code>)</li>
+<li><strong>Access keys</strong>: Inherit tenant from user</li>
+<li><strong>Buckets</strong>: Created with tenant scope, ListBuckets filtered by tenant</li>
+<li><strong>Warehouses</strong>: Tenant-scoped Iceberg warehouses</li>
+<li><strong>Shares</strong>: Tenant-scoped table shares</li>
+</ul>
+<h3 id="tenant-isolation">Tenant Isolation<a class="headerlink" href="#tenant-isolation" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Auth middleware</strong>: <code>AuthResult</code> carries tenant from access key → user → tenant chain</li>
+<li><strong>Console session</strong>: Session token includes tenant, admin pages hidden for tenant users</li>
+<li><strong>API filtering</strong>: All list operations filter by authenticated user's tenant</li>
+<li><strong>System admin</strong>: Users with empty tenant see all resources across tenants</li>
+</ul>
+<h3 id="tenant-admin-role">Tenant Admin Role<a class="headerlink" href="#tenant-admin-role" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong><code>TenantConfig.admin_users</code></strong>: List of user IDs (or ARNs) who can admin the tenant without being system admins</li>
+<li><strong><code>POST /_admin/tenants/{name}/admins</code></strong> — grant tenant-admin</li>
+<li><strong><code>DELETE /_admin/tenants/{name}/admins/{user}</code></strong> — revoke</li>
+<li><strong>Three-tier access model</strong>: System admin (tenant=""), tenant admin (in <code>admin_users</code> for their tenant), regular user</li>
+<li><strong>Scope</strong>: tenant admins can create/delete users + access keys + buckets + warehouses + shares <strong>within their own tenant</strong>; they cannot touch pools, tenants, nodes, system config, KMS backend, or other tenants</li>
+<li><strong>Console</strong>: dedicated "Manage admins" panel on each tenant row; picker lists that tenant's users + free-form user-id/ARN input</li>
+<li><strong>CLI</strong>: <code>objectio-cli tenant admin add|remove|list &lt;tenant&gt; &lt;user&gt;</code> — see <a href="../../operations-guide/administration/cli/">CLI</a></li>
+</ul>
+<hr />
+<h1 id="5-iam-identity-access-management">5. IAM (Identity &amp; Access Management)<a class="headerlink" href="#5-iam-identity-access-management" title="Permanent link">&para;</a></h1>
+<p>Full reference: <a href="../../operations-guide/administration/iam/">Identity and Access</a>
+and <a href="../../operations-guide/administration/public-access/">Public Access</a>.</p>
+<h3 id="users-access-keys">Users &amp; Access Keys<a class="headerlink" href="#users-access-keys" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Create/List/Get/Update/Delete users</strong> with display name, email, tenant</li>
+<li><strong>Suspend a user</strong> (<code>PUT /_admin/users/{id}</code> <code>{"status": "suspended"}</code>) or <strong>deactivate a key</strong> (<code>PUT /_admin/access-keys/{id}</code> <code>{"status": "inactive"}</code>) — refused within 15 s on every gateway, nothing deleted</li>
+<li><strong>Scoped keys</strong>: confined to <code>s3://bucket/prefix/</code>, read-only or read-write; refused on the admin API</li>
+<li><strong>Key format</strong>: <code>AKIA*</code> (permanent) or <code>ASIA*</code> (temporary)</li>
+<li><strong>Admin user</strong>: Auto-created on first meta service startup with credentials logged</li>
+</ul>
+<h3 id="authentication">Authentication<a class="headerlink" href="#authentication" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>AWS SigV4</strong> for requests and presigned URLs. SigV2 is refused with <code>400 InvalidRequest</code>, as S3 refuses it on buckets created since June 2020; with boto3 use <code>botocore.config.Config(signature_version="s3v4")</code>.</li>
+<li><strong>Anonymous requests</strong>: served only what a bucket policy grants to everyone, with public access blocked by default</li>
+<li><strong>OIDC</strong>: the operator's provider and <strong>each tenant's own</strong> (Keycloak, Entra ID, Okta, Google, any compliant issuer); groups from any claim, dotted paths included</li>
+<li><strong>STS <code>AssumeRoleWithWebIdentity</code></strong>: an OIDC token for a role's temporary keys, AWS-wire-compatible; a tenant's roles trust only that tenant's provider, system roles only the operator's</li>
+<li><strong>Vended credentials</strong> for Iceberg / Unity clients, confined to a table's location</li>
+<li><strong>Console session cookies</strong> with 24-hour TTL</li>
+<li>Sessions, temporary credentials and listing tokens are signed with keys derived from a <strong>cluster secret</strong> held in meta's Raft log</li>
+</ul>
+<h3 id="authorization">Authorization<a class="headerlink" href="#authorization" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Tenant boundary</strong>: checked before any policy; no policy can grant across it</li>
+<li><strong>Bucket policies</strong> (<code>PUT /{bucket}?policy</code>) and <strong>IAM policies</strong> attached to users, groups and roles — per tenant, with a shared system catalogue (<code>readonly</code>, <code>readwrite</code>, <code>writeonly</code>)</li>
+<li><strong>Groups</strong> with members; <strong>roles</strong> with trust policies</li>
+<li><strong>Evaluation</strong>: explicit Deny wins; then any Allow; then the bucket's owner; else deny. No policy means owner-only.</li>
+<li><strong>Conditions</strong>: every IAM operator with <code>IfExists</code>, <code>ForAnyValue:</code>/<code>ForAllValues:</code> and <code>Null</code>; unknown operators refused at save. Keys include <code>aws:SourceIp</code>, <code>aws:SourceVpce</code> (named gateway endpoint), <code>aws:SecureTransport</code>, <code>aws:username</code>, <code>s3:prefix</code>, <code>s3:ExistingObjectTag/*</code>, the SSE request headers, <code>obio:CredentialType</code></li>
+<li><strong>AWS policies work as written</strong>: <code>arn:aws:</code> ARNs and <code>{"AWS": …}</code> principals; <code>NotPrincipal</code> on Deny</li>
+<li><strong>Block Public Access</strong> at bucket, tenant and cluster level; new buckets start blocked</li>
+<li><strong>ACLs</strong>: bucket owner enforced — they grant nothing</li>
+<li><strong>Action namespaces</strong>: <code>s3:*</code>, <code>iceberg:*</code>, <code>kms:*</code>, <code>sts:AssumeRoleWithWebIdentity</code></li>
+<li><strong>Admin access</strong>: the built-in admin user bypasses policy evaluation; console sessions are treated as admin for admin endpoints.</li>
+</ul>
+<h3 id="management-sdks">Management SDKs<a class="headerlink" href="#management-sdks" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Go</strong> (<code>github.com/object-io/objectio-go-sdk</code>) and <strong>Python</strong> (<code>objectio-sdk</code>) clients for the whole admin API, standard library only — see <a href="../sdk/">SDKs</a></li>
+</ul>
+<hr />
+<h2 id="3a-iceberg-tables-rest-catalog">3a. Iceberg Tables (REST Catalog)<a class="headerlink" href="#3a-iceberg-tables-rest-catalog" title="Permanent link">&para;</a></h2>
+<h3 id="warehouse-management">Warehouse Management<a class="headerlink" href="#warehouse-management" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>POST/GET/DELETE /_admin/warehouses</strong> — Create, list, delete warehouses</li>
+<li><strong>Backing bucket</strong>: Each warehouse automatically creates an S3 bucket (<code>iceberg-{name}</code>)</li>
+<li><strong>Tenant-scoped</strong>: Warehouses isolated per tenant</li>
+<li><strong>Warehouse-scoped namespaces</strong>: Each warehouse has its own namespace/table hierarchy</li>
+</ul>
+<h3 id="iceberg-rest-catalog-api">Iceberg REST Catalog API<a class="headerlink" href="#iceberg-rest-catalog-api" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>GET /iceberg/v1/config</strong> — Catalog configuration (warehouse location)</li>
+<li><strong>Namespace CRUD</strong>: Create, load, drop, list, update properties, check existence</li>
+<li><strong>Table CRUD</strong>: Create, load, commit (CAS), drop, list, rename, check existence</li>
+<li><strong>Multi-level namespaces</strong>: Dot-separated hierarchy (e.g., <code>db.schema</code>)</li>
+<li><strong>Namespace policies</strong>: IAM-style access control per namespace</li>
+<li><strong>Table policies</strong>: Per-table access control</li>
+<li><strong>Data filters</strong>: Column/row-level security per principal</li>
+</ul>
+<h3 id="authentication_1">Authentication<a class="headerlink" href="#authentication_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>SigV4</strong>: Same access key / secret key as S3 (industry standard)</li>
+<li><strong>OIDC/OAuth2</strong>: Bearer token authentication via external provider</li>
+<li><strong>Console session cookie</strong>: For web console access</li>
+<li><strong>Unified auth middleware</strong>: Tries SigV4 → OIDC → session cookie → unauthenticated</li>
+</ul>
+<h3 id="vended-credentials-sts">Vended Credentials (STS)<a class="headerlink" href="#vended-credentials-sts" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>LoadTable response</strong>: Includes temporary S3 credentials in <code>config</code> field</li>
+<li><strong>Credential format</strong>: <code>ASIA*</code> access key + secret + HMAC-signed session token</li>
+<li><strong>1-hour TTL</strong>: Fresh credentials generated per LoadTable call</li>
+<li><strong>Path-style access</strong>: <code>s3.path-style-access=true</code> for ObjectIO compatibility</li>
+<li><strong>External endpoint</strong>: Configured via <code>--external-endpoint</code> for public access</li>
+</ul>
+<h3 id="client-compatibility">Client Compatibility<a class="headerlink" href="#client-compatibility" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>PyIceberg</strong>: Full support with SigV4 signing (<code>rest.sigv4-enabled=true</code>)</li>
+<li><strong>Spark</strong>: REST catalog with SigV4 or OAuth2</li>
+<li><strong>Trino/Presto</strong>: REST catalog connector</li>
+</ul>
+<hr />
+<h2 id="3b-unity-catalog-rest-api">3b. Unity Catalog (REST API)<a class="headerlink" href="#3b-unity-catalog-rest-api" title="Permanent link">&para;</a></h2>
+<p>Databricks-shape governance plane for catalogs / schemas / tables /
+functions / volumes / models / model-versions, mounted at
+<code>/api/2.1/unity-catalog/*</code>. Coexists with the Iceberg REST Catalog —
+they share the same auth bridge, the same <code>BucketPolicy</code>/<code>PolicyEvaluator</code>
+backbone, and the same admin gate.</p>
+<h3 id="three-level-entity-model">Three-level entity model<a class="headerlink" href="#three-level-entity-model" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Catalog</strong> — top of the namespace; auto-provisions an <code>unity-{name}</code> backing bucket</li>
+<li><strong>Schema</strong> — addressed as <code>{catalog}.{schema}</code></li>
+<li><strong>Table / Function / Volume / Model</strong> — addressed as <code>{catalog}.{schema}.{name}</code></li>
+<li><strong>Model version</strong> — addressed as <code>{catalog}.{schema}.{model}/versions/{n}</code></li>
+</ul>
+<h3 id="policy-model">Policy model<a class="headerlink" href="#policy-model" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>IAM-style JSON</strong> — same <code>BucketPolicy</code> shape as S3 / Iceberg; <code>unity:</code> action prefix and <code>arn:obio:unity:::{catalog}[/{schema}[/{table}]]</code> resource ARNs</li>
+<li><strong>Three-level walk</strong> — catalog → schema → table; deny at any level wins</li>
+<li><strong>Grantable actions</strong> — <code>unity:Get*</code>, <code>unity:Create*</code>, <code>unity:Delete*</code> for every entity, plus <code>unity:SetTableSecurity</code> for row-filter / column-mask binding (grantable to non-admin via Unity policy — does not require admin)</li>
+<li><strong>Per-entity policy editor</strong> — <code>PUT /api/2.1/unity-catalog/{catalogs|schemas|tables}/{name}/policy</code>, <code>GET</code> to read, empty body clears</li>
+</ul>
+<h3 id="row-filters-column-masks">Row filters &amp; column masks<a class="headerlink" href="#row-filters-column-masks" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong><code>PUT /api/2.1/unity-catalog/tables/{full_name}/security</code></strong> — binds a SQL UDF as a row filter and/or per-column masks</li>
+<li><strong>Validation</strong> — row-filter UDF must return BOOLEAN; mask functions must exist in the same <code>catalog.schema</code>; rejects unknown function references at config time</li>
+<li><strong>Engine-side enforcement</strong> — engines (Spark/Trino) read the binding from <code>GET /tables/{full_name}</code> and inject <code>WHERE function(input_cols)</code> / <code>mask_function(col, …)</code> at query compile time. Unity itself does not execute UDFs</li>
+</ul>
+<h3 id="udf-context-built-ins">UDF context built-ins<a class="headerlink" href="#udf-context-built-ins" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong><code>GET /api/2.1/unity-catalog/me</code></strong> returns <code>{user_name, user_id, user_arn, groups, group_arns, tenant, is_admin}</code> — the canonical principal context engines use to populate the SQL built-ins that row-filter and column-mask UDFs reference:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Built-in</th>
+<th>Source field</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>current_user()</code></td>
+<td><code>user_name</code></td>
+</tr>
+<tr>
+<td><code>is_member(g)</code></td>
+<td><code>groups</code> contains <code>g</code></td>
+</tr>
+<tr>
+<td><code>is_account_group_member(g)</code></td>
+<td><code>groups</code> contains <code>g</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="default-deny-direct-s3-on-backing-buckets">Default deny direct-S3 on backing buckets<a class="headerlink" href="#default-deny-direct-s3-on-backing-buckets" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Auto-attached at catalog create</strong> — bucket policy on <code>unity-{catalog}</code> denies any access where <code>obio:CredentialType != STS</code></li>
+<li><strong>Forces vended-credential flow</strong> — permanent IAM keys can't bypass row filters / column masks by going around Unity to the backing bucket</li>
+<li><strong><code>obio:CredentialType</code> policy variable</strong> — surfaced from <code>AuthMode</code> (set to <code>STS</code> in the STS auth path, <code>Permanent</code> in SigV4/OIDC, <code>Anonymous</code> in <code>--no-auth</code>); usable in any bucket policy via <code>StringNotEquals</code> / <code>StringEquals</code> conditions</li>
+</ul>
+<h3 id="vended-credentials-sts_1">Vended credentials (STS)<a class="headerlink" href="#vended-credentials-sts_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong><code>POST /…/temporary-table-credentials</code></strong> — mint scoped 1-hour STS session for table data access</li>
+<li><strong><code>POST /…/temporary-volume-credentials</code></strong> — same for governed volumes</li>
+<li><strong>Admin-gated</strong> — recipients of the vended creds appear to the gateway as <code>obio:CredentialType: STS</code> and pass the default-deny policy</li>
+</ul>
+<h3 id="oidc-group-bridging">OIDC group bridging<a class="headerlink" href="#oidc-group-bridging" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Name-based mapping</strong> — Keycloak / OIDC group claim "data-team" maps to local IAM group "data-team" by exact name match</li>
+<li><strong>Dual stitching</strong> — every authenticated request gets BOTH the IAM group ARN (for policies that name the IAM ARN directly) AND the IAM group_id (so <code>list_attached_policies(group_id=…)</code> returns the right set), so a single IAM policy attached to the IAM group governs SigV4 and OIDC users uniformly</li>
+</ul>
+<h3 id="console-ui">Console UI<a class="headerlink" href="#console-ui" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Unity Catalog page</strong> — three-pane catalog → schema → entity navigation; Tables / Functions / Volumes / Models tabs per schema; full CRUD modals</li>
+<li><strong>Shield button</strong> — opens the <code>PolicyEditor</code> modal scoped to the entity</li>
+<li><strong>Filter button</strong> — opens the <code>TableSecurityEditor</code> modal (function dropdown filtered to same-schema UDFs, multi-mask rows); the icon turns green when a row filter or column mask is active on the row</li>
+<li><strong>Policy templates</strong> — Policies page generator now ships Unity-shape templates (<code>unity-readonly</code>, <code>unity-data-engineer</code>, <code>unity-ml-engineer</code>, <code>unity-security-officer</code>, <code>unity-deny-delete</code>) and an S3-shape <code>s3-deny-non-sts</code> template that mirrors the Unity backing-bucket default</li>
+</ul>
+<h3 id="client-compatibility_1">Client compatibility<a class="headerlink" href="#client-compatibility_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Databricks SDK</strong> — Unity REST API is wire-compatible with Databricks Unity Catalog (<code>/api/2.1/unity-catalog/*</code> paths, snake_case JSON)</li>
+<li><strong>PySpark with Unity connector</strong> — bind warehouse via standard config; SigV4 or OIDC for auth</li>
+<li><strong>Trino Unity connector</strong> — same</li>
+</ul>
+<hr />
+<h2 id="3c-table-sharing-delta-sharing-protocol">3c. Table Sharing (Delta Sharing Protocol)<a class="headerlink" href="#3c-table-sharing-delta-sharing-protocol" title="Permanent link">&para;</a></h2>
+<h3 id="share-management">Share Management<a class="headerlink" href="#share-management" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Create/List/Delete shares</strong> via admin API and console</li>
+<li><strong>Tenant-scoped shares</strong>: Filtered by authenticated user's tenant</li>
+</ul>
+<h3 id="table-types">Table Types<a class="headerlink" href="#table-types" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Delta Lake</strong>: Share Delta tables by S3 bucket + path (<code>table_type: "delta"</code>)</li>
+<li><strong>Iceberg UniForm</strong>: Share Iceberg tables via Delta Sharing protocol (<code>table_type: "uniform"</code>)</li>
+<li><strong>Mixed sharing</strong>: Both Delta and Iceberg tables in the same share</li>
+</ul>
+<h3 id="recipient-token-management">Recipient &amp; Token Management<a class="headerlink" href="#recipient-token-management" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Create recipients</strong>: Name + list of accessible shares</li>
+<li><strong>Bearer tokens</strong>: One-time display, SHA-256 hashed for storage</li>
+<li><strong>profile.share</strong>: Standard Delta Sharing credential file format</li>
+<li><strong>Token authentication</strong>: Recipients authenticate via <code>Authorization: Bearer &lt;token&gt;</code></li>
+</ul>
+<h3 id="protocol-endpoints">Protocol Endpoints<a class="headerlink" href="#protocol-endpoints" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>GET /delta-sharing/v1/shares</code> — List accessible shares</li>
+<li><code>GET /delta-sharing/v1/shares/{share}/schemas</code> — List schemas in share</li>
+<li><code>GET /delta-sharing/v1/shares/{share}/schemas/{schema}/tables</code> — List tables</li>
+<li><code>GET .../tables/{table}/version</code> — Current table version (snapshot ID)</li>
+<li><code>GET .../tables/{table}/metadata</code> — Table metadata (NDJSON format)</li>
+<li><code>POST .../tables/{table}/query</code> — Query table data (returns presigned S3 URLs)</li>
+</ul>
+<h3 id="data-access">Data Access<a class="headerlink" href="#data-access" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Presigned URLs</strong>: Server generates SigV4 presigned URLs for Parquet data files</li>
+<li><strong>1-hour expiry</strong>: Presigned URLs valid for 1 hour</li>
+<li><strong>No S3 credentials needed</strong>: Recipients access data via presigned URLs only</li>
+</ul>
+<hr />
+<h1 id="6-file-storage-nfs-posix">6. File Storage (NFS / POSIX)<a class="headerlink" href="#6-file-storage-nfs-posix" title="Permanent link">&para;</a></h1>
+<p>File protocols (NFS, SMB) are not built yet; they are roadmap track E.
+What exists today is file-like access through S3:</p>
+<h3 id="current-file-like-access-via-s3">Current File-Like Access (via S3)<a class="headerlink" href="#current-file-like-access-via-s3" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Object Browser</strong> (Console): Navigate bucket → folder → file hierarchy</li>
+<li><strong>Presigned URLs</strong>: Time-limited download/upload URLs for direct file access</li>
+<li><strong>Folder semantics</strong>: Delimiter-based folder listing (<code>?delimiter=/</code>)</li>
+<li><strong>Range reads</strong>: HTTP Range header for partial file reads</li>
+<li><strong>Multipart upload</strong>: Large file upload in parts (up to 10,000 parts)</li>
+</ul>
+<hr />
+<h1 id="7-block-storage">7. Block Storage<a class="headerlink" href="#7-block-storage" title="Permanent link">&para;</a></h1>
+<h3 id="grpc-block-service">gRPC Block Service<a class="headerlink" href="#grpc-block-service" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Thin provisioning</strong>: Storage allocated only on write</li>
+<li><strong>4 MB chunks</strong>: Logical block addresses mapped to erasure-coded chunks on OSDs</li>
+<li><strong>512-byte LBA</strong>: Standard sector size</li>
+<li><strong>Snapshots</strong>: Copy-on-write snapshots and writable clones</li>
+<li><strong>Write journal</strong>: Crash-consistent writes via write-ahead journal</li>
+<li><strong>Write cache</strong>: Coalesces small writes before flushing to chunks</li>
+</ul>
+<h3 id="qos-quality-of-service">QoS (Quality of Service)<a class="headerlink" href="#qos-quality-of-service" title="Permanent link">&para;</a></h3>
+<ul>
+<li>A volume carries QoS settings (IOPS and bandwidth limits, priority), and the
+  <code>objectio-block</code> crate has a token-bucket limiter, but the block gateway
+  does not enforce them yet.</li>
+</ul>
+<h3 id="protocol-support">Protocol Support<a class="headerlink" href="#protocol-support" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>gRPC BlockService</strong>: Native block I/O over gRPC (port 9300)</li>
+<li><strong>NBD (Network Block Device)</strong>: Linux kernel NBD attachment (port 10809)</li>
+</ul>
+<h3 id="block-gateway">Block Gateway<a class="headerlink" href="#block-gateway" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Stateless, horizontally scalable</li>
+<li>Accepts block I/O, buffers in write cache, erasure-encodes 4 MB chunks, flushes to OSDs</li>
+<li>Bridges block storage volumes to the erasure-coded object layer</li>
+</ul>
+<hr />
+<h1 id="8-web-console">8. Web Console<a class="headerlink" href="#8-web-console" title="Permanent link">&para;</a></h1>
+<h3 id="authentication_2">Authentication<a class="headerlink" href="#authentication_2" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Login page</strong>: Access key + secret key authentication</li>
+<li><strong>Session management</strong>: HMAC-signed HttpOnly cookies, 24-hour TTL</li>
+<li><strong>Tenant-aware</strong>: Sidebar adapts based on user's tenant (admin pages hidden for tenant users)</li>
+<li><strong>Logout</strong>: Clears session cookie</li>
+</ul>
+<h3 id="pages">Pages<a class="headerlink" href="#pages" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Dashboard</strong></td>
+<td>Cluster health, stats (buckets, users, namespaces, S3 requests), services status</td>
+</tr>
+<tr>
+<td><strong>Buckets</strong></td>
+<td>Create/delete buckets, versioning/lock/lifecycle badges, tenant column</td>
+</tr>
+<tr>
+<td><strong>Bucket Detail</strong></td>
+<td>Tabs: Versioning toggle, Object Lock config, Lifecycle rule editor</td>
+</tr>
+<tr>
+<td><strong>Object Browser</strong></td>
+<td>Navigate buckets → folders → files, breadcrumb path, folder/file counts</td>
+</tr>
+<tr>
+<td><strong>Cluster</strong></td>
+<td>Unified view of cluster infrastructure via four tabs (all admin-only). Legacy <code>/topology</code>, <code>/drives</code>, <code>/pools</code> URLs redirect here.</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;→ <strong>Topology</strong></td>
+<td>Interactive, collapsible diagram of region → zone → datacenter → rack → host → OSDs with color-coded level pills. Per-pool placement satisfiability strip. Rebalance banner merges legacy drift + PG-balancer counters.</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;→ <strong>Nodes &amp; Drives</strong></td>
+<td>K8s node grouping → OSD pods → disks, CPU/RAM/OS info, usage bars, Add Host via host-provider.</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;→ <strong>Storage Pools</strong></td>
+<td>Protection presets, EC config (RS/LRC/Replication), failure domain, PG count selector on create, PGs column on list. Click PG count → placement drill-down.</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;→ <strong>Balancing</strong></td>
+<td>Live balancer status card (Pause/Resume), 7 hot-reloadable tuning knobs (overload/underload/improvement thresholds, scatter width, per-tick cap, sweep interval, pause).</td>
+</tr>
+<tr>
+<td><strong>Pool Placement</strong> (<code>/cluster/pools/:name</code>)</td>
+<td>Per-pool PG visualization: stat cards, per-OSD PG-membership bars with overload/underload coloring and target line, PG × OSD matrix grid with click-to-filter.</td>
+</tr>
+<tr>
+<td><strong>Tenants</strong></td>
+<td>Tenant CRUD, quotas, OIDC provider, pool assignment</td>
+</tr>
+<tr>
+<td><strong>Users &amp; Keys</strong></td>
+<td>Create users with tenant selector, auto-create access keys, credential display</td>
+</tr>
+<tr>
+<td><strong>Identity</strong></td>
+<td>OIDC provider configuration (Azure, Keycloak, Okta, Google, generic)</td>
+</tr>
+<tr>
+<td><strong>Tables</strong></td>
+<td>Warehouse → Namespace → Table hierarchy, table metadata viewer</td>
+</tr>
+<tr>
+<td><strong>Table Sharing</strong></td>
+<td>Share/table/recipient CRUD, UniForm type support, token + profile.share generation</td>
+</tr>
+<tr>
+<td><strong>Monitoring</strong></td>
+<td>Live Prometheus metrics, charts (line, area, bar), 5s polling</td>
+</tr>
+<tr>
+<td><strong>Encryption</strong></td>
+<td>SSE master-key status, KMS backend selector (Disabled / Local / Vault), hot-swap + Test button</td>
+</tr>
+</tbody>
+</table>
+<h3 id="ui-design">UI Design<a class="headerlink" href="#ui-design" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Compact 13px base font (Inter)</li>
+<li>Tailwind CSS styling</li>
+<li>Loading bar animations</li>
+<li>Hover-reveal actions (delete buttons)</li>
+<li>Sticky table headers</li>
+<li>Status badges with colored dots</li>
+</ul>
+<hr />
+<h1 id="9-infrastructure">9. Infrastructure<a class="headerlink" href="#9-infrastructure" title="Permanent link">&para;</a></h1>
+<h3 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Gateway</strong> (stateless, horizontally scalable): S3 API, Iceberg REST Catalog, Delta Sharing, Admin API, Console</li>
+<li><strong>Meta</strong> (openraft 0.9 cluster): Bucket/object metadata, placement (CRUSH 2.0), IAM, tenant config. One code path; deployment picks single-voter (<code>replicas=1</code>) or HA quorum (<code>replicas=3+</code>).</li>
+<li><strong>OSD</strong> (one per disk): Erasure-coded shard storage with Direct I/O, WAL</li>
+<li><strong>Block Gateway</strong> (optional): Block storage over gRPC + NBD</li>
+</ul>
+<h3 id="meta-ha-openraft-09">Meta HA (openraft 0.9)<a class="headerlink" href="#meta-ha-openraft-09" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Real consensus, not a placeholder</strong>: <code>RaftStorage</code> implemented over redb (log + vote + state in <code>raft_logs</code>, <code>raft_vote</code>, <code>raft_state</code> tables); <code>RaftNetwork</code> over tonic gRPC on the existing meta port, JSON-encoded envelopes</li>
+<li><strong>Cluster size is a deployment choice</strong>: <code>meta.replicas=1</code> boots a single-voter cluster (no election drama, same operational behavior as pre-Raft meta); <code>meta.replicas=3+</code> gets true quorum, leader election, log replication. Same binary, same code path</li>
+<li><strong>Bootstrap automated via helm</strong>: post-install Job calls <code>/init</code> on meta-0, adds peers as learners, promotes the voter set. Re-runs safely on upgrade</li>
+<li><strong>Admin API</strong> at <code>:9102</code> per meta pod:</li>
+<li><code>POST /init</code> — bootstrap a single-voter cluster (idempotent)</li>
+<li><code>POST /add-learner {node_id, addr}</code> — onboard a peer non-voting</li>
+<li><code>POST /change-membership {voters}</code> — promote the voter set</li>
+<li><code>GET /status</code> — leader id, term, voters, learners, <code>last_log_index</code>, <code>last_applied</code></li>
+<li><strong>Every meta write goes through Raft</strong>: config, buckets, IAM, tenants, OSD registrations, KMS keys, multipart uploads; replicas apply them in order</li>
+<li><strong>Any meta node serves any client</strong>: a follower forwards each gRPC call to the leader (<code>x-objectio-forwarded</code>); clients take a comma-separated <code>--meta-endpoint</code> list, balanced over health-probed nodes, with a 5 s call timeout, so a dead or frozen meta is routed around</li>
+<li><strong>Snapshots</strong>: the whole state machine, built from the tables on demand and installed in full on a lagging or new node</li>
+<li><strong>Tested</strong>: multi-process e2e (<code>tests/e2e/tests/meta_ha.rs</code>) kills, freezes and replaces metas under S3 traffic</li>
+</ul>
+<h3 id="deployment">Deployment<a class="headerlink" href="#deployment" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Kubernetes (Helm)</strong>: Production-grade Helm chart with StatefulSets, PVCs, Ingress</li>
+<li><strong>Docker Compose</strong>: Local development cluster (3 meta + 6 OSD + 1 gateway)</li>
+<li><strong>Single binary</strong>: All-in-one Docker image with per-service entrypoints</li>
+</ul>
+<h3 id="observability">Observability<a class="headerlink" href="#observability" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Prometheus metrics</strong>: Exported at <code>/metrics</code> on each service</li>
+<li><strong>Per-operation counters</strong>: <code>objectio_s3_requests_total</code>, <code>objectio_iceberg_requests_total</code></li>
+<li><strong>Per-operation latency</strong>: Duration histograms</li>
+<li><strong>OSD status</strong>: Disk capacity, shard counts, SMART health</li>
+<li><strong>Node info</strong>: K8s node name (downward API), OS version, CPU, RAM, ObjectIO version</li>
+</ul>
+<h3 id="networking">Networking<a class="headerlink" href="#networking" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Service</th>
+<th>API Port</th>
+<th>Metrics Port</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Gateway</td>
+<td>9000</td>
+<td>9000 <code>/metrics</code></td>
+</tr>
+<tr>
+<td>Meta</td>
+<td>9100</td>
+<td>9101</td>
+</tr>
+<tr>
+<td>OSD</td>
+<td>9200</td>
+<td>9201</td>
+</tr>
+<tr>
+<td>Block Gateway</td>
+<td>9300 (gRPC) / 10809 (NBD)</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<h3 id="storage-engine">Storage Engine<a class="headerlink" href="#storage-engine" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>4 MB chunk/stripe size</strong>: Fundamental EC unit</li>
+<li><strong>64 KB block size</strong>: Internal allocation unit</li>
+<li><strong>O_DIRECT / F_NOCACHE</strong>: Bypass OS page cache</li>
+<li><strong>Write-ahead log</strong>: Crash-consistent writes</li>
+<li><strong>ARC metadata cache</strong>: Adaptive replacement cache</li>
+<li><strong>CRUSH 2.0 placement</strong>: Consistent hashing with failure domain awareness</li>
+</ul>
+<h3 id="cluster-topology-locality">Cluster Topology &amp; Locality<a class="headerlink" href="#cluster-topology-locality" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>5-level failure domain model</strong> on <code>OsdNode</code> and <code>FailureDomainInfo</code>: region → zone → datacenter → rack → host. Additive proto change, back-compat with 3-level deployments (empty zone/host = "inherit from enclosing")</li>
+<li><strong><code>TopologyDistance</code> metric</strong> (<code>objectio-placement::distance</code>): ranks two peers as <code>SameHost &lt; SameRack &lt; SameDatacenter &lt; SameZone &lt; SameRegion &lt; Remote &lt; Unknown</code>. Total order — safe to use as a sort key. Empty-on-both-sides at a level counts as matching so deployments that only use some levels aren't penalized</li>
+<li><strong>Placement feasibility validation</strong>: <code>Crush2::validate_placement_feasibility(level, required_count)</code> returns <code>InsufficientDomainSpread { required_level, required_count, available_count }</code> when a pool cannot spread across the configured level. Surfaced via <code>GET /_admin/placement/validate?pool=NAME</code></li>
+<li><strong>Gateway self-positioning</strong>: <code>--topology-region/zone/datacenter/rack/host</code> CLI flags (or <code>OBJECTIO_TOPOLOGY_*</code> env vars). Stored on <code>AppState.self_topology</code>; visible via <code>GET /_admin/cluster-info</code></li>
+<li><strong>Locality-aware EC reads</strong>: <code>get_object</code> ranks all candidate shard positions by <code>distance(gateway, shard_host)</code>, fetches the k closest first. Parity reconstruction only triggers when nearer shards are unhealthy. No protocol change — same <code>ReadShard</code> RPCs, different ordering</li>
+<li><strong><code>GET /_admin/topology</code></strong> — aggregated region→zone→datacenter→rack→host→OSDs tree + per-level distinct counts</li>
+<li><strong><code>GET /_admin/cluster-info</code></strong> — gateway's self-position + every OSD's computed distance + <code>is_local</code> flag</li>
+<li><strong>Prometheus metric</strong>: <code>objectio_read_locality_bytes_total{locality="same-rack"|"same-zone"|"same-datacenter"|"same-region"|"remote"|"unknown"}</code> — bytes fetched from OSDs partitioned by topology distance. Multi-DC deployments use this to prove cross-DC bandwidth is being collapsed</li>
+<li><strong>CLI</strong>: <code>objectio-cli cluster topology</code> (full tree) and <code>cluster validate-placement &lt;pool&gt;</code> (exits non-zero when a pool is unsatisfiable)</li>
+</ul>
+<h3 id="stable-osd-identity">Stable OSD identity<a class="headerlink" href="#stable-osd-identity" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>OSD registration retry</strong>: <code>register_with_meta</code> backs off exponentially (2s → 30s cap) until it succeeds. Stops OSDs from silently staying out of the cluster after a meta-first rolling restart</li>
+<li><strong>Address-based dedupe</strong>: re-registration at an existing address with a different node_id evicts the stale entry from both <code>osd_nodes</code> and the CRUSH topology. One-shot dedupe on meta startup also cleans ghosts left by older binaries</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.top", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

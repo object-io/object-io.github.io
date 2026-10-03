@@ -1,0 +1,3337 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://object-io.github.io/dev/ROADMAP/">
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../developer-guide/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>ObjectIO — features and roadmap - ObjectIO</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#objectio-features-and-roadmap" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="ObjectIO" class="md-header__button md-logo" aria-label="ObjectIO" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ObjectIO
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              ObjectIO — features and roadmap
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/object-io/objectio" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    object-io/objectio
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="ObjectIO" class="md-nav__button md-logo" aria-label="ObjectIO" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    ObjectIO
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/object-io/objectio" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    object-io/objectio
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ObjectIO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ObjectIO — features and roadmap
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ObjectIO — features and roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#priorities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Priorities
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#now-next-later" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Now / next / later
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#status-legend" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Status legend
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Features
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-s3-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 S3 API
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-storage-engine-core-shared-by-object-block-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Storage engine core (shared by object, block, file)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-security-and-multi-tenancy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 Security and multi-tenancy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-data-lake" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4 Data lake
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#15-block" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.5 Block
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#16-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.6 File
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#17-operations-and-tooling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.7 Operations and tooling
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-roadmap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Roadmap
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Roadmap">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#track-a-s3-production-ready" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Track A — S3 production-ready
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Track A — S3 production-ready">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#audit-how-it-works-for-each-kind-of-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Audit: how it works for each kind of user
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#track-b-storage-engine-core" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Track B — storage engine core
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#track-c-data-lake" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Track C — data lake
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#track-d-block-after-a9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Track D — block (after A9)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#track-e-file-later" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Track E — file (later)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Developer guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Developer guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../developer-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Developer Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../developer-guide/api-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../developer-guide/features/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ObjectIO — Feature Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../developer-guide/sdk/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Management SDKs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S3 compatibility
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    S3 compatibility
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../developer-guide/s3-compatibility/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S3 compatibility: ceph s3-tests
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_2" id="__nav_3_5_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026 10 02
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2026 10 02
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../developer-guide/s3-compatibility/2026-10-02/summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ceph s3-tests against ObjectIO, run 2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operations guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Operations guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operations Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Administration
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Administration
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/administration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Administration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/administration/audit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audit Stream
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/administration/authentication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Authentication
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/administration/cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI (objectio-cli)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/administration/grep/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gateway-side grep — searching objects without downloading
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/administration/iam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Identity and Access
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/administration/iceberg-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Iceberg REST Catalog API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/administration/public-access/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Public Access
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/administration/replication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bucket replication
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/administration/s3-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S3 API Operations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Installation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/installation/configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/installation/deployment-options/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ObjectIO Deployment Options
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/installation/docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/installation/kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kubernetes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/installation/linux/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/installation/macos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    macOS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/installation/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/installation/topologies/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment Topologies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_4" id="__nav_4_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operations
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Operations
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/operations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operations Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/operations/failure-recovery/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Failure Recovery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/operations/meta-ha/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Meta high availability
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/operations/metrics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Metrics reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/operations/monitoring/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Monitoring
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/operations/upgrades/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Upgrades
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#priorities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Priorities
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#now-next-later" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Now / next / later
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#status-legend" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Status legend
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Features
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-s3-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 S3 API
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-storage-engine-core-shared-by-object-block-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Storage engine core (shared by object, block, file)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-security-and-multi-tenancy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 Security and multi-tenancy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-data-lake" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4 Data lake
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#15-block" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.5 Block
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#16-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.6 File
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#17-operations-and-tooling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.7 Operations and tooling
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-roadmap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Roadmap
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Roadmap">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#track-a-s3-production-ready" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Track A — S3 production-ready
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Track A — S3 production-ready">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#audit-how-it-works-for-each-kind-of-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Audit: how it works for each kind of user
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#track-b-storage-engine-core" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Track B — storage engine core
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#track-c-data-lake" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Track C — data lake
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#track-d-block-after-a9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Track D — block (after A9)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#track-e-file-later" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Track E — file (later)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="objectio-features-and-roadmap">ObjectIO — features and roadmap<a class="headerlink" href="#objectio-features-and-roadmap" title="Permanent link">&para;</a></h1>
+<p>Every feature, its status, and the milestones ahead. Details of each
+built feature are in the
+<a href="../developer-guide/features/">feature reference</a>.</p>
+<p><strong>Last reviewed:</strong> 2026-10-03, at objectio <code>main</code> after #100 (replication phase 1).</p>
+<h2 id="priorities">Priorities<a class="headerlink" href="#priorities" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>S3: production-ready and bug-free.</strong> The product we ship first. No
+   known bug stays open; every gap is either closed or written down as
+   "not supported" with the reason.</li>
+<li><strong>The storage engine core</strong>, worked on alongside S3: OSD, erasure
+   coding, placement, meta, repair. Everything here is built once and
+   reused by block and file — none of it is S3-specific.</li>
+<li><strong>Data lake</strong> (Iceberg REST, Unity Catalog, Delta Sharing): next, and
+   as important as S3 once S3 is in production.</li>
+<li><strong>Block</strong>, then <strong>file</strong>, on the same core.</li>
+</ol>
+<p>Rule for every track: reliability first. An acknowledgment means the data
+is on stable storage; nothing trades durability for speed.</p>
+<h2 id="now-next-later">Now / next / later<a class="headerlink" href="#now-next-later" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Track</th>
+<th>Item</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Now</strong></td>
+<td>S3 / core</td>
+<td>Upgrade path: versioned formats, rolling-upgrade test</td>
+</tr>
+<tr>
+<td><strong>Next</strong></td>
+<td>Core</td>
+<td>Long soak at scale on a lab host (days, full disks, failures)</td>
+</tr>
+<tr>
+<td><strong>Next</strong></td>
+<td>Core</td>
+<td>Performance baseline (a lab host, then multi-host NVMe cloud VMs)</td>
+</tr>
+<tr>
+<td><strong>Next</strong></td>
+<td>Data lake</td>
+<td>End-to-end tests with real engines (pyiceberg, Spark, Trino, Delta Sharing client)</td>
+</tr>
+<tr>
+<td><strong>Next</strong></td>
+<td>S3</td>
+<td>Audit that loses nothing, on by default (A8c)</td>
+</tr>
+<tr>
+<td><strong>Next</strong></td>
+<td>S3</td>
+<td>Multi-meta on kind via helm; multi-host chaos (cloud VMs)</td>
+</tr>
+<tr>
+<td><strong>Later</strong></td>
+<td>S3</td>
+<td>Replication phases 2 (resync, bandwidth) and 3 (two-way)</td>
+</tr>
+<tr>
+<td><strong>Later</strong></td>
+<td>S3</td>
+<td>Tenant audit options: own bucket, export, viewer, bucket logging, Kafka (A10–A13)</td>
+</tr>
+<tr>
+<td><strong>Later</strong></td>
+<td>Block</td>
+<td>QoS enforcement; filesystem/database crash tests</td>
+</tr>
+<tr>
+<td><strong>Later</strong></td>
+<td>File</td>
+<td>NFS gateway design</td>
+</tr>
+</tbody>
+</table>
+<h2 id="status-legend">Status legend<a class="headerlink" href="#status-legend" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Mark</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✅</td>
+<td>Shipped and covered by e2e tests</td>
+</tr>
+<tr>
+<td>🟡</td>
+<td>Shipped, but not yet proven for production (the gap is named)</td>
+</tr>
+<tr>
+<td>🔨</td>
+<td>In progress</td>
+</tr>
+<tr>
+<td>⬜</td>
+<td>Planned</td>
+</tr>
+<tr>
+<td>✖</td>
+<td>Not supported, by decision (reason given)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="1-features">1. Features<a class="headerlink" href="#1-features" title="Permanent link">&para;</a></h2>
+<h3 id="11-s3-api">1.1 S3 API<a class="headerlink" href="#11-s3-api" title="Permanent link">&para;</a></h3>
+<p>Compatibility: <a href="../developer-guide/s3-compatibility/">ceph s3-tests</a>
+— 586 of 1053 pass (2026-10-02); every failure is categorised, and no bug
+or gap is open on that list.</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Status</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Buckets: create, delete, head, list</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>Objects: PUT, GET, HEAD, DELETE, DeleteObjects</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>Range reads, conditional requests (<code>If-*</code>)</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>Multipart upload (all calls, 10 000 parts)</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>CopyObject, UploadPartCopy, copy by reference</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td><code>x-amz-meta-*</code>, content headers, <code>response-*</code> overrides</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>Checksums (CRC32/CRC32C/SHA1/SHA256, aws-chunked)</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>Object tagging</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>Versioning, delete markers, ListObjectVersions</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>Object Lock (governance, compliance, legal hold)</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>Lifecycle: expiration, noncurrent, delete markers, abort MPU</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>Lifecycle transitions</td>
+<td>✖</td>
+<td>One storage class; refused with <code>InvalidStorageClass</code>. Revisit with tiering</td>
+</tr>
+<tr>
+<td>Bucket policies (conditions, <code>obio:CredentialType</code>)</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>Public access block</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>ACLs</td>
+<td>✖</td>
+<td>BucketOwnerEnforced only, as AWS's default; use policies</td>
+</tr>
+<tr>
+<td>SSE-S3, SSE-KMS (built-in KMS)</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>SSE-C</td>
+<td>✅</td>
+<td>Not on CopyObject source/destination yet ⬜</td>
+</tr>
+<tr>
+<td>KMS key rotation, key states</td>
+<td>⬜</td>
+<td></td>
+</tr>
+<tr>
+<td>Streaming re-encrypt on CopyObject</td>
+<td>⬜</td>
+<td>Today a re-encrypting copy buffers the object in memory</td>
+</tr>
+<tr>
+<td>External KMS (AWS KMS, Vault)</td>
+<td>⬜</td>
+<td>Trait in place</td>
+</tr>
+<tr>
+<td>CORS, presigned URLs, POST Object</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>SigV4 (header, query, streaming)</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>SigV2</td>
+<td>✖</td>
+<td>Deprecated by AWS</td>
+</tr>
+<tr>
+<td>STS (AssumeRole, web identity)</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>Audit stream (webhook, file, stdout; per tenant)</td>
+<td>✅</td>
+<td>Off unless configured</td>
+</tr>
+<tr>
+<td>Audit: durable spool (no event lost on crash or receiver outage)</td>
+<td>⬜</td>
+<td>Today events wait in memory; a full queue drops them (counted)</td>
+</tr>
+<tr>
+<td>Audit: on by default for the system</td>
+<td>⬜</td>
+<td>Helm values; kept in an internal bucket</td>
+</tr>
+<tr>
+<td>Audit: a tenant's events into a bucket of its own</td>
+<td>⬜</td>
+<td>Opt-in, tenant admin</td>
+</tr>
+<tr>
+<td>Audit: export a time range (API, console download)</td>
+<td>⬜</td>
+<td></td>
+</tr>
+<tr>
+<td>Audit: Kafka target</td>
+<td>⬜</td>
+<td></td>
+</tr>
+<tr>
+<td>Audit: console viewer (search by user, bucket, time, request id)</td>
+<td>⬜</td>
+<td></td>
+</tr>
+<tr>
+<td>Audit: tamper evidence (hash chain; Object Lock on the audit bucket)</td>
+<td>⬜</td>
+<td></td>
+</tr>
+<tr>
+<td>Bucket replication, one-way, new writes</td>
+<td>✅</td>
+<td>Phase 1 (#100); tenant-scoped targets</td>
+</tr>
+<tr>
+<td>Replication: existing-object resync, bandwidth limits</td>
+<td>⬜</td>
+<td>Phase 2</td>
+</tr>
+<tr>
+<td>Replication: two-way (active-active)</td>
+<td>⬜</td>
+<td>Phase 3</td>
+</tr>
+<tr>
+<td>Replication to non-ObjectIO targets</td>
+<td>⬜</td>
+<td>Best effort, later</td>
+</tr>
+<tr>
+<td>Bucket notifications (webhook, Kafka, AMQP)</td>
+<td>⬜</td>
+<td></td>
+</tr>
+<tr>
+<td>S3 Select</td>
+<td>⬜</td>
+<td>Phase 6; data lake engines cover most needs</td>
+</tr>
+<tr>
+<td>Bucket logging (<code>?logging</code>, S3 access-log format)</td>
+<td>⬜</td>
+<td>Built on the audit pipeline: a tenant's bucket delivery in AWS's log format</td>
+</tr>
+<tr>
+<td>IAM API (<code>iam:*</code> calls)</td>
+<td>✖</td>
+<td>Admin API and SDKs instead</td>
+</tr>
+<tr>
+<td>Static website hosting, inventory, analytics, accelerate, torrent</td>
+<td>✖</td>
+<td>Refused with 501, never misread</td>
+</tr>
+<tr>
+<td>Tenant quota: bucket count</td>
+<td>✅</td>
+<td>Enforced by meta</td>
+</tr>
+<tr>
+<td>Tenant quota: bytes, objects</td>
+<td>⬜</td>
+<td>Stored and shown, not enforced</td>
+</tr>
+<tr>
+<td>Per-bucket/tenant QoS (rate limits)</td>
+<td>⬜</td>
+<td></td>
+</tr>
+<tr>
+<td>S3 Vectors</td>
+<td>⬜</td>
+<td>Planning only</td>
+</tr>
+<tr>
+<td>FTP / FTPS / WebDAV / Swift gateways</td>
+<td>⬜</td>
+<td>Migration aids; see topology design §6.2</td>
+</tr>
+</tbody>
+</table>
+<h3 id="12-storage-engine-core-shared-by-object-block-file">1.2 Storage engine core (shared by object, block, file)<a class="headerlink" href="#12-storage-engine-core-shared-by-object-block-file" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Status</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Raw-disk OSD, O_DIRECT, 4 KiB blocks, WAL</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>On-disk format version check</td>
+<td>✅</td>
+<td>Superblock feature words; protobuf records; strict logs and snapshots</td>
+</tr>
+<tr>
+<td>OSD metadata store (B-tree, ARC cache)</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>io_uring backend</td>
+<td>🟡</td>
+<td>Default in Linux release builds; the e2e suite runs on pread</td>
+</tr>
+<tr>
+<td>Erasure coding: Reed-Solomon (rust-simd, ISA-L)</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>LRC</td>
+<td>🟡</td>
+<td>No e2e test</td>
+</tr>
+<tr>
+<td>Replica protection (2-way, 3-way)</td>
+<td>🟡</td>
+<td>No e2e test</td>
+</tr>
+<tr>
+<td>Shard checksums, scrub</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>Repair after disk loss</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>Drain (planned removal)</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>Placement: CRUSH2, placement groups, copyset allocator</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>Balancer</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>Storage pools (expand by pool)</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>Failure-domain topology (5 levels), locality-aware reads</td>
+<td>✅</td>
+<td>topology design</td>
+</tr>
+<tr>
+<td>Refuse placements the topology can't satisfy</td>
+<td>🟡</td>
+<td>Validation endpoint built; enforcement on write to verify (B11)</td>
+</tr>
+<tr>
+<td>Domain drain (a rack or host at once)</td>
+<td>⬜</td>
+<td>B12</td>
+</tr>
+<tr>
+<td>Repair bandwidth budget per topology link</td>
+<td>⬜</td>
+<td>B13</td>
+</tr>
+<tr>
+<td>Network-fabric awareness (pod, ToR, RDMA group; client hints)</td>
+<td>⬜</td>
+<td>B14</td>
+</tr>
+<tr>
+<td>Rack-local LRC</td>
+<td>⬜</td>
+<td>B15</td>
+</tr>
+<tr>
+<td>Small-object packing (pack, reconcile, compact)</td>
+<td>✅</td>
+<td>Three phases merged</td>
+</tr>
+<tr>
+<td>Dedup</td>
+<td>🔨</td>
+<td>Phase 1 (policy + dry-run)</td>
+</tr>
+<tr>
+<td>Compression</td>
+<td>⬜</td>
+<td>zstd before EC</td>
+</tr>
+<tr>
+<td>Meta: Raft (openraft), replicated state, snapshots</td>
+<td>✅</td>
+<td>design</td>
+</tr>
+<tr>
+<td>Meta: Raft log compaction</td>
+<td>⬜</td>
+<td>B18; today the log grows for the life of the cluster</td>
+</tr>
+<tr>
+<td>Meta HA: any node serves, failover, node loss</td>
+<td>✅</td>
+<td>#99; multi-process tests</td>
+</tr>
+<tr>
+<td>Meta HA on Kubernetes (helm, 3 metas)</td>
+<td>⬜</td>
+<td>Item 1D</td>
+</tr>
+<tr>
+<td>RDMA data plane (Mooncake TE)</td>
+<td>🟡</td>
+<td>Single-part EC objects; behind a flag</td>
+</tr>
+<tr>
+<td>Full-disk behaviour (ENOSPC end to end)</td>
+<td>⬜</td>
+<td>Part of the soak</td>
+</tr>
+<tr>
+<td>Flush before acknowledge (shard fsync, then its location fsynced)</td>
+<td>✅</td>
+<td>A drive's volatile cache is flushed on every write; a failed location record fails the write (objectio#103)</td>
+</tr>
+<tr>
+<td>Drive power-safety checks (PLP, volatile write cache)</td>
+<td>⬜</td>
+<td>B16: detected per drive at OSD start, as metrics and in the console; production needs PLP drives or a UPS</td>
+</tr>
+<tr>
+<td>Superblock safety (two copies; not rewritten per delete)</td>
+<td>✅</td>
+<td>B17</td>
+</tr>
+<tr>
+<td>Rolling upgrade, format migrations</td>
+<td>🔨</td>
+<td>Built (format levels, finalize, upgrade-ready formats, the rolling-upgrade test); the test first runs from the upgrade-ready release (tagged next) to the one after; <a href="../operations-guide/operations/upgrades/">guide</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="13-security-and-multi-tenancy">1.3 Security and multi-tenancy<a class="headerlink" href="#13-security-and-multi-tenancy" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Status</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Users, access keys, groups, policies</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>Tenants, tenant admins, tenant isolation</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>OIDC (external: Keycloak, Entra ID)</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>Tenant-scoped audit and replication targets</td>
+<td>✅</td>
+<td>Host allowlist set by the operator</td>
+</tr>
+<tr>
+<td>Admin/console listener split</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>TLS between services (gateway, meta, OSD, block)</td>
+<td>⬜</td>
+<td>Plain gRPC today; client-facing TLS is at the ingress</td>
+</tr>
+</tbody>
+</table>
+<h3 id="14-data-lake">1.4 Data lake<a class="headerlink" href="#14-data-lake" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Status</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Iceberg REST Catalog (namespaces, tables, commits)</td>
+<td>🟡</td>
+<td>Unit tests only; no engine e2e</td>
+</tr>
+<tr>
+<td>Warehouses (backing bucket per warehouse)</td>
+<td>🟡</td>
+<td></td>
+</tr>
+<tr>
+<td>Namespace/table policies, data filters</td>
+<td>🟡</td>
+<td></td>
+</tr>
+<tr>
+<td>Vended credentials (STS)</td>
+<td>🟡</td>
+<td></td>
+</tr>
+<tr>
+<td>Unity Catalog API (catalogs … models; row filters, column masks)</td>
+<td>🟡</td>
+<td>Unit tests only</td>
+</tr>
+<tr>
+<td>Delta Sharing (shares, recipients, presigned query)</td>
+<td>🟡</td>
+<td>Unit tests only</td>
+</tr>
+<tr>
+<td>Delta log: JSON commits</td>
+<td>🟡</td>
+<td></td>
+</tr>
+<tr>
+<td>Delta log: checkpoints (Parquet)</td>
+<td>⬜</td>
+<td>v2 reader</td>
+</tr>
+<tr>
+<td>Engine e2e: pyiceberg, Spark, Trino, Delta Sharing client</td>
+<td>⬜</td>
+<td>The gate for calling any of the above ✅</td>
+</tr>
+</tbody>
+</table>
+<h3 id="15-block">1.5 Block<a class="headerlink" href="#15-block" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Status</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Volumes over NBD and gRPC; read, write, flush, trim</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>Thin provisioning</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>Write journal (fsynced before ack), replay</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>Snapshots, clones (shared stripes)</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>Metadata in meta (gateway disk holds only the journal)</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>Repair of block stripes</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>QoS enforcement</td>
+<td>⬜</td>
+<td>Types and RPCs exist</td>
+</tr>
+<tr>
+<td>iSCSI, NVMe-oF</td>
+<td>⬜</td>
+<td></td>
+</tr>
+<tr>
+<td>Crash consistency under a filesystem and a database</td>
+<td>⬜</td>
+<td>The gate for production</td>
+</tr>
+<tr>
+<td>Legacy <code>BlockMetaService</code> in meta</td>
+<td>⬜</td>
+<td>Remove (unused)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="16-file">1.6 File<a class="headerlink" href="#16-file" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Status</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NFS v3/v4 gateway</td>
+<td>⬜</td>
+<td>Needs a design: namespace, rename, locking</td>
+</tr>
+<tr>
+<td>SMB, FUSE</td>
+<td>⬜</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="17-operations-and-tooling">1.7 Operations and tooling<a class="headerlink" href="#17-operations-and-tooling" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Status</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Helm chart, kind dev cluster</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td><code>objectio-aio</code> single binary</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>Prometheus metrics (S3, Iceberg, replication, I/O)</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>Admin CLI, SDKs</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>Web console (ops and tenant bundles)</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>Release workflow (multi-arch image, helm OCI)</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>Grafana dashboards, alert rules</td>
+<td>🟡</td>
+<td>docker-compose stack only</td>
+</tr>
+<tr>
+<td>Documentation site (<a href="https://object-io.github.io">object-io.github.io</a>), a version per release</td>
+<td>✅</td>
+<td>Roadmap and guides; built by <code>scripts/site.py</code></td>
+</tr>
+<tr>
+<td>OpenTelemetry tracing</td>
+<td>⬜</td>
+<td></td>
+</tr>
+<tr>
+<td>Backup of meta (export/restore)</td>
+<td>⬜</td>
+<td>A14</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="2-roadmap">2. Roadmap<a class="headerlink" href="#2-roadmap" title="Permanent link">&para;</a></h2>
+<p>Each milestone has an exit test: it is done when the test passes, not
+when the code is written.</p>
+<h3 id="track-a-s3-production-ready">Track A — S3 production-ready<a class="headerlink" href="#track-a-s3-production-ready" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Milestone</th>
+<th>Exit test</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A1</td>
+<td>ceph s3-tests: no bugs, no unexplained failures</td>
+<td>Every failure categorised in <code>known-failures.csv</code>; rerun on every release</td>
+<td>✅ 2026-10-02</td>
+</tr>
+<tr>
+<td>A2</td>
+<td>Meta HA</td>
+<td>Multi-process: leader kill, freeze, replacement under S3 traffic</td>
+<td>✅ #99</td>
+</tr>
+<tr>
+<td>A3</td>
+<td>Backup/DR: bucket replication phase 1 (design)</td>
+<td>Convergence, target outage, scanner-only, idempotence, tenancy e2e</td>
+<td>✅ #100</td>
+</tr>
+<tr>
+<td>A4</td>
+<td>Upgrade path (design)</td>
+<td>Versioned formats; an N-1 → N rolling upgrade of a populated cluster, every object readable after</td>
+<td>🔨</td>
+</tr>
+<tr>
+<td>A5</td>
+<td>Meta HA on Kubernetes</td>
+<td>kind, 3 metas via helm: kill a meta pod under load</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>A6</td>
+<td>Multi-host chaos</td>
+<td>Cloud VMs: node loss, network partition, disk pull, with traffic and an invariant checker</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>A7</td>
+<td>Replication phase 2 (design)</td>
+<td>Resync of existing objects; bandwidth limit holds</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>A8a</td>
+<td>TLS between services</td>
+<td>mTLS on every gRPC hop; e2e runs with it on</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>A8b</td>
+<td>Quotas enforced</td>
+<td>Tenant byte/object quotas refuse writes past the limit, under concurrency</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>A8c</td>
+<td>Audit that loses nothing, on by default</td>
+<td>Events fsynced to a gateway spool before delivery; gateway killed and receiver down for an hour: every event arrives; system audit on in a fresh helm install</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>A8</td>
+<td>Production guide</td>
+<td>Sizing, alerts, runbooks for every failure in the design docs</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>A9</td>
+<td>Release candidate</td>
+<td>A1–A8c, B2–B5 green on one commit</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>A14</td>
+<td>Meta backup and restore</td>
+<td><code>objectio-cli meta export</code> of a live cluster; a fresh cluster restored from it serves every bucket, user and object listing</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>A10</td>
+<td>Tenant audit into its own bucket</td>
+<td>A tenant admin turns it on; its events (only its own) appear as objects in the chosen bucket within a minute, none missing after a gateway crash</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>A11</td>
+<td>Audit export and viewer</td>
+<td>Time-range export (API and console download) and a console search page, both limited to the caller's tenant</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>A12</td>
+<td>Bucket logging (<code>?logging</code>)</td>
+<td><code>PutBucketLogging</code> delivers S3 access-log-format objects; the ceph s3-tests logging tests pass</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>A13</td>
+<td>Kafka target; tamper evidence</td>
+<td>Events to Kafka at least once; a removed or altered event is detected by the hash chain</td>
+<td>⬜</td>
+</tr>
+</tbody>
+</table>
+<h4 id="audit-how-it-works-for-each-kind-of-user">Audit: how it works for each kind of user<a class="headerlink" href="#audit-how-it-works-for-each-kind-of-user" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>The system always audits.</strong> With A8c, every request is an event, fsynced
+  to the gateway's spool before delivery, and kept in an internal
+  system bucket with a retention period the operator sets (optionally under
+  Object Lock, so events can't be altered or removed). The operator's
+  webhooks, Kafka, file and stdout targets get a copy.</li>
+<li><strong>A tenant opts in</strong> (tenant admin), choosing any of:</li>
+<li><strong>into a bucket of its own:</strong> its events as compressed JSON-lines
+     objects partitioned by date (<code>&lt;prefix&gt;/2026/10/03/…</code>), readable with
+     any S3 tool or a query engine;</li>
+<li><strong>streamed:</strong> to its webhook or Kafka (on hosts the operator allows);</li>
+<li><strong>exported on demand:</strong> a time range downloaded from the API or the
+     console, from the system's copy;</li>
+<li><strong>as S3 bucket logging:</strong> <code>PutBucketLogging</code> per bucket, in AWS's
+     access-log format, for tools that expect it.</li>
+<li>A tenant only ever sees events on its buckets or by its principals.</li>
+</ul>
+<h3 id="track-b-storage-engine-core">Track B — storage engine core<a class="headerlink" href="#track-b-storage-engine-core" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Milestone</th>
+<th>Exit test</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B1</td>
+<td>Small-object packing (design)</td>
+<td>Phases 1–3 with crash and contention tests</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>B2</td>
+<td>Long soak at scale</td>
+<td>Days on a lab host: millions of objects, disks filling, OSD failures, repair; invariant checker finds no lost object and no leaked space</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>B3</td>
+<td>Full-disk behaviour</td>
+<td>A full OSD refuses writes cleanly, nothing acknowledged is lost, space returns after deletes</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>B4</td>
+<td>Performance baseline</td>
+<td>Published numbers (throughput, p99, small objects) on a lab host, then multi-host on NVMe cloud VMs, on drives with and without power-loss protection; regression check in CI</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>B5</td>
+<td>Crash consistency of the OSD</td>
+<td>Power-loss injection (kill -9 during WAL/data/metadata writes) at random points, and real power cuts: a lab VM whose disk has a volatile write-back cache, hard-stopped under write load; recovery loses nothing acknowledged</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>B16</td>
+<td>Drive power-safety checks</td>
+<td>Each OSD reports per drive whether it has power-loss protection or a volatile write cache (metrics, console); the ops guide states the production requirement</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>B17</td>
+<td>Superblock safety</td>
+<td>Two superblock copies; a superblock torn by a power cut (injected) still mounts from the other; deletes no longer rewrite it</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>B6</td>
+<td>Test what we ship (io levels)</td>
+<td>e2e and the soak run on the release features (io_uring, ISA-L)</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>B7</td>
+<td>Format versioning and migrations</td>
+<td>Shared with A4</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>B8</td>
+<td>Dedup (design)</td>
+<td>Phases 2–4 of <code>dedup.md</code></td>
+<td>🔨</td>
+</tr>
+<tr>
+<td>B9</td>
+<td>Compression</td>
+<td>zstd per object, decided by policy</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>B11</td>
+<td>Placement honours failure domains, always (design)</td>
+<td>A pool whose topology can't spread k+m across its failure domain refuses writes with a clear error; synthetic topologies with missing domains</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>B12</td>
+<td>Domain drain</td>
+<td>Drain a host or rack under traffic: nothing new placed there, everything readable, repair sources from outside it</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>B13</td>
+<td>Repair budget per link</td>
+<td>Cross-rack/cross-DC repair holds its bandwidth limit while client I/O keeps its latency</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>B14</td>
+<td>Fabric awareness</td>
+<td>Fabric fields and client hints change read and rebuild source choice, shown by the locality metrics</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>B15</td>
+<td>Rack-local LRC</td>
+<td>Losing a rack rebuilds from inside the rack only</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>B18</td>
+<td>Meta Raft log compaction (design)</td>
+<td>The log is compacted into snapshots; a node that was down for longer than the kept log catches up from a snapshot, under traffic</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>B10</td>
+<td>Every protection scheme tested</td>
+<td>LRC and 2/3-way replica pools through the same e2e as 4+2 EC (loss, repair, drain)</td>
+<td>⬜</td>
+</tr>
+</tbody>
+</table>
+<h3 id="track-c-data-lake">Track C — data lake<a class="headerlink" href="#track-c-data-lake" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Milestone</th>
+<th>Exit test</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C1</td>
+<td>Engine e2e harness</td>
+<td>pyiceberg create/append/read/time-travel against aio, in CI</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>C2</td>
+<td>Spark and Trino</td>
+<td>Same scenarios through the REST catalog, SigV4 and OIDC, vended credentials</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>C3</td>
+<td>Concurrent commits</td>
+<td>Many writers to one table: no lost commit, conflicts rejected cleanly</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>C4</td>
+<td>Policies end to end</td>
+<td>Namespace/table deny, row filters and masks seen by an engine</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>C5</td>
+<td>Delta Sharing client</td>
+<td><code>delta-sharing</code> Python client reads shared Iceberg and Delta tables</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>C6</td>
+<td>Delta checkpoints</td>
+<td>Parquet checkpoint reader</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>C7</td>
+<td>Catalog at scale</td>
+<td>Thousands of tables, large metadata files, through meta failover</td>
+<td>⬜</td>
+</tr>
+</tbody>
+</table>
+<h3 id="track-d-block-after-a9">Track D — block (after A9)<a class="headerlink" href="#track-d-block-after-a9" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Milestone</th>
+<th>Exit test</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>D1</td>
+<td>Crash consistency</td>
+<td>ext4/xfs and PostgreSQL on NBD; gateway killed mid-write; fsck and DB recovery clean</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>D2</td>
+<td>QoS</td>
+<td>Per-volume IOPS/bandwidth limits hold under contention</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>D3</td>
+<td>iSCSI or NVMe-oF</td>
+<td>One standard initiator attaches and passes D1</td>
+<td>⬜</td>
+</tr>
+</tbody>
+</table>
+<h3 id="track-e-file-later">Track E — file (later)<a class="headerlink" href="#track-e-file-later" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Milestone</th>
+<th>Exit test</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>E1</td>
+<td>Design</td>
+<td>Namespace model, rename, locking, on the shared core</td>
+<td>⬜</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.top", "search.highlight", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

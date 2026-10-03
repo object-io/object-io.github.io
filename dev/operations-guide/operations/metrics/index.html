@@ -1,0 +1,3667 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://object-io.github.io/dev/operations-guide/operations/metrics/">
+      
+      
+        <link rel="prev" href="../meta-ha/">
+      
+      
+        <link rel="next" href="../monitoring/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Metrics reference - ObjectIO</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#metrics-reference" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="ObjectIO" class="md-header__button md-logo" aria-label="ObjectIO" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ObjectIO
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Metrics reference
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/object-io/objectio" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    object-io/objectio
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="ObjectIO" class="md-nav__button md-logo" aria-label="ObjectIO" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    ObjectIO
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/object-io/objectio" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    object-io/objectio
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ObjectIO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ROADMAP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ObjectIO — features and roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Developer guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Developer guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developer-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Developer Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developer-guide/api-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developer-guide/features/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ObjectIO — Feature Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developer-guide/sdk/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Management SDKs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S3 compatibility
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    S3 compatibility
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developer-guide/s3-compatibility/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S3 compatibility: ceph s3-tests
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_2" id="__nav_3_5_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026 10 02
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2026 10 02
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developer-guide/s3-compatibility/2026-10-02/summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ceph s3-tests against ObjectIO, run 2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operations guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Operations guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operations Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Administration
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Administration
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../administration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Administration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../administration/audit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audit Stream
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../administration/authentication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Authentication
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../administration/cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI (objectio-cli)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../administration/grep/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gateway-side grep — searching objects without downloading
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../administration/iam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Identity and Access
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../administration/iceberg-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Iceberg REST Catalog API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../administration/public-access/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Public Access
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../administration/replication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bucket replication
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../administration/s3-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S3 API Operations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Installation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/deployment-options/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ObjectIO Deployment Options
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kubernetes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/linux/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/macos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    macOS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/topologies/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment Topologies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4_4" id="__nav_4_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operations
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Operations
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operations Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../failure-recovery/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Failure Recovery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../meta-ha/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Meta high availability
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Metrics reference
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Metrics reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#where-to-scrape" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where to scrape
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conventions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conventions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Metrics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Metrics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#s3-requests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        S3 requests
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gateway-data-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gateway data path
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#capacity-and-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Capacity and usage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-safety-drain-and-rebalance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data safety, drain and rebalance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lifecycle-and-multipart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lifecycle and multipart
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#block-gateway" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Block gateway
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#block-volumes-and-snapshots" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Block volumes and snapshots
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#meta-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Meta service
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#meta-raft" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Meta Raft
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#repair" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Repair
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#osd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OSD
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Disks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#process" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Process
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alerts-worth-setting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alerts worth setting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#known-gaps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Known gaps
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../monitoring/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Monitoring
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../upgrades/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Upgrades
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#where-to-scrape" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where to scrape
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conventions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conventions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Metrics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Metrics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#s3-requests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        S3 requests
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gateway-data-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gateway data path
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#capacity-and-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Capacity and usage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-safety-drain-and-rebalance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data safety, drain and rebalance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lifecycle-and-multipart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lifecycle and multipart
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#block-gateway" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Block gateway
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#block-volumes-and-snapshots" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Block volumes and snapshots
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#meta-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Meta service
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#meta-raft" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Meta Raft
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#repair" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Repair
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#osd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OSD
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Disks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#process" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Process
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alerts-worth-setting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alerts worth setting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#known-gaps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Known gaps
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="metrics-reference">Metrics reference<a class="headerlink" href="#metrics-reference" title="Permanent link">&para;</a></h1>
+<p>Every Prometheus metric ObjectIO exports: where it comes from, what it
+means, and the alerts worth setting on it. For dashboards, Prometheus
+setup and the console's views of these metrics, see
+<a href="../monitoring/">Monitoring</a>.</p>
+<p>All metrics are plain Prometheus text exposition. Names start with
+<code>objectio_</code> (and <code>process_</code> for the standard process family).</p>
+<h2 id="where-to-scrape">Where to scrape<a class="headerlink" href="#where-to-scrape" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Process</th>
+<th>Endpoint</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Gateway</td>
+<td><code>:9000/metrics</code></td>
+<td>Or the <code>--admin-listen</code> address when the admin surface is split off.</td>
+</tr>
+<tr>
+<td>Meta</td>
+<td><code>:9101/metrics</code></td>
+<td><code>--metrics-port</code>; <code>0</code> serves none.</td>
+</tr>
+<tr>
+<td>OSD</td>
+<td><code>:9201/metrics</code></td>
+<td><code>--metrics-port</code>; <code>0</code> serves none.</td>
+</tr>
+<tr>
+<td>Block gateway</td>
+<td><code>:9301/metrics</code></td>
+<td><code>--metrics-listen</code>; empty serves none.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>One gateway (and aio): scrape the gateway alone.</strong> By default the
+gateway polls every OSD and meta node every 30 seconds and re-exports
+their metrics on its own <code>/metrics</code>. Re-exported OSD series carry an
+<code>osd_id</code> label, and meta series carry <code>component="meta"</code>. The all-in-one
+binary runs meta, the OSDs and the block gateway in one process with
+their own ports off, so the gateway's <code>/metrics</code> is the only endpoint and
+carries everything.</p>
+<p><strong>Several gateways (the helm chart): scrape every process directly.</strong> Run
+gateways with <code>--no-reexport-metrics</code> (the chart does, via
+<code>gateway.reexportMetrics: false</code>). Otherwise each gateway exports a copy
+of every OSD's and meta's metrics, and every sum multiplies by the number
+of gateways. The chart's Prometheus scrapes meta on 9101 and the OSDs on
+9201 directly.</p>
+<p>Do not do both. Scraping a re-exporting gateway and the OSDs and meta
+directly counts every OSD and meta series twice.</p>
+<p>Series the gateway derives from its own poll (<code>objectio_cluster_*</code>,
+<code>objectio_osd_capacity_bytes</code>, the usage and data-safety families) exist
+once per gateway. With several gateways, aggregate them with <code>max</code>, not
+<code>sum</code>.</p>
+<h2 id="conventions">Conventions<a class="headerlink" href="#conventions" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Latency is a histogram, in seconds</strong>, with buckets from 1 ms to 10 s
+  (or wider where noted). Take percentiles with
+  <code>histogram_quantile(0.99, sum by (le) (rate(&lt;name&gt;_bucket[5m])))</code>, and
+  keep <code>le</code> in any <code>sum by</code>.</li>
+<li><strong>Counters reset when a process restarts.</strong> Use <code>rate()</code> or <code>increase()</code>,
+  which handle resets.</li>
+<li><strong>A family can be absent.</strong> Counter and histogram families appear once
+  something has been recorded. SMART families need <code>smartctl</code> on the host.
+  Iceberg, Unity, lifecycle and drain families need those features in use.
+  Absent is not the same as zero.</li>
+<li><strong>Label cardinality is bounded.</strong> Operations, methods, codes and reasons
+  come from fixed sets. Per-bucket usage (<code>objectio_bucket_*</code>) is one series
+  per bucket; leave it out with <code>--no-bucket-metrics</code> past tens of thousands
+  of buckets. Per-volume and per-snapshot series are one per volume and
+  snapshot.</li>
+<li><strong>gRPC status codes</strong> use gRPC's names (<code>OK</code>, <code>NOT_FOUND</code>,
+  <code>UNAVAILABLE</code>…). A streaming call that fails part-way counts as <code>OK</code>; its
+  status arrives after the response headers, where it is measured.</li>
+</ul>
+<h2 id="metrics">Metrics<a class="headerlink" href="#metrics" title="Permanent link">&para;</a></h2>
+<h3 id="s3-requests">S3 requests<a class="headerlink" href="#s3-requests" title="Permanent link">&para;</a></h3>
+<p>Exported by: gateway.</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Type</th>
+<th>Labels</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>objectio_auth_failures_total</code></td>
+<td>counter</td>
+<td><code>reason</code></td>
+<td>Requests refused by authentication or authorization (unknown_key, expired, missing_credentials, malformed, denied, signature, clock_skew, internal, policy)</td>
+</tr>
+<tr>
+<td><code>objectio_iceberg_request_duration_seconds</code></td>
+<td>histogram</td>
+<td><code>operation</code></td>
+<td>Iceberg REST catalog request latency</td>
+</tr>
+<tr>
+<td><code>objectio_iceberg_requests_total</code></td>
+<td>counter</td>
+<td><code>operation, status</code></td>
+<td>Iceberg REST catalog requests</td>
+</tr>
+<tr>
+<td><code>objectio_s3_request_bytes_total</code></td>
+<td>counter</td>
+<td><code>operation</code></td>
+<td>Total request body bytes</td>
+</tr>
+<tr>
+<td><code>objectio_s3_request_duration_seconds</code></td>
+<td>histogram</td>
+<td><code>operation</code></td>
+<td>S3 request duration histogram</td>
+</tr>
+<tr>
+<td><code>objectio_s3_request_errors_total</code></td>
+<td>counter</td>
+<td><code>code, error, operation</code></td>
+<td>Failed S3 requests by HTTP code and S3 error name</td>
+</tr>
+<tr>
+<td><code>objectio_s3_request_size_bytes</code></td>
+<td>histogram</td>
+<td><code>operation</code></td>
+<td>Request body size (Content-Length) by operation</td>
+</tr>
+<tr>
+<td><code>objectio_s3_requests_in_flight</code></td>
+<td>gauge</td>
+<td><code>operation</code></td>
+<td>S3 requests currently being served</td>
+</tr>
+<tr>
+<td><code>objectio_s3_requests_total</code></td>
+<td>counter</td>
+<td><code>operation, status</code></td>
+<td>Total S3 requests by operation and status</td>
+</tr>
+<tr>
+<td><code>objectio_s3_response_bytes_total</code></td>
+<td>counter</td>
+<td><code>operation</code></td>
+<td>Total response body bytes</td>
+</tr>
+<tr>
+<td><code>objectio_unity_request_duration_seconds</code></td>
+<td>histogram</td>
+<td><code>operation</code></td>
+<td>Unity Catalog request latency</td>
+</tr>
+<tr>
+<td><code>objectio_unity_requests_total</code></td>
+<td>counter</td>
+<td><code>operation, status</code></td>
+<td>Unity Catalog requests</td>
+</tr>
+</tbody>
+</table>
+<h3 id="gateway-data-path">Gateway data path<a class="headerlink" href="#gateway-data-path" title="Permanent link">&para;</a></h3>
+<p>Exported by: gateway.</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Type</th>
+<th>Labels</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>objectio_dedup_dryrun_bytes_total</code></td>
+<td>counter</td>
+<td><code>bucket, chunking, result</code></td>
+<td>Bytes the dedup dry-run fingerprinted, and whether already stored</td>
+</tr>
+<tr>
+<td><code>objectio_dedup_dryrun_chunks_total</code></td>
+<td>counter</td>
+<td><code>bucket, chunking, result</code></td>
+<td>Chunks the dedup dry-run fingerprinted, and whether already stored</td>
+</tr>
+<tr>
+<td><code>objectio_dedup_dryrun_dropped_total</code></td>
+<td>counter</td>
+<td><code>reason</code></td>
+<td>Dry-run work given up on (queue full, lookup failed)</td>
+</tr>
+<tr>
+<td><code>objectio_dedup_dryrun_skipped_total</code></td>
+<td>counter</td>
+<td><code>reason</code></td>
+<td>Writes in dry-run buckets that dry-run does not look at (encrypted, inline)</td>
+</tr>
+<tr>
+<td><code>objectio_erasure_decode_seconds</code></td>
+<td>histogram</td>
+<td><code>path</code></td>
+<td>Time to decode one stripe; path=reconstruct means parity was needed</td>
+</tr>
+<tr>
+<td><code>objectio_erasure_encode_seconds</code></td>
+<td>histogram</td>
+<td>—</td>
+<td>Time to erasure-encode one stripe</td>
+</tr>
+<tr>
+<td><code>objectio_gateway_copied_bytes_total</code></td>
+<td>counter</td>
+<td><code>mode</code></td>
+<td>Bytes CopyObject copied, by mode; reference copies move none of them</td>
+</tr>
+<tr>
+<td><code>objectio_gateway_copies_total</code></td>
+<td>counter</td>
+<td><code>mode</code></td>
+<td>CopyObject requests completed, by mode: reference (shares the source's stripes) or bytes (rewritten)</td>
+</tr>
+<tr>
+<td><code>objectio_gateway_inline_bytes_total</code></td>
+<td>counter</td>
+<td>—</td>
+<td>Bytes of objects stored in their metadata</td>
+</tr>
+<tr>
+<td><code>objectio_gateway_inline_objects_total</code></td>
+<td>counter</td>
+<td>—</td>
+<td>Objects small enough to be stored in their metadata, with no shards</td>
+</tr>
+<tr>
+<td><code>objectio_gateway_osd_request_errors_total</code></td>
+<td>counter</td>
+<td><code>address, kind</code></td>
+<td>Failed shard calls to an OSD (timeout, refused, error)</td>
+</tr>
+<tr>
+<td><code>objectio_gateway_protection_data_shards</code></td>
+<td>gauge</td>
+<td><code>scheme</code></td>
+<td>Number of data shards (k)</td>
+</tr>
+<tr>
+<td><code>objectio_gateway_protection_efficiency</code></td>
+<td>gauge</td>
+<td><code>scheme</code></td>
+<td>Storage efficiency ratio (data/total)</td>
+</tr>
+<tr>
+<td><code>objectio_gateway_protection_lrc_global_parity</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>LRC global parity shards (LRC pools only)</td>
+</tr>
+<tr>
+<td><code>objectio_gateway_protection_lrc_local_parity</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>LRC local parity shards (LRC pools only)</td>
+</tr>
+<tr>
+<td><code>objectio_gateway_protection_parity_shards</code></td>
+<td>gauge</td>
+<td><code>scheme</code></td>
+<td>Number of parity shards (m)</td>
+</tr>
+<tr>
+<td><code>objectio_gateway_protection_total_shards</code></td>
+<td>gauge</td>
+<td><code>scheme</code></td>
+<td>Total shards (data + parity)</td>
+</tr>
+<tr>
+<td><code>objectio_gateway_rdma_fallbacks_total</code></td>
+<td>counter</td>
+<td><code>direction, reason</code></td>
+<td>Shards sent over gRPC to an OSD that offers Transfer Engine</td>
+</tr>
+<tr>
+<td><code>objectio_gateway_request_phase_seconds</code></td>
+<td>histogram</td>
+<td><code>operation, phase</code></td>
+<td>Time spent in each phase of a request, by operation and phase</td>
+</tr>
+<tr>
+<td><code>objectio_gateway_shard_checksum_mismatches_total</code></td>
+<td>counter</td>
+<td><code>direction</code></td>
+<td>Shards sent over gRPC that did not match their checksum</td>
+</tr>
+<tr>
+<td><code>objectio_gateway_shard_latency_seconds</code></td>
+<td>histogram</td>
+<td><code>address, direction</code></td>
+<td>Time for one shard read or write to an OSD, by OSD</td>
+</tr>
+<tr>
+<td><code>objectio_gateway_shard_reclaim_failures_total</code></td>
+<td>counter</td>
+<td><code>reason</code></td>
+<td>Shard deletes that failed, leaving the block allocated</td>
+</tr>
+<tr>
+<td><code>objectio_gateway_shard_transfers_total</code></td>
+<td>counter</td>
+<td><code>direction, transport</code></td>
+<td>Shards moved to or from OSDs, by direction and transport (rdma or grpc)</td>
+</tr>
+<tr>
+<td><code>objectio_gateway_shards_reclaimed_total</code></td>
+<td>counter</td>
+<td><code>reason</code></td>
+<td>Shards deleted because nothing references them any more</td>
+</tr>
+<tr>
+<td><code>objectio_gateway_uptime_seconds</code></td>
+<td>counter</td>
+<td>—</td>
+<td>Gateway uptime in seconds</td>
+</tr>
+<tr>
+<td><code>objectio_read_locality_bytes_total</code></td>
+<td>counter</td>
+<td><code>locality</code></td>
+<td>Bytes fetched from OSDs, by topology distance</td>
+</tr>
+</tbody>
+</table>
+<h3 id="capacity-and-usage">Capacity and usage<a class="headerlink" href="#capacity-and-usage" title="Permanent link">&para;</a></h3>
+<p>Exported by: gateway (poll).</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Type</th>
+<th>Labels</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>objectio_bucket_last_modified_timestamp_seconds</code></td>
+<td>gauge</td>
+<td><code>bucket, tenant</code></td>
+<td>Newest write or delete in the bucket</td>
+</tr>
+<tr>
+<td><code>objectio_bucket_logical_bytes</code></td>
+<td>gauge</td>
+<td><code>bucket, tenant</code></td>
+<td>Bytes of current objects as uploaded</td>
+</tr>
+<tr>
+<td><code>objectio_bucket_noncurrent_bytes</code></td>
+<td>gauge</td>
+<td><code>bucket, tenant</code></td>
+<td>Bytes of noncurrent versions as uploaded</td>
+</tr>
+<tr>
+<td><code>objectio_bucket_noncurrent_versions</code></td>
+<td>gauge</td>
+<td><code>bucket, tenant</code></td>
+<td>Noncurrent object versions</td>
+</tr>
+<tr>
+<td><code>objectio_bucket_objects</code></td>
+<td>gauge</td>
+<td><code>bucket, tenant</code></td>
+<td>Current objects</td>
+</tr>
+<tr>
+<td><code>objectio_bucket_quota_bytes</code></td>
+<td>gauge</td>
+<td><code>bucket, tenant</code></td>
+<td>Storage quota (0 = unlimited)</td>
+</tr>
+<tr>
+<td><code>objectio_bucket_stored_bytes</code></td>
+<td>gauge</td>
+<td><code>bucket, tenant</code></td>
+<td>Bytes on disk for all versions incl. parity</td>
+</tr>
+<tr>
+<td><code>objectio_capacity_poll_duration_seconds</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>How long the last poll took</td>
+</tr>
+<tr>
+<td><code>objectio_capacity_poll_failures_total</code></td>
+<td>counter</td>
+<td>—</td>
+<td>Polls in which meta did not answer</td>
+</tr>
+<tr>
+<td><code>objectio_capacity_poll_last_success_timestamp_seconds</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>When the gateway last refreshed capacity, usage and cluster metrics</td>
+</tr>
+<tr>
+<td><code>objectio_capacity_polls_total</code></td>
+<td>counter</td>
+<td>—</td>
+<td>Polls attempted</td>
+</tr>
+<tr>
+<td><code>objectio_cluster_available_bytes</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Raw bytes free across OSDs that answered the last poll</td>
+</tr>
+<tr>
+<td><code>objectio_cluster_buckets</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Buckets</td>
+</tr>
+<tr>
+<td><code>objectio_cluster_capacity_bytes</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Raw capacity across OSDs that answered the last poll</td>
+</tr>
+<tr>
+<td><code>objectio_cluster_logical_bytes</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Bytes of current objects as uploaded, all buckets</td>
+</tr>
+<tr>
+<td><code>objectio_cluster_objects</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Current objects across all buckets</td>
+</tr>
+<tr>
+<td><code>objectio_cluster_osds_total</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>OSDs registered with the cluster</td>
+</tr>
+<tr>
+<td><code>objectio_cluster_osds_up</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>OSDs that answered the last poll</td>
+</tr>
+<tr>
+<td><code>objectio_cluster_stored_bytes</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Bytes on disk for all object versions incl. parity</td>
+</tr>
+<tr>
+<td><code>objectio_cluster_usable_capacity_bytes</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Raw capacity scaled by the default protection efficiency</td>
+</tr>
+<tr>
+<td><code>objectio_cluster_used_bytes</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Raw bytes allocated across OSDs that answered the last poll</td>
+</tr>
+<tr>
+<td><code>objectio_osd_capacity_bytes</code></td>
+<td>gauge</td>
+<td><code>address, osd_id</code></td>
+<td>Raw capacity of one OSD</td>
+</tr>
+<tr>
+<td><code>objectio_osd_shards</code></td>
+<td>gauge</td>
+<td><code>address, osd_id</code></td>
+<td>Shards stored on one OSD</td>
+</tr>
+<tr>
+<td><code>objectio_osd_up</code></td>
+<td>gauge</td>
+<td><code>address, osd_id</code></td>
+<td>1 if the OSD answered the last poll</td>
+</tr>
+<tr>
+<td><code>objectio_osd_uptime_seconds</code></td>
+<td>counter</td>
+<td><code>osd_id</code></td>
+<td>OSD uptime in seconds</td>
+</tr>
+<tr>
+<td><code>objectio_osd_used_bytes</code></td>
+<td>gauge</td>
+<td><code>address, osd_id</code></td>
+<td>Raw bytes allocated on one OSD</td>
+</tr>
+<tr>
+<td><code>objectio_tenant_buckets</code></td>
+<td>gauge</td>
+<td><code>tenant</code></td>
+<td>Buckets owned by the tenant</td>
+</tr>
+<tr>
+<td><code>objectio_tenant_last_modified_timestamp_seconds</code></td>
+<td>gauge</td>
+<td><code>tenant</code></td>
+<td>Newest write or delete in any of the tenant's buckets</td>
+</tr>
+<tr>
+<td><code>objectio_tenant_logical_bytes</code></td>
+<td>gauge</td>
+<td><code>tenant</code></td>
+<td>Bytes of current objects as uploaded</td>
+</tr>
+<tr>
+<td><code>objectio_tenant_objects</code></td>
+<td>gauge</td>
+<td><code>tenant</code></td>
+<td>Current objects</td>
+</tr>
+<tr>
+<td><code>objectio_tenant_quota_bytes</code></td>
+<td>gauge</td>
+<td><code>tenant</code></td>
+<td>Storage quota (0 = unlimited)</td>
+</tr>
+<tr>
+<td><code>objectio_tenant_stored_bytes</code></td>
+<td>gauge</td>
+<td><code>tenant</code></td>
+<td>Bytes on disk for all versions incl. parity</td>
+</tr>
+<tr>
+<td><code>objectio_usage_last_update_timestamp_seconds</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>When usage was last refreshed</td>
+</tr>
+<tr>
+<td><code>objectio_usage_osds_stale</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>OSDs whose usage is carried over from an earlier poll</td>
+</tr>
+</tbody>
+</table>
+<h3 id="data-safety-drain-and-rebalance">Data safety, drain and rebalance<a class="headerlink" href="#data-safety-drain-and-rebalance" title="Permanent link">&para;</a></h3>
+<p>Exported by: gateway (poll).</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Type</th>
+<th>Labels</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>objectio_at_risk_bytes</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Logical bytes of at-risk objects</td>
+</tr>
+<tr>
+<td><code>objectio_degraded_bytes</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Logical bytes of degraded objects</td>
+</tr>
+<tr>
+<td><code>objectio_drain_errored</code></td>
+<td>gauge</td>
+<td><code>node_id</code></td>
+<td>1 when a drain has hit errors</td>
+</tr>
+<tr>
+<td><code>objectio_drain_shards_initial</code></td>
+<td>gauge</td>
+<td><code>node_id</code></td>
+<td>Shards a draining OSD held when the drain began</td>
+</tr>
+<tr>
+<td><code>objectio_drain_shards_migrated_total</code></td>
+<td>counter</td>
+<td><code>node_id</code></td>
+<td>Shards moved off a draining OSD</td>
+</tr>
+<tr>
+<td><code>objectio_drain_shards_remaining</code></td>
+<td>gauge</td>
+<td><code>node_id</code></td>
+<td>Shards still to move off a draining OSD</td>
+</tr>
+<tr>
+<td><code>objectio_objects_at_risk</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Objects with fewer than k+1 reachable shards: one more loss makes them unreadable</td>
+</tr>
+<tr>
+<td><code>objectio_objects_checked</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Objects and versions whose shard availability was checked</td>
+</tr>
+<tr>
+<td><code>objectio_objects_degraded</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Objects with a shard on an OSD that is down (still readable)</td>
+</tr>
+<tr>
+<td><code>objectio_objects_unreadable</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Objects with fewer than k reachable shards</td>
+</tr>
+<tr>
+<td><code>objectio_rebalance_last_sweep_timestamp_seconds</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>When the balancer last ran</td>
+</tr>
+<tr>
+<td><code>objectio_rebalance_pg_candidates</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Placement groups the balancer wanted to move on its last tick</td>
+</tr>
+<tr>
+<td><code>objectio_rebalance_pgs_moved_total</code></td>
+<td>counter</td>
+<td>—</td>
+<td>Placement groups the balancer has moved</td>
+</tr>
+<tr>
+<td><code>objectio_rebalance_running</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>1 if the balancer is started and not paused</td>
+</tr>
+<tr>
+<td><code>objectio_safety_osds_unreported</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>OSDs that did not answer, so objects only they hold metadata for were not checked</td>
+</tr>
+<tr>
+<td><code>objectio_unreadable_bytes</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Logical bytes of unreadable objects</td>
+</tr>
+</tbody>
+</table>
+<h3 id="lifecycle-and-multipart">Lifecycle and multipart<a class="headerlink" href="#lifecycle-and-multipart" title="Permanent link">&para;</a></h3>
+<p>Exported by: gateway / meta.</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Type</th>
+<th>Labels</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>objectio_lifecycle_actions_total</code></td>
+<td>counter</td>
+<td><code>action, result</code></td>
+<td>Lifecycle actions (expire, delete_marker, abort_upload) and whether they succeeded</td>
+</tr>
+<tr>
+<td><code>objectio_lifecycle_scan_seconds</code></td>
+<td>histogram</td>
+<td>—</td>
+<td>Time one lifecycle scan took</td>
+</tr>
+<tr>
+<td><code>objectio_lifecycle_scans_total</code></td>
+<td>counter</td>
+<td><code>result</code></td>
+<td>Lifecycle scans over every bucket</td>
+</tr>
+<tr>
+<td><code>objectio_multipart_upload_oldest_age_seconds</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Age of the oldest open multipart upload</td>
+</tr>
+<tr>
+<td><code>objectio_multipart_upload_parts_bytes</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Bytes held by parts of open multipart uploads</td>
+</tr>
+<tr>
+<td><code>objectio_multipart_uploads_older_than</code></td>
+<td>gauge</td>
+<td><code>age</code></td>
+<td>Open multipart uploads older than the given age</td>
+</tr>
+<tr>
+<td><code>objectio_multipart_uploads_open</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Multipart uploads started and neither completed nor aborted</td>
+</tr>
+</tbody>
+</table>
+<h3 id="block-gateway">Block gateway<a class="headerlink" href="#block-gateway" title="Permanent link">&para;</a></h3>
+<p>Exported by: block gateway.</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Type</th>
+<th>Labels</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>objectio_block_cache_clean_bytes</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Bytes of stored chunks held in the cache for reads</td>
+</tr>
+<tr>
+<td><code>objectio_block_cache_dirty_bytes</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Bytes written and journaled but not yet stored as stripes</td>
+</tr>
+<tr>
+<td><code>objectio_block_cache_dirty_chunks</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Chunks written and journaled but not yet stored as stripes</td>
+</tr>
+<tr>
+<td><code>objectio_block_cache_volumes</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Volumes with a cache on this gateway</td>
+</tr>
+<tr>
+<td><code>objectio_block_chunk_flush_seconds</code></td>
+<td>histogram</td>
+<td><code>result</code></td>
+<td>Time to store one chunk: encode, write its shards, record it in meta</td>
+</tr>
+<tr>
+<td><code>objectio_block_chunk_reads_total</code></td>
+<td>counter</td>
+<td><code>source</code></td>
+<td>Chunks a read had to fetch, not in the cache: stored (from their stripe) or unwritten (zeros)</td>
+</tr>
+<tr>
+<td><code>objectio_block_chunks_flushed_total</code></td>
+<td>counter</td>
+<td><code>result</code></td>
+<td>Chunk flushes, by result: stored, conflict (changed meanwhile, retried) or failed (retried)</td>
+</tr>
+<tr>
+<td><code>objectio_block_io_bytes_total</code></td>
+<td>counter</td>
+<td><code>protocol, op</code></td>
+<td>Bytes read or written by block requests that succeeded</td>
+</tr>
+<tr>
+<td><code>objectio_block_io_errors_total</code></td>
+<td>counter</td>
+<td><code>protocol, op</code></td>
+<td>Block requests that failed</td>
+</tr>
+<tr>
+<td><code>objectio_block_io_seconds</code></td>
+<td>histogram</td>
+<td><code>protocol, op</code></td>
+<td>Time to serve one block request, by protocol and operation</td>
+</tr>
+<tr>
+<td><code>objectio_block_journal_fsync_seconds</code></td>
+<td>histogram</td>
+<td>—</td>
+<td>Time to fsync the block write journal; every acknowledged write waits for one</td>
+</tr>
+<tr>
+<td><code>objectio_block_shard_delete_failures_total</code></td>
+<td>counter</td>
+<td><code>reason</code></td>
+<td>Shard deletes that failed while freeing stripes, leaving space allocated</td>
+</tr>
+<tr>
+<td><code>objectio_block_stripes_freed_total</code></td>
+<td>counter</td>
+<td><code>reason</code></td>
+<td>Stripes deleted because nothing uses them any more (overwrite, volume, snapshot)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="block-volumes-and-snapshots">Block volumes and snapshots<a class="headerlink" href="#block-volumes-and-snapshots" title="Permanent link">&para;</a></h3>
+<p>Exported by: meta.</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Type</th>
+<th>Labels</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>objectio_block_snapshot_chunks</code></td>
+<td>gauge</td>
+<td><code>snapshot_id, volume_id, name</code></td>
+<td>Chunks one snapshot holds (shared with its volume until overwritten)</td>
+</tr>
+<tr>
+<td><code>objectio_block_snapshots_total</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Block snapshots</td>
+</tr>
+<tr>
+<td><code>objectio_block_volume_size_bytes</code></td>
+<td>gauge</td>
+<td><code>volume_id, name, pool</code></td>
+<td>Size of one block volume</td>
+</tr>
+<tr>
+<td><code>objectio_block_volume_used_bytes</code></td>
+<td>gauge</td>
+<td><code>volume_id, name, pool</code></td>
+<td>Chunks one block volume has written, in bytes</td>
+</tr>
+<tr>
+<td><code>objectio_block_volumes_by_state</code></td>
+<td>gauge</td>
+<td><code>state</code></td>
+<td>Block volumes by state</td>
+</tr>
+<tr>
+<td><code>objectio_block_volumes_provisioned_bytes</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Size of every block volume added up</td>
+</tr>
+<tr>
+<td><code>objectio_block_volumes_total</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Block volumes</td>
+</tr>
+<tr>
+<td><code>objectio_block_volumes_used_bytes</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Chunks block volumes have written, in bytes (volumes are thin: unwritten chunks take nothing)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="meta-service">Meta service<a class="headerlink" href="#meta-service" title="Permanent link">&para;</a></h3>
+<p>Exported by: meta.</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Type</th>
+<th>Labels</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>objectio_meta_buckets_total</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Total number of buckets</td>
+</tr>
+<tr>
+<td><code>objectio_meta_commit_seconds</code></td>
+<td>histogram</td>
+<td>—</td>
+<td>Time to commit one redb write transaction (includes fsync)</td>
+</tr>
+<tr>
+<td><code>objectio_meta_grpc_latency_seconds</code></td>
+<td>histogram</td>
+<td><code>method</code></td>
+<td>Time meta took to answer a gRPC call, by method</td>
+</tr>
+<tr>
+<td><code>objectio_meta_grpc_requests_total</code></td>
+<td>counter</td>
+<td><code>code, component, method</code></td>
+<td>gRPC calls meta served, by method and status code</td>
+</tr>
+<tr>
+<td><code>objectio_meta_osds_total</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Total registered OSDs</td>
+</tr>
+<tr>
+<td><code>objectio_meta_shared_stripe_referrers</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>References held on shared stripes; a stripe is freed when its last one goes</td>
+</tr>
+<tr>
+<td><code>objectio_meta_shared_stripes</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Stripes used by more than one object, chunk, snapshot or clone (zero-copy copies, snapshots)</td>
+</tr>
+<tr>
+<td><code>objectio_meta_uptime_seconds</code></td>
+<td>counter</td>
+<td>—</td>
+<td>Metadata service uptime</td>
+</tr>
+<tr>
+<td><code>objectio_meta_users_total</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Total users</td>
+</tr>
+</tbody>
+</table>
+<h3 id="meta-raft">Meta Raft<a class="headerlink" href="#meta-raft" title="Permanent link">&para;</a></h3>
+<p>Exported by: meta.</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Type</th>
+<th>Labels</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>objectio_meta_raft_applied_index</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Index of the last entry applied to this node's state</td>
+</tr>
+<tr>
+<td><code>objectio_meta_raft_has_leader</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>1 while this node knows a leader; 0 means no writes can commit</td>
+</tr>
+<tr>
+<td><code>objectio_meta_raft_is_leader</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>1 on the Raft leader, 0 elsewhere</td>
+</tr>
+<tr>
+<td><code>objectio_meta_raft_last_log_index</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Index of the last entry in this node's Raft log</td>
+</tr>
+<tr>
+<td><code>objectio_meta_raft_purged_index</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Index up to which the log has been compacted away</td>
+</tr>
+<tr>
+<td><code>objectio_meta_raft_replication_lag_entries</code></td>
+<td>gauge</td>
+<td><code>peer</code></td>
+<td>Entries a follower is behind the leader (leader only; multi-node meta)</td>
+</tr>
+<tr>
+<td><code>objectio_meta_raft_snapshot_build_seconds</code></td>
+<td>histogram</td>
+<td>—</td>
+<td>Time to build a Raft snapshot of the whole state machine (built in memory)</td>
+</tr>
+<tr>
+<td><code>objectio_meta_raft_snapshot_bytes</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Size of the last Raft snapshot built (held in memory while sent)</td>
+</tr>
+<tr>
+<td><code>objectio_meta_raft_snapshot_index</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Index the last snapshot covers</td>
+</tr>
+<tr>
+<td><code>objectio_meta_raft_snapshot_install_seconds</code></td>
+<td>histogram</td>
+<td>—</td>
+<td>Time to install a Raft snapshot received from the leader</td>
+</tr>
+<tr>
+<td><code>objectio_meta_raft_term</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Current Raft term; a rising term means elections</td>
+</tr>
+<tr>
+<td><code>objectio_meta_raft_voters</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Voting members of the Raft cluster</td>
+</tr>
+</tbody>
+</table>
+<h3 id="repair">Repair<a class="headerlink" href="#repair" title="Permanent link">&para;</a></h3>
+<p>Exported by: meta (leader).</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Type</th>
+<th>Labels</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>objectio_meta_repair_block_stripes_checked_total</code></td>
+<td>counter</td>
+<td>—</td>
+<td>Block chunk stripes checked by the repairer (also counted in objects checked)</td>
+</tr>
+<tr>
+<td><code>objectio_meta_repair_errors_total</code></td>
+<td>counter</td>
+<td>—</td>
+<td>Repairs that failed and will be retried next pass</td>
+</tr>
+<tr>
+<td><code>objectio_meta_repair_last_pass_seconds</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>How long the last completed repair pass took (on the node that ran it)</td>
+</tr>
+<tr>
+<td><code>objectio_meta_repair_last_pass_timestamp_seconds</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>When the last repair pass completed (Unix time; 0: none yet on this node)</td>
+</tr>
+<tr>
+<td><code>objectio_meta_repair_listings_restored_total</code></td>
+<td>counter</td>
+<td>—</td>
+<td>Listing entries restored for objects missing from ListObjects</td>
+</tr>
+<tr>
+<td><code>objectio_meta_repair_objects_checked_total</code></td>
+<td>counter</td>
+<td>—</td>
+<td>Objects checked by the repairer</td>
+</tr>
+<tr>
+<td><code>objectio_meta_repair_passes_total</code></td>
+<td>counter</td>
+<td>—</td>
+<td>Completed repair passes</td>
+</tr>
+<tr>
+<td><code>objectio_meta_repair_shards_rebuilt_total</code></td>
+<td>counter</td>
+<td><code>reason</code></td>
+<td>Shards rebuilt from the rest of their stripe</td>
+</tr>
+<tr>
+<td><code>objectio_meta_repair_unrecoverable_stripes_total</code></td>
+<td>counter</td>
+<td>—</td>
+<td>Stripes found with fewer than k good shards</td>
+</tr>
+</tbody>
+</table>
+<h3 id="osd">OSD<a class="headerlink" href="#osd" title="Permanent link">&para;</a></h3>
+<p>Exported by: osd.</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Type</th>
+<th>Labels</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>objectio_osd_corrupt_shards</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Corrupt shards on this OSD not yet rebuilt</td>
+</tr>
+<tr>
+<td><code>objectio_osd_corrupt_shards_found_total</code></td>
+<td>counter</td>
+<td>—</td>
+<td>Shards found failing their checksum, by the scrubber or a read</td>
+</tr>
+<tr>
+<td><code>objectio_osd_disk_seconds</code></td>
+<td>histogram</td>
+<td><code>op,</code></td>
+<td>Time of one shard disk operation: write, sync (before the write is acknowledged), read</td>
+</tr>
+<tr>
+<td><code>objectio_osd_grpc_bytes_received_total</code></td>
+<td>counter</td>
+<td><code>method,</code></td>
+<td>Bytes of shard requests received, by method</td>
+</tr>
+<tr>
+<td><code>objectio_osd_grpc_bytes_sent_total</code></td>
+<td>counter</td>
+<td><code>method,</code></td>
+<td>Bytes of shard responses sent, by method</td>
+</tr>
+<tr>
+<td><code>objectio_osd_grpc_latency_seconds</code></td>
+<td>histogram</td>
+<td><code>method,</code></td>
+<td>Time this OSD took to answer a gRPC call, by method</td>
+</tr>
+<tr>
+<td><code>objectio_osd_grpc_requests_total</code></td>
+<td>counter</td>
+<td><code>code, method,</code></td>
+<td>gRPC calls this OSD served, by method and status code</td>
+</tr>
+<tr>
+<td><code>objectio_osd_info</code></td>
+<td>gauge</td>
+<td><code>datacenter, node, rack, region</code></td>
+<td>OSD information</td>
+</tr>
+<tr>
+<td><code>objectio_osd_scrub_bytes_total</code></td>
+<td>counter</td>
+<td>—</td>
+<td>Bytes read and checked by the scrubber</td>
+</tr>
+<tr>
+<td><code>objectio_osd_scrub_last_pass_seconds</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>How long the last completed scrub pass took</td>
+</tr>
+<tr>
+<td><code>objectio_osd_scrub_last_pass_timestamp_seconds</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>When the last scrub pass completed (Unix time; 0: none yet)</td>
+</tr>
+<tr>
+<td><code>objectio_osd_scrub_passes_total</code></td>
+<td>counter</td>
+<td>—</td>
+<td>Completed scrub passes</td>
+</tr>
+<tr>
+<td><code>objectio_osd_scrub_shards_total</code></td>
+<td>counter</td>
+<td>—</td>
+<td>Shards read and checked by the scrubber</td>
+</tr>
+<tr>
+<td><code>objectio_osd_shards_total</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Total shards stored</td>
+</tr>
+<tr>
+<td><code>objectio_osd_wal_fsync_seconds</code></td>
+<td>histogram</td>
+<td>—</td>
+<td>Time for one metadata WAL fdatasync</td>
+</tr>
+<tr>
+<td><code>objectio_osd_wal_records_synced_total</code></td>
+<td>counter</td>
+<td>—</td>
+<td>Metadata WAL records made durable; divide by syncs for records per fsync</td>
+</tr>
+<tr>
+<td><code>objectio_osd_wal_syncs_total</code></td>
+<td>counter</td>
+<td>—</td>
+<td>Metadata WAL fdatasyncs</td>
+</tr>
+</tbody>
+</table>
+<h3 id="disks">Disks<a class="headerlink" href="#disks" title="Permanent link">&para;</a></h3>
+<p>Exported by: osd.</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Type</th>
+<th>Labels</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>objectio_disk_available_bytes</code></td>
+<td>gauge</td>
+<td><code>disk,</code></td>
+<td>Free bytes on the disk</td>
+</tr>
+<tr>
+<td><code>objectio_disk_capacity_bytes</code></td>
+<td>gauge</td>
+<td><code>disk,</code></td>
+<td>Disk capacity</td>
+</tr>
+<tr>
+<td><code>objectio_disk_errors_total</code></td>
+<td>counter</td>
+<td><code>disk, type</code></td>
+<td>IO errors and checksum mismatches</td>
+</tr>
+<tr>
+<td><code>objectio_disk_healthy</code></td>
+<td>gauge</td>
+<td><code>disk,</code></td>
+<td>Disk health status (1=healthy, 0=unhealthy)</td>
+</tr>
+<tr>
+<td><code>objectio_disk_read_bytes_total</code></td>
+<td>counter</td>
+<td><code>disk,</code></td>
+<td>Bytes read</td>
+</tr>
+<tr>
+<td><code>objectio_disk_reads_total</code></td>
+<td>counter</td>
+<td><code>disk,</code></td>
+<td>Shard reads</td>
+</tr>
+<tr>
+<td><code>objectio_disk_shards_total</code></td>
+<td>gauge</td>
+<td><code>disk,</code></td>
+<td>Shards on disk</td>
+</tr>
+<tr>
+<td><code>objectio_disk_smart_check_errors_total</code></td>
+<td>counter</td>
+<td>—</td>
+<td>SMART checks that failed (no smartctl, unsupported device)</td>
+</tr>
+<tr>
+<td><code>objectio_disk_smart_checks_total</code></td>
+<td>counter</td>
+<td>—</td>
+<td>SMART checks run</td>
+</tr>
+<tr>
+<td><code>objectio_disk_smart_health_score</code></td>
+<td>gauge</td>
+<td><code>device</code></td>
+<td>SMART-derived health score</td>
+</tr>
+<tr>
+<td><code>objectio_disk_smart_healthy</code></td>
+<td>gauge</td>
+<td><code>device</code></td>
+<td>SMART overall health (1 healthy); only where smartctl is installed</td>
+</tr>
+<tr>
+<td><code>objectio_disk_smart_pending_sectors</code></td>
+<td>gauge</td>
+<td><code>device</code></td>
+<td>Sectors pending reallocation</td>
+</tr>
+<tr>
+<td><code>objectio_disk_smart_power_on_hours</code></td>
+<td>counter</td>
+<td><code>device</code></td>
+<td>Drive power-on hours</td>
+</tr>
+<tr>
+<td><code>objectio_disk_smart_predicted_failure_days</code></td>
+<td>gauge</td>
+<td><code>device</code></td>
+<td>Predicted days to failure, when SMART data allows a prediction</td>
+</tr>
+<tr>
+<td><code>objectio_disk_smart_reallocated_sectors</code></td>
+<td>gauge</td>
+<td><code>device</code></td>
+<td>Reallocated sectors: a rising count predicts failure</td>
+</tr>
+<tr>
+<td><code>objectio_disk_smart_temperature_celsius</code></td>
+<td>gauge</td>
+<td><code>device</code></td>
+<td>Drive temperature</td>
+</tr>
+<tr>
+<td><code>objectio_disk_used_bytes</code></td>
+<td>gauge</td>
+<td><code>disk,</code></td>
+<td>Disk used space</td>
+</tr>
+<tr>
+<td><code>objectio_disk_writes_total</code></td>
+<td>counter</td>
+<td><code>disk,</code></td>
+<td>Shard writes</td>
+</tr>
+<tr>
+<td><code>objectio_disk_written_bytes_total</code></td>
+<td>counter</td>
+<td><code>disk,</code></td>
+<td>Bytes written</td>
+</tr>
+</tbody>
+</table>
+<h3 id="process">Process<a class="headerlink" href="#process" title="Permanent link">&para;</a></h3>
+<p>Exported by: every process.</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Type</th>
+<th>Labels</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>objectio_build_info</code></td>
+<td>gauge</td>
+<td><code>commit, version</code></td>
+<td>Build version and commit; always 1</td>
+</tr>
+<tr>
+<td><code>process_cpu_seconds_total</code></td>
+<td>counter</td>
+<td>—</td>
+<td>User and system CPU time</td>
+</tr>
+<tr>
+<td><code>process_max_fds</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>File descriptor limit</td>
+</tr>
+<tr>
+<td><code>process_open_fds</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Open file descriptors</td>
+</tr>
+<tr>
+<td><code>process_start_time_seconds</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Process start, seconds since the epoch</td>
+</tr>
+</tbody>
+</table>
+<h2 id="alerts-worth-setting">Alerts worth setting<a class="headerlink" href="#alerts-worth-setting" title="Permanent link">&para;</a></h2>
+<p>These are starting points; tune thresholds to the hardware and workload.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">groups</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">objectio</span>
+<span class="w">    </span><span class="nt">rules</span><span class="p">:</span>
+<span class="w">      </span><span class="c1"># Data safety</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">alert</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ObjectsUnreadable</span>
+<span class="w">        </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">max(objectio_objects_unreadable) &gt; 0</span>
+<span class="w">        </span><span class="nt">labels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">severity</span><span class="p">:</span><span class="w"> </span><span class="nv">critical</span><span class="p p-Indicator">}</span>
+<span class="w">        </span><span class="nt">annotations</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">summary</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Objects have fewer than k readable shards</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">alert</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ObjectsAtRisk</span>
+<span class="w">        </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">max(objectio_objects_at_risk) &gt; 0</span>
+<span class="w">        </span><span class="nt">for</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">15m</span>
+<span class="w">        </span><span class="nt">labels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">severity</span><span class="p">:</span><span class="w"> </span><span class="nv">warning</span><span class="p p-Indicator">}</span>
+<span class="w">        </span><span class="nt">annotations</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">summary</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Objects are one failure from unreadable and not yet repaired</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">alert</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">UnrecoverableStripes</span>
+<span class="w">        </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">increase(objectio_meta_repair_unrecoverable_stripes_total[1h]) &gt; 0</span>
+<span class="w">        </span><span class="nt">labels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">severity</span><span class="p">:</span><span class="w"> </span><span class="nv">critical</span><span class="p p-Indicator">}</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">alert</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RepairNotRunning</span>
+<span class="w">        </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">time() - max(objectio_meta_repair_last_pass_timestamp_seconds) &gt; 3600</span>
+<span class="w">        </span><span class="nt">labels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">severity</span><span class="p">:</span><span class="w"> </span><span class="nv">warning</span><span class="p p-Indicator">}</span>
+<span class="w">        </span><span class="nt">annotations</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">summary</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">No repair pass completed in an hour</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">alert</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ScrubStale</span>
+<span class="w">        </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">time() - min(objectio_osd_scrub_last_pass_timestamp_seconds) &gt; 7 * 86400</span>
+<span class="w">        </span><span class="nt">labels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">severity</span><span class="p">:</span><span class="w"> </span><span class="nv">warning</span><span class="p p-Indicator">}</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">alert</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CorruptShards</span>
+<span class="w">        </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sum(objectio_osd_corrupt_shards) &gt; 0</span>
+<span class="w">        </span><span class="nt">for</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1h</span>
+<span class="w">        </span><span class="nt">labels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">severity</span><span class="p">:</span><span class="w"> </span><span class="nv">warning</span><span class="p p-Indicator">}</span>
+<span class="w">        </span><span class="nt">annotations</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">summary</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Corrupt shards found and not rebuilt within an hour</span>
+
+<span class="w">      </span><span class="c1"># Metadata</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">alert</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">MetaNoLeader</span>
+<span class="w">        </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">max(objectio_meta_raft_has_leader) == 0</span>
+<span class="w">        </span><span class="nt">for</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1m</span>
+<span class="w">        </span><span class="nt">labels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">severity</span><span class="p">:</span><span class="w"> </span><span class="nv">critical</span><span class="p p-Indicator">}</span>
+<span class="w">        </span><span class="nt">annotations</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">summary</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Meta has no Raft leader; no metadata write can commit</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">alert</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">MetaElectionsChurn</span>
+<span class="w">        </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">increase(max(objectio_meta_raft_term)[15m:]) &gt; 3</span>
+<span class="w">        </span><span class="nt">labels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">severity</span><span class="p">:</span><span class="w"> </span><span class="nv">warning</span><span class="p p-Indicator">}</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">alert</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">MetaFollowerLagging</span>
+<span class="w">        </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">max(objectio_meta_raft_replication_lag_entries) &gt; 1000</span>
+<span class="w">        </span><span class="nt">for</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5m</span>
+<span class="w">        </span><span class="nt">labels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">severity</span><span class="p">:</span><span class="w"> </span><span class="nv">warning</span><span class="p p-Indicator">}</span>
+
+<span class="w">      </span><span class="c1"># Capacity</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">alert</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterFilling</span>
+<span class="w">        </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">max(objectio_cluster_used_bytes) / max(objectio_cluster_capacity_bytes) &gt; 0.8</span>
+<span class="w">        </span><span class="nt">labels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">severity</span><span class="p">:</span><span class="w"> </span><span class="nv">warning</span><span class="p p-Indicator">}</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">alert</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OsdDown</span>
+<span class="w">        </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">max(objectio_cluster_osds_total) - max(objectio_cluster_osds_up) &gt; 0</span>
+<span class="w">        </span><span class="nt">for</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5m</span>
+<span class="w">        </span><span class="nt">labels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">severity</span><span class="p">:</span><span class="w"> </span><span class="nv">warning</span><span class="p p-Indicator">}</span>
+
+<span class="w">      </span><span class="c1"># Durability latency</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">alert</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SlowShardSync</span>
+<span class="w">        </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">histogram_quantile(0.99, sum by (le) (rate(objectio_osd_disk_seconds_bucket{op="sync"}[5m]))) &gt; 0.1</span>
+<span class="w">        </span><span class="nt">for</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10m</span>
+<span class="w">        </span><span class="nt">labels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">severity</span><span class="p">:</span><span class="w"> </span><span class="nv">warning</span><span class="p p-Indicator">}</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">alert</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SlowBlockJournal</span>
+<span class="w">        </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">histogram_quantile(0.99, sum by (le) (rate(objectio_block_journal_fsync_seconds_bucket[5m]))) &gt; 0.05</span>
+<span class="w">        </span><span class="nt">for</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10m</span>
+<span class="w">        </span><span class="nt">labels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">severity</span><span class="p">:</span><span class="w"> </span><span class="nv">warning</span><span class="p p-Indicator">}</span>
+<span class="w">        </span><span class="nt">annotations</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">summary</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Every block write waits for this fsync</span>
+
+<span class="w">      </span><span class="c1"># Block storage</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">alert</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">BlockFlushFailing</span>
+<span class="w">        </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rate(objectio_block_chunks_flushed_total{result="failed"}[10m]) &gt; 0</span>
+<span class="w">        </span><span class="nt">for</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10m</span>
+<span class="w">        </span><span class="nt">labels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">severity</span><span class="p">:</span><span class="w"> </span><span class="nv">warning</span><span class="p p-Indicator">}</span>
+<span class="w">        </span><span class="nt">annotations</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">summary</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Chunks are not being stored; writes stay journaled and the cache fills</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">alert</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">BlockReadErrors</span>
+<span class="w">        </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rate(objectio_block_io_errors_total{op="read"}[5m]) &gt; 0</span>
+<span class="w">        </span><span class="nt">labels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">severity</span><span class="p">:</span><span class="w"> </span><span class="nv">critical</span><span class="p p-Indicator">}</span>
+
+<span class="w">      </span><span class="c1"># Requests</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">alert</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">S3ServerErrors</span>
+<span class="w">        </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sum(rate(objectio_s3_requests_total{status="server_error"}[5m])) / sum(rate(objectio_s3_requests_total[5m])) &gt; 0.01</span>
+<span class="w">        </span><span class="nt">for</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10m</span>
+<span class="w">        </span><span class="nt">labels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">severity</span><span class="p">:</span><span class="w"> </span><span class="nv">warning</span><span class="p p-Indicator">}</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">alert</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SpaceLeaking</span>
+<span class="w">        </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">increase(objectio_gateway_shard_reclaim_failures_total[1h]) + increase(objectio_block_shard_delete_failures_total[1h]) &gt; 100</span>
+<span class="w">        </span><span class="nt">labels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">severity</span><span class="p">:</span><span class="w"> </span><span class="nv">info</span><span class="p p-Indicator">}</span>
+<span class="w">        </span><span class="nt">annotations</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">summary</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Shard deletes failing; space stays allocated</span>
+</code></pre></div>
+<h2 id="known-gaps">Known gaps<a class="headerlink" href="#known-gaps" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Gateway to meta calls</strong> are measured only on meta's side
+  (<code>objectio_meta_grpc_latency_seconds</code>), which leaves out network time.</li>
+<li><strong>Lifecycle expiry</strong> deletes an object's metadata but not its shards
+  (a known leak); <code>objectio_lifecycle_actions_total{action="expire"}</code>
+  counts the deletes, and the space they leave is not reclaimed yet.</li>
+<li><strong>The Transfer Engine (RDMA) path</strong> reports transfers and fallbacks, but
+  not its own latency.</li>
+<li><strong>Tracing</strong> (OpenTelemetry spans across gateway, meta and OSD) is not
+  implemented.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.sections", "navigation.top", "search.highlight", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
