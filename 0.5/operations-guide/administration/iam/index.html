@@ -1,0 +1,2285 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://object-io.github.io/0.5/operations-guide/administration/iam/">
+      
+      
+        <link rel="prev" href="../grep/">
+      
+      
+        <link rel="next" href="../iceberg-api/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Identity and Access - ObjectIO</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#identity-and-access" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="ObjectIO" class="md-header__button md-logo" aria-label="ObjectIO" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ObjectIO
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Identity and Access
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/object-io/objectio" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    object-io/objectio
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="ObjectIO" class="md-nav__button md-logo" aria-label="ObjectIO" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    ObjectIO
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/object-io/objectio" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    object-io/objectio
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ObjectIO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ROADMAP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ObjectIO — features and roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Developer guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Developer guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developer-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Developer Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developer-guide/api-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developer-guide/features/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ObjectIO — Feature Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developer-guide/sdk/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Management SDKs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S3 compatibility
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    S3 compatibility
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developer-guide/s3-compatibility/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S3 compatibility: ceph s3-tests
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_2" id="__nav_3_5_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026 10 02
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2026 10 02
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developer-guide/s3-compatibility/2026-10-02/summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ceph s3-tests against ObjectIO, run 2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operations guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Operations guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operations Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Administration
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Administration
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Administration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../audit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audit Stream
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../authentication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Authentication
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI (objectio-cli)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../grep/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gateway-side grep — searching objects without downloading
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Identity and Access
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Identity and Access
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#scopes-the-system-and-tenants" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scopes: the system and tenants
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#users-and-access-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Users and access keys
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#policies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Policies
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#groups" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Groups
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#roles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Roles
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#identity-providers-oidc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Identity providers (OIDC)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#temporary-credentials-from-an-oidc-token-sts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Temporary credentials from an OIDC token (STS)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#session-and-token-signing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Session and token signing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#acls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ACLs
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../iceberg-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Iceberg REST Catalog API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../public-access/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Public Access
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../replication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bucket replication
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../s3-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S3 API Operations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Installation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/deployment-options/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ObjectIO Deployment Options
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kubernetes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/linux/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/macos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    macOS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/topologies/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment Topologies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_4" id="__nav_4_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operations
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Operations
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operations Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations/failure-recovery/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Failure Recovery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations/meta-ha/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Meta high availability
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations/metrics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Metrics reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations/monitoring/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Monitoring
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations/upgrades/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Upgrades
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#scopes-the-system-and-tenants" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scopes: the system and tenants
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#users-and-access-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Users and access keys
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#policies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Policies
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#groups" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Groups
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#roles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Roles
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#identity-providers-oidc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Identity providers (OIDC)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#temporary-credentials-from-an-oidc-token-sts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Temporary credentials from an OIDC token (STS)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#session-and-token-signing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Session and token signing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#acls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ACLs
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="identity-and-access">Identity and Access<a class="headerlink" href="#identity-and-access" title="Permanent link">&para;</a></h1>
+<p>Who can do what in an ObjectIO cluster: tenants and their admins, users and
+access keys, IAM policies, groups and roles, identity providers, and
+temporary credentials from an OIDC token (STS).</p>
+<p>Everything here is the admin API under <code>/_admin/*</code>, signed with SigV4 like
+any S3 request. The <a href="../../../developer-guide/sdk/">management SDKs</a> wrap it
+for Go and Python.</p>
+<h2 id="scopes-the-system-and-tenants">Scopes: the system and tenants<a class="headerlink" href="#scopes-the-system-and-tenants" title="Permanent link">&para;</a></h2>
+<p>Every identity object lives in one scope.</p>
+<ul>
+<li><strong>The system scope</strong> belongs to the operator. Its admin (the credential
+  meta prints on first boot) manages the whole cluster.</li>
+<li><strong>A tenant</strong> is a hard boundary. Its users, groups, roles, policies and
+  buckets are its own. No policy can grant a tenant's identity access to
+  another tenant's bucket: the check happens before any policy is read.</li>
+</ul>
+<p>A <strong>tenant admin</strong> is a user of the tenant listed in its <code>admin_users</code>. A
+tenant admin manages everything in the tenant and nothing outside it.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># As the system admin</span>
+POST<span class="w"> </span>/_admin/tenants<span class="w">                    </span><span class="o">{</span><span class="s2">"name"</span>:<span class="w"> </span><span class="s2">"acme"</span>,<span class="w"> </span><span class="s2">"display_name"</span>:<span class="w"> </span><span class="s2">"Acme"</span>,<span class="w"> </span><span class="s2">"enabled"</span>:<span class="w"> </span>true<span class="o">}</span>
+POST<span class="w"> </span>/_admin/users<span class="w">                      </span><span class="o">{</span><span class="s2">"display_name"</span>:<span class="w"> </span><span class="s2">"acme-admin"</span>,<span class="w"> </span><span class="s2">"tenant"</span>:<span class="w"> </span><span class="s2">"acme"</span><span class="o">}</span>
+POST<span class="w"> </span>/_admin/tenants/acme/admins<span class="w">        </span><span class="o">{</span><span class="s2">"user_id"</span>:<span class="w"> </span><span class="s2">"&lt;user_id&gt;"</span><span class="o">}</span>
+POST<span class="w"> </span>/_admin/users/&lt;user_id&gt;/access-keys<span class="w"> </span><span class="o">{}</span>
+</code></pre></div>
+<p>From then on the tenant admin works with its own key. Each call below acts in
+the caller's own tenant. The system admin can name a tenant with <code>?tenant=</code>
+(or <code>"tenant"</code> in a body); a tenant admin can't name another tenant.</p>
+<h2 id="users-and-access-keys">Users and access keys<a class="headerlink" href="#users-and-access-keys" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET /_admin/users</code></td>
+<td>users in scope</td>
+</tr>
+<tr>
+<td><code>POST /_admin/users</code> <code>{"display_name", "email"?, "tenant"?}</code></td>
+<td>create</td>
+</tr>
+<tr>
+<td><code>GET /_admin/users/{user_id}</code></td>
+<td>one user</td>
+</tr>
+<tr>
+<td><code>PUT /_admin/users/{user_id}</code> <code>{"status"?, "display_name"?, "email"?}</code></td>
+<td>update; <code>status</code> is <code>active</code> or <code>suspended</code></td>
+</tr>
+<tr>
+<td><code>DELETE /_admin/users/{user_id}</code></td>
+<td>delete</td>
+</tr>
+<tr>
+<td><code>GET /_admin/users/{user_id}/access-keys</code></td>
+<td>the user's keys</td>
+</tr>
+<tr>
+<td><code>POST /_admin/users/{user_id}/access-keys</code> <code>{"scope"?, "operation"?}</code></td>
+<td>new key; a <code>scope</code> like <code>s3://bucket/prefix/</code> confines it</td>
+</tr>
+<tr>
+<td><code>PUT /_admin/access-keys/{id}</code> <code>{"status": "active" \| "inactive"}</code></td>
+<td>turn a key off or back on</td>
+</tr>
+<tr>
+<td><code>DELETE /_admin/access-keys/{id}</code></td>
+<td>delete a key</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Suspend rather than delete</strong> when you need to cut someone off now and
+decide later. A suspended user's keys are all refused, and deactivating a
+key refuses just that key. Nothing is deleted, and reactivating restores
+access. Gateways cache credentials for at most 15 seconds, so the change
+takes effect everywhere within that time.</p>
+<p>A <strong>scoped key</strong> (one with a <code>scope</code>) can only reach that bucket or prefix,
+and is refused on the admin API entirely. A credential handed to a workload
+therefore can't mint itself a wider one.</p>
+<h2 id="policies">Policies<a class="headerlink" href="#policies" title="Permanent link">&para;</a></h2>
+<p>IAM policies are AWS-format JSON documents: <code>Effect</code>, <code>Action</code>, <code>Resource</code>,
+<code>Condition</code>. They are attached to users, groups or roles. A <strong>bucket
+policy</strong> is attached to a bucket instead and set with S3's <code>PUT
+/{bucket}?policy</code>. The two are evaluated together:</p>
+<ol>
+<li>An explicit <code>Deny</code> anywhere wins.</li>
+<li>An <code>Allow</code> in an attached policy or the bucket policy grants access.</li>
+<li>With no <code>Allow</code>, the bucket's <strong>owner</strong> is allowed and everyone else is
+   denied.</li>
+</ol>
+<p>No policy means owner-only, not open.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET /_admin/policies</code></td>
+<td>the tenant's own policies, plus the shared catalogue</td>
+</tr>
+<tr>
+<td><code>POST /_admin/policies</code> <code>{"name", "policy", "tenant"?, "shared"?}</code></td>
+<td>create</td>
+</tr>
+<tr>
+<td><code>GET /_admin/policies/{name}</code></td>
+<td>one policy</td>
+</tr>
+<tr>
+<td><code>PUT /_admin/policies/{name}</code> <code>{"policy"}</code></td>
+<td>replace the document</td>
+</tr>
+<tr>
+<td><code>DELETE /_admin/policies/{name}</code></td>
+<td>delete</td>
+</tr>
+<tr>
+<td><code>POST /_admin/policies/attach</code> <code>{"policy_name", "user_id" \| "group_id" \| "role_name"}</code></td>
+<td>attach</td>
+</tr>
+<tr>
+<td><code>POST /_admin/policies/detach</code></td>
+<td>detach, same body</td>
+</tr>
+<tr>
+<td><code>GET /_admin/policies/attached?user_id=\|group_id=\|role_name=</code></td>
+<td>what's attached</td>
+</tr>
+</tbody>
+</table>
+<p>Policies are per tenant: <code>acme</code>'s <code>auditors</code> and <code>globex</code>'s <code>auditors</code> are
+different documents. The system admin can mark a system policy
+<code>"shared": true</code> so that every tenant can attach it but none can change it.</p>
+<p>The built-in <code>readonly</code>, <code>readwrite</code> and <code>writeonly</code> policies are shared.
+<code>consoleAdmin</code> (<code>admin:*</code>) is the operator's alone.</p>
+<p>Attaching and detaching take effect immediately on the gateway that made the
+change, and within 15 seconds on the others.</p>
+<p>Policies support every IAM condition operator, plus <code>IfExists</code>,
+<code>ForAnyValue:</code>/<code>ForAllValues:</code> and <code>Null</code>. A document using an unknown
+operator is refused when you save it rather than being silently ignored. Policies
+written for AWS work unchanged: <code>arn:aws:</code> ARNs and <code>{"AWS": ...}</code>
+principals mean the same as <code>arn:obio:</code> and <code>{"OBIO": ...}</code>. See <a href="../authentication/#condition-keys">condition
+keys</a>.</p>
+<h2 id="groups">Groups<a class="headerlink" href="#groups" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET /_admin/groups</code></td>
+<td>groups in scope</td>
+</tr>
+<tr>
+<td><code>POST /_admin/groups</code> <code>{"group_name", "tenant"?}</code></td>
+<td>create</td>
+</tr>
+<tr>
+<td><code>GET /_admin/groups/{group_id}</code></td>
+<td>one group, with its members</td>
+</tr>
+<tr>
+<td><code>DELETE /_admin/groups/{group_id}</code></td>
+<td>delete</td>
+</tr>
+<tr>
+<td><code>POST /_admin/groups/{group_id}/members</code> <code>{"user_id"}</code></td>
+<td>add a member of the group's own tenant</td>
+</tr>
+<tr>
+<td><code>DELETE /_admin/groups/{group_id}/members/{user_id}</code></td>
+<td>remove</td>
+</tr>
+</tbody>
+</table>
+<p>A user gets the policies attached to every group it belongs to.</p>
+<h2 id="roles">Roles<a class="headerlink" href="#roles" title="Permanent link">&para;</a></h2>
+<p>A role is a set of policies that someone can take on for a while, rather
+than an identity of its own. Who may take it on is decided by its <strong>trust
+policy</strong>. Today a role is assumed with an OIDC token through
+<a href="#temporary-credentials-from-an-oidc-token-sts">STS</a>.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET /_admin/roles</code></td>
+<td>roles in scope</td>
+</tr>
+<tr>
+<td><code>POST /_admin/roles</code> <code>{"name", "trust_policy", "description"?, "max_session_seconds"?}</code></td>
+<td>create</td>
+</tr>
+<tr>
+<td><code>GET /_admin/roles/{name}</code></td>
+<td>the role and its attached policies</td>
+</tr>
+<tr>
+<td><code>PUT /_admin/roles/{name}</code> <code>{"trust_policy"?, "description"?, "max_session_seconds"?}</code></td>
+<td>update</td>
+</tr>
+<tr>
+<td><code>DELETE /_admin/roles/{name}</code></td>
+<td>delete</td>
+</tr>
+</tbody>
+</table>
+<p>A role's ARN names its scope: <code>arn:obio:iam::acme:role/ci</code> for tenant
+<code>acme</code>, <code>arn:obio:iam::objectio:role/oncall</code> for the system.</p>
+<h2 id="identity-providers-oidc">Identity providers (OIDC)<a class="headerlink" href="#identity-providers-oidc" title="Permanent link">&para;</a></h2>
+<p>The operator and each tenant can have their own OpenID Connect provider:
+Keycloak, Entra ID, Okta, Google, Dex, or any other compliant issuer.</p>
+<ul>
+<li><strong>The operator's provider</strong> signs in system administrators. It is set with
+  the gateway's <code>--oidc-*</code> flags, or stored with <code>"system_admin": true</code>.</li>
+<li><strong>A tenant's provider</strong> signs in that tenant's users. It's stored under
+  the name <code>t-&lt;tenant&gt;</code>, which a tenant admin can create for itself. That
+  also binds it to the tenant.</li>
+</ul>
+<div class="highlight"><pre><span></span><code>PUT<span class="w"> </span>/_admin/config/identity/openid/t-acme
+<span class="o">{</span><span class="s2">"issuer_url"</span>:<span class="w"> </span><span class="s2">"https://keycloak.acme.example/realms/acme"</span>,
+<span class="w"> </span><span class="s2">"client_id"</span>:<span class="w"> </span><span class="s2">"objectio"</span>,<span class="w"> </span><span class="s2">"client_secret"</span>:<span class="w"> </span><span class="s2">"…"</span>,
+<span class="w"> </span><span class="s2">"claim_name"</span>:<span class="w"> </span><span class="s2">"groups"</span>,<span class="w"> </span><span class="s2">"scopes"</span>:<span class="w"> </span><span class="s2">"openid profile email"</span><span class="o">}</span>
+</code></pre></div>
+<p><code>claim_name</code> can be a dotted path, such as <code>realm_access.roles</code> for
+Keycloak realm roles.</p>
+<p>Only the system admin can set <code>system_admin</code>, or edit or delete a provider
+that has it. Otherwise a tenant admin could point the operator's sign-in at
+their own IdP.</p>
+<h2 id="temporary-credentials-from-an-oidc-token-sts">Temporary credentials from an OIDC token (STS)<a class="headerlink" href="#temporary-credentials-from-an-oidc-token-sts" title="Permanent link">&para;</a></h2>
+<p><code>AssumeRoleWithWebIdentity</code> trades an OIDC token for a role's temporary S3
+keys. It's the AWS STS call, so AWS SDKs and tools speak it as is. Point
+them at the gateway's S3 endpoint:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">boto3</span>
+
+<span class="n">sts</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s2">"sts"</span><span class="p">,</span> <span class="n">endpoint_url</span><span class="o">=</span><span class="s2">"https://s3.example.com"</span><span class="p">,</span> <span class="n">region_name</span><span class="o">=</span><span class="s2">"us-east-1"</span><span class="p">)</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">sts</span><span class="o">.</span><span class="n">assume_role_with_web_identity</span><span class="p">(</span>
+    <span class="n">RoleArn</span><span class="o">=</span><span class="s2">"arn:obio:iam::acme:role/ci"</span><span class="p">,</span>
+    <span class="n">RoleSessionName</span><span class="o">=</span><span class="s2">"build-42"</span><span class="p">,</span>
+    <span class="n">WebIdentityToken</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="s2">"/var/run/secrets/token"</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span>
+    <span class="n">DurationSeconds</span><span class="o">=</span><span class="mi">3600</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">r</span><span class="p">[</span><span class="s2">"Credentials"</span><span class="p">]</span>
+<span class="n">s3</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s2">"s3"</span><span class="p">,</span> <span class="n">endpoint_url</span><span class="o">=</span><span class="s2">"https://s3.example.com"</span><span class="p">,</span>
+                  <span class="n">aws_access_key_id</span><span class="o">=</span><span class="n">c</span><span class="p">[</span><span class="s2">"AccessKeyId"</span><span class="p">],</span>
+                  <span class="n">aws_secret_access_key</span><span class="o">=</span><span class="n">c</span><span class="p">[</span><span class="s2">"SecretAccessKey"</span><span class="p">],</span>
+                  <span class="n">aws_session_token</span><span class="o">=</span><span class="n">c</span><span class="p">[</span><span class="s2">"SessionToken"</span><span class="p">])</span>
+</code></pre></div>
+<p><strong>Which provider can vouch for which role:</strong></p>
+<table>
+<thead>
+<tr>
+<th>role</th>
+<th>accepted tokens</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>system role (<code>arn:obio:iam::objectio:role/…</code>)</td>
+<td>the operator's providers only</td>
+</tr>
+<tr>
+<td>tenant role (<code>arn:obio:iam::acme:role/…</code>)</td>
+<td>that tenant's provider only. For a multi-tenant provider such as Entra <code>organizations</code>, only tokens from the upstream organisation registered to the tenant</td>
+</tr>
+</tbody>
+</table>
+<p>A token from the wrong provider is refused with <code>InvalidIdentityToken</code>,
+however its claims read.</p>
+<p><strong>The trust policy then decides.</strong> Claims are condition keys named after the
+issuer (without <code>https://</code>): <code>&lt;issuer&gt;:sub</code>, <code>&lt;issuer&gt;:aud</code>,
+<code>&lt;issuer&gt;:email</code>, <code>&lt;issuer&gt;:groups</code> and any other claim. As in AWS, a trust
+policy has no <code>Resource</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">"Version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-10-17"</span><span class="p">,</span><span class="w"> </span><span class="nt">"Statement"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span>
+<span class="w">  </span><span class="nt">"Effect"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Allow"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"Principal"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"Federated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://keycloak.acme.example/realms/acme"</span><span class="p">},</span>
+<span class="w">  </span><span class="nt">"Action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sts:AssumeRoleWithWebIdentity"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"Condition"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"StringEquals"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"keycloak.acme.example/realms/acme:aud"</span><span class="p">:</span><span class="w"> </span><span class="s2">"objectio"</span><span class="p">},</span>
+<span class="w">    </span><span class="nt">"ForAnyValue:StringEquals"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"keycloak.acme.example/realms/acme:groups"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ci"</span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}]}</span>
+</code></pre></div>
+<p><strong>What the credentials can do:</strong> what the role's attached policies allow,
+inside the role's tenant. Detaching a policy affects sessions already
+issued. A system role is not a system admin.</p>
+<p><strong>How long they last:</strong> <code>DurationSeconds</code> is between 900 and the role's
+<code>max_session_seconds</code>. The default is 3600 and the maximum 12 hours.</p>
+<p><strong>Errors:</strong> <code>AccessDenied</code> (trust policy, or no such role: the two are
+answered the same, so role names can't be probed), <code>InvalidIdentityToken</code>,
+<code>ExpiredTokenException</code>, <code>ValidationError</code>.</p>
+<h2 id="session-and-token-signing">Session and token signing<a class="headerlink" href="#session-and-token-signing" title="Permanent link">&para;</a></h2>
+<p>Temporary credentials, console sessions and listing continuation tokens are
+signed with keys derived from a <strong>cluster secret</strong>. Meta creates the secret
+once and replicates it through Raft, so every gateway shares it: a session
+issued by one gateway is honoured by all of them, and nothing about it can be
+forged from outside. The secret is never exposed by any API.</p>
+<h2 id="acls">ACLs<a class="headerlink" href="#acls" title="Permanent link">&para;</a></h2>
+<p>Buckets are <strong>bucket owner enforced</strong>, the S3 default since 2023. The bucket
+owner owns every object, ACLs grant nothing, and access is decided by
+policies only. ACL reads answer with the owner's <code>FULL_CONTROL</code>. An ACL
+write that says only that is accepted; any other ACL write is refused with
+<code>AccessControlListNotSupported</code>. No ACL can make data public: see
+<a href="../public-access/">Public access</a> for how that's done deliberately.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.sections", "navigation.top", "search.highlight", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1054 @@
+test_id,file,area,outcome,category,note
+s3tests/functional/test_iam.py::test_deny_bucket_actions_in_user_policy,test_iam.py,iam,failed,not-implemented-by-design,IAM API (PutUserPolicy etc.)
+s3tests/functional/test_s3.py::test_bucket_list_maxkeys_one,test_s3.py,listing,passed,,
+s3tests/functional/test_headers.py::test_object_create_bad_md5_invalid_short,test_headers.py,aws2/headers,passed,,
+s3tests/functional/test_iam.py::test_cross_account_bucket_acl_user_policy_grant_account_email,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_iam.py::test_cross_account_user_policy_bucket_acl_grant_account_email,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_headers.py::test_object_create_bad_md5_bad,test_headers.py,aws2/headers,passed,,
+s3tests/functional/test_iam.py::test_allow_object_actions_in_user_policy,test_iam.py,iam,failed,not-implemented-by-design,IAM API (PutUserPolicy etc.)
+s3tests/functional/test_iam.py::test_cross_account_root_bucket_policy_allow_account_arn,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_iam.py::test_cross_account_root_bucket_policy_allow_account_id,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_iam.py::test_deny_object_actions_in_user_policy,test_iam.py,iam,failed,not-implemented-by-design,IAM API (PutUserPolicy etc.)
+s3tests/functional/test_iam.py::test_cross_account_root_bucket_acl_grant_canonical_id,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_s3.py::test_bucket_listv2_maxkeys_one,test_s3.py,listing,passed,,
+s3tests/functional/test_iam.py::test_cross_account_root_bucket_acl_grant_account_email,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_iam.py::test_allow_multipart_actions_in_user_policy,test_iam.py,iam,failed,not-implemented-by-design,IAM API (PutUserPolicy etc.)
+s3tests/functional/test_iam.py::test_get_account_summary_root,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_iam.py::test_get_account_summary_policy,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_iam.py::test_deny_multipart_actions_in_user_policy,test_iam.py,iam,failed,not-implemented-by-design,IAM API (PutUserPolicy etc.)
+s3tests/functional/test_s3.py::test_bucket_list_empty,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_bucket_list_maxkeys_zero,test_s3.py,listing,passed,,
+s3tests/functional/test_iam.py::test_allow_tagging_actions_in_user_policy,test_iam.py,iam,failed,not-implemented-by-design,IAM API (PutUserPolicy etc.)
+s3tests/functional/test_s3.py::test_bucket_list_distinct,test_s3.py,listing,passed,,
+s3tests/functional/test_iam.py::test_deny_tagging_actions_in_user_policy,test_iam.py,iam,failed,not-implemented-by-design,IAM API (PutUserPolicy etc.)
+s3tests/functional/test_iam.py::test_verify_conflicting_user_policy_statements,test_iam.py,iam,failed,not-implemented-by-design,IAM API (PutUserPolicy etc.)
+s3tests/functional/test_s3.py::test_bucket_list_many,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_bucket_listv2_maxkeys_zero,test_s3.py,listing,passed,,
+s3tests/functional/test_iam.py::test_verify_conflicting_user_policies,test_iam.py,iam,failed,not-implemented-by-design,IAM API (PutUserPolicy etc.)
+s3tests/functional/test_iam.py::test_verify_allow_iam_actions,test_iam.py,iam,failed,not-implemented-by-design,IAM API (PutUserPolicy etc.)
+s3tests/functional/test_s3.py::test_bucket_listv2_many,test_s3.py,listing,passed,,
+s3tests/functional/test_iam.py::test_account_user_create,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_s3.py::test_bucket_list_maxkeys_none,test_s3.py,listing,passed,,
+s3tests/functional/test_iam.py::test_account_user_case_insensitive_name,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_iam.py::test_account_user_delete,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_iam.py::test_account_user_list,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_s3.py::test_basic_key_count,test_s3.py,other,passed,,
+s3tests/functional/test_iam.py::test_account_user_list_path_prefix,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_iam.py::test_account_user_update_name,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_iam.py::test_account_user_update_path,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_s3.py::test_bucket_listv2_maxkeys_none,test_s3.py,listing,passed,,
+s3tests/functional/test_iam.py::test_account_user_access_key_create,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_iam.py::test_account_current_user_access_key_create,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_iam.py::test_account_user_access_key_update,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_s3.py::test_bucket_list_delimiter_basic,test_s3.py,listing,passed,,
+s3tests/functional/test_iam.py::test_account_current_user_access_key_update,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_s3.py::test_account_usage,test_s3.py,usage,failed,not-implemented-by-design,RGW usage extension
+s3tests/functional/test_iam.py::test_account_user_access_key_delete,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_iam.py::test_account_current_user_access_key_delete,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_iam.py::test_account_user_access_key_list,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_s3.py::test_head_bucket_usage,test_s3.py,usage,failed,not-implemented-by-design,RGW X-RGW-* usage headers
+s3tests/functional/test_iam.py::test_account_user_bucket_policy_allow,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_s3.py::test_bucket_listv2_delimiter_basic,test_s3.py,listing,passed,,
+s3tests/functional/test_iam.py::test_account_user_policy,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_iam.py::test_account_user_policy_managed,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_s3.py::test_bucket_list_unordered,test_s3.py,listing,failed,not-implemented-by-design,RGW allow-unordered listing extension
+s3tests/functional/test_iam.py::test_account_user_policy_allow,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_iam.py::test_account_group_create,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_s3.py::test_bucket_listv2_encoding_basic,test_s3.py,encryption,passed,,
+s3tests/functional/test_iam.py::test_account_group_case_insensitive_name,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_iam.py::test_account_group_list,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_iam.py::test_account_group_update,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_iam.py::test_account_inline_group_policy,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_iam.py::test_account_managed_group_policy,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_s3.py::test_bucket_list_encoding_basic,test_s3.py,encryption,passed,,
+s3tests/functional/test_iam.py::test_account_inline_group_policy_allow,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_iam.py::test_account_managed_group_policy_allow,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_iam.py::test_account_role_create,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_iam.py::test_account_role_case_insensitive_name,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_iam.py::test_account_role_delete,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_headers.py::test_object_create_bad_md5_empty,test_headers.py,aws2/headers,passed,,
+s3tests/functional/test_s3.py::test_bucket_list_delimiter_prefix,test_s3.py,listing,passed,,
+s3tests/functional/test_iam.py::test_account_role_list,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_headers.py::test_object_create_bad_md5_none,test_headers.py,aws2/headers,passed,,
+s3tests/functional/test_iam.py::test_account_role_list_path_prefix,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_iam.py::test_account_role_update,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_iam.py::test_account_role_list_permission,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_iam.py::test_account_role_policy,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_headers.py::test_object_create_bad_expect_mismatch,test_headers.py,aws2/headers,passed,,
+s3tests/functional/test_iam.py::test_account_role_policy_managed,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_iam.py::test_account_role_policy_allow,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_iam.py::test_same_account_role_policy_allow,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_s3.py::test_bucket_listv2_delimiter_prefix,test_s3.py,listing,passed,,
+s3tests/functional/test_iam.py::test_cross_account_role_policy_allow,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_headers.py::test_object_create_bad_expect_empty,test_headers.py,aws2/headers,passed,,
+s3tests/functional/test_iam.py::test_account_role_policy_allow_create_bucket,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_iam.py::test_account_role_policy_allow_get_role,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_iam.py::test_account_oidc_provider,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_iam.py::test_verify_add_new_client_id_to_oidc,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_headers.py::test_object_create_bad_expect_none,test_headers.py,aws2/headers,passed,,
+s3tests/functional/test_iam.py::test_verify_add_existing_client_id_to_oidc,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_iam.py::test_verify_remove_client_id_from_oidc,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_s3.py::test_bucket_listv2_unordered,test_s3.py,listing,failed,not-implemented-by-design,RGW allow-unordered listing extension
+s3tests/functional/test_iam.py::test_verify_update_thumbprintlist_of_oidc,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_s3.py::test_bucket_listv2_delimiter_prefix_ends_with_delimiter,test_s3.py,listing,passed,,
+s3tests/functional/test_headers.py::test_object_create_bad_contentlength_empty,test_headers.py,aws2/headers,passed,,
+s3tests/functional/test_iam.py::test_cross_account_bucket_user_policy_allow_user_arn,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_iam.py::test_cross_account_user_bucket_policy_allow_user_arn,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_headers.py::test_object_create_bad_contentlength_negative,test_headers.py,aws2/headers,passed,,
+s3tests/functional/test_s3.py::test_bucket_list_delimiter_prefix_ends_with_delimiter,test_s3.py,listing,passed,,
+s3tests/functional/test_iam.py::test_cross_account_user_bucket_policy_allow_account_arn,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_headers.py::test_object_create_bad_contentlength_none,test_headers.py,aws2/headers,failed,test-environment,botocore signs/re-adds the header after the test removes it (fails_on_rgw)
+s3tests/functional/test_iam.py::test_cross_account_bucket_user_policy_allow_account_arn,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_iam.py::test_cross_account_user_bucket_policy_allow_account_id,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_s3.py::test_bucket_list_delimiter_alt,test_s3.py,listing,passed,,
+s3tests/functional/test_iam.py::test_cross_account_bucket_user_policy_allow_account_id,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_headers.py::test_object_create_bad_contenttype_invalid,test_headers.py,aws2/headers,passed,,
+s3tests/functional/test_iam.py::test_cross_account_bucket_acl_user_policy_grant_user_id,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_iam.py::test_cross_account_user_policy_bucket_acl_grant_user_id,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_iam.py::test_cross_account_bucket_acl_user_policy_grant_canonical_id,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_headers.py::test_object_create_bad_contenttype_empty,test_headers.py,aws2/headers,passed,,
+s3tests/functional/test_iam.py::test_cross_account_user_policy_bucket_acl_grant_canonical_id,test_iam.py,iam,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_s3.py::test_post_object_escaped_field_values,test_s3.py,post_object,failed,not-implemented-by-design,POST object signed with SigV2 (HMAC-SHA1 policy)
+s3tests/functional/test_s3.py::test_bucket_listv2_delimiter_alt,test_s3.py,listing,passed,,
+s3tests/functional/test_headers.py::test_object_create_bad_contenttype_none,test_headers.py,aws2/headers,passed,,
+s3tests/functional/test_s3.py::test_post_object_success_redirect_action,test_s3.py,post_object,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_post_object_invalid_signature,test_s3.py,post_object,failed,not-implemented-by-design,POST object signed with SigV2 (HMAC-SHA1 policy)
+s3tests/functional/test_headers.py::test_object_create_bad_authorization_empty,test_headers.py,aws2/headers,failed,test-environment,botocore signs/re-adds the header after the test removes it (fails_on_rgw)
+s3tests/functional/test_s3.py::test_post_object_invalid_access_key,test_s3.py,post_object,failed,not-implemented-by-design,POST object signed with SigV2 (HMAC-SHA1 policy)
+s3tests/functional/test_s3.py::test_bucket_list_delimiter_prefix_underscore,test_s3.py,listing,passed,,
+s3tests/functional/test_headers.py::test_object_create_date_and_amz_date,test_headers.py,aws2/headers,passed,,
+s3tests/functional/test_s3.py::test_post_object_invalid_date_format,test_s3.py,post_object,passed,,
+s3tests/functional/test_s3.py::test_post_object_no_key_specified,test_s3.py,post_object,passed,,
+s3tests/functional/test_headers.py::test_object_create_amz_date_and_no_date,test_headers.py,aws2/headers,passed,,
+s3tests/functional/test_s3.py::test_post_object_missing_signature,test_s3.py,post_object,passed,,
+s3tests/functional/test_s3.py::test_bucket_listv2_delimiter_prefix_underscore,test_s3.py,listing,passed,,
+s3tests/functional/test_headers.py::test_object_create_bad_authorization_none,test_headers.py,aws2/headers,failed,test-environment,botocore signs/re-adds the header after the test removes it (fails_on_rgw)
+s3tests/functional/test_s3.py::test_post_object_missing_policy_condition,test_s3.py,post_object,failed,not-implemented-by-design,POST object signed with SigV2 (HMAC-SHA1 policy)
+s3tests/functional/test_s3.py::test_bucket_list_maxkeys_invalid,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_post_object_user_specified_header,test_s3.py,post_object,failed,not-implemented-by-design,POST object signed with SigV2 (HMAC-SHA1 policy)
+s3tests/functional/test_headers.py::test_bucket_create_contentlength_none,test_headers.py,aws2/headers,passed,,
+s3tests/functional/test_headers.py::test_object_acl_create_contentlength_none,test_headers.py,aws2/headers,failed,not-implemented-by-design,ACLs beyond canned private
+s3tests/functional/test_s3.py::test_post_object_request_missing_policy_specified_field,test_s3.py,post_object,failed,not-implemented-by-design,POST object signed with SigV2 (HMAC-SHA1 policy)
+s3tests/functional/test_s3.py::test_bucket_list_marker_none,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_bucket_list_delimiter_percentage,test_s3.py,tagging,passed,,
+s3tests/functional/test_s3.py::test_post_object_condition_is_case_sensitive,test_s3.py,post_object,passed,,
+s3tests/functional/test_headers.py::test_bucket_put_bad_canned_acl,test_headers.py,aws2/headers,passed,,
+s3tests/functional/test_s3.py::test_post_object_expires_is_case_sensitive,test_s3.py,post_object,passed,,
+s3tests/functional/test_headers.py::test_bucket_create_bad_expect_mismatch,test_headers.py,aws2/headers,passed,,
+s3tests/functional/test_s3.py::test_post_object_expired_policy,test_s3.py,post_object,failed,not-implemented-by-design,POST object signed with SigV2 (HMAC-SHA1 policy)
+s3tests/functional/test_headers.py::test_bucket_create_bad_expect_empty,test_headers.py,aws2/headers,passed,,
+s3tests/functional/test_s3.py::test_bucket_listv2_delimiter_percentage,test_s3.py,tagging,passed,,
+s3tests/functional/test_s3.py::test_bucket_list_marker_empty,test_s3.py,listing,passed,,
+s3tests/functional/test_headers.py::test_bucket_create_bad_contentlength_empty,test_headers.py,aws2/headers,passed,,
+s3tests/functional/test_s3.py::test_post_object_wrong_bucket,test_s3.py,post_object,failed,not-implemented-by-design,POST object signed with SigV2 (HMAC-SHA1 policy)
+s3tests/functional/test_headers.py::test_bucket_create_bad_contentlength_negative,test_headers.py,aws2/headers,passed,,
+s3tests/functional/test_headers.py::test_bucket_create_bad_contentlength_none,test_headers.py,aws2/headers,passed,,
+s3tests/functional/test_headers.py::test_bucket_create_bad_authorization_empty,test_headers.py,aws2/headers,failed,test-environment,botocore signs/re-adds the header after the test removes it (fails_on_rgw)
+s3tests/functional/test_s3.py::test_post_object_invalid_request_field_value,test_s3.py,post_object,failed,not-implemented-by-design,POST object signed with SigV2 (HMAC-SHA1 policy)
+s3tests/functional/test_s3.py::test_bucket_list_delimiter_whitespace,test_s3.py,listing,passed,,
+s3tests/functional/test_headers.py::test_bucket_create_bad_authorization_none,test_headers.py,aws2/headers,failed,test-environment,botocore signs/re-adds the header after the test removes it (fails_on_rgw)
+s3tests/functional/test_s3.py::test_bucket_listv2_continuationtoken_empty,test_s3.py,listing,passed,,
+s3tests/functional/test_headers.py::test_object_create_bad_md5_invalid_garbage_aws2,test_headers.py,aws2/headers,failed,not-implemented-by-design,SigV2
+s3tests/functional/test_s3.py::test_post_object_missing_expires_condition,test_s3.py,post_object,passed,,
+s3tests/functional/test_s3.py::test_post_object_missing_conditions_list,test_s3.py,post_object,passed,,
+s3tests/functional/test_headers.py::test_object_create_bad_contentlength_mismatch_below_aws2,test_headers.py,aws2/headers,failed,not-implemented-by-design,SigV2
+s3tests/functional/test_s3.py::test_post_object_upload_size_limit_exceeded,test_s3.py,post_object,passed,,
+s3tests/functional/test_headers.py::test_object_create_bad_authorization_incorrect_aws2,test_headers.py,aws2/headers,failed,not-implemented-by-design,SigV2
+s3tests/functional/test_s3.py::test_bucket_listv2_delimiter_whitespace,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_bucket_listv2_continuationtoken,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_post_object_missing_content_length_argument,test_s3.py,post_object,passed,,
+s3tests/functional/test_headers.py::test_object_create_bad_authorization_invalid_aws2,test_headers.py,aws2/headers,failed,not-implemented-by-design,SigV2
+s3tests/functional/test_s3.py::test_post_object_invalid_content_length_argument,test_s3.py,post_object,passed,,
+s3tests/functional/test_headers.py::test_object_create_bad_ua_empty_aws2,test_headers.py,aws2/headers,failed,not-implemented-by-design,SigV2
+s3tests/functional/test_s3.py::test_post_object_upload_size_below_minimum,test_s3.py,post_object,passed,,
+s3tests/functional/test_headers.py::test_object_create_bad_ua_none_aws2,test_headers.py,aws2/headers,failed,not-implemented-by-design,SigV2
+s3tests/functional/test_s3.py::test_bucket_listv2_both_continuationtoken_startafter,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_bucket_list_delimiter_dot,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_post_object_upload_size_rgw_chunk_size_bug,test_s3.py,post_object,failed,not-implemented-by-design,POST object signed with SigV2 (HMAC-SHA1 policy)
+s3tests/functional/test_headers.py::test_object_create_bad_date_invalid_aws2,test_headers.py,aws2/headers,failed,not-implemented-by-design,SigV2
+s3tests/functional/test_headers.py::test_object_create_bad_date_empty_aws2,test_headers.py,aws2/headers,failed,not-implemented-by-design,SigV2
+s3tests/functional/test_s3.py::test_post_object_empty_conditions,test_s3.py,post_object,passed,,
+s3tests/functional/test_s3.py::test_get_object_ifmatch_good,test_s3.py,ranged/get,passed,,
+s3tests/functional/test_headers.py::test_object_create_bad_date_none_aws2,test_headers.py,aws2/headers,failed,not-implemented-by-design,SigV2
+s3tests/functional/test_s3.py::test_bucket_list_marker_unreadable,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_bucket_listv2_delimiter_dot,test_s3.py,listing,passed,,
+s3tests/functional/test_headers.py::test_object_create_bad_date_before_today_aws2,test_headers.py,aws2/headers,failed,not-implemented-by-design,SigV2
+s3tests/functional/test_s3.py::test_get_object_ifmatch_failed,test_s3.py,ranged/get,passed,,
+s3tests/functional/test_headers.py::test_object_create_bad_date_before_epoch_aws2,test_headers.py,aws2/headers,failed,not-implemented-by-design,SigV2
+s3tests/functional/test_headers.py::test_object_create_bad_date_after_end_aws2,test_headers.py,aws2/headers,failed,not-implemented-by-design,SigV2
+s3tests/functional/test_s3.py::test_get_object_ifnonematch_good,test_s3.py,ranged/get,passed,,
+s3tests/functional/test_s3.py::test_bucket_listv2_startafter_unreadable,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_bucket_list_delimiter_unreadable,test_s3.py,listing,passed,,
+s3tests/functional/test_headers.py::test_bucket_create_bad_authorization_invalid_aws2,test_headers.py,aws2/headers,failed,not-implemented-by-design,SigV2
+s3tests/functional/test_headers.py::test_bucket_create_bad_ua_empty_aws2,test_headers.py,aws2/headers,failed,not-implemented-by-design,SigV2
+s3tests/functional/test_s3.py::test_get_object_ifnonematch_failed,test_s3.py,ranged/get,passed,,
+s3tests/functional/test_headers.py::test_bucket_create_bad_ua_none_aws2,test_headers.py,aws2/headers,failed,not-implemented-by-design,SigV2
+s3tests/functional/test_headers.py::test_bucket_create_bad_date_invalid_aws2,test_headers.py,aws2/headers,failed,not-implemented-by-design,SigV2
+s3tests/functional/test_headers.py::test_bucket_create_bad_date_empty_aws2,test_headers.py,aws2/headers,failed,not-implemented-by-design,SigV2
+s3tests/functional/test_s3.py::test_get_object_ifmodifiedsince_good,test_s3.py,conditional,passed,,
+s3tests/functional/test_headers.py::test_bucket_create_bad_date_none_aws2,test_headers.py,aws2/headers,failed,not-implemented-by-design,SigV2
+s3tests/functional/test_s3.py::test_bucket_list_marker_not_in_list,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_bucket_listv2_delimiter_unreadable,test_s3.py,listing,passed,,
+s3tests/functional/test_headers.py::test_bucket_create_bad_date_before_today_aws2,test_headers.py,aws2/headers,failed,not-implemented-by-design,SigV2
+s3tests/functional/test_headers.py::test_bucket_create_bad_date_after_today_aws2,test_headers.py,aws2/headers,failed,not-implemented-by-design,SigV2
+s3tests/functional/test_s3.py::test_get_object_ifmodifiedsince_failed,test_s3.py,conditional,passed,,
+s3tests/functional/test_headers.py::test_bucket_create_bad_date_before_epoch_aws2,test_headers.py,aws2/headers,failed,not-implemented-by-design,SigV2
+s3tests/functional/test_iam.py::test_put_user_policy,test_iam.py,iam,failed,not-implemented-by-design,IAM API (PutUserPolicy etc.)
+s3tests/functional/test_iam.py::test_put_user_policy_invalid_user,test_iam.py,iam,failed,not-implemented-by-design,IAM API (PutUserPolicy etc.)
+s3tests/functional/test_iam.py::test_put_user_policy_parameter_limit,test_iam.py,iam,failed,not-implemented-by-design,IAM API (PutUserPolicy etc.)
+s3tests/functional/test_s3.py::test_bucket_listv2_startafter_not_in_list,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_bucket_list_delimiter_empty,test_s3.py,listing,passed,,
+s3tests/functional/test_iam.py::test_put_user_policy_invalid_element,test_iam.py,iam,failed,not-implemented-by-design,IAM API (PutUserPolicy etc.)
+s3tests/functional/test_iam.py::test_put_existing_user_policy,test_iam.py,iam,failed,not-implemented-by-design,IAM API (PutUserPolicy etc.)
+s3tests/functional/test_iam.py::test_list_user_policy,test_iam.py,iam,failed,not-implemented-by-design,IAM API (PutUserPolicy etc.)
+s3tests/functional/test_iam.py::test_list_user_policy_invalid_user,test_iam.py,iam,failed,not-implemented-by-design,IAM API (PutUserPolicy etc.)
+s3tests/functional/test_s3.py::test_get_object_ifunmodifiedsince_good,test_s3.py,conditional,passed,,
+s3tests/functional/test_iam.py::test_get_user_policy,test_iam.py,iam,failed,not-implemented-by-design,IAM API (PutUserPolicy etc.)
+s3tests/functional/test_s3.py::test_bucket_list_marker_after_list,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_bucket_listv2_delimiter_empty,test_s3.py,listing,passed,,
+s3tests/functional/test_iam.py::test_get_user_policy_invalid_user,test_iam.py,iam,failed,not-implemented-by-design,IAM API (PutUserPolicy etc.)
+s3tests/functional/test_iam.py::test_get_user_policy_invalid_policy_name,test_iam.py,iam,failed,not-implemented-by-design,IAM API (PutUserPolicy etc.)
+s3tests/functional/test_s3.py::test_get_object_ifunmodifiedsince_failed,test_s3.py,conditional,passed,,
+s3tests/functional/test_iam.py::test_get_deleted_user_policy,test_iam.py,iam,failed,not-implemented-by-design,IAM API (PutUserPolicy etc.)
+s3tests/functional/test_iam.py::test_get_user_policy_from_multiple_policies,test_iam.py,iam,failed,not-implemented-by-design,IAM API (PutUserPolicy etc.)
+s3tests/functional/test_iam.py::test_delete_user_policy,test_iam.py,iam,failed,not-implemented-by-design,IAM API (PutUserPolicy etc.)
+s3tests/functional/test_s3.py::test_put_object_ifmatch_good,test_s3.py,object,passed,,
+s3tests/functional/test_s3.py::test_bucket_listv2_startafter_after_list,test_s3.py,listing,passed,,
+s3tests/functional/test_iam.py::test_delete_user_policy_invalid_user,test_iam.py,iam,failed,not-implemented-by-design,IAM API (PutUserPolicy etc.)
+s3tests/functional/test_s3.py::test_bucket_list_delimiter_none,test_s3.py,listing,passed,,
+s3tests/functional/test_iam.py::test_delete_user_policy_invalid_policy_name,test_iam.py,iam,failed,not-implemented-by-design,IAM API (PutUserPolicy etc.)
+s3tests/functional/test_iam.py::test_delete_user_policy_from_multiple_policies,test_iam.py,iam,failed,not-implemented-by-design,IAM API (PutUserPolicy etc.)
+s3tests/functional/test_iam.py::test_allow_bucket_actions_in_user_policy,test_iam.py,iam,failed,not-implemented-by-design,IAM API (PutUserPolicy etc.)
+s3tests/functional/test_s3.py::test_put_object_ifmatch_failed,test_s3.py,object,passed,,
+s3tests/functional/test_s3.py::test_object_acl_canned_bucketownerread,test_s3.py,acl/ownership,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_bucket_list_return_data,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_bucket_listv2_delimiter_none,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_put_object_ifmatch_overwrite_existed_good,test_s3.py,object,passed,,
+s3tests/functional/test_s3.py::test_object_acl_canned_bucketownerfullcontrol,test_s3.py,acl/ownership,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_object_acl_full_control_verify_owner,test_s3.py,acl/ownership,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_object_acl_full_control_verify_attributes,test_s3.py,acl/ownership,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_put_object_ifmatch_nonexisted_failed,test_s3.py,object,passed,,
+s3tests/functional/test_s3.py::test_bucket_list_return_data_versioning,test_s3.py,versioning,failed,gap,ListObjectVersions entries carry no Owner element
+s3tests/functional/test_s3.py::test_bucket_listv2_fetchowner_notempty,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_bucket_acl_canned_private_to_private,test_s3.py,acl/ownership,passed,,
+s3tests/functional/test_s3.py::test_put_object_ifnonmatch_good,test_s3.py,object,passed,,
+s3tests/functional/test_s3.py::test_object_acl,test_s3.py,acl/ownership,failed,aws-compatible-already,Owner DisplayName is the canonical user id; test expects RGW display name (AWS stopped returning DisplayName in 2025)
+s3tests/functional/test_s3.py::test_put_object_ifnonmatch_failed,test_s3.py,object,passed,,
+s3tests/functional/test_s3.py::test_bucket_listv2_fetchowner_defaultempty,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_bucket_list_objects_anonymous,test_s3.py,listing,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_object_acl_write,test_s3.py,acl/ownership,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_put_object_ifnonmatch_nonexisted_good,test_s3.py,object,passed,,
+s3tests/functional/test_s3.py::test_bucket_listv2_objects_anonymous,test_s3.py,listing,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_put_object_ifnonmatch_overwrite_existed_failed,test_s3.py,object,passed,,
+s3tests/functional/test_s3.py::test_bucket_listv2_fetchowner_empty,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_object_acl_writeacp,test_s3.py,acl/ownership,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_bucket_list_objects_anonymous_fail,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_object_raw_get,test_s3.py,object,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_bucket_listv2_objects_anonymous_fail,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_object_acl_read,test_s3.py,acl/ownership,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_bucket_list_delimiter_not_exist,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_bucket_notexist,test_s3.py,bucket,passed,,
+s3tests/functional/test_s3.py::test_object_raw_get_bucket_gone,test_s3.py,bucket,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_bucketv2_notexist,test_s3.py,bucket,passed,,
+s3tests/functional/test_s3.py::test_bucket_delete_notexist,test_s3.py,bucket,passed,,
+s3tests/functional/test_s3.py::test_bucket_delete_nonempty,test_s3.py,bucket,passed,,
+s3tests/functional/test_s3.py::test_object_delete_key_bucket_gone,test_s3.py,bucket,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_object_acl_readacp,test_s3.py,acl/ownership,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_bucket_listv2_delimiter_not_exist,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_bucket_concurrent_set_canned_acl,test_s3.py,acl/ownership,failed,not-implemented-by-design,PutBucketAcl public-read refused (ACLs disabled)
+s3tests/functional/test_s3.py::test_object_raw_get_object_gone,test_s3.py,ranged/get,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_bucket_acl_grant_userid_fullcontrol,test_s3.py,acl/ownership,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_object_write_to_nonexist_bucket,test_s3.py,bucket,passed,,
+s3tests/functional/test_s3.py::test_bucket_list_delimiter_not_skip_special,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_bucket_head,test_s3.py,bucket,passed,,
+s3tests/functional/test_s3.py::test_object_write_with_chunked_transfer_encoding,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_bucket_head_notexist,test_s3.py,bucket,passed,,
+s3tests/functional/test_s3.py::test_bucket_acl_grant_userid_read,test_s3.py,acl/ownership,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_bucket_head_extended,test_s3.py,bucket,failed,not-implemented-by-design,RGW x-rgw-object-count header
+s3tests/functional/test_s3.py::test_bucket_create_delete,test_s3.py,bucket,passed,,
+s3tests/functional/test_s3.py::test_object_read_not_exist,test_s3.py,ranged/get,passed,,
+s3tests/functional/test_s3.py::test_object_raw_get_bucket_acl,test_s3.py,acl/ownership,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_bucket_acl_grant_userid_readacp,test_s3.py,acl/ownership,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_object_requestid_matches_header_on_error,test_s3.py,conditional,passed,,
+s3tests/functional/test_s3.py::test_versioning_concurrent_multi_object_delete,test_s3.py,versioning,passed,,
+s3tests/functional/test_s3.py::test_object_raw_get_object_acl,test_s3.py,acl/ownership,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_bucket_acl_grant_userid_write,test_s3.py,acl/ownership,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_object_put_acl_mtime,test_s3.py,acl/ownership,passed,,
+s3tests/functional/test_s3.py::test_bucket_acl_grant_userid_writeacp,test_s3.py,acl/ownership,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_bucket_acl_grant_nonexist_user,test_s3.py,acl/ownership,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_object_header_acl_grants,test_s3.py,acl/ownership,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_bucket_header_acl_grants,test_s3.py,acl/ownership,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_bucket_acl_grant_email,test_s3.py,acl/ownership,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_multi_object_delete,test_s3.py,object,passed,,
+s3tests/functional/test_s3.py::test_object_raw_authenticated,test_s3.py,object,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_bucket_acl_grant_email_not_exist,test_s3.py,acl/ownership,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_object_raw_response_headers,test_s3.py,object,passed,,
+s3tests/functional/test_s3.py::test_bucket_acl_revoke_all,test_s3.py,acl/ownership,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_expected_bucket_owner,test_s3.py,bucket,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_object_raw_authenticated_bucket_acl,test_s3.py,acl/ownership,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_multi_objectv2_delete,test_s3.py,object,passed,,
+s3tests/functional/test_s3.py::test_object_raw_authenticated_object_acl,test_s3.py,acl/ownership,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_access_bucket_private_object_private,test_s3.py,bucket,passed,,
+s3tests/functional/test_s3.py::test_object_raw_authenticated_bucket_gone,test_s3.py,bucket,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_multi_object_delete_key_limit,test_s3.py,object,passed,,
+s3tests/functional/test_s3.py::test_object_raw_authenticated_object_gone,test_s3.py,object,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_access_bucket_private_objectv2_private,test_s3.py,bucket,passed,,
+s3tests/functional/test_s3.py::test_object_raw_get_x_amz_expires_not_expired,test_s3.py,object,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_access_bucket_private_object_publicread,test_s3.py,policy/public-access,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_object_raw_get_x_amz_expires_not_expired_tenant,test_s3.py,object,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_object_raw_get_x_amz_expires_out_range_zero,test_s3.py,ranged/get,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_access_bucket_private_objectv2_publicread,test_s3.py,policy/public-access,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_object_raw_get_x_amz_expires_out_max_range,test_s3.py,ranged/get,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_object_raw_get_x_amz_expires_out_positive_range,test_s3.py,ranged/get,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_access_bucket_private_object_publicreadwrite,test_s3.py,policy/public-access,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_object_content_encoding_aws_chunked,test_s3.py,object,failed,bug,Content-Encoding aws-chunked with a plain (non-STREAMING) body is parsed as chunked -> 400 IncompleteBody
+s3tests/functional/test_s3.py::test_access_bucket_private_objectv2_publicreadwrite,test_s3.py,policy/public-access,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_object_anon_put,test_s3.py,object,passed,,
+s3tests/functional/test_s3.py::test_object_anon_put_write_access,test_s3.py,object,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_access_bucket_publicread_object_private,test_s3.py,policy/public-access,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_object_put_authenticated,test_s3.py,object,passed,,
+s3tests/functional/test_s3.py::test_access_bucket_publicread_object_publicread,test_s3.py,policy/public-access,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_object_presigned_put_object_with_acl,test_s3.py,acl/ownership,passed,,
+s3tests/functional/test_s3.py::test_access_bucket_publicread_object_publicreadwrite,test_s3.py,policy/public-access,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_object_presigned_put_object_with_acl_tenant,test_s3.py,acl/ownership,passed,,
+s3tests/functional/test_s3.py::test_object_raw_put_authenticated_expired,test_s3.py,object,passed,,
+s3tests/functional/test_s3.py::test_access_bucket_publicreadwrite_object_private,test_s3.py,policy/public-access,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_bucket_create_naming_bad_starts_nonalpha,test_s3.py,bucket,passed,,
+s3tests/functional/test_s3.py::test_access_bucket_publicreadwrite_object_publicread,test_s3.py,policy/public-access,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_bucket_create_naming_bad_short_one,test_s3.py,bucket,passed,,
+s3tests/functional/test_s3.py::test_bucket_create_naming_bad_short_two,test_s3.py,bucket,passed,,
+s3tests/functional/test_s3.py::test_bucket_create_naming_good_long_60,test_s3.py,bucket,passed,,
+s3tests/functional/test_s3.py::test_access_bucket_publicreadwrite_object_publicreadwrite,test_s3.py,policy/public-access,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_bucket_create_naming_good_long_61,test_s3.py,bucket,passed,,
+s3tests/functional/test_s3.py::test_bucket_create_naming_good_long_62,test_s3.py,bucket,passed,,
+s3tests/functional/test_s3.py::test_buckets_create_then_list,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_bucket_create_naming_good_long_63,test_s3.py,bucket,passed,,
+s3tests/functional/test_s3.py::test_bucket_list_long_name,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_buckets_list_ctime,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_bucket_create_naming_bad_ip,test_s3.py,bucket,passed,,
+s3tests/functional/test_s3.py::test_bucket_create_naming_dns_underscore,test_s3.py,bucket,passed,,
+s3tests/functional/test_s3.py::test_bucket_create_naming_dns_long,test_s3.py,bucket,passed,,
+s3tests/functional/test_s3.py::test_bucket_create_naming_dns_dash_at_end,test_s3.py,bucket,passed,,
+s3tests/functional/test_s3.py::test_bucket_create_naming_dns_dot_dot,test_s3.py,bucket,passed,,
+s3tests/functional/test_s3.py::test_list_buckets_anonymous,test_s3.py,listing,failed,aws-compatible-already,anonymous ListBuckets is 403 as on AWS (test is fails_on_aws)
+s3tests/functional/test_s3.py::test_bucket_create_naming_dns_dot_dash,test_s3.py,bucket,passed,,
+s3tests/functional/test_s3.py::test_bucket_create_naming_dns_dash_dot,test_s3.py,bucket,passed,,
+s3tests/functional/test_s3.py::test_list_buckets_invalid_auth,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_bucket_create_exists,test_s3.py,bucket,passed,,
+s3tests/functional/test_s3.py::test_list_buckets_bad_auth,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_list_buckets_paginated,test_s3.py,listing,failed,test-environment,assumes main user owns no buckets; a bucket (testbuck2) left by another test exists
+s3tests/functional/test_s3.py::test_bucket_get_location,test_s3.py,bucket,failed,aws-compatible-already,us-east-1 returns null LocationConstraint as AWS does; RGW echoes api_name
+s3tests/functional/test_s3.py::test_bucket_create_naming_good_starts_alpha,test_s3.py,bucket,passed,,
+s3tests/functional/test_s3.py::test_bucket_create_exists_nonowner,test_s3.py,bucket,passed,,
+s3tests/functional/test_s3.py::test_bucket_create_naming_good_starts_digit,test_s3.py,bucket,passed,,
+s3tests/functional/test_s3.py::test_bucket_recreate_overwrite_acl,test_s3.py,acl/ownership,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_bucket_create_naming_good_contains_period,test_s3.py,bucket,passed,,
+s3tests/functional/test_s3.py::test_bucket_recreate_new_acl,test_s3.py,acl/ownership,failed,not-implemented-by-design,CreateBucket with ACL public-read refused (400) before the exists check (409)
+s3tests/functional/test_s3.py::test_bucket_create_naming_good_contains_hyphen,test_s3.py,bucket,passed,,
+s3tests/functional/test_s3.py::test_bucket_acl_default,test_s3.py,acl/ownership,failed,aws-compatible-already,Owner DisplayName is the canonical user id; test expects RGW display name (AWS stopped returning DisplayName in 2025)
+s3tests/functional/test_s3.py::test_bucket_recreate_not_overriding,test_s3.py,bucket,passed,,
+s3tests/functional/test_s3.py::test_bucket_acl_canned_during_create,test_s3.py,acl/ownership,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_bucket_acl_canned,test_s3.py,acl/ownership,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_bucket_create_special_key_names,test_s3.py,bucket,passed,,
+s3tests/functional/test_s3.py::test_bucket_acl_canned_publicreadwrite,test_s3.py,acl/ownership,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_bucket_acl_canned_authenticatedread,test_s3.py,acl/ownership,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_put_bucket_acl_grant_group_read,test_s3.py,acl/ownership,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_object_acl_default,test_s3.py,acl/ownership,failed,aws-compatible-already,Owner DisplayName is the canonical user id; test expects RGW display name (AWS stopped returning DisplayName in 2025)
+s3tests/functional/test_s3.py::test_object_acl_canned_during_create,test_s3.py,acl/ownership,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_object_acl_canned,test_s3.py,acl/ownership,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_bucket_list_special_prefix,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_object_acl_canned_publicreadwrite,test_s3.py,acl/ownership,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_object_acl_canned_authenticatedread,test_s3.py,acl/ownership,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_object_copy_zero_size,test_s3.py,copy,passed,,
+s3tests/functional/test_s3.py::test_multipart_get_part,test_s3.py,multipart,passed,,
+s3tests/functional/test_s3.py::test_object_copy_16m,test_s3.py,copy,passed,,
+s3tests/functional/test_s3.py::test_object_copy_same_bucket,test_s3.py,copy,passed,,
+s3tests/functional/test_s3.py::test_object_copy_verify_contenttype,test_s3.py,copy,passed,,
+s3tests/functional/test_s3.py::test_multipart_sse_c_get_part,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_object_copy_to_itself,test_s3.py,copy,passed,,
+s3tests/functional/test_s3.py::test_object_copy_to_itself_with_metadata,test_s3.py,copy,passed,,
+s3tests/functional/test_s3.py::test_object_copy_diff_bucket,test_s3.py,copy,passed,,
+s3tests/functional/test_s3.py::test_object_copy_not_owned_bucket,test_s3.py,copy,passed,,
+s3tests/functional/test_s3.py::test_object_copy_not_owned_object_bucket,test_s3.py,copy,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_object_copy_canned_acl,test_s3.py,acl/ownership,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_multipart_single_get_part,test_s3.py,multipart,passed,,
+s3tests/functional/test_s3.py::test_object_copy_retaining_metadata,test_s3.py,copy,passed,,
+s3tests/functional/test_s3.py::test_non_multipart_get_part,test_s3.py,multipart,passed,,
+s3tests/functional/test_s3.py::test_non_multipart_sse_c_get_part,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_object_copy_replacing_metadata,test_s3.py,copy,passed,,
+s3tests/functional/test_s3.py::test_100_continue,test_s3.py,other,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_100_continue_error_retry,test_s3.py,other,passed,,
+s3tests/functional/test_s3.py::test_set_cors,test_s3.py,cors,passed,,
+s3tests/functional/test_s3.py::test_object_copy_bucket_not_found,test_s3.py,copy,passed,,
+s3tests/functional/test_s3.py::test_object_copy_key_not_found,test_s3.py,copy,passed,,
+s3tests/functional/test_s3.py::test_cors_origin_response,test_s3.py,cors,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_object_copy_versioned_bucket,test_s3.py,versioning,passed,,
+s3tests/functional/test_s3.py::test_cors_origin_wildcard,test_s3.py,cors,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_cors_header_option,test_s3.py,cors,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_cors_presigned_get_object,test_s3.py,cors,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_cors_presigned_get_object_tenant,test_s3.py,cors,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_cors_presigned_get_object_v2,test_s3.py,cors,failed,not-implemented-by-design,SigV2 presigned URLs
+s3tests/functional/test_s3.py::test_cors_presigned_get_object_tenant_v2,test_s3.py,cors,failed,not-implemented-by-design,SigV2 presigned URLs
+s3tests/functional/test_s3.py::test_cors_presigned_put_object,test_s3.py,cors,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_cors_presigned_put_object_with_acl,test_s3.py,cors,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_object_copy_versioned_url_encoding,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_cors_presigned_put_object_v2,test_s3.py,cors,failed,not-implemented-by-design,SigV2 presigned URLs
+s3tests/functional/test_s3.py::test_cors_presigned_put_object_tenant_v2,test_s3.py,cors,failed,not-implemented-by-design,SigV2 presigned URLs
+s3tests/functional/test_s3.py::test_cors_presigned_put_object_tenant,test_s3.py,cors,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_object_copy_versioning_multipart_upload,test_s3.py,versioning,passed,,
+s3tests/functional/test_s3.py::test_cors_presigned_put_object_tenant_with_acl,test_s3.py,cors,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_set_bucket_tagging,test_s3.py,tagging,passed,,
+s3tests/functional/test_s3.py::test_atomic_read_1mb,test_s3.py,ranged/get,passed,,
+s3tests/functional/test_s3.py::test_atomic_read_4mb,test_s3.py,ranged/get,passed,,
+s3tests/functional/test_s3.py::test_atomic_read_8mb,test_s3.py,ranged/get,passed,,
+s3tests/functional/test_s3.py::test_atomic_write_1mb,test_s3.py,other,passed,,
+s3tests/functional/test_s3.py::test_multipart_upload_empty,test_s3.py,multipart,passed,,
+s3tests/functional/test_s3.py::test_multipart_upload_complete_without_create,test_s3.py,multipart,passed,,
+s3tests/functional/test_s3.py::test_atomic_write_4mb,test_s3.py,other,passed,,
+s3tests/functional/test_s3.py::test_multipart_upload_small,test_s3.py,multipart,passed,,
+s3tests/functional/test_s3.py::test_atomic_write_8mb,test_s3.py,other,passed,,
+s3tests/functional/test_s3.py::test_multipart_copy_small,test_s3.py,multipart,passed,,
+s3tests/functional/test_s3.py::test_atomic_dual_write_1mb,test_s3.py,other,passed,,
+s3tests/functional/test_s3.py::test_multipart_copy_invalid_range,test_s3.py,multipart,passed,,
+s3tests/functional/test_s3.py::test_multipart_copy_improper_range,test_s3.py,multipart,passed,,
+s3tests/functional/test_s3.py::test_atomic_dual_write_4mb,test_s3.py,other,passed,,
+s3tests/functional/test_s3.py::test_multipart_copy_without_range,test_s3.py,multipart,passed,,
+s3tests/functional/test_s3.py::test_atomic_dual_write_8mb,test_s3.py,other,passed,,
+s3tests/functional/test_s3.py::test_multipart_copy_special_names,test_s3.py,multipart,passed,,
+s3tests/functional/test_s3.py::test_atomic_conditional_write_1mb,test_s3.py,conditional,passed,,
+s3tests/functional/test_s3.py::test_atomic_dual_conditional_write_1mb,test_s3.py,conditional,passed,,
+s3tests/functional/test_s3.py::test_atomic_write_bucket_gone,test_s3.py,bucket,passed,,
+s3tests/functional/test_s3.py::test_atomic_multipart_upload_write,test_s3.py,multipart,passed,,
+s3tests/functional/test_s3.py::test_multipart_upload,test_s3.py,multipart,passed,,
+s3tests/functional/test_s3.py::test_multipart_resend_first_finishes_last,test_s3.py,multipart,failed,aws-compatible-already,completes with part 1 listed twice; AWS rejects too (InvalidPartOrder); ObjectIO says EntityTooSmall
+s3tests/functional/test_s3.py::test_ranged_request_response_code,test_s3.py,ranged/get,passed,,
+s3tests/functional/test_s3.py::test_ranged_big_request_response_code,test_s3.py,ranged/get,passed,,
+s3tests/functional/test_s3.py::test_multipart_copy_versioned,test_s3.py,versioning,passed,,
+s3tests/functional/test_s3.py::test_ranged_request_skip_leading_bytes_response_code,test_s3.py,ranged/get,passed,,
+s3tests/functional/test_s3.py::test_ranged_request_return_trailing_bytes_response_code,test_s3.py,ranged/get,passed,,
+s3tests/functional/test_s3.py::test_ranged_request_invalid_range,test_s3.py,ranged/get,passed,,
+s3tests/functional/test_s3.py::test_ranged_request_empty_object,test_s3.py,ranged/get,passed,,
+s3tests/functional/test_s3.py::test_versioning_bucket_create_suspend,test_s3.py,versioning,passed,,
+s3tests/functional/test_s3.py::test_versioning_obj_create_read_remove,test_s3.py,versioning,passed,,
+s3tests/functional/test_s3.py::test_multipart_upload_resend_part,test_s3.py,multipart,passed,,
+s3tests/functional/test_s3.py::test_versioning_obj_create_read_remove_head,test_s3.py,versioning,passed,,
+s3tests/functional/test_s3.py::test_versioning_stack_delete_merkers,test_s3.py,versioning,passed,,
+s3tests/functional/test_s3.py::test_versioning_obj_plain_null_version_removal,test_s3.py,versioning,passed,,
+s3tests/functional/test_s3.py::test_versioning_obj_plain_null_version_overwrite,test_s3.py,versioning,passed,,
+s3tests/functional/test_s3.py::test_versioning_obj_plain_null_version_overwrite_suspended,test_s3.py,versioning,passed,,
+s3tests/functional/test_s3.py::test_versioning_obj_suspend_versions,test_s3.py,versioning,passed,,
+s3tests/functional/test_s3.py::test_multipart_upload_multiple_sizes,test_s3.py,multipart,passed,,
+s3tests/functional/test_s3.py::test_versioning_obj_suspended_copy,test_s3.py,versioning,passed,,
+s3tests/functional/test_s3.py::test_versioning_obj_create_versions_remove_all,test_s3.py,versioning,passed,,
+s3tests/functional/test_s3.py::test_multipart_copy_multiple_sizes,test_s3.py,multipart,passed,,
+s3tests/functional/test_s3.py::test_versioning_obj_create_versions_remove_special_names,test_s3.py,versioning,passed,,
+s3tests/functional/test_s3.py::test_multipart_upload_size_too_small,test_s3.py,multipart,passed,,
+s3tests/functional/test_s3.py::test_multipart_upload_contents,test_s3.py,multipart,passed,,
+s3tests/functional/test_s3.py::test_multipart_upload_overwrite_existing_object,test_s3.py,multipart,passed,,
+s3tests/functional/test_s3.py::test_abort_multipart_upload,test_s3.py,multipart,passed,,
+s3tests/functional/test_s3.py::test_abort_multipart_upload_not_found,test_s3.py,multipart,passed,,
+s3tests/functional/test_s3.py::test_list_multipart_upload,test_s3.py,multipart,passed,,
+s3tests/functional/test_s3.py::test_list_multipart_upload_owner,test_s3.py,multipart,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_multipart_upload_missing_part,test_s3.py,multipart,passed,,
+s3tests/functional/test_s3.py::test_multipart_upload_incorrect_etag,test_s3.py,tagging,passed,,
+s3tests/functional/test_s3.py::test_lifecycle_expiration_size_gt,test_s3.py,lifecycle,failed,aws-compatible-already,"several filter conditions without <And> rejected, as AWS (fails_on_aws)"
+s3tests/functional/test_s3.py::test_lifecycle_expiration_size_lt,test_s3.py,lifecycle,failed,aws-compatible-already,"several filter conditions without <And> rejected, as AWS (fails_on_aws)"
+s3tests/functional/test_s3.py::test_lifecycle_id_too_long,test_s3.py,lifecycle,passed,,
+s3tests/functional/test_s3.py::test_lifecycle_same_id,test_s3.py,lifecycle,passed,,
+s3tests/functional/test_s3.py::test_versioning_obj_create_overwrite_multipart,test_s3.py,versioning,passed,,
+s3tests/functional/test_s3.py::test_lifecycle_invalid_status,test_s3.py,lifecycle,passed,,
+s3tests/functional/test_s3.py::test_lifecycle_set_date,test_s3.py,lifecycle,passed,,
+s3tests/functional/test_s3.py::test_lifecycle_set_invalid_date,test_s3.py,lifecycle,passed,,
+s3tests/functional/test_s3.py::test_lifecycle_expiration_date,test_s3.py,lifecycle,passed,,
+s3tests/functional/test_s3.py::test_versioning_obj_list_marker,test_s3.py,versioning,passed,,
+s3tests/functional/test_s3.py::test_versioning_copy_obj_version,test_s3.py,versioning,passed,,
+s3tests/functional/test_s3.py::test_versioning_multi_object_delete,test_s3.py,versioning,passed,,
+s3tests/functional/test_s3.py::test_versioning_multi_object_delete_with_marker,test_s3.py,versioning,passed,,
+s3tests/functional/test_s3.py::test_versioning_multi_object_delete_with_marker_create,test_s3.py,versioning,passed,,
+s3tests/functional/test_s3.py::test_versioned_object_acl,test_s3.py,acl/ownership,failed,aws-compatible-already,Owner DisplayName is the canonical user id; test expects RGW display name (AWS stopped returning DisplayName in 2025)
+s3tests/functional/test_s3.py::test_versioned_object_acl_no_version_specified,test_s3.py,acl/ownership,failed,aws-compatible-already,Owner DisplayName is the canonical user id; test expects RGW display name (AWS stopped returning DisplayName in 2025)
+s3tests/functional/test_s3.py::test_versioned_concurrent_object_create_concurrent_remove,test_s3.py,versioning,passed,,
+s3tests/functional/test_s3.py::test_versioned_concurrent_object_create_and_remove,test_s3.py,versioning,passed,,
+s3tests/functional/test_s3.py::test_lifecycle_set,test_s3.py,lifecycle,passed,,
+s3tests/functional/test_s3.py::test_lifecycle_get,test_s3.py,lifecycle,passed,,
+s3tests/functional/test_s3.py::test_lifecycle_delete,test_s3.py,lifecycle,passed,,
+s3tests/functional/test_s3.py::test_lifecycle_get_no_id,test_s3.py,lifecycle,passed,,
+s3tests/functional/test_s3.py::test_lifecycle_expiration,test_s3.py,lifecycle,passed,,
+s3tests/functional/test_s3.py::test_lifecycle_expiration_days0,test_s3.py,lifecycle,passed,,
+s3tests/functional/test_s3.py::test_lifecycle_expiration_header_put,test_s3.py,lifecycle,failed,gap,no x-amz-expiration response header
+s3tests/functional/test_s3.py::test_lifecycle_expiration_header_head,test_s3.py,lifecycle,failed,gap,no x-amz-expiration response header
+s3tests/functional/test_s3.py::test_lifecycle_expiration_header_tags_head,test_s3.py,lifecycle,failed,gap,no x-amz-expiration response header
+s3tests/functional/test_s3.py::test_lifecycle_expiration_header_and_tags_head,test_s3.py,lifecycle,passed,,
+s3tests/functional/test_s3.py::test_lifecycle_set_noncurrent,test_s3.py,lifecycle,passed,,
+s3tests/functional/test_s3.py::test_lifecycle_noncur_expiration,test_s3.py,lifecycle,passed,,
+s3tests/functional/test_s3.py::test_bucket_list_prefix_basic,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_bucket_listv2_prefix_basic,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_bucket_list_prefix_alt,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_bucket_listv2_prefix_alt,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_bucket_list_prefix_empty,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_lifecycle_set_deletemarker,test_s3.py,lifecycle,passed,,
+s3tests/functional/test_s3.py::test_bucket_listv2_prefix_empty,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_lifecycle_set_filter,test_s3.py,lifecycle,passed,,
+s3tests/functional/test_s3.py::test_lifecycle_set_empty_filter,test_s3.py,lifecycle,passed,,
+s3tests/functional/test_s3.py::test_bucket_list_prefix_none,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_lifecycle_deletemarker_expiration,test_s3.py,lifecycle,passed,,
+s3tests/functional/test_s3.py::test_multi_objectv2_delete_key_limit,test_s3.py,object,passed,,
+s3tests/functional/test_s3.py::test_bucket_listv2_prefix_none,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_bucket_list_prefix_not_exist,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_bucket_listv2_prefix_not_exist,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_bucket_list_prefix_unreadable,test_s3.py,listing,failed,aws-compatible-already,ListObjects v1 with encoding-type=url percent-encodes Prefix as AWS documents; botocore does not decode v1 Prefix (RGW sends it raw)
+s3tests/functional/test_s3.py::test_bucket_listv2_prefix_unreadable,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_lifecyclev2_expiration,test_s3.py,lifecycle,passed,,
+s3tests/functional/test_s3.py::test_bucket_list_prefix_delimiter_basic,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_bucket_listv2_prefix_delimiter_basic,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_bucket_list_prefix_delimiter_alt,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_bucket_listv2_prefix_delimiter_alt,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_bucket_list_prefix_delimiter_prefix_not_exist,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_bucket_listv2_prefix_delimiter_prefix_not_exist,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_bucket_list_prefix_delimiter_delimiter_not_exist,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_bucket_listv2_prefix_delimiter_delimiter_not_exist,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_bucket_list_prefix_delimiter_prefix_delimiter_not_exist,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_bucket_listv2_prefix_delimiter_prefix_delimiter_not_exist,test_s3.py,listing,passed,,
+s3tests/functional/test_s3.py::test_sse_kms_multipart_invalid_chunks_2,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_sse_kms_post_object_authenticated_request,test_s3.py,post_object,failed,not-implemented-by-design,POST object signed with SigV2 (HMAC-SHA1 policy)
+s3tests/functional/test_s3.py::test_sse_kms_transfer_1b,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_sse_kms_transfer_1kb,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_sse_kms_transfer_1MB,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_sse_kms_transfer_13b,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_sse_kms_read_declare,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_bucket_policy,test_s3.py,policy/public-access,passed,,
+s3tests/functional/test_s3.py::test_bucketv2_policy,test_s3.py,policy/public-access,passed,,
+s3tests/functional/test_s3.py::test_bucket_policy_deny_self_denied_policy,test_s3.py,policy/public-access,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_s3.py::test_bucket_policy_deny_self_denied_policy_confirm_header,test_s3.py,policy/public-access,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_s3.py::test_bucket_policy_acl,test_s3.py,acl/ownership,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_bucketv2_policy_acl,test_s3.py,acl/ownership,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_bucket_policy_different_tenant,test_s3.py,policy/public-access,failed,not-implemented-by-design,RGW tenant:bucket naming
+s3tests/functional/test_s3.py::test_bucket_policy_multipart,test_s3.py,policy/public-access,passed,,
+s3tests/functional/test_s3.py::test_bucket_policy_tenanted_bucket,test_s3.py,policy/public-access,failed,not-implemented-by-design,RGW tenant:bucket naming
+s3tests/functional/test_s3.py::test_bucket_policy_another_bucket,test_s3.py,policy/public-access,passed,,
+s3tests/functional/test_s3.py::test_bucketv2_policy_another_bucket,test_s3.py,policy/public-access,passed,,
+s3tests/functional/test_s3.py::test_bucket_policy_set_condition_operator_end_with_IfExists,test_s3.py,policy/public-access,failed,aws-compatible-already,"requester is bucket owner, so an Allow-only policy cannot deny (fails_on_rgw)"
+s3tests/functional/test_s3.py::test_set_get_del_bucket_policy,test_s3.py,policy/public-access,passed,,
+s3tests/functional/test_s3.py::test_set_multipart_tagging,test_s3.py,tagging,passed,,
+s3tests/functional/test_s3.py::test_get_obj_tagging,test_s3.py,tagging,passed,,
+s3tests/functional/test_s3.py::test_get_obj_head_tagging,test_s3.py,tagging,passed,,
+s3tests/functional/test_s3.py::test_put_max_tags,test_s3.py,tagging,passed,,
+s3tests/functional/test_s3.py::test_put_excess_tags,test_s3.py,tagging,passed,,
+s3tests/functional/test_s3.py::test_put_max_kvsize_tags,test_s3.py,tagging,passed,,
+s3tests/functional/test_s3.py::test_put_excess_key_tags,test_s3.py,tagging,passed,,
+s3tests/functional/test_s3.py::test_put_excess_val_tags,test_s3.py,tagging,passed,,
+s3tests/functional/test_s3.py::test_put_modify_tags,test_s3.py,tagging,passed,,
+s3tests/functional/test_s3.py::test_put_delete_tags,test_s3.py,tagging,passed,,
+s3tests/functional/test_s3.py::test_post_object_tags_anonymous_request,test_s3.py,post_object,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_post_object_tags_authenticated_request,test_s3.py,post_object,failed,not-implemented-by-design,POST object signed with SigV2 (HMAC-SHA1 policy)
+s3tests/functional/test_s3.py::test_put_obj_with_tags,test_s3.py,tagging,passed,,
+s3tests/functional/test_s3.py::test_get_tags_acl_public,test_s3.py,acl/ownership,passed,,
+s3tests/functional/test_s3.py::test_put_tags_acl_public,test_s3.py,acl/ownership,passed,,
+s3tests/functional/test_s3.py::test_delete_tags_obj_public,test_s3.py,policy/public-access,passed,,
+s3tests/functional/test_s3.py::test_versioning_bucket_atomic_upload_return_version_id,test_s3.py,versioning,passed,,
+s3tests/functional/test_s3.py::test_versioning_bucket_multipart_upload_return_version_id,test_s3.py,versioning,passed,,
+s3tests/functional/test_s3.py::test_bucket_policy_get_obj_existing_tag,test_s3.py,policy/public-access,passed,,
+s3tests/functional/test_s3.py::test_bucket_policy_get_obj_tagging_existing_tag,test_s3.py,policy/public-access,passed,,
+s3tests/functional/test_s3.py::test_bucket_policy_put_obj_tagging_existing_tag,test_s3.py,policy/public-access,passed,,
+s3tests/functional/test_s3.py::test_bucket_policy_upload_part_copy,test_s3.py,policy/public-access,passed,,
+s3tests/functional/test_s3.py::test_bucket_policy_put_obj_copy_source,test_s3.py,policy/public-access,failed,aws-compatible-already,"BucketOwnerEnforced: copied object belongs to bucket owner, alt has no GetObject"
+s3tests/functional/test_s3.py::test_bucket_policy_put_obj_copy_source_meta,test_s3.py,policy/public-access,failed,aws-compatible-already,"BucketOwnerEnforced: copied object belongs to bucket owner, alt has no GetObject"
+s3tests/functional/test_s3.py::test_bucket_policy_put_obj_acl,test_s3.py,acl/ownership,passed,,
+s3tests/functional/test_s3.py::test_bucket_policy_put_obj_grant,test_s3.py,acl/ownership,failed,not-implemented-by-design,x-amz-grant-* ACL headers
+s3tests/functional/test_s3.py::test_put_obj_enc_conflict_c_s3,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_put_obj_enc_conflict_c_kms,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_put_obj_enc_conflict_s3_kms,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_put_obj_enc_conflict_bad_enc_kms,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_bucket_policy_put_obj_s3_noenc,test_s3.py,policy/public-access,passed,,
+s3tests/functional/test_s3.py::test_bucket_policy_put_obj_s3_incorrect_algo_sse_s3,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_bucket_policy_put_obj_s3_kms,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_bucket_policy_put_obj_kms_noenc,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_bucket_policy_put_obj_kms_s3,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_bucket_policy_put_obj_request_obj_tag,test_s3.py,policy/public-access,failed,test-environment,"test adds x-amz-tagging to the main client, not alt (fails_on_rgw)"
+s3tests/functional/test_s3.py::test_bucket_policy_get_obj_acl_existing_tag,test_s3.py,acl/ownership,passed,,
+s3tests/functional/test_s3.py::test_object_lock_put_obj_lock,test_s3.py,object_lock,passed,,
+s3tests/functional/test_s3.py::test_object_lock_put_obj_lock_invalid_bucket,test_s3.py,object_lock,passed,,
+s3tests/functional/test_s3.py::test_object_lock_put_obj_lock_enable_after_create,test_s3.py,object_lock,passed,,
+s3tests/functional/test_s3.py::test_object_lock_put_obj_lock_with_days_and_years,test_s3.py,object_lock,passed,,
+s3tests/functional/test_s3.py::test_object_lock_put_obj_lock_invalid_days,test_s3.py,object_lock,passed,,
+s3tests/functional/test_s3.py::test_object_lock_put_obj_lock_invalid_years,test_s3.py,object_lock,passed,,
+s3tests/functional/test_s3.py::test_object_lock_put_obj_lock_invalid_mode,test_s3.py,object_lock,passed,,
+s3tests/functional/test_s3.py::test_object_lock_put_obj_lock_invalid_status,test_s3.py,object_lock,passed,,
+s3tests/functional/test_s3.py::test_object_lock_suspend_versioning,test_s3.py,object_lock,passed,,
+s3tests/functional/test_s3.py::test_object_lock_get_obj_lock,test_s3.py,object_lock,passed,,
+s3tests/functional/test_s3.py::test_object_lock_get_obj_lock_invalid_bucket,test_s3.py,object_lock,passed,,
+s3tests/functional/test_s3.py::test_object_lock_put_obj_retention,test_s3.py,object_lock,passed,,
+s3tests/functional/test_s3.py::test_object_lock_put_obj_retention_invalid_bucket,test_s3.py,object_lock,passed,,
+s3tests/functional/test_s3.py::test_object_lock_put_obj_retention_invalid_mode,test_s3.py,object_lock,passed,,
+s3tests/functional/test_s3.py::test_object_lock_get_obj_retention,test_s3.py,object_lock,passed,,
+s3tests/functional/test_s3.py::test_object_lock_get_obj_retention_iso8601,test_s3.py,object_lock,passed,,
+s3tests/functional/test_s3.py::test_object_lock_get_obj_retention_invalid_bucket,test_s3.py,object_lock,passed,,
+s3tests/functional/test_s3.py::test_object_lock_put_obj_retention_versionid,test_s3.py,object_lock,passed,,
+s3tests/functional/test_s3.py::test_object_lock_put_obj_retention_override_default_retention,test_s3.py,object_lock,passed,,
+s3tests/functional/test_s3.py::test_object_lock_put_obj_retention_increase_period,test_s3.py,object_lock,passed,,
+s3tests/functional/test_s3.py::test_object_lock_put_obj_retention_shorten_period,test_s3.py,object_lock,passed,,
+s3tests/functional/test_s3.py::test_object_lock_put_obj_retention_shorten_period_bypass,test_s3.py,object_lock,passed,,
+s3tests/functional/test_s3.py::test_object_lock_delete_object_with_retention,test_s3.py,object_lock,passed,,
+s3tests/functional/test_s3.py::test_object_lock_delete_multipart_object_with_retention,test_s3.py,object_lock,passed,,
+s3tests/functional/test_s3.py::test_object_lock_delete_object_with_retention_and_marker,test_s3.py,object_lock,passed,,
+s3tests/functional/test_s3.py::test_object_lock_multi_delete_object_with_retention,test_s3.py,object_lock,passed,,
+s3tests/functional/test_s3.py::test_object_lock_put_legal_hold,test_s3.py,object_lock,passed,,
+s3tests/functional/test_s3.py::test_object_lock_put_legal_hold_invalid_bucket,test_s3.py,object_lock,passed,,
+s3tests/functional/test_s3.py::test_object_lock_put_legal_hold_invalid_status,test_s3.py,object_lock,passed,,
+s3tests/functional/test_s3.py::test_object_lock_get_legal_hold,test_s3.py,object_lock,passed,,
+s3tests/functional/test_s3.py::test_object_lock_get_legal_hold_invalid_bucket,test_s3.py,object_lock,passed,,
+s3tests/functional/test_s3.py::test_object_lock_delete_object_with_legal_hold_on,test_s3.py,object_lock,passed,,
+s3tests/functional/test_s3.py::test_object_lock_delete_multipart_object_with_legal_hold_on,test_s3.py,object_lock,passed,,
+s3tests/functional/test_s3.py::test_object_lock_delete_object_with_legal_hold_off,test_s3.py,object_lock,passed,,
+s3tests/functional/test_s3.py::test_object_lock_get_obj_metadata,test_s3.py,object_lock,passed,,
+s3tests/functional/test_s3.py::test_lifecycle_deletemarker_expiration_with_days_tag,test_s3.py,lifecycle,passed,,
+s3tests/functional/test_s3.py::test_object_lock_uploading_obj,test_s3.py,object_lock,passed,,
+s3tests/functional/test_s3.py::test_object_lock_changing_mode_from_governance_with_bypass,test_s3.py,object_lock,passed,,
+s3tests/functional/test_s3.py::test_lifecycle_expiration_versioning_enabled,test_s3.py,lifecycle,passed,,
+s3tests/functional/test_s3.py::test_object_lock_changing_mode_from_governance_without_bypass,test_s3.py,object_lock,passed,,
+s3tests/functional/test_s3.py::test_object_lock_changing_mode_from_compliance,test_s3.py,object_lock,passed,,
+s3tests/functional/test_s3.py::test_copy_object_ifmatch_good,test_s3.py,copy,passed,,
+s3tests/functional/test_s3.py::test_copy_object_ifmatch_failed,test_s3.py,copy,passed,,
+s3tests/functional/test_s3.py::test_copy_object_ifnonematch_good,test_s3.py,copy,passed,,
+s3tests/functional/test_s3.py::test_copy_object_ifnonematch_failed,test_s3.py,copy,passed,,
+s3tests/functional/test_s3.py::test_object_read_unreadable,test_s3.py,ranged/get,failed,aws-compatible-already,non-ASCII key read returns 404 NoSuchKey; RGW-specific 400 expected
+s3tests/functional/test_s3.py::test_get_bucket_policy_status,test_s3.py,policy/public-access,failed,aws-compatible-already,"no policy -> NoSuchBucketPolicy, as AWS"
+s3tests/functional/test_s3.py::test_get_public_acl_bucket_policy_status,test_s3.py,acl/ownership,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_get_authpublic_acl_bucket_policy_status,test_s3.py,acl/ownership,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_get_publicpolicy_acl_bucket_policy_status,test_s3.py,acl/ownership,failed,aws-compatible-already,"first call on bucket without policy -> NoSuchBucketPolicy, as AWS"
+s3tests/functional/test_s3.py::test_get_nonpublicpolicy_acl_bucket_policy_status,test_s3.py,acl/ownership,failed,aws-compatible-already,"first call on bucket without policy -> NoSuchBucketPolicy, as AWS"
+s3tests/functional/test_s3.py::test_get_nonpublicpolicy_principal_bucket_policy_status,test_s3.py,policy/public-access,passed,,
+s3tests/functional/test_s3.py::test_bucket_policy_allow_notprincipal,test_s3.py,policy/public-access,passed,,
+s3tests/functional/test_s3.py::test_get_undefined_public_block,test_s3.py,policy/public-access,passed,,
+s3tests/functional/test_s3.py::test_get_public_block_deny_bucket_policy,test_s3.py,policy/public-access,passed,,
+s3tests/functional/test_s3.py::test_put_public_block,test_s3.py,policy/public-access,passed,,
+s3tests/functional/test_s3.py::test_block_public_put_bucket_acls,test_s3.py,acl/ownership,failed,not-implemented-by-design,public PutBucketAcl refused as ACLs-disabled (400) rather than by BlockPublicAcls (403)
+s3tests/functional/test_s3.py::test_block_public_object_canned_acls,test_s3.py,acl/ownership,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_block_public_policy,test_s3.py,policy/public-access,passed,,
+s3tests/functional/test_s3.py::test_block_public_policy_with_principal,test_s3.py,policy/public-access,passed,,
+s3tests/functional/test_s3.py::test_block_public_restrict_public_buckets,test_s3.py,policy/public-access,passed,,
+s3tests/functional/test_s3.py::test_ignore_public_acls,test_s3.py,acl/ownership,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_put_get_delete_public_block,test_s3.py,policy/public-access,passed,,
+s3tests/functional/test_s3.py::test_multipart_upload_on_a_bucket_with_policy,test_s3.py,policy/public-access,passed,,
+s3tests/functional/test_s3.py::test_put_bucket_encryption_s3,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_put_bucket_encryption_kms,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_get_bucket_encryption_s3,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_get_bucket_encryption_kms,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_delete_bucket_encryption_s3,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_delete_bucket_encryption_kms,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_sse_s3_default_upload_1b,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_sse_s3_default_upload_1kb,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_lifecycle_expiration_tags1,test_s3.py,lifecycle,failed,aws-compatible-already,"Prefix+Tag without <And> rejected, as AWS (fails_on_aws)"
+s3tests/functional/test_s3.py::test_sse_s3_default_upload_1mb,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_lifecycle_expiration_tags2,test_s3.py,lifecycle,failed,aws-compatible-already,"Prefix+Tag without <And> rejected, as AWS (fails_on_aws)"
+s3tests/functional/test_s3.py::test_sse_s3_default_upload_8mb,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_lifecycle_expiration_versioned_tags2,test_s3.py,lifecycle,failed,aws-compatible-already,"Prefix+Tag without <And> rejected, as AWS (fails_on_aws)"
+s3tests/functional/test_s3.py::test_lifecycle_expiration_noncur_tags1,test_s3.py,lifecycle,failed,aws-compatible-already,"Prefix+Tag without <And> rejected, as AWS (fails_on_aws)"
+s3tests/functional/test_s3.py::test_sse_kms_default_upload_1b,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_sse_kms_default_upload_1kb,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_sse_kms_default_upload_1mb,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_sse_kms_default_upload_8mb,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_lifecycle_expiration_newer_noncurrent,test_s3.py,lifecycle,passed,,
+s3tests/functional/test_s3.py::test_sse_s3_default_method_head,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_sse_s3_default_multipart_upload,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_lifecycle_set_multipart,test_s3.py,lifecycle,passed,,
+s3tests/functional/test_s3.py::test_lifecycle_multipart_expiration,test_s3.py,lifecycle,passed,,
+s3tests/functional/test_s3.py::test_post_object_upload_checksum,test_s3.py,post_object,failed,not-implemented-by-design,POST object signed with SigV2 (HMAC-SHA1 policy)
+s3tests/functional/test_s3.py::test_put_bucket_logging,test_s3.py,logging,failed,not-implemented-by-design,bucket logging
+s3tests/functional/test_s3.py::test_sse_s3_default_post_object_authenticated_request,test_s3.py,post_object,failed,not-implemented-by-design,POST object signed with SigV2 (HMAC-SHA1 policy)
+s3tests/functional/test_s3.py::test_bucket_logging_mtime,test_s3.py,logging,failed,not-implemented-by-design,bucket logging
+s3tests/functional/test_s3.py::test_sse_kms_default_post_object_authenticated_request,test_s3.py,post_object,failed,not-implemented-by-design,POST object signed with SigV2 (HMAC-SHA1 policy)
+s3tests/functional/test_s3.py::test_sse_s3_encrypted_upload_1b,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_bucket_logging_simple_key,test_s3.py,logging,failed,not-implemented-by-design,bucket logging
+s3tests/functional/test_s3.py::test_sse_s3_encrypted_upload_1kb,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_sse_s3_encrypted_upload_1mb,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_bucket_logging_partitioned_key,test_s3.py,logging,failed,not-implemented-by-design,bucket logging
+s3tests/functional/test_s3.py::test_bucket_logging_bucket_auth_type,test_s3.py,logging,failed,not-implemented-by-design,bucket logging
+s3tests/functional/test_s3.py::test_sse_s3_encrypted_upload_8mb,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_object_head_zero_bytes,test_s3.py,object,passed,,
+s3tests/functional/test_s3.py::test_object_write_check_etag,test_s3.py,tagging,passed,,
+s3tests/functional/test_s3.py::test_bucket_logging_request_id,test_s3.py,logging,failed,not-implemented-by-design,bucket logging
+s3tests/functional/test_s3.py::test_object_write_cache_control,test_s3.py,object,passed,,
+s3tests/functional/test_s3.py::test_object_write_expires,test_s3.py,object,passed,,
+s3tests/functional/test_s3.py::test_bucket_logging_requester_assumed_role,test_s3.py,logging,failed,not-implemented-by-design,bucket logging + IAM CreateRole
+s3tests/functional/test_s3.py::test_object_write_read_update_read_delete,test_s3.py,ranged/get,passed,,
+s3tests/functional/test_s3.py::test_bucket_logging_bucket_acl_required,test_s3.py,logging,failed,not-implemented-by-design,bucket logging
+s3tests/functional/test_s3.py::test_get_object_torrent,test_s3.py,ranged/get,failed,not-implemented-by-design,torrent
+s3tests/functional/test_s3.py::test_object_set_get_metadata_none_to_good,test_s3.py,object,passed,,
+s3tests/functional/test_s3.py::test_bucket_logging_object_acl_required,test_s3.py,logging,failed,not-implemented-by-design,bucket logging
+s3tests/functional/test_s3.py::test_object_set_get_metadata_none_to_empty,test_s3.py,object,passed,,
+s3tests/functional/test_s3.py::test_object_checksum_sha256,test_s3.py,checksum,failed,aws-compatible-already,malformed checksum value 'bad' -> InvalidRequest as AWS; RGW says BadDigest
+s3tests/functional/test_s3.py::test_object_set_get_metadata_overwrite_to_empty,test_s3.py,object,passed,,
+s3tests/functional/test_s3.py::test_bucket_logging_key_filter_s,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_key_filter_j,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_flush_empty,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_object_set_get_unicode_metadata,test_s3.py,object,failed,aws-compatible-already,non-ASCII metadata returned RFC 2047 encoded as S3 does (fails_on_rgw)
+s3tests/functional/test_s3.py::test_object_checksum_crc64nvme,test_s3.py,checksum,failed,aws-compatible-already,malformed checksum value 'bad' -> InvalidRequest as AWS; RGW says BadDigest
+s3tests/functional/test_s3.py::test_bucket_logging_flush_j,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_flush_s,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_flush_j_single,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_flush_s_single,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_object_metadata_replaced_on_put,test_s3.py,object,passed,,
+s3tests/functional/test_s3.py::test_bucket_logging_concurrent_flush_j,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_multipart_checksum_sha256,test_s3.py,checksum,passed,,
+s3tests/functional/test_s3.py::test_bucket_logging_concurrent_flush_s,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_concurrent_flush_j_single,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_object_write_file,test_s3.py,object,passed,,
+s3tests/functional/test_s3.py::test_bucket_logging_concurrent_flush_s_single,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_put_and_flush,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_post_object_anonymous_request,test_s3.py,post_object,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_put_bucket_logging_errors,test_s3.py,logging,failed,not-implemented-by-design,bucket logging
+s3tests/functional/test_s3.py::test_post_object_authenticated_request,test_s3.py,post_object,failed,not-implemented-by-design,POST object signed with SigV2 (HMAC-SHA1 policy)
+s3tests/functional/test_s3.py::test_bucket_logging_owner,test_s3.py,logging,failed,not-implemented-by-design,"bucket logging (also: policy without Resource rejected, as AWS)"
+s3tests/functional/test_s3.py::test_post_object_authenticated_no_content_type,test_s3.py,post_object,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_post_object_authenticated_request_bad_access_key,test_s3.py,post_object,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_put_bucket_logging_permissions,test_s3.py,logging,failed,not-implemented-by-design,bucket logging
+s3tests/functional/test_s3.py::test_post_object_set_success_code,test_s3.py,post_object,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_post_object_set_invalid_success_code,test_s3.py,post_object,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_put_bucket_logging_policy_wildcard,test_s3.py,logging,failed,not-implemented-by-design,bucket logging
+s3tests/functional/test_s3.py::test_post_object_upload_larger_than_chunk,test_s3.py,post_object,failed,not-implemented-by-design,POST object signed with SigV2 (HMAC-SHA1 policy)
+s3tests/functional/test_s3.py::test_post_object_set_key_from_filename,test_s3.py,post_object,failed,not-implemented-by-design,POST object signed with SigV2 (HMAC-SHA1 policy)
+s3tests/functional/test_s3.py::test_put_bucket_logging_policy_wildcard_objects,test_s3.py,logging,failed,not-implemented-by-design,bucket logging
+s3tests/functional/test_s3.py::test_post_object_ignored_header,test_s3.py,post_object,failed,not-implemented-by-design,POST object signed with SigV2 (HMAC-SHA1 policy)
+s3tests/functional/test_s3.py::test_bucket_logging_permission_change_s,test_s3.py,logging,failed,not-implemented-by-design,bucket logging
+s3tests/functional/test_s3.py::test_post_object_case_insensitive_condition_fields,test_s3.py,post_object,failed,not-implemented-by-design,POST object signed with SigV2 (HMAC-SHA1 policy)
+s3tests/functional/test_s3.py::test_bucket_logging_delete_objects,test_s3.py,logging,failed,not-implemented-by-design,bucket logging
+s3tests/functional/test_s3.py::test_bucket_logging_permission_change_j,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_put_bucket_logging_tenant_s,test_s3.py,logging,failed,not-implemented-by-design,bucket logging
+s3tests/functional/test_s3.py::test_put_bucket_logging_tenant_j,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_delete_objects_versioned,test_s3.py,logging,failed,not-implemented-by-design,bucket logging
+s3tests/functional/test_s3.py::test_put_bucket_logging_account_s,test_s3.py,logging,failed,not-implemented-by-design,bucket logging
+s3tests/functional/test_s3.py::test_put_bucket_logging_account_j,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_rm_bucket_logging,test_s3.py,logging,failed,not-implemented-by-design,bucket logging
+s3tests/functional/test_s3.py::test_put_bucket_logging_extensions,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_put_objects,test_s3.py,logging,failed,not-implemented-by-design,bucket logging
+s3tests/functional/test_s3.py::test_bucket_logging_get_objects,test_s3.py,logging,failed,not-implemented-by-design,bucket logging
+s3tests/functional/test_s3.py::test_bucket_logging_put_objects_versioned,test_s3.py,logging,failed,not-implemented-by-design,bucket logging
+s3tests/functional/test_s3.py::test_bucket_logging_put_concurrency,test_s3.py,logging,failed,not-implemented-by-design,bucket logging
+s3tests/functional/test_s3.py::test_bucket_logging_get_objects_versioned,test_s3.py,logging,failed,not-implemented-by-design,bucket logging
+s3tests/functional/test_s3.py::test_bucket_logging_cleanup_disabling_s,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_cleanup_disabling_s_single,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_cleanup_updating_s,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_cleanup_updating_s_single,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_notupdating_s,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_notupdating_s_single,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_target_cleanup_j,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_target_cleanup_j_single,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_target_cleanup_s,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_copy_objects,test_s3.py,logging,failed,not-implemented-by-design,bucket logging
+s3tests/functional/test_s3.py::test_bucket_logging_target_cleanup_s_single,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_cleanup_bucket_concurrent_deletion_j,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_cleanup_bucket_concurrent_deletion_j_single,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_cleanup_concurrent_disabling_j,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_cleanup_concurrent_disabling_j_single,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_cleanup_concurrent_updating_j,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_cleanup_concurrent_updating_j_single,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_cleanup_bucket_concurrent_deletion_s,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_cleanup_bucket_concurrent_deletion_s_single,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_copy_objects_versioned,test_s3.py,logging,failed,not-implemented-by-design,bucket logging
+s3tests/functional/test_s3.py::test_bucket_logging_cleanup_concurrent_disabling_s,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_cleanup_concurrent_disabling_s_single,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_cleanup_concurrent_updating_s,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_cleanup_concurrent_updating_s_single,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_part_cleanup_concurrent_updating_s,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_part_cleanup_concurrent_disabling_s,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_part_cleanup_concurrent_deletion_s,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_part_cleanup_concurrent_updating_j,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_part_cleanup_concurrent_disabling_j,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_part_cleanup_concurrent_deletion_j,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_part_cleanup_updating_s,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_part_cleanup_disabling_s,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_part_cleanup_deletion_s,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_copy_objects_bucket,test_s3.py,logging,failed,not-implemented-by-design,bucket logging
+s3tests/functional/test_s3.py::test_bucket_logging_part_cleanup_updating_j,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_part_cleanup_disabling_j,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_part_cleanup_deletion_j,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_conf_updating_roll_s,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_conf_updating_roll_j,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_conf_updating_pfx_s,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_conf_updating_pfx_j,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_conf_concurrent_updating_roll_s,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_conf_concurrent_updating_roll_j,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_copy_objects_bucket_versioned,test_s3.py,logging,failed,not-implemented-by-design,bucket logging
+s3tests/functional/test_s3.py::test_bucket_logging_conf_concurrent_updating_pfx_s,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_conf_concurrent_updating_pfx_j,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_get_multipart_checksum_object_attributes,test_s3.py,checksum,passed,,
+s3tests/functional/test_s3.py::test_multipart_reupload_checksum_and_etag,test_s3.py,checksum,passed,,
+s3tests/functional/test_s3.py::test_bucket_logging_head_objects,test_s3.py,logging,failed,not-implemented-by-design,bucket logging
+s3tests/functional/test_s3.py::test_multipart_use_cksum_helper_sha256,test_s3.py,multipart,passed,,
+s3tests/functional/test_s3.py::test_bucket_logging_head_objects_versioned,test_s3.py,logging,failed,not-implemented-by-design,bucket logging
+s3tests/functional/test_s3.py::test_multipart_use_cksum_helper_crc64nvme,test_s3.py,multipart,passed,,
+s3tests/functional/test_s3.py::test_bucket_logging_mpu_s,test_s3.py,logging,failed,not-implemented-by-design,bucket logging
+s3tests/functional/test_s3.py::test_bucket_logging_mpu_versioned_s,test_s3.py,logging,failed,not-implemented-by-design,bucket logging
+s3tests/functional/test_s3.py::test_multipart_use_cksum_helper_crc32,test_s3.py,multipart,passed,,
+s3tests/functional/test_s3.py::test_get_multipart_object_attributes,test_s3.py,multipart,passed,,
+s3tests/functional/test_s3.py::test_bucket_logging_mpu_j,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_mpu_versioned_j,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_mpu_copy,test_s3.py,logging,failed,not-implemented-by-design,bucket logging
+s3tests/functional/test_s3.py::test_multipart_use_cksum_helper_crc32c,test_s3.py,multipart,passed,,
+s3tests/functional/test_s3.py::test_get_paginated_multipart_object_attributes,test_s3.py,multipart,passed,,
+s3tests/functional/test_s3.py::test_multipart_use_cksum_helper_sha1,test_s3.py,multipart,passed,,
+s3tests/functional/test_s3.py::test_bucket_logging_mpu_copy_versioned,test_s3.py,logging,failed,not-implemented-by-design,bucket logging
+s3tests/functional/test_s3.py::test_get_single_multipart_object_attributes,test_s3.py,multipart,passed,,
+s3tests/functional/test_s3.py::test_put_object_if_match,test_s3.py,conditional,passed,,
+s3tests/functional/test_s3.py::test_get_checksum_object_attributes,test_s3.py,checksum,passed,,
+s3tests/functional/test_s3.py::test_multipart_put_object_if_match,test_s3.py,multipart,passed,,
+s3tests/functional/test_s3.py::test_get_versioned_object_attributes,test_s3.py,versioning,passed,,
+s3tests/functional/test_s3.py::test_get_sse_c_encrypted_object_attributes,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_get_object_attributes,test_s3.py,ranged/get,passed,,
+s3tests/functional/test_s3.py::test_bucket_logging_multi_delete,test_s3.py,logging,failed,not-implemented-by-design,bucket logging
+s3tests/functional/test_s3.py::test_upload_part_copy_percent_encoded_key,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_put_current_object_if_none_match,test_s3.py,conditional,passed,,
+s3tests/functional/test_s3.py::test_delete_marker_nonversioned,test_s3.py,versioning,passed,,
+s3tests/functional/test_s3.py::test_multipart_put_current_object_if_none_match,test_s3.py,multipart,passed,,
+s3tests/functional/test_s3.py::test_delete_marker_versioned,test_s3.py,versioning,passed,,
+s3tests/functional/test_s3.py::test_bucket_logging_multi_delete_versioned,test_s3.py,logging,failed,not-implemented-by-design,bucket logging
+s3tests/functional/test_s3.py::test_delete_marker_suspended,test_s3.py,versioning,passed,,
+s3tests/functional/test_s3.py::test_delete_marker_expiration,test_s3.py,versioning,passed,,
+s3tests/functional/test_s3.py::test_put_current_object_if_match,test_s3.py,conditional,passed,,
+s3tests/functional/test_s3.py::test_multipart_put_current_object_if_match,test_s3.py,multipart,passed,,
+s3tests/functional/test_s3.py::test_bucket_logging_event_type_j,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_event_type_s,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_roll_time,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_multiple_prefixes,test_s3.py,logging,failed,not-implemented-by-design,bucket logging
+s3tests/functional/test_s3.py::test_put_object_current_if_match,test_s3.py,conditional,passed,,
+s3tests/functional/test_s3.py::test_bucket_logging_single_prefix,test_s3.py,logging,failed,not-implemented-by-design,bucket logging
+s3tests/functional/test_s3.py::test_delete_object_if_match,test_s3.py,conditional,passed,,
+s3tests/functional/test_s3.py::test_bucket_logging_object_meta,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_delete_object_current_if_match,test_s3.py,conditional,passed,,
+s3tests/functional/test_s3.py::test_bucket_logging_cleanup_bucket_deletion_j,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_cleanup_bucket_deletion_j_single,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_cleanup_disabling_j,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_cleanup_disabling_j_single,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_cleanup_updating_j,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_delete_object_version_if_match,test_s3.py,versioning,passed,,
+s3tests/functional/test_s3.py::test_bucket_logging_cleanup_updating_j_single,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_notupdating_j,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_notupdating_j_single,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_bucket_logging_cleanup_bucket_deletion_s,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_delete_object_if_match_last_modified_time,test_s3.py,conditional,passed,,
+s3tests/functional/test_s3.py::test_bucket_logging_cleanup_bucket_deletion_s_single,test_s3.py,logging,skipped,,ceph extension to bucket logging not supported at client
+s3tests/functional/test_s3.py::test_copy_part_enc[sse-c-sse-s3-STANDARD-STANDARD-8388608],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_delete_object_current_if_match_last_modified_time,test_s3.py,conditional,passed,,
+s3tests/functional/test_s3.py::test_delete_object_version_if_match_last_modified_time,test_s3.py,versioning,passed,,
+s3tests/functional/test_s3.py::test_delete_object_if_match_size,test_s3.py,conditional,passed,,
+s3tests/functional/test_s3.py::test_delete_object_current_if_match_size,test_s3.py,conditional,passed,,
+s3tests/functional/test_s3.py::test_lifecycle_transition_set_invalid_date,test_s3.py,lifecycle,passed,,
+s3tests/functional/test_s3.py::test_lifecycle_transition,test_s3.py,lifecycle,skipped,,requires 3 or more storage classes
+s3tests/functional/test_s3.py::test_lifecycle_transition_single_rule_multi_trans,test_s3.py,lifecycle,skipped,,requires 3 or more storage classes
+s3tests/functional/test_s3.py::test_delete_object_version_if_match_size,test_s3.py,versioning,passed,,
+s3tests/functional/test_s3.py::test_lifecycle_set_noncurrent_transition,test_s3.py,lifecycle,skipped,,requires 3 or more storage classes
+s3tests/functional/test_s3.py::test_lifecycle_noncur_transition,test_s3.py,lifecycle,skipped,,requires 3 or more storage classes
+s3tests/functional/test_s3.py::test_lifecycle_plain_null_version_current_transition,test_s3.py,lifecycle,skipped,,requires 2 or more storage classes
+s3tests/functional/test_s3.py::test_lifecycle_cloud_transition,test_s3.py,lifecycle,skipped,,no cloud_storage_class configured
+s3tests/functional/test_s3.py::test_lifecycle_cloud_multiple_transition,test_s3.py,lifecycle,skipped,,[s3 cloud] section missing cloud_storage_class
+s3tests/functional/test_s3.py::test_lifecycle_noncur_cloud_transition,test_s3.py,lifecycle,skipped,,[s3 cloud] section missing cloud_storage_class
+s3tests/functional/test_s3.py::test_lifecycle_cloud_transition_large_obj,test_s3.py,lifecycle,skipped,,[s3 cloud] section missing cloud_storage_class
+s3tests/functional/test_s3.py::test_lifecycle_cloud_transition_target_by_bucket,test_s3.py,lifecycle,skipped,,[s3 cloud] section missing cloud_storage_class
+s3tests/functional/test_s3.py::test_lifecycle_cloud_transition_target_by_bucket_multiple_buckets,test_s3.py,lifecycle,skipped,,[s3 cloud] section missing cloud_storage_class
+s3tests/functional/test_s3.py::test_restore_object_temporary,test_s3.py,storage_class,skipped,,[s3 cloud] section missing cloud_storage_class
+s3tests/functional/test_s3.py::test_restore_object_permanent,test_s3.py,storage_class,skipped,,[s3 cloud] section missing cloud_storage_class
+s3tests/functional/test_s3.py::test_read_through,test_s3.py,ranged/get,skipped,,[s3 cloud] section missing cloud_storage_class
+s3tests/functional/test_s3.py::test_restore_noncur_obj,test_s3.py,storage_class,skipped,,[s3 cloud] section missing cloud_storage_class
+s3tests/functional/test_s3.py::test_list_objects_restore_status,test_s3.py,listing,skipped,,[s3 cloud] section missing cloud_storage_class
+s3tests/functional/test_s3.py::test_list_object_versions_restore_status,test_s3.py,versioning,skipped,,[s3 cloud] section missing cloud_storage_class
+s3tests/functional/test_s3.py::test_encrypted_transfer_1b,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_delete_objects_if_match,test_s3.py,conditional,passed,,
+s3tests/functional/test_s3.py::test_encrypted_transfer_1kb,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_part_enc[sse-c-sse-c-STANDARD-STANDARD-8388608],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_delete_objects_current_if_match,test_s3.py,conditional,passed,,
+s3tests/functional/test_s3.py::test_encrypted_transfer_1MB,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_delete_objects_version_if_match,test_s3.py,versioning,passed,,
+s3tests/functional/test_s3.py::test_encrypted_transfer_13b,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_delete_objects_if_match_last_modified_time,test_s3.py,conditional,passed,,
+s3tests/functional/test_s3.py::test_encryption_sse_c_method_head,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_delete_objects_current_if_match_last_modified_time,test_s3.py,conditional,passed,,
+s3tests/functional/test_s3.py::test_encryption_sse_c_present,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_encryption_sse_c_other_key,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_delete_objects_version_if_match_last_modified_time,test_s3.py,versioning,passed,,
+s3tests/functional/test_s3.py::test_encryption_sse_c_invalid_md5,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_encryption_sse_c_no_md5,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_delete_objects_if_match_size,test_s3.py,conditional,passed,,
+s3tests/functional/test_s3.py::test_encryption_sse_c_no_key,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_part_enc[sse-c-sse-kms-STANDARD-STANDARD-8388608],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[unencrypted-sse-c-STANDARD-STANDARD-1048576],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_encryption_key_no_sse_c,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_encryption_sse_c_multipart_upload,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[unencrypted-sse-c-STANDARD-STANDARD-8388608],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_part_enc[sse-kms-unencrypted-STANDARD-STANDARD-8388608],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[unencrypted-sse-kms-STANDARD-STANDARD-1],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[unencrypted-sse-kms-STANDARD-STANDARD-1024],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[unencrypted-sse-kms-STANDARD-STANDARD-1048576],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_part_enc[sse-kms-sse-s3-STANDARD-STANDARD-8388608],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[unencrypted-sse-kms-STANDARD-STANDARD-8388608],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[sse-s3-unencrypted-STANDARD-STANDARD-1],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_part_enc[sse-kms-sse-c-STANDARD-STANDARD-8388608],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_delete_objects_current_if_match_size,test_s3.py,conditional,passed,,
+s3tests/functional/test_s3.py::test_delete_objects_version_if_match_size,test_s3.py,versioning,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[sse-s3-unencrypted-STANDARD-STANDARD-1024],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_encryption_sse_c_unaligned_multipart_upload,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_create_bucket_no_ownership_controls,test_s3.py,acl/ownership,failed,aws-compatible-already,"ownership is always BucketOwnerEnforced, the AWS default since 2023 (fails_on_aws)"
+s3tests/functional/test_s3.py::test_create_bucket_bucket_owner_enforced,test_s3.py,bucket,failed,aws-compatible-already,Owner DisplayName is the canonical user id; test expects RGW display name (AWS stopped returning DisplayName in 2025)
+s3tests/functional/test_s3.py::test_copy_part_enc[sse-kms-sse-kms-STANDARD-STANDARD-8388608],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[sse-s3-unencrypted-STANDARD-STANDARD-1048576],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_create_bucket_bucket_owner_preferred,test_s3.py,bucket,failed,bug,"CreateBucket ignores x-amz-object-ownership=BucketOwnerPreferred, stores Enforced silently"
+s3tests/functional/test_s3.py::test_create_bucket_object_writer,test_s3.py,bucket,failed,bug,"CreateBucket ignores x-amz-object-ownership=ObjectWriter, stores Enforced silently"
+s3tests/functional/test_s3.py::test_put_bucket_ownership_bucket_owner_enforced,test_s3.py,acl/ownership,failed,not-implemented-by-design,ACLs (bucket is BucketOwnerEnforced)
+s3tests/functional/test_s3.py::test_put_bucket_ownership_bucket_owner_preferred,test_s3.py,acl/ownership,failed,not-implemented-by-design,only BucketOwnerEnforced (ACLs disabled)
+s3tests/functional/test_s3.py::test_put_bucket_ownership_object_writer,test_s3.py,acl/ownership,failed,not-implemented-by-design,only BucketOwnerEnforced (ACLs disabled)
+s3tests/functional/test_s3.py::test_bucket_create_delete_bucket_ownership,test_s3.py,acl/ownership,failed,not-implemented-by-design,ownership controls cannot be removed (always Enforced)
+s3tests/functional/test_s3.py::test_copy_enc[sse-s3-unencrypted-STANDARD-STANDARD-8388608],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_head_object_404_with_policy_prefix,test_s3.py,policy/public-access,failed,aws-compatible-already,alt has no s3:GetObject; 403 as AWS; RGW maps s3:prefix ListBucket to 404
+s3tests/functional/test_s3.py::test_copy_part_enc[unencrypted-unencrypted-STANDARD-STANDARD-8388608],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[unencrypted-unencrypted-STANDARD-STANDARD-1],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[sse-s3-sse-s3-STANDARD-STANDARD-1],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_part_enc[unencrypted-sse-s3-STANDARD-STANDARD-8388608],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[unencrypted-unencrypted-STANDARD-STANDARD-1024],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[sse-s3-sse-s3-STANDARD-STANDARD-1024],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[unencrypted-unencrypted-STANDARD-STANDARD-1048576],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[sse-s3-sse-s3-STANDARD-STANDARD-1048576],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_part_enc[unencrypted-sse-c-STANDARD-STANDARD-8388608],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[unencrypted-unencrypted-STANDARD-STANDARD-8388608],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[sse-s3-sse-s3-STANDARD-STANDARD-8388608],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_encryption_sse_c_multipart_invalid_chunks_1,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[unencrypted-sse-s3-STANDARD-STANDARD-1],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_encryption_sse_c_multipart_invalid_chunks_2,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_part_enc[unencrypted-sse-kms-STANDARD-STANDARD-8388608],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[sse-s3-sse-c-STANDARD-STANDARD-1],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_encryption_sse_c_multipart_bad_download,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[unencrypted-sse-s3-STANDARD-STANDARD-1024],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[unencrypted-sse-s3-STANDARD-STANDARD-1048576],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[sse-s3-sse-c-STANDARD-STANDARD-1024],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_part_enc[sse-s3-unencrypted-STANDARD-STANDARD-8388608],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[sse-s3-sse-c-STANDARD-STANDARD-1048576],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_encryption_sse_c_post_object_authenticated_request,test_s3.py,post_object,failed,not-implemented-by-design,POST object signed with SigV2 (HMAC-SHA1 policy)
+s3tests/functional/test_s3.py::test_copy_enc[unencrypted-sse-s3-STANDARD-STANDARD-8388608],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_encryption_sse_c_enforced_with_bucket_policy,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_part_enc[sse-s3-sse-s3-STANDARD-STANDARD-8388608],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_encryption_sse_c_deny_algo_with_bucket_policy,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[unencrypted-sse-c-STANDARD-STANDARD-1],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[sse-s3-sse-c-STANDARD-STANDARD-8388608],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_sse_kms_method_head,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_sse_kms_present,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_part_enc[sse-s3-sse-c-STANDARD-STANDARD-8388608],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[unencrypted-sse-c-STANDARD-STANDARD-1024],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_sse_kms_no_key,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[sse-s3-sse-kms-STANDARD-STANDARD-1],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_sse_kms_not_declared,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_sse_kms_multipart_upload,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[sse-c-sse-s3-STANDARD-STANDARD-1048576],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[sse-s3-sse-kms-STANDARD-STANDARD-1024],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[sse-s3-sse-kms-STANDARD-STANDARD-1048576],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[sse-c-sse-s3-STANDARD-STANDARD-8388608],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_part_enc[sse-s3-sse-kms-STANDARD-STANDARD-8388608],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[sse-s3-sse-kms-STANDARD-STANDARD-8388608],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[sse-c-sse-c-STANDARD-STANDARD-1],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[sse-c-sse-c-STANDARD-STANDARD-1024],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[sse-c-unencrypted-STANDARD-STANDARD-1],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[sse-c-sse-c-STANDARD-STANDARD-1048576],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_part_enc[sse-c-unencrypted-STANDARD-STANDARD-8388608],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[sse-c-unencrypted-STANDARD-STANDARD-1024],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[sse-c-unencrypted-STANDARD-STANDARD-1048576],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[sse-c-sse-c-STANDARD-STANDARD-8388608],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[sse-kms-unencrypted-STANDARD-STANDARD-1048576],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_sse_kms_multipart_invalid_chunks_1,test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[sse-c-unencrypted-STANDARD-STANDARD-8388608],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[sse-kms-unencrypted-STANDARD-STANDARD-8388608],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[sse-c-sse-kms-STANDARD-STANDARD-1],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[sse-kms-sse-kms-STANDARD-STANDARD-1],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[sse-c-sse-s3-STANDARD-STANDARD-1],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[sse-kms-sse-s3-STANDARD-STANDARD-1],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[sse-c-sse-kms-STANDARD-STANDARD-1024],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[sse-kms-sse-kms-STANDARD-STANDARD-1024],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[sse-c-sse-s3-STANDARD-STANDARD-1024],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[sse-kms-sse-s3-STANDARD-STANDARD-1024],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[sse-c-sse-kms-STANDARD-STANDARD-1048576],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[sse-kms-sse-kms-STANDARD-STANDARD-1048576],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3select.py::test_count_json_operation,test_s3select.py,select,failed,not-implemented-by-design,S3 Select
+s3tests/functional/test_s3.py::test_copy_enc[sse-kms-sse-s3-STANDARD-STANDARD-1048576],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3select.py::test_json_column_sum_min_max,test_s3select.py,select,failed,not-implemented-by-design,S3 Select
+s3tests/functional/test_s3.py::test_copy_enc[sse-c-sse-kms-STANDARD-STANDARD-8388608],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3select.py::test_json_nullif_expressions,test_s3select.py,select,failed,not-implemented-by-design,S3 Select
+s3tests/functional/test_s3.py::test_copy_enc[sse-kms-sse-kms-STANDARD-STANDARD-8388608],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[sse-kms-sse-s3-STANDARD-STANDARD-8388608],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3select.py::test_column_sum_min_max,test_s3select.py,select,failed,not-implemented-by-design,S3 Select
+s3tests/functional/test_s3select.py::test_nullif_expressions,test_s3select.py,select,passed,,
+s3tests/functional/test_s3select.py::test_nulliftrue_expressions,test_s3select.py,select,passed,,
+s3tests/functional/test_s3select.py::test_is_not_null_expressions,test_s3select.py,select,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[sse-kms-unencrypted-STANDARD-STANDARD-1],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_lifecycle_transition_encrypted[NOTSET],test_s3.py,lifecycle,skipped,,"got empty parameter set for (source_mode_key, source_storage_class, dest_storage_class)"
+s3tests/functional/test_s3control.py::test_account_public_access_block,test_s3control.py,s3control,failed,test-environment,needs <account>.host virtual-host DNS; S3 Control API not implemented
+s3tests/functional/test_s3.py::test_copy_enc[sse-kms-sse-c-STANDARD-STANDARD-1],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3select.py::test_lowerupper_expressions,test_s3select.py,select,failed,not-implemented-by-design,S3 Select
+s3tests/functional/test_s3.py::test_copy_enc[sse-kms-unencrypted-STANDARD-STANDARD-1024],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[sse-kms-sse-c-STANDARD-STANDARD-1024],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3select.py::test_in_expressions,test_s3select.py,select,passed,,
+s3tests/functional/test_s3select.py::test_datetime,test_s3select.py,select,passed,,
+s3tests/functional/test_s3select.py::test_true_false_in_expressions,test_s3select.py,select,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[sse-kms-sse-c-STANDARD-STANDARD-1048576],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3select.py::test_true_false_datetime,test_s3select.py,select,passed,,
+s3tests/functional/test_s3select.py::test_like_expressions,test_s3select.py,select,passed,,
+s3tests/functional/test_s3select.py::test_csv_parser,test_s3select.py,select,passed,,
+s3tests/functional/test_s3.py::test_copy_enc[sse-kms-sse-c-STANDARD-STANDARD-8388608],test_s3.py,encryption,passed,,
+s3tests/functional/test_s3select.py::test_csv_definition,test_s3select.py,select,failed,not-implemented-by-design,S3 Select
+s3tests/functional/test_s3select.py::test_truefalselike_expressions,test_s3select.py,select,passed,,
+s3tests/functional/test_s3select.py::test_schema_definition,test_s3select.py,select,failed,not-implemented-by-design,S3 Select
+s3tests/functional/test_s3select.py::test_complex_expressions,test_s3select.py,select,passed,,
+s3tests/functional/test_s3select.py::test_when_then_else_expressions,test_s3select.py,select,passed,,
+s3tests/functional/test_s3select.py::test_alias,test_s3select.py,select,passed,,
+s3tests/functional/test_s3select.py::test_escape_expressions,test_s3select.py,select,passed,,
+s3tests/functional/test_s3select.py::test_generate_where_clause,test_s3select.py,select,failed,not-implemented-by-design,S3 Select
+s3tests/functional/test_s3select.py::test_alias_cyclic_refernce,test_s3select.py,select,failed,not-implemented-by-design,S3 Select
+s3tests/functional/test_s3select.py::test_coalesce_expressions,test_s3select.py,select,passed,,
+s3tests/functional/test_s3select.py::test_case_value_expressions,test_s3select.py,select,passed,,
+s3tests/functional/test_s3select.py::test_generate_projection,test_s3select.py,select,failed,not-implemented-by-design,S3 Select
+s3tests/functional/test_s3select.py::test_output_serial_expressions,test_s3select.py,select,passed,,
+s3tests/functional/test_s3select.py::test_cast_expressions,test_s3select.py,select,passed,,
+s3tests/functional/test_s3select.py::test_bool_cast_expressions,test_s3select.py,select,passed,,
+s3tests/functional/test_sns.py::test_account_topic,test_sns.py,other,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_sns.py::test_cross_account_topic,test_sns.py,other,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_s3select.py::test_count_operation,test_s3select.py,select,failed,not-implemented-by-design,S3 Select
+s3tests/functional/test_sns.py::test_account_user_policy_list_topics,test_sns.py,other,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_sts.py::test_assume_role_allow,test_sts.py,sts,failed,not-implemented-by-design,STS AssumeRole/GetSessionToken/GetCallerIdentity need the IAM API
+s3tests/functional/test_sts.py::test_assume_role_deny,test_sts.py,sts,failed,not-implemented-by-design,STS AssumeRole/GetSessionToken/GetCallerIdentity need the IAM API
+s3tests/functional/test_sts.py::test_assume_role_creds_expiry,test_sts.py,sts,failed,not-implemented-by-design,STS AssumeRole/GetSessionToken/GetCallerIdentity need the IAM API
+s3tests/functional/test_sns.py::test_account_topic_publish,test_sns.py,other,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_sns.py::test_cross_account_topic_publish,test_sns.py,other,skipped,,[iam root] user does not belong to an account
+s3tests/functional/test_s3select.py::test_progress_expressions,test_s3select.py,select,failed,not-implemented-by-design,S3 Select
+s3tests/functional/test_s3select.py::test_version,test_s3select.py,select,passed,,
+s3tests/functional/test_sts.py::test_get_session_token,test_sts.py,sts,failed,not-implemented-by-design,STS AssumeRole/GetSessionToken/GetCallerIdentity need the IAM API
+s3tests/functional/test_sts.py::test_assume_role_deny_head_nonexistent,test_sts.py,sts,failed,not-implemented-by-design,STS AssumeRole/GetSessionToken/GetCallerIdentity need the IAM API
+s3tests/functional/test_s3select.py::test_trim_expressions,test_s3select.py,select,passed,,
+s3tests/functional/test_sts.py::test_session_policy_check_put_obj_denial,test_sts.py,sts,failed,test-environment,no [webidentity] section / IdP configured
+s3tests/functional/test_sts.py::test_swapping_role_policy_and_session_policy,test_sts.py,sts,failed,test-environment,no [webidentity] section / IdP configured
+s3tests/functional/test_sts.py::test_assume_role_allow_head_nonexistent,test_sts.py,sts,failed,not-implemented-by-design,STS AssumeRole/GetSessionToken/GetCallerIdentity need the IAM API
+s3tests/functional/test_sts.py::test_session_policy_check_different_op_permissions,test_sts.py,sts,failed,test-environment,no [webidentity] section / IdP configured
+s3tests/functional/test_sts.py::test_assume_role_with_web_identity,test_sts.py,sts,failed,test-environment,no [webidentity] section / IdP configured
+s3tests/functional/test_sts.py::test_session_policy_check_with_deny_effect,test_sts.py,sts,failed,test-environment,no [webidentity] section / IdP configured
+s3tests/functional/test_sts.py::test_session_policy_check_with_deny_on_same_op,test_sts.py,sts,failed,test-environment,no [webidentity] section / IdP configured
+s3tests/functional/test_s3select.py::test_truefalse_trim_expressions,test_s3select.py,select,passed,,
+s3tests/functional/test_sts.py::test_session_policy_bucket_policy_session_arn,test_sts.py,sts,failed,test-environment,no [webidentity] section / IdP configured
+s3tests/functional/test_sts.py::test_session_policy_bucket_policy_role_arn,test_sts.py,sts,failed,test-environment,no [webidentity] section / IdP configured
+s3tests/functional/test_sts.py::test_session_policy_no_bucket_role_policy,test_sts.py,sts,failed,test-environment,no [webidentity] section / IdP configured
+s3tests/functional/test_sts.py::test_session_policy_bucket_policy_deny,test_sts.py,sts,failed,test-environment,no [webidentity] section / IdP configured
+s3tests/functional/test_sts.py::test_assume_role_with_web_identity_with_sub,test_sts.py,sts,failed,test-environment,no [webidentity] section / IdP configured
+s3tests/functional/test_sts.py::test_assume_role_with_web_identity_with_azp,test_sts.py,sts,failed,test-environment,no [webidentity] section / IdP configured
+s3tests/functional/test_sts.py::test_assume_role_with_web_identity_with_request_tag,test_sts.py,sts,failed,test-environment,no [webidentity] section / IdP configured
+s3tests/functional/test_sts.py::test_assume_role_with_web_identity_with_principal_tag,test_sts.py,sts,failed,test-environment,no [webidentity] section / IdP configured
+s3tests/functional/test_sts.py::test_session_policy_copy_object,test_sts.py,sts,failed,test-environment,no [webidentity] section / IdP configured
+s3tests/functional/test_sts.py::test_assume_role_with_web_identity_for_all_values,test_sts.py,sts,failed,test-environment,no [webidentity] section / IdP configured
+s3tests/functional/test_sts.py::test_assume_role_with_web_identity_for_all_values_deny,test_sts.py,sts,failed,test-environment,no [webidentity] section / IdP configured
+s3tests/functional/test_sts.py::test_assume_role_with_web_identity_tag_keys_trust_policy,test_sts.py,sts,failed,test-environment,no [webidentity] section / IdP configured
+s3tests/functional/test_sts.py::test_assume_role_with_web_identity_tag_keys_role_policy,test_sts.py,sts,failed,test-environment,no [webidentity] section / IdP configured
+s3tests/functional/test_sts.py::test_assume_role_with_web_identity_resource_tag,test_sts.py,sts,failed,test-environment,no [webidentity] section / IdP configured
+s3tests/functional/test_sts.py::test_assume_role_with_web_identity_resource_tag_deny,test_sts.py,sts,failed,test-environment,no [webidentity] section / IdP configured
+s3tests/functional/test_sts.py::test_assume_role_with_web_identity_wrong_resource_tag_deny,test_sts.py,sts,failed,test-environment,no [webidentity] section / IdP configured
+s3tests/functional/test_sts.py::test_assume_role_with_web_identity_resource_tag_princ_tag,test_sts.py,sts,failed,test-environment,no [webidentity] section / IdP configured
+s3tests/functional/test_sts.py::test_assume_role_with_web_identity_resource_tag_copy_obj,test_sts.py,sts,failed,test-environment,no [webidentity] section / IdP configured
+s3tests/functional/test_sts.py::test_assume_role_with_web_identity_role_resource_tag,test_sts.py,sts,failed,test-environment,no [webidentity] section / IdP configured
+s3tests/functional/test_sts.py::test_get_caller_identity_root,test_sts.py,sts,failed,not-implemented-by-design,STS AssumeRole/GetSessionToken/GetCallerIdentity need the IAM API
+s3tests/functional/test_sts.py::test_get_caller_identity_after_assume_role,test_sts.py,sts,failed,not-implemented-by-design,STS AssumeRole/GetSessionToken/GetCallerIdentity need the IAM API
+s3tests/functional/test_sts.py::test_get_caller_identity_non_root_user,test_sts.py,sts,failed,not-implemented-by-design,STS AssumeRole/GetSessionToken/GetCallerIdentity need the IAM API
+s3tests/functional/test_utils.py::test_generate,test_utils.py,other,passed,,
+s3tests/functional/test_sts.py::test_session_policy_check_on_different_buckets,test_sts.py,sts,failed,test-environment,no [webidentity] section / IdP configured
+s3tests/functional/test_sts.py::test_session_policy_check_on_same_bucket,test_sts.py,sts,failed,test-environment,no [webidentity] section / IdP configured

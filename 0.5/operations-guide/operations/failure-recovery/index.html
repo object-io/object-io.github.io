@@ -1,0 +1,2818 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://object-io.github.io/0.5/operations-guide/operations/failure-recovery/">
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../meta-ha/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Failure Recovery - ObjectIO</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#failure-recovery" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="ObjectIO" class="md-header__button md-logo" aria-label="ObjectIO" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ObjectIO
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Failure Recovery
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/object-io/objectio" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    object-io/objectio
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="ObjectIO" class="md-nav__button md-logo" aria-label="ObjectIO" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    ObjectIO
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/object-io/objectio" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    object-io/objectio
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ObjectIO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ROADMAP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ObjectIO — features and roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Developer guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Developer guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developer-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Developer Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developer-guide/api-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developer-guide/features/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ObjectIO — Feature Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developer-guide/sdk/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Management SDKs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S3 compatibility
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    S3 compatibility
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developer-guide/s3-compatibility/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S3 compatibility: ceph s3-tests
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_2" id="__nav_3_5_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026 10 02
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2026 10 02
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developer-guide/s3-compatibility/2026-10-02/summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ceph s3-tests against ObjectIO, run 2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operations guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Operations guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operations Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Administration
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Administration
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../administration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Administration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../administration/audit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audit Stream
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../administration/authentication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Authentication
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../administration/cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI (objectio-cli)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../administration/grep/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gateway-side grep — searching objects without downloading
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../administration/iam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Identity and Access
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../administration/iceberg-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Iceberg REST Catalog API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../administration/public-access/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Public Access
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../administration/replication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bucket replication
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../administration/s3-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S3 API Operations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Installation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/deployment-options/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ObjectIO Deployment Options
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kubernetes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/linux/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/macos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    macOS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/topologies/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment Topologies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4_4" id="__nav_4_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operations
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Operations
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operations Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Failure Recovery
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Failure Recovery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#failure-domains" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Failure Domains
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#disk-failures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Disk Failures
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Disk Failures">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Detection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#automatic-recovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Automatic Recovery
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#replacing-a-disk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Replacing a disk
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#osd-failures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OSD Failures
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OSD Failures">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#types-of-osd-failures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Types of OSD Failures
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recovery-process" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recovery Process
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#manual-recovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Manual Recovery
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#restarting-a-failed-osd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Restarting a Failed OSD
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#metadata-service-failures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Metadata Service Failures
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Metadata Service Failures">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#raft-consensus-openraft-09" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Raft consensus (openraft 0.9)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#admin-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Admin API
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#single-pod-failure-in-a-3-node-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Single pod failure in a 3-node cluster
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#complete-metadata-cluster-failure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Complete metadata cluster failure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network-partitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Network partitions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gateway-failures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gateway Failures
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Gateway Failures">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stateless-recovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stateless Recovery
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#load-balancer-health-checks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Load Balancer Health Checks
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network-partitions_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Network Partitions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Network Partitions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#client-retry-logic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Client Retry Logic
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-corruption" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data Corruption
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Data Corruption">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#detection_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Detection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recovery
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#disaster-recovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Disaster Recovery
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Disaster Recovery">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#backups" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Backups
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recovery-time-objectives" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recovery Time Objectives
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#failure-simulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Failure Simulation
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../meta-ha/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Meta high availability
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../metrics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Metrics reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../monitoring/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Monitoring
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../upgrades/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Upgrades
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#failure-domains" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Failure Domains
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#disk-failures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Disk Failures
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Disk Failures">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Detection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#automatic-recovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Automatic Recovery
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#replacing-a-disk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Replacing a disk
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#osd-failures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OSD Failures
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OSD Failures">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#types-of-osd-failures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Types of OSD Failures
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recovery-process" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recovery Process
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#manual-recovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Manual Recovery
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#restarting-a-failed-osd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Restarting a Failed OSD
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#metadata-service-failures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Metadata Service Failures
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Metadata Service Failures">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#raft-consensus-openraft-09" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Raft consensus (openraft 0.9)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#admin-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Admin API
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#single-pod-failure-in-a-3-node-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Single pod failure in a 3-node cluster
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#complete-metadata-cluster-failure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Complete metadata cluster failure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network-partitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Network partitions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gateway-failures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gateway Failures
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Gateway Failures">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stateless-recovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stateless Recovery
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#load-balancer-health-checks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Load Balancer Health Checks
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network-partitions_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Network Partitions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Network Partitions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#client-retry-logic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Client Retry Logic
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-corruption" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data Corruption
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Data Corruption">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#detection_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Detection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recovery
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#disaster-recovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Disaster Recovery
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Disaster Recovery">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#backups" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Backups
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recovery-time-objectives" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recovery Time Objectives
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#failure-simulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Failure Simulation
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="failure-recovery">Failure Recovery<a class="headerlink" href="#failure-recovery" title="Permanent link">&para;</a></h1>
+<p>Handling failures in ObjectIO clusters.</p>
+<h2 id="failure-domains">Failure Domains<a class="headerlink" href="#failure-domains" title="Permanent link">&para;</a></h2>
+<p>ObjectIO is designed to tolerate failures at multiple levels:</p>
+<div class="highlight"><pre><span></span><code>┌─────────────────────────────────────────────────────────────────┐
+│                    Failure Domain Hierarchy                     │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  Datacenter ──┬── Rack ──┬── Host ──┬── Disk                    │
+│               │          │          │                           │
+│               │          │          └── Single disk failure     │
+│               │          │              (most common)           │
+│               │          │                                      │
+│               │          └── Node failure                       │
+│               │              (power, OS, hardware)              │
+│               │                                                 │
+│               └── Rack failure                                  │
+│                   (power, network switch)                       │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+</code></pre></div>
+<hr />
+<h2 id="disk-failures">Disk Failures<a class="headerlink" href="#disk-failures" title="Permanent link">&para;</a></h2>
+<h3 id="detection">Detection<a class="headerlink" href="#detection" title="Permanent link">&para;</a></h3>
+<p>OSDs detect disk failures via:
+- I/O errors during read/write
+- SMART monitoring (if enabled)
+- Scrubbing (background verification)</p>
+<h3 id="automatic-recovery">Automatic Recovery<a class="headerlink" href="#automatic-recovery" title="Permanent link">&para;</a></h3>
+<p>With 4+2 erasure coding, the cluster tolerates 2 disk failures:</p>
+<div class="highlight"><pre><span></span><code>Object: photo.jpg (split into 6 shards)
+
+Before failure:
+  Disk1: shard1 ✓    Disk4: shard4 ✓
+  Disk2: shard2 ✓    Disk5: shard5 ✓
+  Disk3: shard3 ✓    Disk6: shard6 ✓
+
+After Disk3 fails:
+  Disk1: shard1 ✓    Disk4: shard4 ✓
+  Disk2: shard2 ✓    Disk5: shard5 ✓
+  Disk3: shard3 ✗    Disk6: shard6 ✓
+
+Recovery: shard3 reconstructed from any 4 remaining shards
+          → placed on spare disk (Disk7)
+</code></pre></div>
+<h3 id="replacing-a-disk">Replacing a disk<a class="headerlink" href="#replacing-a-disk" title="Permanent link">&para;</a></h3>
+<p>Lost shards are rebuilt automatically: the repairer in meta finds stripes
+missing a shard and rebuilds it on another OSD. Watch it work:</p>
+<div class="highlight"><pre><span></span><code>objectio-cli<span class="w"> </span>metrics<span class="w"> </span>query<span class="w"> </span><span class="s1">'objectio_objects_at_risk'</span><span class="w">        </span><span class="c1"># objects one more loss from unreadable</span>
+objectio-cli<span class="w"> </span>metrics<span class="w"> </span>query<span class="w"> </span><span class="s1">'objectio_degraded_bytes'</span>
+objectio-cli<span class="w"> </span>metrics<span class="w"> </span>query<span class="w"> </span><span class="s1">'rate(objectio_meta_repair_shards_rebuilt_total[5m])'</span>
+objectio-cli<span class="w"> </span>metrics<span class="w"> </span>query<span class="w"> </span><span class="s1">'objectio_meta_repair_unrecoverable_stripes_total'</span>
+</code></pre></div>
+<p>To take an OSD's disk out of service (still readable):</p>
+<div class="highlight"><pre><span></span><code>objectio-cli<span class="w"> </span>node<span class="w"> </span>list<span class="w">                               </span><span class="c1"># find the OSD's id</span>
+objectio-cli<span class="w"> </span>osd<span class="w"> </span>set-state<span class="w"> </span>&lt;osd-id&gt;<span class="w"> </span>draining<span class="w">         </span><span class="c1"># copies everything off it</span>
+objectio-cli<span class="w"> </span>cluster<span class="w"> </span>drain-status<span class="w">                    </span><span class="c1"># progress; it turns "out" when done</span>
+</code></pre></div>
+<p>When a drain finishes, the OSD is marked <code>out</code> and wiped (its space is
+reclaimed, and nothing stale can come back with it). Replace the hardware,
+start the OSD on the new disk, and set it back in:</p>
+<div class="highlight"><pre><span></span><code>objectio-cli<span class="w"> </span>osd<span class="w"> </span>set-state<span class="w"> </span>&lt;osd-id&gt;<span class="w"> </span><span class="k">in</span>
+</code></pre></div>
+<p>For a disk that is already dead, set its OSD <code>out</code> straight away; repair
+rebuilds its shards from the others. Don't put a directly-<code>out</code> OSD back in
+with old data on it: wipe the disk first.</p>
+<hr />
+<h2 id="osd-failures">OSD Failures<a class="headerlink" href="#osd-failures" title="Permanent link">&para;</a></h2>
+<h3 id="types-of-osd-failures">Types of OSD Failures<a class="headerlink" href="#types-of-osd-failures" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Detection</th>
+<th>Impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Process crash</td>
+<td>Heartbeat timeout</td>
+<td>Temporary unavailability</td>
+</tr>
+<tr>
+<td>Network partition</td>
+<td>Heartbeat timeout</td>
+<td>Partial cluster access</td>
+</tr>
+<tr>
+<td>Hardware failure</td>
+<td>No heartbeat</td>
+<td>Requires repair</td>
+</tr>
+</tbody>
+</table>
+<h3 id="recovery-process">Recovery Process<a class="headerlink" href="#recovery-process" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>1. Heartbeat timeout (default: 30s)
+   │
+   ▼
+2. Metadata service marks OSD as DOWN
+   │
+   ▼
+3. Placement recalculated for affected objects
+   │
+   ▼
+4. Repair manager queues recovery operations
+   │
+   ▼
+5. Missing shards reconstructed on healthy OSDs
+</code></pre></div>
+<h3 id="manual-recovery">Manual Recovery<a class="headerlink" href="#manual-recovery" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>objectio-cli<span class="w"> </span>node<span class="w"> </span>list<span class="w">                  </span><span class="c1"># status and admin state of every OSD</span>
+objectio-cli<span class="w"> </span>node<span class="w"> </span>show<span class="w"> </span>&lt;osd-id&gt;<span class="w">         </span><span class="c1"># its disks and capacity</span>
+objectio-cli<span class="w"> </span>cluster<span class="w"> </span>topology<span class="w">           </span><span class="c1"># where it sits in the failure domains</span>
+objectio-cli<span class="w"> </span>metrics<span class="w"> </span>query<span class="w"> </span><span class="s1">'objectio_meta_repair_last_pass_timestamp_seconds'</span>
+</code></pre></div>
+<p>Repair is continuous; there is nothing to start by hand. An OSD that is
+down long enough to be replaced should be set <code>out</code> (see above).</p>
+<h3 id="restarting-a-failed-osd">Restarting a Failed OSD<a class="headerlink" href="#restarting-a-failed-osd" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Check logs for failure reason</span>
+journalctl<span class="w"> </span>-u<span class="w"> </span>objectio-osd@osd3<span class="w"> </span>-n<span class="w"> </span><span class="m">100</span>
+
+<span class="c1"># Common issues:</span>
+<span class="c1"># - Disk I/O errors → check disk health</span>
+<span class="c1"># - Out of memory → increase limits or add RAM</span>
+<span class="c1"># - Network issues → check connectivity</span>
+
+<span class="c1"># Restart OSD</span>
+sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>objectio-osd@osd3
+
+<span class="c1"># Verify reconnection</span>
+objectio-cli<span class="w"> </span>node<span class="w"> </span>show<span class="w"> </span>osd3
+</code></pre></div>
+<hr />
+<h2 id="metadata-service-failures">Metadata Service Failures<a class="headerlink" href="#metadata-service-failures" title="Permanent link">&para;</a></h2>
+<h3 id="raft-consensus-openraft-09">Raft consensus (openraft 0.9)<a class="headerlink" href="#raft-consensus-openraft-09" title="Permanent link">&para;</a></h3>
+<p>The metadata service runs openraft. Every meta pod is a Raft member;
+cluster size is a deployment decision via <code>meta.replicas</code> in the helm
+chart:</p>
+<table>
+<thead>
+<tr>
+<th><code>meta.replicas</code></th>
+<th>Semantics</th>
+<th>Survives</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Single-voter cluster</td>
+<td>Pod restart with PVC intact</td>
+</tr>
+<tr>
+<td>3</td>
+<td>3-voter quorum</td>
+<td>1 pod loss</td>
+</tr>
+<tr>
+<td>5</td>
+<td>5-voter quorum</td>
+<td>2 pod losses</td>
+</tr>
+</tbody>
+</table>
+<p>Phase R1 routes cluster config mutations (<code>SetConfig</code> / <code>DeleteConfig</code>)
+through the Raft log. Other mutations (users, buckets, tenants, etc.)
+still write to redb directly pending the R2+ migration — those are
+quorum-safe only because they're leader-only in practice.</p>
+<h3 id="admin-api">Admin API<a class="headerlink" href="#admin-api" title="Permanent link">&para;</a></h3>
+<p>All endpoints are plain HTTP on the meta admin port (default 9102).
+They're meta-local and not exposed via the gateway.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Cluster state (leader id, term, voters, learners, last_log_index)</span>
+curl<span class="w"> </span>http://meta-0:9102/status<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq
+
+<span class="c1"># Force a node into the cluster as a learner (non-voting, catches up</span>
+<span class="c1"># via log replication):</span>
+curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://meta-0:9102/add-learner<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">'Content-Type: application/json'</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">'{"node_id": 4, "addr": "meta-3.meta-headless:9100"}'</span>
+
+<span class="c1"># Promote learners to voters (pass the full voter list, not a delta):</span>
+curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://meta-0:9102/change-membership<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">'Content-Type: application/json'</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">'{"voters": [1,2,3,4]}'</span>
+</code></pre></div>
+<h3 id="single-pod-failure-in-a-3-node-cluster">Single pod failure in a 3-node cluster<a class="headerlink" href="#single-pod-failure-in-a-3-node-cluster" title="Permanent link">&para;</a></h3>
+<p>Cluster continues with 2/3 nodes. Election is automatic; the old
+leader's clients see <code>failed_precondition "not the raft leader —
+forward to node X"</code> on the next write and retry there.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Simulate a leader crash. Use `--grace-period=0 --force` — a graceful</span>
+<span class="c1"># shutdown keeps sending heartbeats during the termination window,</span>
+<span class="c1"># which suppresses the follower election until the container actually</span>
+<span class="c1"># exits:</span>
+kubectl<span class="w"> </span>delete<span class="w"> </span>pod<span class="w"> </span>-n<span class="w"> </span>objectio<span class="w"> </span>objectio-meta-0<span class="w"> </span>--grace-period<span class="o">=</span><span class="m">0</span><span class="w"> </span>--force
+
+<span class="c1"># Watch followers elect a new leader (expect ~5s from kill to new</span>
+<span class="c1"># leader with default heartbeat=250ms, election_timeout=500–1000ms,</span>
+<span class="c1"># leader_lease=1s):</span>
+<span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">2</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">  </span>curl<span class="w"> </span>-s<span class="w"> </span>http://objectio-meta-<span class="nv">$i</span>.objectio-meta-headless:9102/status
+<span class="k">done</span>
+</code></pre></div>
+<p><strong>Verified on a kind cluster (2026-04-18):</strong> leader (node 1)
+force-deleted at T+0s; meta-1 (node 2) became leader at term=2, log
+index 6 at ~T+5s. Meta-2 recognized the new leader in the same
+interval. Writes continued against the new leader. When meta-0's
+StatefulSet pod came back on its existing PVC ~30s later, it read
+its Raft log, noticed the higher term, stepped down from its stored
+leader state, received AppendEntries from the new leader, and
+rejoined as Follower at term=2/log=6 without operator action.</p>
+<p><strong>Bootstrap addresses matter.</strong> The membership stores the peer
+advertise address. Bootstrap must use the new helm chart (which sets
+<code>--raft-advertise $HOSTNAME.objectio-meta-headless:9100</code>) — a
+<code>kubectl set image</code> rollover on a pre-Raft StatefulSet misses the new
+args and would register node 1 with listen address <code>0.0.0.0:9100</code>,
+breaking future replication to that pod. Re-install fresh when
+rolling up from a pre-R1 release.</p>
+<h3 id="complete-metadata-cluster-failure">Complete metadata cluster failure<a class="headerlink" href="#complete-metadata-cluster-failure" title="Permanent link">&para;</a></h3>
+<p><strong>Scenario:</strong> all meta pods lose their PVCs simultaneously (rare —
+typically requires a storage-layer incident).</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># If all pods still have their PVCs, just wait — each pod's redb log</span>
+<span class="c1"># is durable, so restarting the StatefulSet recovers the cluster.</span>
+kubectl<span class="w"> </span>rollout<span class="w"> </span>restart<span class="w"> </span>statefulset/objectio-meta<span class="w"> </span>-n<span class="w"> </span>objectio
+
+<span class="c1"># If PVCs are lost, the cluster is lost — there's no quorum to recover</span>
+<span class="c1"># from. Treat it like a fresh install:</span>
+kubectl<span class="w"> </span>delete<span class="w"> </span>statefulset/objectio-meta<span class="w"> </span>pvc<span class="w"> </span>-l<span class="w"> </span>app.kubernetes.io/component<span class="o">=</span>meta
+helm<span class="w"> </span>upgrade<span class="w"> </span>objectio<span class="w"> </span>./deploy/helm/objectio<span class="w"> </span>-f<span class="w"> </span>values.yaml
+<span class="c1"># Helm's post-install Job re-runs /init + /add-learner + /change-membership</span>
+<span class="c1"># against the new meta-0.</span>
+</code></pre></div>
+<h3 id="network-partitions">Network partitions<a class="headerlink" href="#network-partitions" title="Permanent link">&para;</a></h3>
+<p>Raft's quorum requirement prevents split-brain. In a 3-node cluster
+partitioned 1 + 2:</p>
+<ul>
+<li>Minority side (1 pod): can't elect a leader, refuses writes with
+  <code>RaftError::Fatal("not ready")</code>.</li>
+<li>Majority side (2 pods): re-elects a leader if the old one was on the
+  minority side; continues serving writes.</li>
+</ul>
+<p>When the partition heals, the minority catches up via AppendEntries
+and resumes as follower. No manual intervention needed.</p>
+<hr />
+<h2 id="gateway-failures">Gateway Failures<a class="headerlink" href="#gateway-failures" title="Permanent link">&para;</a></h2>
+<h3 id="stateless-recovery">Stateless Recovery<a class="headerlink" href="#stateless-recovery" title="Permanent link">&para;</a></h3>
+<p>Gateways are stateless - simply restart:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>objectio-gateway
+</code></pre></div>
+<h3 id="load-balancer-health-checks">Load Balancer Health Checks<a class="headerlink" href="#load-balancer-health-checks" title="Permanent link">&para;</a></h3>
+<p>Configure health checks in your load balancer:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># nginx example</span>
+<span class="k">upstream</span><span class="w"> </span><span class="s">objectio</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kn">server</span><span class="w"> </span><span class="n">gateway1</span><span class="p">:</span><span class="mi">9000</span><span class="w"> </span><span class="s">max_fails=3</span><span class="w"> </span><span class="s">fail_timeout=30s</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">server</span><span class="w"> </span><span class="n">gateway2</span><span class="p">:</span><span class="mi">9000</span><span class="w"> </span><span class="s">max_fails=3</span><span class="w"> </span><span class="s">fail_timeout=30s</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">server</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kn">location</span><span class="w"> </span><span class="s">/health</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kn">proxy_pass</span><span class="w"> </span><span class="s">http://objectio/health</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="network-partitions_1">Network Partitions<a class="headerlink" href="#network-partitions_1" title="Permanent link">&para;</a></h2>
+<p>Meta-side partition behavior is covered in the Metadata Service
+Failures section above. Gateway/OSD partitions are handled by
+client-side retry.</p>
+<h3 id="client-retry-logic">Client Retry Logic<a class="headerlink" href="#client-retry-logic" title="Permanent link">&para;</a></h3>
+<p>Clients should retry on different gateways:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">boto3</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">botocore.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">Config</span>
+
+<span class="c1"># Configure retries</span>
+<span class="n">config</span> <span class="o">=</span> <span class="n">Config</span><span class="p">(</span>
+    <span class="n">retries</span><span class="o">=</span><span class="p">{</span>
+        <span class="s1">'max_attempts'</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="s1">'mode'</span><span class="p">:</span> <span class="s1">'adaptive'</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+
+<span class="n">s3</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">'s3'</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h2 id="data-corruption">Data Corruption<a class="headerlink" href="#data-corruption" title="Permanent link">&para;</a></h2>
+<h3 id="detection_1">Detection<a class="headerlink" href="#detection_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Online:</strong> CRC32C verification on every read</li>
+<li><strong>Offline:</strong> Background scrubbing</li>
+</ul>
+<h3 id="recovery">Recovery<a class="headerlink" href="#recovery" title="Permanent link">&para;</a></h3>
+<p>A read that finds a shard failing its checksum decodes the object from the
+other shards and returns correct data; the scrubber and the repairer
+rebuild the bad shard. There is no manual step. Watch
+<code>objectio_meta_repair_shards_rebuilt_total</code> and
+<code>objectio_meta_repair_unrecoverable_stripes_total</code> (should stay 0).</p>
+<hr />
+<h2 id="disaster-recovery">Disaster Recovery<a class="headerlink" href="#disaster-recovery" title="Permanent link">&para;</a></h2>
+<h3 id="backups">Backups<a class="headerlink" href="#backups" title="Permanent link">&para;</a></h3>
+<p>Meta is a Raft group (3+ nodes) and survives the loss of a minority. To
+protect against losing the whole cluster, copy data to another one with an
+S3 tool (<code>rclone sync</code>, <code>aws s3 sync</code>) on a schedule. Built-in cross-site
+replication is planned, not available.</p>
+<h3 id="recovery-time-objectives">Recovery Time Objectives<a class="headerlink" href="#recovery-time-objectives" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Failure Type</th>
+<th>RTO</th>
+<th>RPO</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Single disk</td>
+<td>Automatic</td>
+<td>0 (no data loss)</td>
+</tr>
+<tr>
+<td>Single OSD</td>
+<td>Automatic</td>
+<td>0 (no data loss)</td>
+</tr>
+<tr>
+<td>Single metadata node</td>
+<td>&lt; 5 seconds</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Loss of a meta majority</td>
+<td>Until a majority is back</td>
+<td>0 (Raft log)</td>
+</tr>
+<tr>
+<td>Complete cluster loss</td>
+<td>Restore from your copy</td>
+<td>Last copy</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="failure-simulation">Failure Simulation<a class="headerlink" href="#failure-simulation" title="Permanent link">&para;</a></h2>
+<p>Test recovery in a staging cluster by failing things for real: stop an OSD
+process (<code>systemctl stop objectio-osd@osd3</code>), detach a disk, or partition a
+meta node with a firewall rule. Then check that <code>objectio_objects_at_risk</code>
+returns to 0 and that a checksum-verified read of a sample of objects
+(<code>aws s3 cp</code> and compare) succeeds. The end-to-end tests in the source tree
+(<code>tests/e2e/tests/{repair,drain}.rs</code>) do exactly this against <code>objectio-aio</code>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.sections", "navigation.top", "search.highlight", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
