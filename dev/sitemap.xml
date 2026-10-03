@@ -33,6 +33,14 @@
          <lastmod>2026-10-03</lastmod>
     </url>
     <url>
+         <loc>https://object-io.github.io/dev/developer-guide/s3-compatibility/2026-10-03/linux-amd64/summary/</loc>
+         <lastmod>2026-10-03</lastmod>
+    </url>
+    <url>
+         <loc>https://object-io.github.io/dev/developer-guide/s3-compatibility/2026-10-03/linux-arm64/summary/</loc>
+         <lastmod>2026-10-03</lastmod>
+    </url>
+    <url>
          <loc>https://object-io.github.io/dev/operations-guide/</loc>
          <lastmod>2026-10-03</lastmod>
     </url>

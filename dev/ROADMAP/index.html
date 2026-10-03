@@ -898,6 +898,233 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_3" id="__nav_3_5_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026 10 03
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_5_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2026 10 03
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_3_1" id="__nav_3_5_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux amd64
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_5_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Linux amd64
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../developer-guide/s3-compatibility/2026-10-03/linux-amd64/summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ceph s3-tests results
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_3_2" id="__nav_3_5_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux arm64
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_5_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Linux arm64
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../developer-guide/s3-compatibility/2026-10-03/linux-arm64/summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ceph s3-tests results
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -2204,6 +2431,11 @@ is on stable storage; nothing trades durability for speed.</p>
 </tr>
 <tr>
 <td><strong>Later</strong></td>
+<td>S3</td>
+<td>IAM API (A15), S3 Select (A16)</td>
+</tr>
+<tr>
+<td><strong>Later</strong></td>
 <td>Block</td>
 <td>QoS enforcement; filesystem/database crash tests</td>
 </tr>
@@ -2248,9 +2480,8 @@ is on stable storage; nothing trades durability for speed.</p>
 <hr />
 <h2 id="1-features">1. Features<a class="headerlink" href="#1-features" title="Permanent link">&para;</a></h2>
 <h3 id="11-s3-api">1.1 S3 API<a class="headerlink" href="#11-s3-api" title="Permanent link">&para;</a></h3>
-<p>Compatibility: <a href="../developer-guide/s3-compatibility/">ceph s3-tests</a>
-— 586 of 1053 pass (2026-10-02); every failure is categorised, and no bug
-or gap is open on that list.</p>
+<p>Compatibility: <a href="../developer-guide/s3-compatibility/">ceph s3-tests</a>,
+run on Linux amd64 and arm64; the latest numbers are there.</p>
 <table>
 <thead>
 <tr>
@@ -2448,7 +2679,7 @@ or gap is open on that list.</p>
 <tr>
 <td>S3 Select</td>
 <td>⬜</td>
-<td>Phase 6; data lake engines cover most needs</td>
+<td>A16: CSV, JSON and Parquet input</td>
 </tr>
 <tr>
 <td>Bucket logging (<code>?logging</code>, S3 access-log format)</td>
@@ -2457,8 +2688,8 @@ or gap is open on that list.</p>
 </tr>
 <tr>
 <td>IAM API (<code>iam:*</code> calls)</td>
-<td>✖</td>
-<td>Admin API and SDKs instead</td>
+<td>⬜</td>
+<td>A15: the AWS IAM query API over our users, groups, policies and keys; STS calls that need it follow</td>
 </tr>
 <tr>
 <td>Static website hosting, inventory, analytics, accelerate, torrent</td>
@@ -2927,8 +3158,8 @@ when the code is written.</p>
 <tr>
 <td>A1</td>
 <td>ceph s3-tests: no bugs, no unexplained failures</td>
-<td>Every failure categorised in <code>known-failures.csv</code>; rerun on every release</td>
-<td>✅ 2026-10-02</td>
+<td>Every failure categorised in <code>known-failures.csv</code>; rerun on every release, on Linux x86_64 and arm64</td>
+<td>✅ 2026-10-03</td>
 </tr>
 <tr>
 <td>A2</td>
@@ -3024,6 +3255,18 @@ when the code is written.</p>
 <td>A13</td>
 <td>Kafka target; tamper evidence</td>
 <td>Events to Kafka at least once; a removed or altered event is detected by the hash chain</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>A15</td>
+<td>IAM API</td>
+<td>Users, groups, user/group policies, access keys and roles through the AWS IAM query API (aws-cli <code>iam</code>, boto3), tenant-scoped, the same records as the admin API; STS AssumeRole, GetSessionToken, GetCallerIdentity on top; the ceph s3-tests IAM and STS tests pass</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>A16</td>
+<td>S3 Select</td>
+<td><code>SelectObjectContent</code> on CSV, JSON and Parquet objects (SQL subset as AWS, event-stream response); the ceph s3-tests S3 Select tests pass</td>
 <td>⬜</td>
 </tr>
 </tbody>
