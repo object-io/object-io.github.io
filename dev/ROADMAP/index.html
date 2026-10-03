@@ -2391,8 +2391,8 @@ is on stable storage; nothing trades durability for speed.</p>
 <tbody>
 <tr>
 <td><strong>Now</strong></td>
-<td>S3</td>
-<td>Meta HA on Kubernetes (A5), then multi-host chaos (A6)</td>
+<td>Core</td>
+<td>Object metadata at quorum (B19): one OSD down must not stop writes; then multi-host chaos (A6) passes</td>
 </tr>
 <tr>
 <td><strong>Next</strong></td>
@@ -2774,6 +2774,11 @@ run on Linux amd64 and arm64; the latest numbers are there.</p>
 <td></td>
 </tr>
 <tr>
+<td>Object metadata at quorum (writes, reads and deletes go on with OSDs down)</td>
+<td>🔨</td>
+<td>B19; today one OSD down stops writes to its keys</td>
+</tr>
+<tr>
 <td>Drain (planned removal)</td>
 <td>✅</td>
 <td></td>
@@ -2855,8 +2860,8 @@ run on Linux amd64 and arm64; the latest numbers are there.</p>
 </tr>
 <tr>
 <td>Meta HA on Kubernetes (helm, 3 metas)</td>
-<td>⬜</td>
-<td>Item 1D</td>
+<td>✅</td>
+<td>#116; kind test in CI (leader, follower, rolling restart under traffic)</td>
 </tr>
 <tr>
 <td>RDMA data plane (Mooncake TE)</td>
@@ -3178,13 +3183,13 @@ when the code is written.</p>
 <td>A5</td>
 <td>Meta HA on Kubernetes</td>
 <td>kind, 3 metas via helm: kill a meta pod under load</td>
-<td>🔨</td>
+<td>✅ #116</td>
 </tr>
 <tr>
 <td>A6</td>
 <td>Multi-host chaos</td>
-<td>Cloud VMs: node loss, network partition, disk pull, with traffic and an invariant checker</td>
-<td>⬜</td>
+<td>Six VMs on a lab host (3 metas, 6 OSDs on their own block devices, 2 gateways): process kill, node power-off, network partition (the meta leader included), disk pull and replacement, under traffic; an invariant checker: every acknowledged write reads back, writes resume, failures are 503, repair restores full redundancy</td>
+<td>🔨</td>
 </tr>
 <tr>
 <td>A7</td>
@@ -3396,6 +3401,12 @@ when the code is written.</p>
 <td>Meta Raft log compaction (design)</td>
 <td>The log is compacted into snapshots; a node that was down for longer than the kept log catches up from a snapshot, under traffic</td>
 <td>⬜</td>
+</tr>
+<tr>
+<td>B19</td>
+<td>Object metadata at quorum (design)</td>
+<td>With one or two OSDs down (4+2), PUT, overwrite and DELETE succeed; reads give the newest copy and never a deleted object; repair heals copies that fell behind; A6 passes</td>
+<td>🔨</td>
 </tr>
 <tr>
 <td>B10</td>

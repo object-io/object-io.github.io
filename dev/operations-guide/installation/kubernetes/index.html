@@ -1650,6 +1650,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Scaling an existing release">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#losing-a-meta-pod" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Losing a meta pod
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2264,6 +2281,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Scaling an existing release">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#losing-a-meta-pod" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Losing a meta pod
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2564,8 +2598,7 @@ drives cluster capacity.</p>
 <span class="w">    </span><span class="nt">datacenter</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dc1</span>
 <span class="w">    </span><span class="nt">rack</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rack1</span><span class="w">           </span><span class="c1"># override per-node via pod topology labels</span>
 <span class="w">  </span><span class="nt">storage</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">blockSize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4194304</span><span class="w">    </span><span class="c1"># 4 MiB — match the intended object size</span>
-<span class="w">    </span><span class="nt">diskFile</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">disk.raw</span>
+<span class="w">    </span><span class="nt">diskFile</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">disk.raw</span><span class="w">    </span><span class="c1"># blockSize: leave unset (the OSD's 4 KiB)</span>
 <span class="w">  </span><span class="nt">persistence</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">data</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1Ti</span>
@@ -2668,6 +2701,15 @@ coordinated by the chart's <code>meta-raft-bootstrap-job</code> on upgrade.
 Changes to OSD count trigger a rebalance; see
 <a href="../../operations/failure-recovery/">operations/failure-recovery.md</a>
 for progress + throttling knobs.</p>
+<h3 id="losing-a-meta-pod">Losing a meta pod<a class="headerlink" href="#losing-a-meta-pod" title="Permanent link">&para;</a></h3>
+<p>With three metas, any one pod can go (killed, evicted, rescheduled, or
+rolled by <code>kubectl rollout restart</code>) without losing anything the
+gateway acknowledged. If it was the leader, the other two elect one in
+about 5 seconds; writes that arrive meanwhile get <strong>503
+ServiceUnavailable</strong>, which S3 clients retry, and resume on their own.
+The pod comes back on its PVC and catches up. Losing two of three at
+once stops writes until one returns: keep the PodDisruptionBudget
+(<code>meta.podDisruptionBudget</code>) on.</p>
 <hr />
 <h2 id="uninstalling">Uninstalling<a class="headerlink" href="#uninstalling" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>uninstall<span class="w"> </span>objectio<span class="w"> </span>-n<span class="w"> </span>objectio
@@ -2689,6 +2731,13 @@ git<span class="w"> </span>clone<span class="w"> </span>https://github.com/objec
 make<span class="w"> </span>kind-up<span class="w">                                 </span><span class="c1"># build + deploy from source</span>
 <span class="c1"># OR</span>
 make<span class="w"> </span>kind-up-registry<span class="w">                        </span><span class="c1"># pull from ghcr.io/object-io (no local build)</span>
+</code></pre></div>
+<p>If something already listens on port 9000, forward the gateway elsewhere:
+<code>PF_PORT=19000 make kind-up</code>.</p>
+<p>To check meta HA on it, with S3 traffic running from a pod: kill the
+meta leader's pod, then a follower's, then roll the StatefulSet; every
+acknowledged write must read back.</p>
+<div class="highlight"><pre><span></span><code>deploy/kind/meta-ha-test.sh
 </code></pre></div>
 <p>When it finishes, the script prints:</p>
 <div class="highlight"><pre><span></span><code>Endpoints (via kubectl port-forward):

@@ -2954,7 +2954,9 @@ gRPC socket as MetadataService.</p>
 
 <span class="k">[storage]</span>
 <span class="n">disks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"/dev/sdb"</span><span class="p">,</span><span class="w"> </span><span class="s2">"/dev/sdc"</span><span class="p">,</span><span class="w"> </span><span class="s2">"/dev/sdd"</span><span class="p">]</span>
-<span class="n">block_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4194304</span><span class="w">   </span><span class="c1"># 4 MiB</span>
+<span class="c1"># block_size: leave unset. A new disk's allocation unit, 4096 by default;</span>
+<span class="c1"># every shard takes whole blocks, so a larger one wastes space on small</span>
+<span class="c1"># objects.</span>
 <span class="n">data_dir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"/var/lib/objectio/osd"</span>
 
 <span class="k">[logging]</span>
