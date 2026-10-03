@@ -1,0 +1,19 @@
+/* ObjectIO brand on the docs site (colors from objectio/assets/brand-tokens). */
+:root,
+[data-md-color-scheme="default"],
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color: #0c121a;        /* ink: the header */
+  --md-primary-fg-color--light: #232933; /* graphite */
+  --md-primary-fg-color--dark: #0c121a;
+  --md-primary-bg-color: #f5f7f9;        /* paper: text on the header */
+  --md-accent-fg-color: #fc9f30;         /* parity */
+}
+[data-md-color-scheme="default"] {
+  --md-typeset-a-color: #0077c7;         /* data-deep */
+}
+[data-md-color-scheme="slate"] {
+  --md-typeset-a-color: #249ff3;         /* data */
+}
+.md-header__title {
+  font-weight: 600;
+}
