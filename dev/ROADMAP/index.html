@@ -2391,8 +2391,8 @@ is on stable storage; nothing trades durability for speed.</p>
 <tbody>
 <tr>
 <td><strong>Now</strong></td>
-<td>S3 / core</td>
-<td>Upgrade path: versioned formats, rolling-upgrade test</td>
+<td>S3</td>
+<td>Meta HA on Kubernetes (A5), then multi-host chaos (A6)</td>
 </tr>
 <tr>
 <td><strong>Next</strong></td>
@@ -2413,11 +2413,6 @@ is on stable storage; nothing trades durability for speed.</p>
 <td><strong>Next</strong></td>
 <td>S3</td>
 <td>Audit that loses nothing, on by default (A8c)</td>
-</tr>
-<tr>
-<td><strong>Next</strong></td>
-<td>S3</td>
-<td>Multi-meta on kind via helm; multi-host chaos (cloud VMs)</td>
 </tr>
 <tr>
 <td><strong>Next</strong></td>
@@ -2890,8 +2885,8 @@ run on Linux amd64 and arm64; the latest numbers are there.</p>
 </tr>
 <tr>
 <td>Rolling upgrade, format migrations</td>
-<td>🔨</td>
-<td>Built (format levels, finalize, upgrade-ready formats, the rolling-upgrade test); the test first runs from the upgrade-ready release (tagged next) to the one after; <a href="../operations-guide/operations/upgrades/">guide</a></td>
+<td>✅</td>
+<td>v0.5.0 → main rolled under traffic in CI on every PR; <a href="../operations-guide/operations/upgrades/">guide</a></td>
 </tr>
 </tbody>
 </table>
@@ -3177,13 +3172,13 @@ when the code is written.</p>
 <td>A4</td>
 <td>Upgrade path (design)</td>
 <td>Versioned formats; an N-1 → N rolling upgrade of a populated cluster, every object readable after</td>
-<td>🔨</td>
+<td>✅ #115</td>
 </tr>
 <tr>
 <td>A5</td>
 <td>Meta HA on Kubernetes</td>
 <td>kind, 3 metas via helm: kill a meta pod under load</td>
-<td>⬜</td>
+<td>🔨</td>
 </tr>
 <tr>
 <td>A6</td>
