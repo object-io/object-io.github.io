@@ -1897,6 +1897,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#log-compaction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Log compaction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#replacing-a-meta-node" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2086,6 +2097,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#log-compaction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Log compaction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#replacing-a-meta-node" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2184,6 +2206,15 @@ block volumes and chunks, OSD registrations, KMS keys, and multipart
 uploads in progress.</p>
 <p>The bootstrap admin is created once for the cluster, by the first leader;
 every meta node writes the same <code>admin-creds.env</code>.</p>
+<h2 id="log-compaction">Log compaction<a class="headerlink" href="#log-compaction" title="Permanent link">&para;</a></h2>
+<p>The Raft log doesn't grow without bound. Every <code>--raft-snapshot-every</code>
+entries (default 500,000), each meta node writes a snapshot of its state
+and drops the log up to it, keeping the last <code>--raft-keep-logs</code> entries
+(default 10,000). A node that falls further behind, or a new node, is sent
+a snapshot of the whole metadata database. It travels in chunks and goes
+through <code>&lt;data-dir&gt;/raft-snapshots/</code>, so leave free space there of about
+the size of <code>meta.redb</code>. <code>/status</code> on the admin port shows how far the
+last snapshot (<code>snapshot</code>) and the purge (<code>purged</code>) reach.</p>
 <h2 id="replacing-a-meta-node">Replacing a meta node<a class="headerlink" href="#replacing-a-meta-node" title="Permanent link">&para;</a></h2>
 <p>Use the Raft admin API on the leader (port 9102 by default):</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># 1. Start the new node (empty data dir, a new --node-id), then add it.</span>

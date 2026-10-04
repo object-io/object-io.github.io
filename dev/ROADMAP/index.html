@@ -2476,13 +2476,8 @@ is on stable storage; nothing trades durability for speed.</p>
 <tbody>
 <tr>
 <td><strong>Now</strong></td>
-<td>Core</td>
-<td>Long soak at scale on a lab host (B2: days, full disks, failures); B19, B20 and A6 are done</td>
-</tr>
-<tr>
-<td><strong>Next</strong></td>
-<td>Core</td>
-<td>Performance baseline (a lab host, then multi-host NVMe cloud VMs)</td>
+<td>S3 + core</td>
+<td>Release-candidate gates: Raft log compaction (B18) is done; next mTLS between services (A8a), quotas (A8b), lossless audit (A8c), full disks (B3); the soak (B2) and the performance baseline (B4, against MinIO and SeaweedFS) on the lab host</td>
 </tr>
 <tr>
 <td><strong>Next</strong></td>
@@ -2935,8 +2930,8 @@ run on Linux amd64 and arm64; the latest numbers are there.</p>
 </tr>
 <tr>
 <td>Meta: Raft log compaction</td>
-<td>⬜</td>
-<td>B18; today the log grows for the life of the cluster</td>
+<td>✅</td>
+<td>B18: snapshots streamed through files; a lagging follower gets one</td>
 </tr>
 <tr>
 <td>Meta HA: any node serves, failover, node loss</td>
@@ -3485,7 +3480,7 @@ when the code is written.</p>
 <td>B18</td>
 <td>Meta Raft log compaction (design)</td>
 <td>The log is compacted into snapshots; a node that was down for longer than the kept log catches up from a snapshot, under traffic</td>
-<td>⬜</td>
+<td>✅</td>
 </tr>
 <tr>
 <td>B19</td>
