@@ -1259,6 +1259,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Delivery">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#with-a-spool-production" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        With a spool (production)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#without-a-spool-development" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Without a spool (development)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2178,6 +2206,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Delivery">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#with-a-spool-production" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        With a spool (production)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#without-a-spool-development" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Without a spool (development)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2343,18 +2399,51 @@ at addresses inside the cluster, such as meta's port or a cloud metadata
 endpoint. Redirects are never followed, for the same reason. If the operator
 later removes a host, delivery to it stops.</p>
 <h2 id="delivery">Delivery<a class="headerlink" href="#delivery" title="Permanent link">&para;</a></h2>
+<p><strong>Delivery is at least once.</strong> A batch is retried with backoff (1 s up to
+30 s) until the target takes it (a webhook answers 2xx). A target can
+therefore see an event twice, so deduplicate on <code>id</code>. Auditing never holds
+up or refuses a request.</p>
+<h3 id="with-a-spool-production">With a spool (production)<a class="headerlink" href="#with-a-spool-production" title="Permanent link">&para;</a></h3>
+<p>With <code>--audit-spool &lt;dir&gt;</code>, every event is written to the gateway's disk
+before it is delivered:</p>
 <ul>
-<li><strong>At least once.</strong> A webhook batch is retried with backoff (1 s up to
-  30 s) until the receiver takes it with a 2xx. A receiver can therefore see
-  an event twice; deduplicate on <code>id</code>.</li>
-<li><strong>Bounded.</strong> Each target has a queue (<code>queue_size</code>, default 10 000). If a
-  receiver is down long enough to fill it, new events for that target are
-  dropped and counted. They are never dropped silently, and the request is
-  never held up or refused because of auditing.</li>
-<li><strong>In memory.</strong> Events waiting for delivery live in the gateway. A gateway
-  that crashes loses what it hadn't delivered yet. If you need every event,
-  also keep <code>--audit-log</code> on local disk and collect that.</li>
+<li><strong>Each event is written when its request completes,</strong> to the current
+  segment in the spool (one write, so it survives the gateway being
+  killed).</li>
+<li><strong>Only fsynced events are delivered.</strong> The spool is fsynced every 50 ms,
+  so a power cut never leaves a target holding an event the spool lost.</li>
+<li><strong>Each target has a shipper</strong> that reads from its own cursor, kept in the
+  spool directory. The cursor only moves once the target has taken a
+  batch. A target that is down lets the spool grow; it is caught up when
+  it's back, however long it was down, and so is a gateway restarted after
+  being killed.</li>
+<li><strong>A segment every target has passed is deleted.</strong> A new target gets
+  events from the moment it's added.</li>
+<li><strong>On a normal shutdown</strong> the gateway delivers what's left before it exits,
+  for up to <code>--audit-drain-secs</code> (default 20).</li>
+<li><strong>The spool is capped</strong> by <code>--audit-spool-max-bytes</code> (default 10 GiB).
+  Past that, new events are dropped and counted under <code>target="spool"</code>.</li>
 </ul>
+<p><strong>The system always audits.</strong> With <code>--audit-system-bucket &lt;name&gt;</code> (it
+needs the spool), every event also goes to that bucket in the cluster, which
+is created on first start with a lifecycle rule expiring events after
+<code>--audit-retention-days</code> (default 365; 0 keeps them). Events are stored as
+JSON lines, one object per batch, by hour:</p>
+<div class="highlight"><pre><span></span><code>&lt;bucket&gt;/2026/10/04/12/&lt;gateway&gt;-&lt;segment&gt;-&lt;offset&gt;.ndjson
+</code></pre></div>
+<p>Each object is named after its place in the spool, so a batch delivered
+again replaces itself.</p>
+<p><strong>Helm turns both on by default</strong> (<code>gateway.audit</code> in <code>values.yaml</code>). The
+spool is an <code>emptyDir</code> with a 10 GiB <code>sizeLimit</code>, and the gateway's own cap
+is 9 GiB, so the volume never fills. A container restarted (the gateway
+killed) keeps its spool. A pod that is deleted delivers its spool during
+its termination grace. A pod that is deleted <em>without</em> a shutdown loses
+what it hadn't delivered.</p>
+<h3 id="without-a-spool-development">Without a spool (development)<a class="headerlink" href="#without-a-spool-development" title="Permanent link">&para;</a></h3>
+<p>Events wait in memory, in a queue per target (<code>queue_size</code>, default
+10 000). If a receiver is down long enough to fill the queue, new events for
+it are dropped and counted. A gateway that crashes loses what it hadn't
+delivered.</p>
 <table>
 <thead>
 <tr>
@@ -2365,11 +2454,11 @@ later removes a host, delivery to it stops.</p>
 <tbody>
 <tr>
 <td><code>objectio_audit_events_total{target}</code></td>
-<td>delivered</td>
+<td>delivered (<code>target="system"</code>: the system bucket)</td>
 </tr>
 <tr>
 <td><code>objectio_audit_dropped_total{target}</code></td>
-<td>dropped because a queue was full (<code>target="ingest"</code>: the gateway's own intake)</td>
+<td>dropped: <code>spool</code> (the spool is full), <code>ingest</code> (no spool: the gateway's intake), or a target's full queue</td>
 </tr>
 <tr>
 <td><code>objectio_audit_delivery_failures_total{target}</code></td>

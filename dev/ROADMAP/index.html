@@ -2716,13 +2716,13 @@ run on Linux amd64 and arm64; the latest numbers are there.</p>
 </tr>
 <tr>
 <td>Audit: durable spool (no event lost on crash or receiver outage)</td>
-<td>⬜</td>
-<td>Today events wait in memory; a full queue drops them (counted)</td>
+<td>✅</td>
+<td>A8c: fsynced on the gateway before delivery; a cursor per target</td>
 </tr>
 <tr>
 <td>Audit: on by default for the system</td>
-<td>⬜</td>
-<td>Helm values; kept in an internal bucket</td>
+<td>✅</td>
+<td>A8c: every event into an internal bucket (Helm default), with retention</td>
 </tr>
 <tr>
 <td>Audit: a tenant's events into a bucket of its own</td>
@@ -3326,7 +3326,7 @@ when the code is written.</p>
 <td>A8c</td>
 <td>Audit that loses nothing, on by default</td>
 <td>Events fsynced to a gateway spool before delivery; gateway killed and receiver down for an hour: every event arrives; system audit on in a fresh helm install</td>
-<td>⬜</td>
+<td>✅</td>
 </tr>
 <tr>
 <td>A8</td>
