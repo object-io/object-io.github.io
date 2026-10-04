@@ -3355,7 +3355,7 @@ when the code is written.</p>
 <tr>
 <td>A9</td>
 <td>Release candidate</td>
-<td>A1–A8c, A8, A15, A16, A12, B2–B5, B22 green on one commit</td>
+<td>A1–A8c, A8, A15, A16, A12, B2–B5, B22, B23 green on one commit</td>
 <td>⬜</td>
 </tr>
 <tr>
@@ -3459,6 +3459,12 @@ when the code is written.</p>
 <td>B22</td>
 <td>OSD metadata on disk (storage engine)</td>
 <td>Phase 1: snapshots streamed, not cloned, and taken by log size, not every 10,000 writes; a faster allocator. Phase 2: the index on disk with a bounded cache, so an OSD's RAM no longer grows with its object count (today about 5 KB per object copy, all in memory). Exit: 100 million objects written on the lab host with OSD memory flat past the cache; small-object PUT/GET no slower than before</td>
+<td>🔨</td>
+</tr>
+<tr>
+<td>B23</td>
+<td>End-to-end shard checksums</td>
+<td>Each shard's checksum is kept in its ObjectMeta when written, not only by the OSD that holds it; a GET checks every shard it decodes from against it, repair checks its sources and the shard it rebuilt before storing it, and scrub reports a mismatch as corrupt. Exit: a test that stores a wrong shard on an OSD (with a matching OSD-side checksum) gets an error or a repaired read, never the wrong bytes; the B2 disk-pull fault passes</td>
 <td>🔨</td>
 </tr>
 <tr>
