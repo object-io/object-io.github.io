@@ -2838,6 +2838,12 @@ once per gateway. With several gateways, aggregate them with <code>max</code>, n
 <td>Storage quota (0 = unlimited)</td>
 </tr>
 <tr>
+<td><code>objectio_s3_quota_refusals_total</code></td>
+<td>counter</td>
+<td><code>scope</code> (<code>bucket</code>, <code>tenant</code>)</td>
+<td>Writes refused for passing a quota (403 <code>QuotaExceeded</code>)</td>
+</tr>
+<tr>
 <td><code>objectio_bucket_stored_bytes</code></td>
 <td>gauge</td>
 <td><code>bucket, tenant</code></td>

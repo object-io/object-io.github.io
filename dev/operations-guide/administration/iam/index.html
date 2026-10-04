@@ -1313,6 +1313,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#quotas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quotas
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#users-and-access-keys" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2136,6 +2147,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#quotas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quotas
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#users-and-access-keys" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2270,6 +2292,33 @@ POST<span class="w"> </span>/_admin/users/&lt;user_id&gt;/access-keys<span class
 <p>From then on the tenant admin works with its own key. Each call below acts in
 the caller's own tenant. The system admin can name a tenant with <code>?tenant=</code>
 (or <code>"tenant"</code> in a body); a tenant admin can't name another tenant.</p>
+<h2 id="quotas">Quotas<a class="headerlink" href="#quotas" title="Permanent link">&para;</a></h2>
+<p>A tenant can have quotas on bytes, objects and buckets, and a bucket can
+have quotas on bytes and objects. 0 means unlimited. Bytes and objects
+count every version stored, current and noncurrent; a tenant's usage is
+the sum of its buckets'.</p>
+<div class="highlight"><pre><span></span><code>obioctl<span class="w"> </span>tenant<span class="w"> </span>create<span class="w"> </span>acme<span class="w"> </span>--quota-bytes<span class="w"> </span>2T<span class="w"> </span>--quota-objects<span class="w"> </span><span class="m">10000000</span>
+obioctl<span class="w"> </span>bucket<span class="w"> </span>set-quota<span class="w"> </span>photos<span class="w"> </span>--bytes<span class="w"> </span>500G<span class="w"> </span>--objects<span class="w"> </span><span class="m">1000000</span>
+<span class="c1"># or: PUT /_admin/buckets/{bucket}/quota  {"quota_bytes": N, "quota_objects": N}</span>
+</code></pre></div>
+<p>A system admin sets tenant quotas. A bucket's quota can be set by a system
+admin or by its tenant's admin. The bucket quota is checked when a bucket
+is created.</p>
+<p>A write that would pass a byte or object quota is refused with <strong>403
+<code>QuotaExceeded</code></strong>: a PUT, a copy, a browser upload, an upload part, or a
+multipart completion. It is refused before any of its bytes are stored.</p>
+<ul>
+<li><strong>Usage comes from the usage report,</strong> which the OSDs feed. While any
+  quota is set, each gateway refreshes the report every 5 s.</li>
+<li><strong>A delete makes room once the next report shows it.</strong></li>
+<li><strong>Within one gateway, enforcement is exact,</strong> up to the writes already
+  in flight when the limit is crossed.</li>
+<li><strong>With several gateways,</strong> each also allows what the others admitted
+  within one report interval, so usage can pass a quota by that much. This
+  is the same trade-off Ceph RGW and MinIO make. The design is in
+  <code>architecture/design/s3/quotas.md</code>.</li>
+</ul>
+<p>Refusals are counted in <code>objectio_s3_quota_refusals_total{scope}</code>.</p>
 <h2 id="users-and-access-keys">Users and access keys<a class="headerlink" href="#users-and-access-keys" title="Permanent link">&para;</a></h2>
 <table>
 <thead>

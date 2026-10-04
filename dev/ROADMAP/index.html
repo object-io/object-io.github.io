@@ -2800,9 +2800,9 @@ run on Linux amd64 and arm64; the latest numbers are there.</p>
 <td>Enforced by meta</td>
 </tr>
 <tr>
-<td>Tenant quota: bytes, objects</td>
-<td>⬜</td>
-<td>Stored and shown, not enforced</td>
+<td>Quotas: bytes and objects, per tenant and per bucket</td>
+<td>✅</td>
+<td>A8b: 403 <code>QuotaExceeded</code>; bounded overshoot across gateways (design)</td>
 </tr>
 <tr>
 <td>Per-bucket/tenant QoS (rate limits)</td>
@@ -3320,7 +3320,7 @@ when the code is written.</p>
 <td>A8b</td>
 <td>Quotas enforced</td>
 <td>Tenant byte/object quotas refuse writes past the limit, under concurrency</td>
-<td>⬜</td>
+<td>✅</td>
 </tr>
 <tr>
 <td>A8c</td>
