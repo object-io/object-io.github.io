@@ -8,13 +8,13 @@
       
       
       
-        <link rel="canonical" href="https://object-io.github.io/dev/operations-guide/administration/grep/">
+        <link rel="canonical" href="https://object-io.github.io/dev/operations-guide/administration/mtls/">
       
       
-        <link rel="prev" href="../cli/">
+        <link rel="prev" href="../iceberg-api/">
       
       
-        <link rel="next" href="../iam/">
+        <link rel="next" href="../public-access/">
       
       
         
@@ -25,7 +25,7 @@
     
     
       
-        <title>Gateway-side grep — searching objects without downloading - ObjectIO</title>
+        <title>Mutual TLS between the services - ObjectIO</title>
       
     
     
@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#gateway-side-grep-searching-objects-without-downloading" class="md-skip">
+        <a href="#mutual-tls-between-the-services" class="md-skip">
           Skip to content
         </a>
       
@@ -117,7 +117,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Gateway-side grep — searching objects without downloading
+              Mutual TLS between the services
             
           </span>
         </div>
@@ -1211,37 +1211,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Gateway-side grep — searching objects without downloading
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../grep/" class="md-nav__link">
         
   
   
@@ -1257,114 +1230,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#single-object-grep" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Single-object grep
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#multi-object-prefix-grep" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Multi-object (prefix) grep
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#agent-pattern-grep-then-range-fetch" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Agent pattern: grep then Range-fetch
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#mcp-tool-stub" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        MCP tool stub
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#pattern-engines" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Pattern engines
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#what-this-is-and-isnt" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        What this is and isn't
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#limits-and-follow-ups" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Limits and follow-ups
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#example-from-the-command-line" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Example — from the command line
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1430,10 +1295,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../mtls/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mutual TLS between the services
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1449,6 +1341,70 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#turning-it-on" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Turning it on
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kubernetes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kubernetes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#renewal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Renewal
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-its-tested" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How it's tested
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -2114,10 +2070,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#single-object-grep" class="md-nav__link">
+  <a href="#turning-it-on" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Single-object grep
+        Turning it on
       
     </span>
   </a>
@@ -2125,10 +2081,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#multi-object-prefix-grep" class="md-nav__link">
+  <a href="#kubernetes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Multi-object (prefix) grep
+        Kubernetes
       
     </span>
   </a>
@@ -2136,10 +2092,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#agent-pattern-grep-then-range-fetch" class="md-nav__link">
+  <a href="#renewal" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Agent pattern: grep then Range-fetch
+        Renewal
       
     </span>
   </a>
@@ -2147,54 +2103,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#mcp-tool-stub" class="md-nav__link">
+  <a href="#how-its-tested" class="md-nav__link">
     <span class="md-ellipsis">
       
-        MCP tool stub
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#pattern-engines" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Pattern engines
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#what-this-is-and-isnt" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        What this is and isn't
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#limits-and-follow-ups" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Limits and follow-ups
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#example-from-the-command-line" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Example — from the command line
+        How it's tested
       
     </span>
   </a>
@@ -2221,297 +2133,113 @@
   
 
 
-<h1 id="gateway-side-grep-searching-objects-without-downloading">Gateway-side grep — searching objects without downloading<a class="headerlink" href="#gateway-side-grep-searching-objects-without-downloading" title="Permanent link">&para;</a></h1>
-<p>When an agent (or a fleet of 100 clients) needs to search inside
-object contents, the naive approach is <code>GET</code> the object and grep
-client-side. For a 10 GB log file and 100 agents that's 1 TB of
-egress for one search — unacceptable.</p>
-<p>ObjectIO ships two grep endpoints that run the scan <strong>on the gateway</strong>
-and stream only matching records (with their byte offsets) back to
-the caller. Built for log / text / markdown / JSONL workloads where
-line-level regex is the right tool; use the Iceberg catalog for
-structured tabular queries.</p>
-<h2 id="single-object-grep">Single-object grep<a class="headerlink" href="#single-object-grep" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>POST /{bucket}/{key}?grep
-Content-Type: application/json
-{
-  "pattern":          "ERROR.*timeout",
-  "literal":          false,
-  "case_insensitive": false,
-  "max_matches":      100,
-  "content_max_bytes": 2048,
-  "invert":           false,
-  "engine":           "regex"   // optional — "regex" | "pcre2" | "hyperscan"
-}
-</code></pre></div>
-<p>Response is <code>application/x-ndjson</code> — one JSON event per newline:</p>
-<div class="highlight"><pre><span></span><code>{"type":"start","file_size":271,"etag":"\"abc123\"","pattern":"ERROR.*timeout"}
-{"type":"match","line_number":3,"offset":80,"line_length":57,"match_offset":100,"match_length":13,"content":"2026-04-22 10:00:03 ERROR timeout connecting to host=db1"}
-{"type":"match","line_number":5,"offset":179,"line_length":57,"match_offset":199,"match_length":13,"content":"2026-04-22 10:00:05 ERROR timeout connecting to host=db2"}
-{"type":"end","matches":2,"bytes_scanned":271,"truncated":false,"elapsed_ms":1}
-</code></pre></div>
-<p>Every <code>match</code> frame gives the agent everything needed to find or
-fetch the source context:</p>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>line_number</code></td>
-<td>1-indexed line in the source object</td>
-</tr>
-<tr>
-<td><code>offset</code></td>
-<td><strong>Byte offset of the line start</strong> in the source file — use with <code>Range: bytes=offset-</code></td>
-</tr>
-<tr>
-<td><code>line_length</code></td>
-<td>Bytes the line occupies (including the trailing newline if present)</td>
-</tr>
-<tr>
-<td><code>match_offset</code></td>
-<td>Byte offset of the matched substring itself</td>
-</tr>
-<tr>
-<td><code>match_length</code></td>
-<td>Length of the matched substring in bytes</td>
-</tr>
-<tr>
-<td><code>content</code></td>
-<td>The matched line, truncated to <code>content_max_bytes</code> (default 8 KiB)</td>
-</tr>
-<tr>
-<td><code>truncated</code></td>
-<td><code>true</code> if the content field was clipped — agent can use <code>offset</code> + <code>line_length</code> to Range-fetch the full line</td>
-</tr>
-</tbody>
-</table>
-<h2 id="multi-object-prefix-grep">Multi-object (prefix) grep<a class="headerlink" href="#multi-object-prefix-grep" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>POST /{bucket}?grep
-Content-Type: application/json
-{
-  "pattern":                "panic",
-  "prefix":                 "2026-04/",
-  "continuation_token":     "",        // paginate from a prior scan's next_continuation_token
-  "max_keys":               100,
-  "max_matches":            500,
-  "max_matches_per_object": 20,
-  "literal":                false,
-  "case_insensitive":       false,
-  "content_max_bytes":      2048,
-  "invert":                 false
-}
-</code></pre></div>
-<p>Response is the same NDJSON shape, with per-key brackets:</p>
-<div class="highlight"><pre><span></span><code>{"type":"start","file_size":0,"etag":"","pattern":"panic"}
-{"type":"object","bucket":"logs","key":"2026-04/app-20.log","file_size":151,"etag":"\"c19ddee6…\""}
-{"type":"match","bucket":"logs","key":"2026-04/app-20.log","line_number":3,"offset":93,...}
-{"type":"match","bucket":"logs","key":"2026-04/app-20.log","line_number":7,"offset":410,...}
-{"type":"object_end","bucket":"logs","key":"2026-04/app-20.log","matches_in_object":2,"per_object_truncated":false}
-{"type":"object","bucket":"logs","key":"2026-04/app-21.log","file_size":151,"etag":"..."}
-...
-{"type":"end","matches":6,"bytes_scanned":453,"truncated":false,"elapsed_ms":5,"objects_scanned":3}
-</code></pre></div>
-<p>Every match now carries <code>bucket</code> and <code>key</code> so agents can cross-reference.</p>
-<h2 id="agent-pattern-grep-then-range-fetch">Agent pattern: grep then Range-fetch<a class="headerlink" href="#agent-pattern-grep-then-range-fetch" title="Permanent link">&para;</a></h2>
-<p>The canonical LLM workflow: small matches go straight into context;
-larger fetches happen only when the agent decides they're needed.</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Step 1 — grep</span>
-<span class="n">hits</span> <span class="o">=</span> <span class="n">tool</span><span class="o">.</span><span class="n">grep_object</span><span class="p">(</span>
-    <span class="n">bucket</span><span class="o">=</span><span class="s2">"logs"</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s2">"app.log"</span><span class="p">,</span>
-    <span class="n">pattern</span><span class="o">=</span><span class="s2">"ERROR.*user=alice"</span><span class="p">,</span> <span class="n">max_matches</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
-
-<span class="c1"># Step 2 — optional: fetch surrounding context around interesting match</span>
-<span class="n">m</span> <span class="o">=</span> <span class="n">hits</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
-<span class="n">chunk</span> <span class="o">=</span> <span class="n">tool</span><span class="o">.</span><span class="n">get_object</span><span class="p">(</span>
-    <span class="s2">"logs"</span><span class="p">,</span> <span class="s2">"app.log"</span><span class="p">,</span>
-    <span class="n">range_header</span><span class="o">=</span><span class="sa">f</span><span class="s2">"bytes=</span><span class="si">{</span><span class="n">m</span><span class="p">[</span><span class="s1">'offset'</span><span class="p">]</span><span class="o">-</span><span class="mi">4096</span><span class="si">}</span><span class="s2">-"</span>
-                 <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">m</span><span class="p">[</span><span class="s1">'offset'</span><span class="p">]</span><span class="o">+</span><span class="n">m</span><span class="p">[</span><span class="s1">'line_length'</span><span class="p">]</span><span class="o">+</span><span class="mi">4096</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-
-<span class="c1"># Or: fetch the whole file if small</span>
-<span class="k">if</span> <span class="n">hits</span><span class="o">.</span><span class="n">file_size</span> <span class="o">&lt;</span> <span class="mi">1_000_000</span><span class="p">:</span>
-    <span class="n">full</span> <span class="o">=</span> <span class="n">tool</span><span class="o">.</span><span class="n">get_object</span><span class="p">(</span><span class="s2">"logs"</span><span class="p">,</span> <span class="s2">"app.log"</span><span class="p">)</span>
-</code></pre></div>
-<h2 id="mcp-tool-stub">MCP tool stub<a class="headerlink" href="#mcp-tool-stub" title="Permanent link">&para;</a></h2>
-<p>Drop into any agent runtime that understands MCP-style tool schemas
-(Claude Code, OpenAI function calling, Anthropic MCP):</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"grep_object"</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Search inside an object using a regex. Returns matching lines with byte offsets so the agent can fetch surrounding context via Range reads."</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">"input_schema"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">"required"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"bucket"</span><span class="p">,</span><span class="w"> </span><span class="s2">"key"</span><span class="p">,</span><span class="w"> </span><span class="s2">"pattern"</span><span class="p">],</span>
-<span class="w">    </span><span class="nt">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">"bucket"</span><span class="p">:</span><span class="w">           </span><span class="p">{</span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">},</span>
-<span class="w">      </span><span class="nt">"key"</span><span class="p">:</span><span class="w">              </span><span class="p">{</span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">},</span>
-<span class="w">      </span><span class="nt">"pattern"</span><span class="p">:</span><span class="w">          </span><span class="p">{</span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w"> </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Regex or literal. Set literal=true to disable regex interpretation."</span><span class="p">},</span>
-<span class="w">      </span><span class="nt">"literal"</span><span class="p">:</span><span class="w">          </span><span class="p">{</span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"boolean"</span><span class="p">,</span><span class="w"> </span><span class="nt">"default"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">},</span>
-<span class="w">      </span><span class="nt">"case_insensitive"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"boolean"</span><span class="p">,</span><span class="w"> </span><span class="nt">"default"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">},</span>
-<span class="w">      </span><span class="nt">"max_matches"</span><span class="p">:</span><span class="w">      </span><span class="p">{</span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"integer"</span><span class="p">,</span><span class="w"> </span><span class="nt">"default"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">},</span>
-<span class="w">      </span><span class="nt">"content_max_bytes"</span><span class="p">:{</span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"integer"</span><span class="p">,</span><span class="w"> </span><span class="nt">"default"</span><span class="p">:</span><span class="w"> </span><span class="mi">2048</span><span class="p">},</span>
-<span class="w">      </span><span class="nt">"invert"</span><span class="p">:</span><span class="w">           </span><span class="p">{</span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"boolean"</span><span class="p">,</span><span class="w"> </span><span class="nt">"default"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-<p>And for prefix grep:</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"grep_prefix"</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Search every object under a key prefix. Returns matches tagged by bucket+key so the agent knows which file each hit came from."</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">"input_schema"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">"required"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"bucket"</span><span class="p">,</span><span class="w"> </span><span class="s2">"pattern"</span><span class="p">],</span>
-<span class="w">    </span><span class="nt">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">"bucket"</span><span class="p">:</span><span class="w">                  </span><span class="p">{</span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">},</span>
-<span class="w">      </span><span class="nt">"pattern"</span><span class="p">:</span><span class="w">                 </span><span class="p">{</span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">},</span>
-<span class="w">      </span><span class="nt">"prefix"</span><span class="p">:</span><span class="w">                  </span><span class="p">{</span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w"> </span><span class="nt">"default"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">},</span>
-<span class="w">      </span><span class="nt">"continuation_token"</span><span class="p">:</span><span class="w">      </span><span class="p">{</span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w"> </span><span class="nt">"default"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Pass back the prior response's next_continuation_token to resume a paginated scan."</span><span class="p">},</span>
-<span class="w">      </span><span class="nt">"max_keys"</span><span class="p">:</span><span class="w">                </span><span class="p">{</span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"integer"</span><span class="p">,</span><span class="w"> </span><span class="nt">"default"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">},</span>
-<span class="w">      </span><span class="nt">"max_matches"</span><span class="p">:</span><span class="w">             </span><span class="p">{</span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"integer"</span><span class="p">,</span><span class="w"> </span><span class="nt">"default"</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="p">},</span>
-<span class="w">      </span><span class="nt">"max_matches_per_object"</span><span class="p">:</span><span class="w">  </span><span class="p">{</span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"integer"</span><span class="p">,</span><span class="w"> </span><span class="nt">"default"</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">},</span>
-<span class="w">      </span><span class="nt">"literal"</span><span class="p">:</span><span class="w">                 </span><span class="p">{</span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"boolean"</span><span class="p">,</span><span class="w"> </span><span class="nt">"default"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">},</span>
-<span class="w">      </span><span class="nt">"case_insensitive"</span><span class="p">:</span><span class="w">        </span><span class="p">{</span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"boolean"</span><span class="p">,</span><span class="w"> </span><span class="nt">"default"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-<p>Both tools inherit normal S3 auth — the agent must sign with SigV4
-credentials that have <code>s3:GetObject</code> on the target keys, same as any
-other read.</p>
-<h2 id="pattern-engines">Pattern engines<a class="headerlink" href="#pattern-engines" title="Permanent link">&para;</a></h2>
-<p>By default the scanner uses the pure-Rust <code>regex</code> crate — RE2-based,
-linear-time, no catastrophic backtracking. It handles nearly every
-pattern an agent will throw at it. When you need features the
-default can't express, pass <code>"engine": "&lt;name&gt;"</code> in the request body:</p>
-<table>
-<thead>
-<tr>
-<th>Engine</th>
-<th>Compiled into</th>
-<th>Adds</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>regex</code> (default)</td>
-<td>always</td>
-<td>—</td>
-</tr>
-<tr>
-<td><code>pcre2</code></td>
-<td>Linux release binaries (<code>--features grep-pcre2</code>)</td>
-<td>backrefs (<code>\1</code>), lookaround (<code>(?=foo)</code>, <code>(?&lt;!bar)</code>), atomic groups, recursion, named captures</td>
-</tr>
-<tr>
-<td><code>hyperscan</code></td>
-<td>Linux x86_64 release binaries (<code>--features grep-hyperscan</code>)</td>
-<td>Intel SIMD-accelerated matching for high-throughput scanning over large streams</td>
-</tr>
-</tbody>
-</table>
-<p>Selecting an engine that wasn't compiled into your gateway binary
-returns <code>400 BadRequest</code> with a clear message:</p>
-<div class="highlight"><pre><span></span><code>HTTP 400: pattern compile failed: engine 'pcre2' is not compiled into
-this gateway; rebuild with `--features pcre2` or select another engine
-</code></pre></div>
-<p>macOS release binaries ship with <code>regex</code> only. Linux arm64 ships
-with <code>regex</code> + <code>pcre2</code>. Linux amd64 ships with all three.</p>
-<p>Example — duplicate-word detection (needs a backref, so <code>regex</code>
-can't do it; <code>pcre2</code> can):</p>
-<div class="highlight"><pre><span></span><code><span class="n">body</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"pattern"</span><span class="p">:</span> <span class="sa">r</span><span class="s2">"(\w+) \1"</span><span class="p">,</span> <span class="s2">"engine"</span><span class="p">:</span> <span class="s2">"pcre2"</span><span class="p">}</span>
-<span class="c1"># → matches "hello hello", "foo foo", ...</span>
-</code></pre></div>
-<h2 id="what-this-is-and-isnt">What this is and isn't<a class="headerlink" href="#what-this-is-and-isnt" title="Permanent link">&para;</a></h2>
-<p><strong>Good fit:</strong></p>
+<h1 id="mutual-tls-between-the-services">Mutual TLS between the services<a class="headerlink" href="#mutual-tls-between-the-services" title="Permanent link">&para;</a></h1>
+<p>With mTLS on, every gRPC hop between ObjectIO's components runs over
+mutual TLS, and each side proves it holds a certificate signed by the
+cluster's CA:</p>
 <ul>
-<li>Plain text (<code>.txt</code>) logs and exports</li>
-<li>Markdown documents (<code>.md</code>)</li>
-<li>JSONL (one JSON object per line)</li>
-<li>Source code files where regex grep is already the right tool</li>
-<li>Any workload where "find matching lines without downloading the
-  full file" is the ask</li>
+<li>gateway to meta and to the OSDs;</li>
+<li>OSD to meta;</li>
+<li>meta to meta, including Raft;</li>
+<li>meta to the OSDs (liveness, repair, drain);</li>
+<li>block gateway to meta and to the OSDs;</li>
+<li><code>obioctl</code> to the block gateway (<code>volume</code>, <code>snapshot</code>).</li>
 </ul>
-<p><strong>Not the right tool — use these instead:</strong></p>
+<p>A peer without such a certificate is refused when it connects: a plaintext
+client, a TLS client with no certificate, or one with a certificate from
+another CA.</p>
+<p>TLS for clients (S3, the console, Iceberg) is a separate matter: it's
+terminated at the ingress or load balancer.</p>
+<h2 id="turning-it-on">Turning it on<a class="headerlink" href="#turning-it-on" title="Permanent link">&para;</a></h2>
+<p>Every component takes the same three settings, as flags or environment
+variables:</p>
 <table>
 <thead>
 <tr>
-<th>Workload</th>
-<th>Use</th>
+<th>Flag</th>
+<th>Environment</th>
+<th>What</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>SQL over a table / filter a column</td>
-<td><strong>Iceberg REST Catalog</strong> + DuckDB / Spark / Trino</td>
+<td><code>--tls-cert</code></td>
+<td><code>OBJECTIO_TLS_CERT</code></td>
+<td>This node's certificate (PEM). It is presented both as a server and as a client.</td>
 </tr>
 <tr>
-<td>Column pruning on Parquet without a catalog</td>
-<td><strong>DuckDB over S3</strong> with <code>httpfs</code>, client-side</td>
+<td><code>--tls-key</code></td>
+<td><code>OBJECTIO_TLS_KEY</code></td>
+<td>Its private key (PEM)</td>
 </tr>
 <tr>
-<td>Full-text search with relevance / BM25</td>
-<td><strong>Quickwit</strong> (S3-backed index, lightweight) or <strong>OpenSearch</strong> alongside the gateway</td>
-</tr>
-<tr>
-<td>Code search with symbol awareness</td>
-<td><strong>Sourcegraph</strong> / <strong>Zoekt</strong> mirror</td>
-</tr>
-<tr>
-<td>Pretty-printed JSON with structural path (<code>$.users[?(@.name=="alice")]</code>)</td>
-<td>Pipe the raw object through <code>jq</code> client-side; grep can't give you structural semantics</td>
+<td><code>--tls-ca</code></td>
+<td><code>OBJECTIO_TLS_CA</code></td>
+<td>The CA (PEM) that signs every node's certificate. It is the only CA trusted.</td>
 </tr>
 </tbody>
 </table>
-<h2 id="limits-and-follow-ups">Limits and follow-ups<a class="headerlink" href="#limits-and-follow-ups" title="Permanent link">&para;</a></h2>
-<ul>
-<li><strong>Object body is collected into memory before scanning</strong> — fine up
-  to a few GiB, hard cap at 16 GiB. Streaming off the EC read path
-  is a planned follow-up that lifts the cap entirely.</li>
-<li><strong><code>.</code> in regex doesn't cross line boundaries</strong> — line-based grep
-  by design; multiline patterns aren't supported in v1.</li>
-<li><strong>Pretty-printed or single-line JSON</strong> has weaker match locality
-  because there's no line structure. Use <code>content_max_bytes</code> and
-  Range-fetch the offset to recover context.</li>
-<li><strong>Per-request timeout</strong> follows the gateway's HTTP timeout (60s
-  default). Patterns that require scanning very large prefixes
-  should page by adjusting <code>max_keys</code> across requests.</li>
-<li><strong>Pagination is supported via continuation tokens.</strong> When a prefix
-  scan hits <code>max_keys</code>, the <code>end</code> frame includes
-  <code>next_continuation_token</code>. Pass it back in the next request's
-  <code>continuation_token</code> to resume. A response without
-  <code>next_continuation_token</code> signals that the prefix is exhausted.</li>
-</ul>
-<div class="highlight"><pre><span></span><code><span class="n">ct</span> <span class="o">=</span> <span class="s2">""</span>
-<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-    <span class="n">resp</span> <span class="o">=</span> <span class="n">grep_prefix</span><span class="p">(</span><span class="n">bucket</span><span class="o">=</span><span class="s2">"logs"</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s2">"panic"</span><span class="p">,</span>
-                       <span class="n">prefix</span><span class="o">=</span><span class="s2">"2026-04/"</span><span class="p">,</span> <span class="n">max_keys</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
-                       <span class="n">continuation_token</span><span class="o">=</span><span class="n">ct</span><span class="p">)</span>
-    <span class="c1"># ... process matches ...</span>
-    <span class="n">ct</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">end</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"next_continuation_token"</span><span class="p">)</span> <span class="ow">or</span> <span class="s2">""</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">ct</span><span class="p">:</span>
-        <span class="k">break</span>
+<p>The three go together. Without them, gRPC is plain, which is fine for
+development and the all-in-one on a laptop. <code>objectio-aio</code> takes them too:
+its own internal hops then use mTLS.</p>
+<p>The certificate must name every address peers dial the node by: the
+addresses registered as <code>--advertise-addr</code> (OSDs), <code>--raft-advertise</code>
+(meta) and the <code>--meta-endpoint</code> targets. Names and IPs both work. One
+certificate for the whole cluster is simplest, with a wildcard for each
+headless service.</p>
+<p><strong>Enable it at install time.</strong> A cluster can't run half on TLS and half
+off, so turning it on, or off, later means restarting every component at
+once.</p>
+<h2 id="kubernetes">Kubernetes<a class="headerlink" href="#kubernetes" title="Permanent link">&para;</a></h2>
+<p>The chart mounts a Secret holding <code>tls.crt</code>, <code>tls.key</code> and <code>ca.crt</code>
+(cert-manager's format) into meta, the OSDs, the gateways and the block
+gateway, and sets the variables above:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">tls</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="c1"># Either name a cert-manager CA issuer, and the chart requests the</span>
+<span class="w">  </span><span class="c1"># certificate, with every service and pod name in it:</span>
+<span class="w">  </span><span class="nt">certManager</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">issuerRef</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="nv">objectio-ca</span><span class="p p-Indicator">,</span><span class="nt"> kind</span><span class="p">:</span><span class="w"> </span><span class="nv">Issuer</span><span class="p p-Indicator">}</span>
+<span class="w">  </span><span class="c1"># or create the Secret yourself:</span>
+<span class="w">  </span><span class="c1"># secretName: my-objectio-tls</span>
 </code></pre></div>
-<h2 id="example-from-the-command-line">Example — from the command line<a class="headerlink" href="#example-from-the-command-line" title="Permanent link">&para;</a></h2>
-<p><code>curl</code> using SigV4 via <code>awscurl</code> / <code>aws s3api</code> helpers:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">OBJ</span><span class="o">=</span>http://localhost:9000
-python3<span class="w"> </span>-<span class="w"> </span><span class="s">&lt;&lt;'EOF'</span>
-<span class="s">import boto3, json, os</span>
-<span class="s">from botocore.awsrequest import AWSRequest</span>
-<span class="s">import botocore.auth</span>
-<span class="s">from urllib.request import Request, urlopen</span>
-<span class="s">creds = boto3.Session().get_credentials()</span>
-<span class="s">body = json.dumps({"pattern": "ERROR.*timeout", "max_matches": 20}).encode()</span>
-<span class="s">r = AWSRequest(method="POST", url=f"{os.environ['OBJ']}/logs/app.log?grep",</span>
-<span class="s">               data=body, headers={"Content-Type": "application/json"})</span>
-<span class="s">botocore.auth.SigV4Auth(creds, "s3", "us-east-1").add_auth(r)</span>
-<span class="s">with urlopen(Request(r.url, data=body, headers=dict(r.headers), method="POST")) as resp:</span>
-<span class="s">    for line in resp: print(line.decode().rstrip())</span>
-<span class="s">EOF</span>
+<p>A CA issuer is what you want here: <code>ca.crt</code> is then the CA that signs
+each certificate. A minimal one, with cert-manager installed:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cert-manager.io/v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Issuer</span>
+<span class="nt">metadata</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="nv">objectio-selfsigned</span><span class="p p-Indicator">}</span>
+<span class="nt">spec</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">selfSigned</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}}</span>
+<span class="nn">---</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cert-manager.io/v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Certificate</span>
+<span class="nt">metadata</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="nv">objectio-ca</span><span class="p p-Indicator">}</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">isCA</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">commonName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">objectio-ca</span>
+<span class="w">  </span><span class="nt">secretName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">objectio-ca</span>
+<span class="w">  </span><span class="nt">issuerRef</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="nv">objectio-selfsigned</span><span class="p p-Indicator">,</span><span class="nt"> kind</span><span class="p">:</span><span class="w"> </span><span class="nv">Issuer</span><span class="p p-Indicator">}</span>
+<span class="nn">---</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cert-manager.io/v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Issuer</span>
+<span class="nt">metadata</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="nv">objectio-ca</span><span class="p p-Indicator">}</span>
+<span class="nt">spec</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">ca</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">secretName</span><span class="p">:</span><span class="w"> </span><span class="nv">objectio-ca</span><span class="p p-Indicator">}}</span>
 </code></pre></div>
+<h2 id="renewal">Renewal<a class="headerlink" href="#renewal" title="Permanent link">&para;</a></h2>
+<p>Components read their certificate when they start. cert-manager renews the
+Secret 30 days before the certificate expires, and the chart's default
+lifetime is one year. After a renewal, restart the components one at a
+time so they pick up the new certificate:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>rollout<span class="w"> </span>restart<span class="w"> </span>statefulset/&lt;release&gt;-objectio-meta<span class="w"> </span>statefulset/&lt;release&gt;-objectio-osd<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>deployment/&lt;release&gt;-objectio-gateway
+</code></pre></div>
+<p>Picking up a renewed certificate without a restart is planned.</p>
+<h2 id="how-its-tested">How it's tested<a class="headerlink" href="#how-its-tested" title="Permanent link">&para;</a></h2>
+<p>The end-to-end suite runs with mTLS on: every node of every test cluster
+gets a test CA's certificate. One test checks that a node refuses a
+plaintext client, a client with no certificate and one with another CA's
+certificate, and serves the cluster's own. The rolling-upgrade test starts
+from the previous release, before TLS existed, so it runs plain.
+<code>OBJECTIO_E2E_PLAIN=1</code> runs the whole suite plain.</p>
 
 
 

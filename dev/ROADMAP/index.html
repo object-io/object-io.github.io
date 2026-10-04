@@ -1557,6 +1557,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../operations-guide/administration/mtls/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mutual TLS between the services
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../operations-guide/administration/public-access/" class="md-nav__link">
         
   
@@ -3012,8 +3040,8 @@ run on Linux amd64 and arm64; the latest numbers are there.</p>
 </tr>
 <tr>
 <td>TLS between services (gateway, meta, OSD, block)</td>
-<td>⬜</td>
-<td>Plain gRPC today; client-facing TLS is at the ingress</td>
+<td>✅</td>
+<td>mTLS on every gRPC hop (A8a); client-facing TLS is at the ingress</td>
 </tr>
 </tbody>
 </table>
@@ -3214,6 +3242,11 @@ run on Linux amd64 and arm64; the latest numbers are there.</p>
 <td></td>
 </tr>
 <tr>
+<td>mTLS certificates reloaded without a restart</td>
+<td>⬜</td>
+<td>Today a renewed certificate is picked up by a rolling restart</td>
+</tr>
+<tr>
 <td>Backup of meta (export/restore)</td>
 <td>⬜</td>
 <td>A14</td>
@@ -3281,7 +3314,7 @@ when the code is written.</p>
 <td>A8a</td>
 <td>TLS between services</td>
 <td>mTLS on every gRPC hop; e2e runs with it on</td>
-<td>⬜</td>
+<td>✅</td>
 </tr>
 <tr>
 <td>A8b</td>
