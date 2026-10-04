@@ -1189,7 +1189,7 @@
   <span class="md-ellipsis">
     
   
-    CLI (objectio-cli)
+    CLI (obioctl)
   
 
     
@@ -2150,12 +2150,12 @@ Design: core/upgrade-path.md.</p>
    each, wait until it has rejoined (<code>GET /status</code> on its admin port shows
    it with the others' <code>last_applied</code>).</li>
 <li><strong>OSDs</strong>, one failure domain at a time. After each, wait until it is
-   registered and healthy (<code>objectio-cli node list</code>). A restart needs no
+   registered and healthy (<code>obioctl node list</code>). A restart needs no
    drain: reads tolerate up to <em>m</em> missing shards meanwhile.</li>
 <li><strong>Gateways and block gateways</strong>, in any order.</li>
 <li><strong>Check</strong> that every node runs the new release:</li>
 </ol>
-<div class="highlight"><pre><span></span><code>objectio-cli<span class="w"> </span>upgrade<span class="w"> </span>status
+<div class="highlight"><pre><span></span><code>obioctl<span class="w"> </span>upgrade<span class="w"> </span>status
 </code></pre></div>
 <p>It lists every node heard from in the last 90 seconds, with its
    release and format level, and says what blocks finalizing: a meta node
@@ -2166,14 +2166,14 @@ Design: core/upgrade-path.md.</p>
 <ol>
 <li><strong>Finalize:</strong></li>
 </ol>
-<div class="highlight"><pre><span></span><code>objectio-cli<span class="w"> </span>upgrade<span class="w"> </span>finalize
+<div class="highlight"><pre><span></span><code>obioctl<span class="w"> </span>upgrade<span class="w"> </span>finalize
 </code></pre></div>
 <p>It is refused while anything blocks it.</p>
 <p>To go back before step 6, run the same steps in reverse order with the
 previous release's binaries.</p>
 <h2 id="kubernetes">Kubernetes<a class="headerlink" href="#kubernetes" title="Permanent link">&para;</a></h2>
 <p>Roll the meta and OSD StatefulSets one pod at a time (<code>partition</code>), each
-gated on readiness, in the order above, then run <code>objectio-cli upgrade
+gated on readiness, in the order above, then run <code>obioctl upgrade
 finalize</code>.</p>
 <h2 id="api">API<a class="headerlink" href="#api" title="Permanent link">&para;</a></h2>
 <p>Both calls are system admin only.</p>

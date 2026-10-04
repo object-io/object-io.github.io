@@ -1191,7 +1191,7 @@
   <span class="md-ellipsis">
     
   
-    CLI (objectio-cli)
+    CLI (obioctl)
   
 
     
@@ -2470,11 +2470,11 @@ Pick the right arch:</p>
 curl<span class="w"> </span>-L<span class="w"> </span>-o<span class="w"> </span>/tmp/objectio.tar.gz<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>https://github.com/object-io/objectio/releases/latest/download/objectio-linux-<span class="si">${</span><span class="nv">ARCH</span><span class="si">}</span>.tar.gz
 sudo<span class="w"> </span>tar<span class="w"> </span>-xzf<span class="w"> </span>/tmp/objectio.tar.gz<span class="w"> </span>-C<span class="w"> </span>/usr/local/bin<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>objectio-aio<span class="w"> </span>objectio-gateway<span class="w"> </span>objectio-meta<span class="w"> </span>objectio-osd<span class="w"> </span>objectio-cli<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>objectio-aio<span class="w"> </span>objectio-gateway<span class="w"> </span>objectio-meta<span class="w"> </span>objectio-osd<span class="w"> </span>obioctl<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>objectio-install<span class="w"> </span>objectio-block-gateway
 </code></pre></div>
 <p>Verify:</p>
-<div class="highlight"><pre><span></span><code>objectio-cli<span class="w"> </span>--version
+<div class="highlight"><pre><span></span><code>obioctl<span class="w"> </span>--version
 objectio-aio<span class="w"> </span>--help
 </code></pre></div>
 <p>Runtime packages (all installed automatically as dependencies of the

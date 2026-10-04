@@ -1191,7 +1191,7 @@
   <span class="md-ellipsis">
     
   
-    CLI (objectio-cli)
+    CLI (obioctl)
   
 
     
@@ -2547,10 +2547,10 @@ sudo<span class="w"> </span>systemctl<span class="w"> </span>status<span class="
 curl<span class="w"> </span>http://localhost:9000/health
 
 <span class="c1"># Check cluster status via CLI</span>
-objectio-cli<span class="w"> </span>cluster<span class="w"> </span>info
+obioctl<span class="w"> </span>cluster<span class="w"> </span>info
 
 <span class="c1"># Check OSD status</span>
-objectio-cli<span class="w"> </span>node<span class="w"> </span>list
+obioctl<span class="w"> </span>node<span class="w"> </span>list
 </code></pre></div>
 <h3 id="common-operations">Common Operations<a class="headerlink" href="#common-operations" title="Permanent link">&para;</a></h3>
 <table>
@@ -2563,23 +2563,23 @@ objectio-cli<span class="w"> </span>node<span class="w"> </span>list
 <tbody>
 <tr>
 <td>List buckets</td>
-<td><code>objectio-cli bucket list</code></td>
+<td><code>obioctl bucket list</code></td>
 </tr>
 <tr>
 <td>Check capacity and usage</td>
-<td><code>objectio-cli cluster usage</code>, <code>objectio-cli node show &lt;osd-id&gt;</code></td>
+<td><code>obioctl cluster usage</code>, <code>obioctl node show &lt;osd-id&gt;</code></td>
 </tr>
 <tr>
 <td>View cluster map</td>
-<td><code>objectio-cli cluster topology</code></td>
+<td><code>obioctl cluster topology</code></td>
 </tr>
 <tr>
 <td>Check repair</td>
-<td><code>objectio-cli metrics query 'objectio_objects_at_risk'</code> (repair is continuous)</td>
+<td><code>obioctl metrics query 'objectio_objects_at_risk'</code> (repair is continuous)</td>
 </tr>
 <tr>
 <td>Drain OSD</td>
-<td><code>objectio-cli osd set-state &lt;osd-id&gt; draining</code>, then <code>objectio-cli cluster drain-status</code></td>
+<td><code>obioctl osd set-state &lt;osd-id&gt; draining</code>, then <code>obioctl cluster drain-status</code></td>
 </tr>
 </tbody>
 </table>
@@ -2634,7 +2634,7 @@ objectio-cli<span class="w"> </span>node<span class="w"> </span>list
 sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>objectio-osd@osd1
 
 <span class="c1"># Before the next one: nothing one failure from unreadable</span>
-objectio-cli<span class="w"> </span>metrics<span class="w"> </span>query<span class="w"> </span><span class="s1">'objectio_objects_at_risk'</span><span class="w">     </span><span class="c1"># expect 0</span>
+obioctl<span class="w"> </span>metrics<span class="w"> </span>query<span class="w"> </span><span class="s1">'objectio_objects_at_risk'</span><span class="w">     </span><span class="c1"># expect 0</span>
 </code></pre></div></p>
 </li>
 <li>
@@ -2657,12 +2657,12 @@ sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class=
 <h3 id="adding-capacity">Adding Capacity<a class="headerlink" href="#adding-capacity" title="Permanent link">&para;</a></h3>
 <p>Start an OSD on the new host; it registers itself with meta and joins
 placement. Placement groups rebalance onto it in the background:</p>
-<div class="highlight"><pre><span></span><code>objectio-cli<span class="w"> </span>node<span class="w"> </span>list<span class="w">                 </span><span class="c1"># the new OSD, "in"</span>
-objectio-cli<span class="w"> </span>cluster<span class="w"> </span>rebalance<span class="w"> </span>status
+<div class="highlight"><pre><span></span><code>obioctl<span class="w"> </span>node<span class="w"> </span>list<span class="w">                 </span><span class="c1"># the new OSD, "in"</span>
+obioctl<span class="w"> </span>cluster<span class="w"> </span>rebalance<span class="w"> </span>status
 </code></pre></div>
 <h3 id="removing-an-osd">Removing an OSD<a class="headerlink" href="#removing-an-osd" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>objectio-cli<span class="w"> </span>osd<span class="w"> </span>set-state<span class="w"> </span>&lt;osd-id&gt;<span class="w"> </span>draining<span class="w">     </span><span class="c1"># copies everything off it</span>
-objectio-cli<span class="w"> </span>cluster<span class="w"> </span>drain-status<span class="w">                </span><span class="c1"># until it is "out"</span>
+<div class="highlight"><pre><span></span><code>obioctl<span class="w"> </span>osd<span class="w"> </span>set-state<span class="w"> </span>&lt;osd-id&gt;<span class="w"> </span>draining<span class="w">     </span><span class="c1"># copies everything off it</span>
+obioctl<span class="w"> </span>cluster<span class="w"> </span>drain-status<span class="w">                </span><span class="c1"># until it is "out"</span>
 </code></pre></div>
 <p>When the drain finishes the OSD is marked <code>out</code> and wiped. Then stop it
 and take the hardware away.</p>

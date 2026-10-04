@@ -1191,7 +1191,7 @@
   <span class="md-ellipsis">
     
   
-    CLI (objectio-cli)
+    CLI (obioctl)
   
 
     
@@ -2404,7 +2404,7 @@ image for quick-test / appliance setups.</p>
 </tr>
 <tr>
 <td><code>cli</code></td>
-<td><code>objectio-cli</code></td>
+<td><code>obioctl</code></td>
 <td>—</td>
 <td>Admin CLI</td>
 </tr>
@@ -2456,7 +2456,7 @@ docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </
 docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>--network<span class="w"> </span>host<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>ghcr.io/object-io/objectio:latest<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-e<span class="w"> </span>OBJECTIO_ACCESS_KEY<span class="w"> </span>-e<span class="w"> </span>OBJECTIO_SECRET_KEY<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>objectio-cli<span class="w"> </span>--endpoint<span class="w"> </span>http://localhost:9000<span class="w"> </span>user<span class="w"> </span>list
+<span class="w">  </span>obioctl<span class="w"> </span>--endpoint<span class="w"> </span>http://localhost:9000<span class="w"> </span>user<span class="w"> </span>list
 </code></pre></div>
 <h3 id="when-to-use-which">When to use which<a class="headerlink" href="#when-to-use-which" title="Permanent link">&para;</a></h3>
 <table>
@@ -2492,7 +2492,7 @@ gateway, 1 block-gateway, all on one Docker host.</p>
 make<span class="w"> </span>cluster-up<span class="w">          </span><span class="c1"># builds images, starts the stack</span>
 make<span class="w"> </span>cluster-status<span class="w">      </span><span class="c1"># docker compose ps</span>
 make<span class="w"> </span>cluster-logs<span class="w">        </span><span class="c1"># tail every service</span>
-make<span class="w"> </span>cluster-cli<span class="w"> </span><span class="nv">ARGS</span><span class="o">=</span><span class="s2">"user list"</span><span class="w">    </span><span class="c1"># run objectio-cli in the cluster network</span>
+make<span class="w"> </span>cluster-cli<span class="w"> </span><span class="nv">ARGS</span><span class="o">=</span><span class="s2">"user list"</span><span class="w">    </span><span class="c1"># run obioctl in the cluster network</span>
 make<span class="w"> </span>cluster-down<span class="w">        </span><span class="c1"># stop, keep volumes</span>
 make<span class="w"> </span>cluster-clean<span class="w">       </span><span class="c1"># stop + wipe volumes</span>
 </code></pre></div>

@@ -1191,7 +1191,7 @@
   <span class="md-ellipsis">
     
   
-    CLI (objectio-cli)
+    CLI (obioctl)
   
 
     
@@ -2765,20 +2765,20 @@ Recovery: shard3 reconstructed from any 4 remaining shards
 <h3 id="replacing-a-disk">Replacing a disk<a class="headerlink" href="#replacing-a-disk" title="Permanent link">&para;</a></h3>
 <p>Lost shards are rebuilt automatically: the repairer in meta finds stripes
 missing a shard and rebuilds it on another OSD. Watch it work:</p>
-<div class="highlight"><pre><span></span><code>objectio-cli<span class="w"> </span>metrics<span class="w"> </span>query<span class="w"> </span><span class="s1">'objectio_objects_at_risk'</span><span class="w">        </span><span class="c1"># objects one more loss from unreadable</span>
-objectio-cli<span class="w"> </span>metrics<span class="w"> </span>query<span class="w"> </span><span class="s1">'objectio_degraded_bytes'</span>
-objectio-cli<span class="w"> </span>metrics<span class="w"> </span>query<span class="w"> </span><span class="s1">'rate(objectio_meta_repair_shards_rebuilt_total[5m])'</span>
-objectio-cli<span class="w"> </span>metrics<span class="w"> </span>query<span class="w"> </span><span class="s1">'objectio_meta_repair_unrecoverable_stripes_total'</span>
+<div class="highlight"><pre><span></span><code>obioctl<span class="w"> </span>metrics<span class="w"> </span>query<span class="w"> </span><span class="s1">'objectio_objects_at_risk'</span><span class="w">        </span><span class="c1"># objects one more loss from unreadable</span>
+obioctl<span class="w"> </span>metrics<span class="w"> </span>query<span class="w"> </span><span class="s1">'objectio_degraded_bytes'</span>
+obioctl<span class="w"> </span>metrics<span class="w"> </span>query<span class="w"> </span><span class="s1">'rate(objectio_meta_repair_shards_rebuilt_total[5m])'</span>
+obioctl<span class="w"> </span>metrics<span class="w"> </span>query<span class="w"> </span><span class="s1">'objectio_meta_repair_unrecoverable_stripes_total'</span>
 </code></pre></div>
 <p>To take an OSD's disk out of service (still readable):</p>
-<div class="highlight"><pre><span></span><code>objectio-cli<span class="w"> </span>node<span class="w"> </span>list<span class="w">                               </span><span class="c1"># find the OSD's id</span>
-objectio-cli<span class="w"> </span>osd<span class="w"> </span>set-state<span class="w"> </span>&lt;osd-id&gt;<span class="w"> </span>draining<span class="w">         </span><span class="c1"># copies everything off it</span>
-objectio-cli<span class="w"> </span>cluster<span class="w"> </span>drain-status<span class="w">                    </span><span class="c1"># progress; it turns "out" when done</span>
+<div class="highlight"><pre><span></span><code>obioctl<span class="w"> </span>node<span class="w"> </span>list<span class="w">                               </span><span class="c1"># find the OSD's id</span>
+obioctl<span class="w"> </span>osd<span class="w"> </span>set-state<span class="w"> </span>&lt;osd-id&gt;<span class="w"> </span>draining<span class="w">         </span><span class="c1"># copies everything off it</span>
+obioctl<span class="w"> </span>cluster<span class="w"> </span>drain-status<span class="w">                    </span><span class="c1"># progress; it turns "out" when done</span>
 </code></pre></div>
 <p>When a drain finishes, the OSD is marked <code>out</code> and wiped (its space is
 reclaimed, and nothing stale can come back with it). Replace the hardware,
 start the OSD on the new disk, and set it back in:</p>
-<div class="highlight"><pre><span></span><code>objectio-cli<span class="w"> </span>osd<span class="w"> </span>set-state<span class="w"> </span>&lt;osd-id&gt;<span class="w"> </span><span class="k">in</span>
+<div class="highlight"><pre><span></span><code>obioctl<span class="w"> </span>osd<span class="w"> </span>set-state<span class="w"> </span>&lt;osd-id&gt;<span class="w"> </span><span class="k">in</span>
 </code></pre></div>
 <p>For a disk that is already dead, set its OSD <code>out</code> straight away; repair
 rebuilds its shards from the others. Don't put a directly-<code>out</code> OSD back in
@@ -2828,10 +2828,10 @@ with old data on it: wipe the disk first.</p>
 5. Missing shards reconstructed on healthy OSDs
 </code></pre></div>
 <h3 id="manual-recovery">Manual Recovery<a class="headerlink" href="#manual-recovery" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>objectio-cli<span class="w"> </span>node<span class="w"> </span>list<span class="w">                  </span><span class="c1"># status and admin state of every OSD</span>
-objectio-cli<span class="w"> </span>node<span class="w"> </span>show<span class="w"> </span>&lt;osd-id&gt;<span class="w">         </span><span class="c1"># its disks and capacity</span>
-objectio-cli<span class="w"> </span>cluster<span class="w"> </span>topology<span class="w">           </span><span class="c1"># where it sits in the failure domains</span>
-objectio-cli<span class="w"> </span>metrics<span class="w"> </span>query<span class="w"> </span><span class="s1">'objectio_meta_repair_last_pass_timestamp_seconds'</span>
+<div class="highlight"><pre><span></span><code>obioctl<span class="w"> </span>node<span class="w"> </span>list<span class="w">                  </span><span class="c1"># status and admin state of every OSD</span>
+obioctl<span class="w"> </span>node<span class="w"> </span>show<span class="w"> </span>&lt;osd-id&gt;<span class="w">         </span><span class="c1"># its disks and capacity</span>
+obioctl<span class="w"> </span>cluster<span class="w"> </span>topology<span class="w">           </span><span class="c1"># where it sits in the failure domains</span>
+obioctl<span class="w"> </span>metrics<span class="w"> </span>query<span class="w"> </span><span class="s1">'objectio_meta_repair_last_pass_timestamp_seconds'</span>
 </code></pre></div>
 <p>Repair is continuous; there is nothing to start by hand. An OSD that is
 down long enough to be replaced should be set <code>out</code> (see above).</p>
@@ -2848,7 +2848,7 @@ journalctl<span class="w"> </span>-u<span class="w"> </span>objectio-osd@osd3<sp
 sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>objectio-osd@osd3
 
 <span class="c1"># Verify reconnection</span>
-objectio-cli<span class="w"> </span>node<span class="w"> </span>show<span class="w"> </span>osd3
+obioctl<span class="w"> </span>node<span class="w"> </span>show<span class="w"> </span>osd3
 </code></pre></div>
 <hr />
 <h2 id="metadata-service-failures">Metadata Service Failures<a class="headerlink" href="#metadata-service-failures" title="Permanent link">&para;</a></h2>

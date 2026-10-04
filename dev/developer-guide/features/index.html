@@ -1332,7 +1332,7 @@
   <span class="md-ellipsis">
     
   
-    CLI (objectio-cli)
+    CLI (obioctl)
   
 
     
@@ -2831,7 +2831,7 @@ tab both consume this.</p>
 <li><strong>Three-tier access model</strong>: System admin (tenant=""), tenant admin (in <code>admin_users</code> for their tenant), regular user</li>
 <li><strong>Scope</strong>: tenant admins can create/delete users + access keys + buckets + warehouses + shares <strong>within their own tenant</strong>; they cannot touch pools, tenants, nodes, system config, KMS backend, or other tenants</li>
 <li><strong>Console</strong>: dedicated "Manage admins" panel on each tenant row; picker lists that tenant's users + free-form user-id/ARN input</li>
-<li><strong>CLI</strong>: <code>objectio-cli tenant admin add|remove|list &lt;tenant&gt; &lt;user&gt;</code> — see <a href="../../operations-guide/administration/cli/">CLI</a></li>
+<li><strong>CLI</strong>: <code>obioctl tenant admin add|remove|list &lt;tenant&gt; &lt;user&gt;</code> — see <a href="../../operations-guide/administration/cli/">CLI</a></li>
 </ul>
 <hr />
 <h1 id="5-iam-identity-access-management">5. IAM (Identity &amp; Access Management)<a class="headerlink" href="#5-iam-identity-access-management" title="Permanent link">&para;</a></h1>
@@ -3256,7 +3256,7 @@ What exists today is file-like access through S3:</p>
 <li><strong><code>GET /_admin/topology</code></strong> — aggregated region→zone→datacenter→rack→host→OSDs tree + per-level distinct counts</li>
 <li><strong><code>GET /_admin/cluster-info</code></strong> — gateway's self-position + every OSD's computed distance + <code>is_local</code> flag</li>
 <li><strong>Prometheus metric</strong>: <code>objectio_read_locality_bytes_total{locality="same-rack"|"same-zone"|"same-datacenter"|"same-region"|"remote"|"unknown"}</code> — bytes fetched from OSDs partitioned by topology distance. Multi-DC deployments use this to prove cross-DC bandwidth is being collapsed</li>
-<li><strong>CLI</strong>: <code>objectio-cli cluster topology</code> (full tree) and <code>cluster validate-placement &lt;pool&gt;</code> (exits non-zero when a pool is unsatisfiable)</li>
+<li><strong>CLI</strong>: <code>obioctl cluster topology</code> (full tree) and <code>cluster validate-placement &lt;pool&gt;</code> (exits non-zero when a pool is unsatisfiable)</li>
 </ul>
 <h3 id="stable-osd-identity">Stable OSD identity<a class="headerlink" href="#stable-osd-identity" title="Permanent link">&para;</a></h3>
 <ul>

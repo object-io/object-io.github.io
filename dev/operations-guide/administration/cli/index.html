@@ -25,7 +25,7 @@
     
     
       
-        <title>CLI (objectio-cli) - ObjectIO</title>
+        <title>CLI (obioctl) - ObjectIO</title>
       
     
     
@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#cli-objectio-cli" class="md-skip">
+        <a href="#cli-obioctl" class="md-skip">
           Skip to content
         </a>
       
@@ -117,7 +117,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              CLI (objectio-cli)
+              CLI (obioctl)
             
           </span>
         </div>
@@ -1202,7 +1202,7 @@
   <span class="md-ellipsis">
     
   
-    CLI (objectio-cli)
+    CLI (obioctl)
   
 
     
@@ -1220,7 +1220,7 @@
   <span class="md-ellipsis">
     
   
-    CLI (objectio-cli)
+    CLI (obioctl)
   
 
     
@@ -2105,8 +2105,8 @@
   
 
 
-<h1 id="cli-objectio-cli">CLI (<code>objectio-cli</code>)<a class="headerlink" href="#cli-objectio-cli" title="Permanent link">&para;</a></h1>
-<p><code>objectio-cli</code> manages a cluster through the gateway's admin API, signed
+<h1 id="cli-obioctl">CLI (<code>obioctl</code>)<a class="headerlink" href="#cli-obioctl" title="Permanent link">&para;</a></h1>
+<p><code>obioctl</code> manages a cluster through the gateway's admin API, signed
 with SigV4 like the <a href="../../../developer-guide/sdk/">SDKs</a>. Every command goes
 through the same authentication, tenant scoping, validation, Block Public
 Access and <a href="../audit/">audit</a> as any other caller. It never talks to meta
@@ -2116,10 +2116,10 @@ signed the same way. <code>sts assume-role-with-web-identity</code> needs no key
 <code>volume</code> and <code>snapshot</code> talk to the block gateway (<code>--block-endpoint</code>,
 default <code>http://localhost:9300</code>).</p>
 <h2 id="configure">Configure<a class="headerlink" href="#configure" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>objectio-cli<span class="w"> </span>configure<span class="w">                 </span><span class="c1"># prompts for endpoint, key and secret</span>
-objectio-cli<span class="w"> </span>--profile<span class="w"> </span>acme<span class="w"> </span>configure<span class="w"> </span>--endpoint<span class="w"> </span>https://s3.example.com<span class="w"> </span><span class="se">\</span>
+<div class="highlight"><pre><span></span><code>obioctl<span class="w"> </span>configure<span class="w">                 </span><span class="c1"># prompts for endpoint, key and secret</span>
+obioctl<span class="w"> </span>--profile<span class="w"> </span>acme<span class="w"> </span>configure<span class="w"> </span>--endpoint<span class="w"> </span>https://s3.example.com<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--access-key<span class="w"> </span>AKIA…<span class="w"> </span>--secret-key<span class="w"> </span>…<span class="w"> </span>--non-interactive
-objectio-cli<span class="w"> </span>configure<span class="w"> </span>--list<span class="w">          </span><span class="c1"># secrets masked</span>
+obioctl<span class="w"> </span>configure<span class="w"> </span>--list<span class="w">          </span><span class="c1"># secrets masked</span>
 </code></pre></div>
 <p>Profiles live in <code>~/.objectio/config</code> (mode 0600). Settings are resolved in
 this order:
@@ -2134,7 +2134,7 @@ admin API. The system admin and tenant admins use the same CLI; without
 <code>--tenant</code>, a command acts in the caller's own tenant.</p>
 <h2 id="output">Output<a class="headerlink" href="#output" title="Permanent link">&para;</a></h2>
 <p>Tables by default. <code>-o json</code> prints the API's JSON for scripting:</p>
-<div class="highlight"><pre><span></span><code>objectio-cli<span class="w"> </span>-o<span class="w"> </span>json<span class="w"> </span>user<span class="w"> </span>create<span class="w"> </span>alice<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span>.user_id
+<div class="highlight"><pre><span></span><code>obioctl<span class="w"> </span>-o<span class="w"> </span>json<span class="w"> </span>user<span class="w"> </span>create<span class="w"> </span>alice<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span>.user_id
 </code></pre></div>
 <p>On error the exit code is non-zero and stderr carries the server's message.
 A secret is printed only when it's created.</p>
@@ -2237,29 +2237,29 @@ A secret is printed only when it's created.</p>
 </tr>
 </tbody>
 </table>
-<p><code>objectio-cli &lt;group&gt; --help</code> lists each command's options. The source tree
+<p><code>obioctl &lt;group&gt; --help</code> lists each command's options. The source tree
 has the full command → API route map in <code>bin/cli/README.md</code>.</p>
 <h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
 <p>Onboard a tenant, as the system admin:</p>
-<div class="highlight"><pre><span></span><code>objectio-cli<span class="w"> </span>tenant<span class="w"> </span>create<span class="w"> </span>acme<span class="w"> </span>--display-name<span class="w"> </span><span class="s2">"Acme"</span><span class="w"> </span>--quota-bytes<span class="w"> </span>2T<span class="w"> </span>--default-pool<span class="w"> </span>standard
-<span class="nv">ADMIN</span><span class="o">=</span><span class="k">$(</span>objectio-cli<span class="w"> </span>-o<span class="w"> </span>json<span class="w"> </span>user<span class="w"> </span>create<span class="w"> </span>acme-admin<span class="w"> </span>--tenant<span class="w"> </span>acme<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span>.user_id<span class="k">)</span>
-objectio-cli<span class="w"> </span>tenant<span class="w"> </span>admin<span class="w"> </span>add<span class="w"> </span>acme<span class="w"> </span><span class="s2">"</span><span class="nv">$ADMIN</span><span class="s2">"</span>
-objectio-cli<span class="w"> </span>key<span class="w"> </span>create<span class="w"> </span><span class="s2">"</span><span class="nv">$ADMIN</span><span class="s2">"</span><span class="w">          </span><span class="c1"># hand this to acme's admin</span>
+<div class="highlight"><pre><span></span><code>obioctl<span class="w"> </span>tenant<span class="w"> </span>create<span class="w"> </span>acme<span class="w"> </span>--display-name<span class="w"> </span><span class="s2">"Acme"</span><span class="w"> </span>--quota-bytes<span class="w"> </span>2T<span class="w"> </span>--default-pool<span class="w"> </span>standard
+<span class="nv">ADMIN</span><span class="o">=</span><span class="k">$(</span>obioctl<span class="w"> </span>-o<span class="w"> </span>json<span class="w"> </span>user<span class="w"> </span>create<span class="w"> </span>acme-admin<span class="w"> </span>--tenant<span class="w"> </span>acme<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span>.user_id<span class="k">)</span>
+obioctl<span class="w"> </span>tenant<span class="w"> </span>admin<span class="w"> </span>add<span class="w"> </span>acme<span class="w"> </span><span class="s2">"</span><span class="nv">$ADMIN</span><span class="s2">"</span>
+obioctl<span class="w"> </span>key<span class="w"> </span>create<span class="w"> </span><span class="s2">"</span><span class="nv">$ADMIN</span><span class="s2">"</span><span class="w">          </span><span class="c1"># hand this to acme's admin</span>
 </code></pre></div>
 <p>As acme's admin:</p>
-<div class="highlight"><pre><span></span><code>objectio-cli<span class="w"> </span>user<span class="w"> </span>create<span class="w"> </span>alice
-objectio-cli<span class="w"> </span>policy<span class="w"> </span>create<span class="w"> </span>read-logs<span class="w"> </span>--file<span class="w"> </span>read-logs.json
-objectio-cli<span class="w"> </span>policy<span class="w"> </span>attach<span class="w"> </span>read-logs<span class="w"> </span>--user<span class="w"> </span>&lt;alice-id&gt;
-objectio-cli<span class="w"> </span>public-access-block<span class="w"> </span>put<span class="w"> </span>--all
-objectio-cli<span class="w"> </span>bucket<span class="w"> </span>create<span class="w"> </span>logs
-objectio-cli<span class="w"> </span>bucket<span class="w"> </span>lifecycle<span class="w"> </span>put<span class="w"> </span>logs<span class="w"> </span>--file<span class="w"> </span>lifecycle.xml
+<div class="highlight"><pre><span></span><code>obioctl<span class="w"> </span>user<span class="w"> </span>create<span class="w"> </span>alice
+obioctl<span class="w"> </span>policy<span class="w"> </span>create<span class="w"> </span>read-logs<span class="w"> </span>--file<span class="w"> </span>read-logs.json
+obioctl<span class="w"> </span>policy<span class="w"> </span>attach<span class="w"> </span>read-logs<span class="w"> </span>--user<span class="w"> </span>&lt;alice-id&gt;
+obioctl<span class="w"> </span>public-access-block<span class="w"> </span>put<span class="w"> </span>--all
+obioctl<span class="w"> </span>bucket<span class="w"> </span>create<span class="w"> </span>logs
+obioctl<span class="w"> </span>bucket<span class="w"> </span>lifecycle<span class="w"> </span>put<span class="w"> </span>logs<span class="w"> </span>--file<span class="w"> </span>lifecycle.xml
 </code></pre></div>
 <p>Take an OSD out of service:</p>
-<div class="highlight"><pre><span></span><code>objectio-cli<span class="w"> </span>osd<span class="w"> </span>set-state<span class="w"> </span>&lt;osd-id&gt;<span class="w"> </span>draining
-objectio-cli<span class="w"> </span>cluster<span class="w"> </span>drain-status
+<div class="highlight"><pre><span></span><code>obioctl<span class="w"> </span>osd<span class="w"> </span>set-state<span class="w"> </span>&lt;osd-id&gt;<span class="w"> </span>draining
+obioctl<span class="w"> </span>cluster<span class="w"> </span>drain-status
 </code></pre></div>
 <p>Temporary credentials from a CI job's OIDC token:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">eval</span><span class="w"> </span><span class="s2">"</span><span class="k">$(</span>objectio-cli<span class="w"> </span>sts<span class="w"> </span>assume-role-with-web-identity<span class="w"> </span><span class="se">\</span>
+<div class="highlight"><pre><span></span><code><span class="nb">eval</span><span class="w"> </span><span class="s2">"</span><span class="k">$(</span>obioctl<span class="w"> </span>sts<span class="w"> </span>assume-role-with-web-identity<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--role-arn<span class="w"> </span>arn:obio:iam::acme:role/ci<span class="w"> </span>--token-file<span class="w"> </span><span class="s2">"</span><span class="nv">$TOKEN_FILE</span><span class="s2">"</span><span class="w"> </span>--env<span class="k">)</span><span class="s2">"</span>
 </code></pre></div>
 

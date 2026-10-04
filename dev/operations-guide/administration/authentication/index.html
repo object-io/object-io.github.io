@@ -1606,7 +1606,7 @@
   <span class="md-ellipsis">
     
   
-    CLI (objectio-cli)
+    CLI (obioctl)
   
 
     
@@ -2835,18 +2835,18 @@ Signature=fe5f80f77d5fa3beca038a248ff027d0445342fe2855ddc963176630326f1024
 <hr />
 <h2 id="user-management">User Management<a class="headerlink" href="#user-management" title="Permanent link">&para;</a></h2>
 <h3 id="using-the-cli">Using the CLI<a class="headerlink" href="#using-the-cli" title="Permanent link">&para;</a></h3>
-<p><code>objectio-cli</code> is a client of the admin API, signed with SigV4 like any
+<p><code>obioctl</code> is a client of the admin API, signed with SigV4 like any
 request — see <a href="../cli/">CLI</a> for configuring it.</p>
-<div class="highlight"><pre><span></span><code>objectio-cli<span class="w"> </span>user<span class="w"> </span>list
-objectio-cli<span class="w"> </span>user<span class="w"> </span>create<span class="w"> </span>alice<span class="w"> </span>--email<span class="w"> </span>alice@example.com
-objectio-cli<span class="w"> </span>user<span class="w"> </span><span class="nb">suspend</span><span class="w"> </span>&lt;user_id&gt;<span class="w">          </span><span class="c1"># every key refused; nothing deleted</span>
-objectio-cli<span class="w"> </span>user<span class="w"> </span>delete<span class="w"> </span>&lt;user_id&gt;
+<div class="highlight"><pre><span></span><code>obioctl<span class="w"> </span>user<span class="w"> </span>list
+obioctl<span class="w"> </span>user<span class="w"> </span>create<span class="w"> </span>alice<span class="w"> </span>--email<span class="w"> </span>alice@example.com
+obioctl<span class="w"> </span>user<span class="w"> </span><span class="nb">suspend</span><span class="w"> </span>&lt;user_id&gt;<span class="w">          </span><span class="c1"># every key refused; nothing deleted</span>
+obioctl<span class="w"> </span>user<span class="w"> </span>delete<span class="w"> </span>&lt;user_id&gt;
 
-objectio-cli<span class="w"> </span>key<span class="w"> </span>list<span class="w"> </span>&lt;user_id&gt;
-objectio-cli<span class="w"> </span>key<span class="w"> </span>create<span class="w"> </span>&lt;user_id&gt;<span class="w">                              </span><span class="c1"># unscoped</span>
-objectio-cli<span class="w"> </span>key<span class="w"> </span>create<span class="w"> </span>&lt;user_id&gt;<span class="w"> </span>--scope<span class="w"> </span>s3://logs/<span class="w"> </span>--read-only
-objectio-cli<span class="w"> </span>key<span class="w"> </span>deactivate<span class="w"> </span>&lt;access_key_id&gt;
-objectio-cli<span class="w"> </span>key<span class="w"> </span>delete<span class="w"> </span>&lt;access_key_id&gt;
+obioctl<span class="w"> </span>key<span class="w"> </span>list<span class="w"> </span>&lt;user_id&gt;
+obioctl<span class="w"> </span>key<span class="w"> </span>create<span class="w"> </span>&lt;user_id&gt;<span class="w">                              </span><span class="c1"># unscoped</span>
+obioctl<span class="w"> </span>key<span class="w"> </span>create<span class="w"> </span>&lt;user_id&gt;<span class="w"> </span>--scope<span class="w"> </span>s3://logs/<span class="w"> </span>--read-only
+obioctl<span class="w"> </span>key<span class="w"> </span>deactivate<span class="w"> </span>&lt;access_key_id&gt;
+obioctl<span class="w"> </span>key<span class="w"> </span>delete<span class="w"> </span>&lt;access_key_id&gt;
 </code></pre></div>
 <hr />
 <h2 id="admin-api">Admin API<a class="headerlink" href="#admin-api" title="Permanent link">&para;</a></h2>
