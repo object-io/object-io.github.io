@@ -3554,9 +3554,9 @@ when the code is written.</p>
 </tr>
 <tr>
 <td>B23</td>
-<td>End-to-end shard checksums</td>
+<td>End-to-end shard checksums (design)</td>
 <td>Each shard's checksum is kept in its ObjectMeta when written, not only by the OSD that holds it; a GET checks every shard it decodes from against it, repair checks its sources and the shard it rebuilt before storing it, and scrub reports a mismatch as corrupt. Exit: a test that stores a wrong shard on an OSD (with a matching OSD-side checksum) gets an error or a repaired read, never the wrong bytes; the B2 disk-pull fault passes</td>
-<td>🔨</td>
+<td>✅</td>
 </tr>
 <tr>
 <td>B24</td>
