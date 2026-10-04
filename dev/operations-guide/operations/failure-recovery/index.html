@@ -2409,6 +2409,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../production/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Running ObjectIO in production
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../upgrades/" class="md-nav__link">
         
   
@@ -2969,20 +2997,21 @@ writes in again.</p>
 </tbody>
 </table>
 <h3 id="recovery-process">Recovery Process<a class="headerlink" href="#recovery-process" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>1. Heartbeat timeout (default: 30s)
-   │
-   ▼
-2. Metadata service marks OSD as DOWN
-   │
-   ▼
-3. Placement recalculated for affected objects
-   │
-   ▼
-4. Repair manager queues recovery operations
-   │
-   ▼
-5. Missing shards reconstructed on healthy OSDs
-</code></pre></div>
+<ol>
+<li>Meta probes every OSD every 15 s (every 2 s just after it starts);
+   three misses in a row (about 45 s) mark it <strong>Down</strong>.</li>
+<li>A Down OSD keeps its placement positions. Writes go on at k + 1 shards
+   (degraded), and reads decode around it. Its shards are <strong>not</strong> rebuilt
+   elsewhere: it may come back, and moving them would cost more than
+   waiting.</li>
+<li>When it comes back, repair rebuilds only the shards written while it
+   was gone.</li>
+<li>When it is set <code>out</code> (<code>obioctl osd set-state &lt;node_id&gt; out</code>: the host
+   or drive is gone for good), its positions move to other OSDs, and
+   repair rebuilds its shards there from the rest of each stripe.</li>
+</ol>
+<p>Setting a dead OSD out is the operator's decision; nothing does it
+automatically. See the <a href="../production/#an-osd-is-down">production runbooks</a>.</p>
 <h3 id="manual-recovery">Manual Recovery<a class="headerlink" href="#manual-recovery" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>obioctl<span class="w"> </span>node<span class="w"> </span>list<span class="w">                  </span><span class="c1"># status and admin state of every OSD</span>
 obioctl<span class="w"> </span>node<span class="w"> </span>show<span class="w"> </span>&lt;osd-id&gt;<span class="w">         </span><span class="c1"># its disks and capacity</span>

@@ -14,7 +14,7 @@
         <link rel="prev" href="../metrics/">
       
       
-        <link rel="next" href="../upgrades/">
+        <link rel="next" href="../production/">
       
       
         
@@ -2153,6 +2153,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../production/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Running ObjectIO in production
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../upgrades/" class="md-nav__link">
         
   
@@ -2478,7 +2506,7 @@ Prometheus, since the gateway's <code>/metrics</code> then no longer carries the
 <p><code>deploy/monitoring/</code> also has a docker-compose Prometheus and Grafana that
 load these dashboards.</p>
 <h2 id="alerting">Alerting<a class="headerlink" href="#alerting" title="Permanent link">&para;</a></h2>
-<p>The <a href="../metrics/#alerts-worth-setting">metrics reference</a> has a rule file
+<p>The <a href="../production/#alerts">metrics reference</a> has a rule file
 to start from. It covers:
 - data safety: objects unreadable or at risk, repair not running, scrub
   stale, corrupt shards;

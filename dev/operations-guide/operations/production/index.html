@@ -8,13 +8,13 @@
       
       
       
-        <link rel="canonical" href="https://object-io.github.io/dev/operations-guide/administration/replication/">
+        <link rel="canonical" href="https://object-io.github.io/dev/operations-guide/operations/production/">
       
       
-        <link rel="prev" href="../public-access/">
+        <link rel="prev" href="../monitoring/">
       
       
-        <link rel="next" href="../s3-api/">
+        <link rel="next" href="../upgrades/">
       
       
         
@@ -25,7 +25,7 @@
     
     
       
-        <title>Bucket replication - ObjectIO</title>
+        <title>Running ObjectIO in production - ObjectIO</title>
       
     
     
@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#bucket-replication" class="md-skip">
+        <a href="#running-objectio-in-production" class="md-skip">
           Skip to content
         </a>
       
@@ -117,7 +117,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Bucket replication
+              Running ObjectIO in production
             
           </span>
         </div>
@@ -1133,8 +1133,6 @@
                 
   
   
-    
-  
   
   
     
@@ -1144,11 +1142,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
         
           
           <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
@@ -1169,7 +1167,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1187,7 +1185,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../" class="md-nav__link">
+      <a href="../../administration/" class="md-nav__link">
         
   
   
@@ -1215,7 +1213,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../audit/" class="md-nav__link">
+      <a href="../../administration/audit/" class="md-nav__link">
         
   
   
@@ -1243,7 +1241,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../authentication/" class="md-nav__link">
+      <a href="../../administration/authentication/" class="md-nav__link">
         
   
   
@@ -1271,7 +1269,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cli/" class="md-nav__link">
+      <a href="../../administration/cli/" class="md-nav__link">
         
   
   
@@ -1299,7 +1297,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../grep/" class="md-nav__link">
+      <a href="../../administration/grep/" class="md-nav__link">
         
   
   
@@ -1327,7 +1325,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../iam/" class="md-nav__link">
+      <a href="../../administration/iam/" class="md-nav__link">
         
   
   
@@ -1355,7 +1353,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../iceberg-api/" class="md-nav__link">
+      <a href="../../administration/iceberg-api/" class="md-nav__link">
         
   
   
@@ -1383,7 +1381,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../mtls/" class="md-nav__link">
+      <a href="../../administration/mtls/" class="md-nav__link">
         
   
   
@@ -1411,7 +1409,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../public-access/" class="md-nav__link">
+      <a href="../../administration/public-access/" class="md-nav__link">
         
   
   
@@ -1436,37 +1434,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Bucket replication
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../administration/replication/" class="md-nav__link">
         
   
   
@@ -1482,81 +1453,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#set-it-up" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Set it up
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#what-replicates" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        What replicates
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#how-it-works" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        How it works
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#watching-it" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Watching it
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#not-yet" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Not yet
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1569,7 +1465,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../s3-api/" class="md-nav__link">
+      <a href="../../administration/s3-api/" class="md-nav__link">
         
   
   
@@ -1911,6 +1807,8 @@
                 
   
   
+    
+  
   
   
     
@@ -1920,11 +1818,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4" checked>
         
           
           <label class="md-nav__link" for="__nav_4_4" id="__nav_4_4_label" tabindex="0">
@@ -1945,7 +1843,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4_4">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1963,7 +1861,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../operations/" class="md-nav__link">
+      <a href="../" class="md-nav__link">
         
   
   
@@ -1991,7 +1889,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../operations/failure-recovery/" class="md-nav__link">
+      <a href="../failure-recovery/" class="md-nav__link">
         
   
   
@@ -2019,7 +1917,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../operations/meta-ha/" class="md-nav__link">
+      <a href="../meta-ha/" class="md-nav__link">
         
   
   
@@ -2047,7 +1945,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../operations/metrics/" class="md-nav__link">
+      <a href="../metrics/" class="md-nav__link">
         
   
   
@@ -2075,7 +1973,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../operations/monitoring/" class="md-nav__link">
+      <a href="../monitoring/" class="md-nav__link">
         
   
   
@@ -2100,10 +1998,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../operations/production/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Running ObjectIO in production
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -2119,6 +2044,291 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#before-going-live" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Before going live
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sizing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sizing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sizing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#capacity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Capacity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Memory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metadata-on-disk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Metadata on disk
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#throughput" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Throughput
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alerts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alerts
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#runbooks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Runbooks
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Runbooks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#an-osd-is-down" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        An OSD is down
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#replacing-a-disk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Replacing a disk
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disks-filling-or-full" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Disks filling or full
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-gateway-refuses-writes-for-clock-skew" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A gateway refuses writes for clock skew
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#meta-has-no-leader-or-elects-often" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Meta has no leader, or elects often
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#repair-not-running" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Repair not running
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#corrupt-shards" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Corrupt shards
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#objects-unreadable-or-unrecoverable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objects unreadable or unrecoverable
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-slow-disk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A slow disk
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#s3-requests-failing-with-5xx" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        S3 requests failing with 5xx
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#audit-events-dropped" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Audit events dropped
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#replication-lagging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Replication lagging
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#block-volumes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Block volumes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#certificates-expiring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Certificates expiring
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#upgrades" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Upgrades
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -2131,7 +2341,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../operations/upgrades/" class="md-nav__link">
+      <a href="../upgrades/" class="md-nav__link">
         
   
   
@@ -2194,10 +2404,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#set-it-up" class="md-nav__link">
+  <a href="#before-going-live" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Set it up
+        Before going live
       
     </span>
   </a>
@@ -2205,10 +2415,71 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#what-replicates" class="md-nav__link">
+  <a href="#sizing" class="md-nav__link">
     <span class="md-ellipsis">
       
-        What replicates
+        Sizing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sizing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#capacity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Capacity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Memory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metadata-on-disk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Metadata on disk
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#throughput" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Throughput
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alerts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alerts
       
     </span>
   </a>
@@ -2216,35 +2487,184 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#how-it-works" class="md-nav__link">
+  <a href="#runbooks" class="md-nav__link">
     <span class="md-ellipsis">
       
-        How it works
+        Runbooks
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Runbooks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#an-osd-is-down" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        An OSD is down
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#watching-it" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#replacing-a-disk" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Watching it
+        Replacing a disk
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#not-yet" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#disks-filling-or-full" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Not yet
+        Disks filling or full
       
     </span>
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-gateway-refuses-writes-for-clock-skew" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A gateway refuses writes for clock skew
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#meta-has-no-leader-or-elects-often" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Meta has no leader, or elects often
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#repair-not-running" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Repair not running
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#corrupt-shards" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Corrupt shards
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#objects-unreadable-or-unrecoverable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objects unreadable or unrecoverable
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-slow-disk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A slow disk
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#s3-requests-failing-with-5xx" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        S3 requests failing with 5xx
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#audit-events-dropped" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Audit events dropped
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#replication-lagging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Replication lagging
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#block-volumes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Block volumes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#certificates-expiring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Certificates expiring
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#upgrades" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Upgrades
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2268,133 +2688,412 @@
   
 
 
-<h1 id="bucket-replication">Bucket replication<a class="headerlink" href="#bucket-replication" title="Permanent link">&para;</a></h1>
-<p>Copy every new version written to a bucket into a bucket on another
-ObjectIO cluster, asynchronously, so losing a site loses nothing that had
-time to replicate.</p>
-<h2 id="set-it-up">Set it up<a class="headerlink" href="#set-it-up" title="Permanent link">&para;</a></h2>
-<p><strong>1. On the target cluster:</strong> a versioned bucket, and credentials for the
-source to write with. The admin's work; for least privilege, a user with
-<code>s3:PutObject</code>, <code>s3:ReplicateObject</code> (and <code>s3:DeleteObject</code>,
-<code>s3:ReplicateDelete</code> if delete markers replicate) on that bucket.</p>
-<div class="highlight"><pre><span></span><code>aws<span class="w"> </span>s3api<span class="w"> </span>create-bucket<span class="w"> </span>--bucket<span class="w"> </span>dr-copy<span class="w"> </span>--endpoint-url<span class="w"> </span>https://site-b:9000
-aws<span class="w"> </span>s3api<span class="w"> </span>put-bucket-versioning<span class="w"> </span>--bucket<span class="w"> </span>dr-copy<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--versioning-configuration<span class="w"> </span><span class="nv">Status</span><span class="o">=</span>Enabled<span class="w"> </span>--endpoint-url<span class="w"> </span>https://site-b:9000
-</code></pre></div>
-<p><strong>2. On the source cluster:</strong> the target. Targets belong to a tenant: a
-bucket's rules can name only its own tenant's targets, so one tenant can
-never send data into another's remote bucket with the other's
-credentials. A tenant's admin manages its tenant's targets; the system
-admin manages the system's (no <code>?tenant=</code>) and any tenant's (<code>?tenant=</code>).</p>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>https://site-a:9000/_admin/replication/targets<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--aws-sigv4<span class="w"> </span>aws:amz:us-east-1:s3<span class="w"> </span>--user<span class="w"> </span><span class="s2">"</span><span class="nv">$AK</span><span class="s2">:</span><span class="nv">$SK</span><span class="s2">"</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-H<span class="w"> </span><span class="s1">'content-type: application/json'</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span><span class="s1">'{"name": "site-b", "endpoint": "https://site-b:9000", "bucket": "dr-copy",</span>
-<span class="s1">       "access_key": "...", "secret_key": "..."}'</span>
-</code></pre></div>
-<p><code>GET /_admin/replication/targets</code> lists a tenant's targets (the caller's
-own, for a tenant admin; secrets never shown);
-<code>DELETE /_admin/replication/targets/{name}</code> removes one. Both take
-<code>?tenant=</code> for the system admin. The secret is kept in meta, as users'
-secret keys are.</p>
-<p>A target a tenant's admin sets must be <code>https://</code>, on a host the operator
-allows tenants (as for tenant audit webhooks); otherwise a tenant could
-make the gateway send requests to addresses inside the cluster. Until the
-operator allows some, tenant admins can't set targets, and the system
-admin sets them with <code>?tenant=</code>, unrestricted:</p>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>PUT<span class="w"> </span>https://site-a:9000/_admin/replication/settings<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--aws-sigv4<span class="w"> </span>aws:amz:us-east-1:s3<span class="w"> </span>--user<span class="w"> </span><span class="s2">"</span><span class="nv">$AK</span><span class="s2">:</span><span class="nv">$SK</span><span class="s2">"</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-H<span class="w"> </span><span class="s1">'content-type: application/json'</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span><span class="s1">'{"allowed_tenant_hosts": ["dr.example.com", "*.dr.example.com"]}'</span>
-</code></pre></div>
-<p>The list is checked again at every send, so removing a host stops tenants'
-targets on it.</p>
-<p><strong>3. On the source bucket:</strong> versioning, then the rules (S3's
-<code>PutBucketReplication</code>), by the bucket's owner or anyone its policy grants
-<code>s3:PutReplicationConfiguration</code>. The destination names one of the
-bucket's tenant's targets: <code>arn:obio:replication:::&lt;target&gt;</code>.</p>
-<div class="highlight"><pre><span></span><code><span class="nt">&lt;ReplicationConfiguration&gt;</span>
-<span class="w">  </span><span class="nt">&lt;Rule&gt;</span>
-<span class="w">    </span><span class="nt">&lt;ID&gt;</span>everything<span class="nt">&lt;/ID&gt;</span>
-<span class="w">    </span><span class="nt">&lt;Status&gt;</span>Enabled<span class="nt">&lt;/Status&gt;</span>
-<span class="w">    </span><span class="nt">&lt;Filter&gt;&lt;Prefix&gt;&lt;/Prefix&gt;&lt;/Filter&gt;</span>
-<span class="w">    </span><span class="nt">&lt;DeleteMarkerReplication&gt;&lt;Status&gt;</span>Disabled<span class="nt">&lt;/Status&gt;&lt;/DeleteMarkerReplication&gt;</span>
-<span class="w">    </span><span class="nt">&lt;Destination&gt;&lt;Bucket&gt;</span>arn:obio:replication:::site-b<span class="nt">&lt;/Bucket&gt;&lt;/Destination&gt;</span>
-<span class="w">  </span><span class="nt">&lt;/Rule&gt;</span>
-<span class="nt">&lt;/ReplicationConfiguration&gt;</span>
-</code></pre></div>
-<div class="highlight"><pre><span></span><code>aws<span class="w"> </span>s3api<span class="w"> </span>put-bucket-replication<span class="w"> </span>--bucket<span class="w"> </span>photos<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--replication-configuration<span class="w"> </span>file://rules.json<span class="w"> </span>--endpoint-url<span class="w"> </span>https://site-a:9000
-</code></pre></div>
-<p>A rule filters by prefix and tags (<code>&lt;And&gt;</code> for both). Both buckets must be
-versioned; the rules are refused otherwise.</p>
-<h2 id="what-replicates">What replicates<a class="headerlink" href="#what-replicates" title="Permanent link">&para;</a></h2>
+<h1 id="running-objectio-in-production">Running ObjectIO in production<a class="headerlink" href="#running-objectio-in-production" title="Permanent link">&para;</a></h1>
+<p>What a production cluster needs, how to size it, what to alert on, and
+what to do when each alert fires. Read it with the
+<a href="../failure-recovery/">failure-recovery</a>, <a href="../meta-ha/">meta HA</a>,
+<a href="../metrics/">metrics</a> and <a href="../upgrades/">upgrades</a> pages, which go deeper
+on each subject.</p>
+<h2 id="before-going-live">Before going live<a class="headerlink" href="#before-going-live" title="Permanent link">&para;</a></h2>
+<p>Every item is a default you have to change, or a requirement the software
+can't check for you.</p>
 <table>
 <thead>
 <tr>
-<th>Change on the source</th>
-<th>On the target</th>
+<th></th>
+<th>Requirement</th>
+<th>Why</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>A new version (PUT, multipart upload, copy)</td>
-<td>The same version: same version id, bytes, ETag, content headers, <code>x-amz-meta-*</code>, tags, Object Lock retention and legal hold, SSE-S3 / SSE-KMS encryption (re-encrypted with the target's keys; an SSE-KMS key id must exist there)</td>
+<td><strong>Redundancy</strong></td>
+<td>Set an erasure code: <code>ec.k</code>/<code>ec.m</code> in the chart (its default is <code>k: 1, m: 0</code>, <strong>no redundancy</strong>), or <code>--ec-k</code>/<code>--ec-m</code>. 4+2 for 6–11 hosts, 8+4 from 12.</td>
+<td>With m = 0, one lost disk loses data.</td>
 </tr>
 <tr>
-<td>A delete marker</td>
-<td>Only if the rule has <code>DeleteMarkerReplication</code> <code>Enabled</code></td>
+<td><strong>Hosts</strong></td>
+<td>At least k + m OSD hosts, one more to rebuild onto (7 for 4+2).</td>
+<td>With fewer, placement puts several shards of a stripe on one host, and losing that host can lose data. Placement doesn't refuse it.</td>
 </tr>
 <tr>
-<td>A DELETE of a specific version</td>
-<td>Never: a mistake or an attacker on one site can't destroy the other's copy</td>
+<td><strong>Meta</strong></td>
+<td>3 meta nodes (5 for two failures at once), each on its own host.</td>
+<td>Raft needs a majority: 3 survive one loss.</td>
 </tr>
 <tr>
-<td>An SSE-C object</td>
-<td>Not replicated (its key isn't ours to send), as in S3</td>
+<td><strong>Authentication</strong></td>
+<td><code>gateway.noAuth: false</code> in the chart (its default is <code>true</code>).</td>
+<td>Without it anyone who reaches the gateway can read and write everything.</td>
 </tr>
 <tr>
-<td>Objects written before the rule</td>
-<td>Not yet (a resync is coming); copy them once with your usual tooling</td>
+<td><strong>mTLS</strong></td>
+<td><code>tls.enabled: true</code> (<a href="../../administration/mtls/">mTLS</a>).</td>
+<td>Shards and metadata cross the network between services.</td>
+</tr>
+<tr>
+<td><strong>Drives</strong></td>
+<td>NVMe with power-loss protection, or a UPS for the whole host.</td>
+<td>An acknowledged write is fsynced; on a drive with a volatile write cache and no PLP, a power cut can still lose it.</td>
+</tr>
+<tr>
+<td><strong>OSD layout</strong></td>
+<td>Shards on the raw device; each OSD's state directory (<code>--data-dir</code>: metadata WAL and index) on a small partition of <strong>the same drive</strong> (about 2%), not the boot disk.</td>
+<td>Every metadata write fsyncs its WAL. With 18 OSDs on a host, a shared boot disk becomes the bottleneck, and its loss takes every OSD.</td>
+</tr>
+<tr>
+<td><strong>Clocks</strong></td>
+<td>NTP (chrony) on every host, offset well under 100 ms.</td>
+<td>A gateway whose clock is more than 500 ms from meta's refuses writes (503) until it is back in step: write order depends on clocks.</td>
+</tr>
+<tr>
+<td><strong>Monitoring</strong></td>
+<td>Prometheus scraping the gateways, meta and OSDs, the <a href="#alerts">alert rules</a> loaded, and the alerts routed to someone.</td>
+<td>Repair is automatic; deciding that a host is gone for good is not.</td>
+</tr>
+<tr>
+<td><strong>Audit</strong></td>
+<td><code>gateway.audit</code> with a system bucket, if you need an audit trail (<a href="../../administration/audit/">audit</a>).</td>
+<td>Events are spooled to disk and delivered later, so a receiver outage loses nothing.</td>
 </tr>
 </tbody>
 </table>
-<p>The target never replicates a replica onward, so two clusters with rules
-pointing at each other don't loop.</p>
-<h2 id="how-it-works">How it works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h2>
+<h2 id="sizing">Sizing<a class="headerlink" href="#sizing" title="Permanent link">&para;</a></h2>
+<h3 id="capacity">Capacity<a class="headerlink" href="#capacity" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>usable ≈ raw × k / (k + m) × 0.95 − one host's worth (for rebuilds)
+</code></pre></div>
 <ul>
-<li>A version a rule covers is committed with each target marked <code>PENDING</code>,
-  in the same metadata write: no version is ever committed and forgotten.</li>
-<li>The gateway that took the write sends it at once. One gateway at a time
-  (a lease in meta) also scans every bucket with rules, every
-  <code>--replication-scan-secs</code> (30 s by default), for versions still <code>PENDING</code>
-  or <code>FAILED</code>, and sends them oldest first. That is what makes it
-  reliable: after a crash, or while a target was down, every marked version
-  is found.</li>
-<li>A failed send is retried with backoff (2 s, doubling, up to 5 min),
-  indefinitely. <code>FAILED</code> is a status to alert on, not a give-up.</li>
-<li>Objects up to 64 MiB go in one PUT; larger ones as a multipart upload of
-  16 MiB parts.</li>
-<li>The target stores a version it already holds (same version id and ETag)
-  once: a send repeated after a crash changes nothing. An older version
-  arriving after a newer one is kept as a version, never made current.</li>
+<li><strong>k/(k+m):</strong> 4+2 stores 1.5 bytes per byte (67% efficient), 8+4 the
+  same, 10+4 1.4.</li>
+<li><strong>0.95:</strong> an OSD refuses client writes past 95% of its disk
+  (<code>--full-ratio</code>) and keeps the rest for repair, drain and backfill.
+  Clients get 507 <code>StorageFull</code>.</li>
+<li><strong>One host's worth:</strong> when a host is lost for good, its shards are
+  rebuilt onto the others. Keep that much free, or a host loss fills the
+  cluster.</li>
 </ul>
-<h2 id="watching-it">Watching it<a class="headerlink" href="#watching-it" title="Permanent link">&para;</a></h2>
+<p>Worked example: 8 hosts × 18 × 7.68 TB = 1,106 TB raw. 4+2:
+1,106 × 0.67 × 0.95 = 704 TB, less one host (88 TB) = about 616 TB usable.</p>
+<h3 id="memory">Memory<a class="headerlink" href="#memory" title="Permanent link">&para;</a></h3>
+<p>Since B22 an OSD's memory no longer depends on how many objects it holds:</p>
+<table>
+<thead>
+<tr>
+<th>Per OSD</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Metadata index page cache</td>
+<td><code>--meta-cache-mib</code>, 1024 by default</td>
+</tr>
+<tr>
+<td>Memtables (changes not yet checkpointed)</td>
+<td>up to 2 × 64 MiB</td>
+</tr>
+<tr>
+<td>Shard I/O buffers and the rest</td>
+<td>about 200 MB</td>
+</tr>
+</tbody>
+</table>
+<p>Plan about <strong>1.5 GB per OSD</strong> with the default cache. Per host:
+18 OSDs × 1.5 GB = 27 GB, plus the gateway (2–4 GB) and the OS. <strong>64 GB
+per host</strong> leaves room. A smaller cache (<code>--meta-cache-mib 256</code>) cuts it
+to about 0.7 GB per OSD, at the cost of more metadata reads from disk for
+objects not read recently.</p>
+<p>Meta: plan 4–8 GB per node. Its index is in redb on disk, with a bounded
+cache.</p>
+<h3 id="metadata-on-disk">Metadata on disk<a class="headerlink" href="#metadata-on-disk" title="Permanent link">&para;</a></h3>
+<p>Each object keeps a metadata copy on each of its k + m OSDs, about 600
+bytes each, plus its shard location on each OSD holding a shard:</p>
+<div class="highlight"><pre><span></span><code>OSD metadata per host ≈ objects_on_host × 6 copies / hosts × ~700 B
+</code></pre></div>
+<p>For the example above at a 1 MiB average object: about 420 million copies
+per host, about 300 GB, roughly 16 GB per drive. That is why the state
+partition is about 2% of each drive.</p>
+<h3 id="throughput">Throughput<a class="headerlink" href="#throughput" title="Permanent link">&para;</a></h3>
+<p>The <a href="../../../developer-guide/performance/">performance page</a> has
+the lab baseline. What bounds it:
+- <strong>Small PUTs</strong> wait for fsyncs. A drive with power-loss protection makes
+  them cheap; one without doesn't.
+- <strong>Small GETs</strong> cost several internal calls each (B21 reduces them).
+- <strong>Large objects</strong> are bound by the network and by erasure coding: ISA-L
+  on x86_64.</p>
+<h2 id="alerts">Alerts<a class="headerlink" href="#alerts" title="Permanent link">&para;</a></h2>
+<p>The chart ships the rules in <code>deploy/helm/objectio/alerts/objectio-rules.yaml</code>:
+- its own Prometheus loads them when <code>monitoring.enabled</code> is set;
+- <code>monitoring.prometheusRule.enabled</code> also publishes them as a
+  <code>PrometheusRule</code> for a prometheus-operator.</p>
+<p>Each alert has a runbook below.</p>
+<table>
+<thead>
+<tr>
+<th>Alert</th>
+<th>Severity</th>
+<th>Runbook</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ObjectIOObjectsUnreadable</td>
+<td>critical</td>
+<td><a href="#objects-unreadable-or-unrecoverable">Objects unreadable</a></td>
+</tr>
+<tr>
+<td>ObjectIOUnrecoverableStripes</td>
+<td>critical</td>
+<td><a href="#objects-unreadable-or-unrecoverable">Objects unreadable</a></td>
+</tr>
+<tr>
+<td>ObjectIOObjectsAtRisk</td>
+<td>warning</td>
+<td><a href="#an-osd-is-down">OSD down</a></td>
+</tr>
+<tr>
+<td>ObjectIORepairNotRunning</td>
+<td>warning</td>
+<td><a href="#repair-not-running">Repair not running</a></td>
+</tr>
+<tr>
+<td>ObjectIOScrubStale</td>
+<td>warning</td>
+<td><a href="#repair-not-running">Repair not running</a></td>
+</tr>
+<tr>
+<td>ObjectIOCorruptShards</td>
+<td>warning</td>
+<td><a href="#corrupt-shards">Corrupt shards</a></td>
+</tr>
+<tr>
+<td>ObjectIOMetaNoLeader</td>
+<td>critical</td>
+<td><a href="#meta-has-no-leader-or-elects-often">Meta</a></td>
+</tr>
+<tr>
+<td>ObjectIOMetaElectionsChurn</td>
+<td>warning</td>
+<td><a href="#meta-has-no-leader-or-elects-often">Meta</a></td>
+</tr>
+<tr>
+<td>ObjectIOMetaFollowerLagging</td>
+<td>warning</td>
+<td><a href="#meta-has-no-leader-or-elects-often">Meta</a></td>
+</tr>
+<tr>
+<td>ObjectIOHealQueueFailing</td>
+<td>warning</td>
+<td><a href="#meta-has-no-leader-or-elects-often">Meta</a></td>
+</tr>
+<tr>
+<td>ObjectIOGatewayClockSkewed</td>
+<td>critical</td>
+<td><a href="#a-gateway-refuses-writes-for-clock-skew">Clock skew</a></td>
+</tr>
+<tr>
+<td>ObjectIOOsdDown</td>
+<td>warning</td>
+<td><a href="#an-osd-is-down">OSD down</a></td>
+</tr>
+<tr>
+<td>ObjectIODiskNearFull</td>
+<td>warning</td>
+<td><a href="#disks-filling-or-full">Disks filling</a></td>
+</tr>
+<tr>
+<td>ObjectIODiskFull</td>
+<td>critical</td>
+<td><a href="#disks-filling-or-full">Disks filling</a></td>
+</tr>
+<tr>
+<td>ObjectIOClusterFilling</td>
+<td>warning</td>
+<td><a href="#disks-filling-or-full">Disks filling</a></td>
+</tr>
+<tr>
+<td>ObjectIOSlowShardSync</td>
+<td>warning</td>
+<td><a href="#a-slow-disk">Slow disk</a></td>
+</tr>
+<tr>
+<td>ObjectIOS3ServerErrors</td>
+<td>warning</td>
+<td><a href="#s3-requests-failing-with-5xx">5xx</a></td>
+</tr>
+<tr>
+<td>ObjectIOSpaceLeaking</td>
+<td>info</td>
+<td><a href="#s3-requests-failing-with-5xx">5xx</a></td>
+</tr>
+<tr>
+<td>ObjectIOAuditEventsDropped</td>
+<td>warning</td>
+<td><a href="#audit-events-dropped">Audit</a></td>
+</tr>
+<tr>
+<td>ObjectIOReplicationLagging</td>
+<td>warning</td>
+<td><a href="#replication-lagging">Replication</a></td>
+</tr>
+<tr>
+<td>ObjectIOSlowBlockJournal, ObjectIOBlockFlushFailing, ObjectIOBlockReadErrors</td>
+<td></td>
+<td><a href="#block-volumes">Block</a></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Not covered by any alert yet:</strong> certificate expiry (no metric; watch
+cert-manager's own), meta data-dir free space (watch with node_exporter),
+and the audit spool's size.</p>
+<h2 id="runbooks">Runbooks<a class="headerlink" href="#runbooks" title="Permanent link">&para;</a></h2>
+<p>Commands are <code>obioctl</code> (a SigV4 client of the gateway's admin API,
+<code>bin/cli/README.md</code> in the code repo) and meta's admin port (9102).</p>
+<h3 id="an-osd-is-down">An OSD is down<a class="headerlink" href="#an-osd-is-down" title="Permanent link">&para;</a></h3>
+<p><strong>What happens on its own.</strong>
+- Meta probes every OSD every 15 s. Three missed probes, about 45 s, mark
+  it Down.
+- A Down OSD keeps its placement positions: writes go on at k + 1 shards
+  (degraded), and reads decode around it.
+- Nothing is rebuilt while the OSD is merely Down. It may come back, and
+  moving its data would cost more than waiting.</p>
+<p><strong>What you do.</strong>
+1. <code>obioctl node list</code>: which OSD, and since when.
+2. If the process died: restart it (<code>systemctl restart objectio-osd</code>, or
+   the pod). It rejoins, and repair rebuilds only the shards written while
+   it was gone.
+3. If the host or drive is gone for good: <code>obioctl osd set-state &lt;node_id&gt;
+   out</code>. Repair then rebuilds its shards elsewhere. Do this within a few
+   hours: until then every stripe it held is one failure from unreadable
+   (<code>ObjectIOObjectsAtRisk</code>).</p>
+<p><strong>Done when</strong> <code>ObjectIOObjectsAtRisk</code> clears and the repair counters
+(<code>objectio_meta_repair_shards_rebuilt_total</code>) stop rising.</p>
+<h3 id="replacing-a-disk">Replacing a disk<a class="headerlink" href="#replacing-a-disk" title="Permanent link">&para;</a></h3>
+<ol>
+<li>If the disk still reads: <code>obioctl osd set-state &lt;node_id&gt; draining</code>,
+   and wait for <code>obioctl cluster drain-status</code> to show it empty. It turns
+   <code>out</code> by itself.</li>
+<li>If it doesn't read: <code>obioctl osd set-state &lt;node_id&gt; out</code>.</li>
+<li>Swap the drive and start the OSD on it with the same state directory:
+   it keeps its identity, finds the disk blank, and forgets the shards it
+   held there.</li>
+<li><code>obioctl osd set-state &lt;node_id&gt; in</code>. Repair rebuilds what it held.</li>
+</ol>
+<h3 id="disks-filling-or-full">Disks filling or full<a class="headerlink" href="#disks-filling-or-full" title="Permanent link">&para;</a></h3>
 <ul>
-<li><code>x-amz-replication-status</code> on HEAD and GET: <code>PENDING</code>, <code>COMPLETED</code> or
-  <code>FAILED</code> on the source, <code>REPLICA</code> on the target.</li>
-<li>Metrics (gateway <code>/metrics</code>):</li>
-<li><code>objectio_replication_backlog{target}</code>: versions not yet replicated,
-    at the last scan;</li>
-<li><code>objectio_replication_lag_seconds{target}</code>: the oldest one's age, in
-    effect the RPO;</li>
-<li><code>objectio_replication_sent_total{target,result}</code>;</li>
-<li><code>objectio_replication_bytes_total{target}</code>.</li>
+<li><strong>Near full (85%).</strong> Plan capacity: add OSDs or hosts (the balancer
+  moves data onto them), or delete data. Check <code>obioctl cluster usage</code>.</li>
+<li><strong>Full (95%).</strong> That OSD refuses client writes and clients get 507.
+  The space above 95% is kept for repair. Other OSDs keep taking writes for
+  stripes not placed on the full one.</li>
+<li>Find which disks: <code>objectio_disk_used_bytes / objectio_disk_capacity_bytes</code>.</li>
+<li>One full disk among emptier ones is uneven placement: the balancer
+    evens it out (<code>obioctl cluster rebalance status</code>).</li>
+<li>Everything full: add capacity. Deletes free space within a minute.</li>
+<li>Don't raise <code>--full-ratio</code> to get writes going: it spends the room
+    repair needs after the next failure.</li>
 </ul>
-<p>Alert on lag that keeps growing, and on <code>result="error"</code>.</p>
-<h2 id="not-yet">Not yet<a class="headerlink" href="#not-yet" title="Permanent link">&para;</a></h2>
-<p>Existing-object resync, per-target bandwidth limits, and targets that
-aren't ObjectIO (AWS S3, MinIO) are the next phases.</p>
+<h3 id="a-gateway-refuses-writes-for-clock-skew">A gateway refuses writes for clock skew<a class="headerlink" href="#a-gateway-refuses-writes-for-clock-skew" title="Permanent link">&para;</a></h3>
+<p>Its clock is more than 500 ms from meta's
+(<code>objectio_gateway_clock_offset_seconds</code> gives the offset). Writes through
+it fail with 503 (clients retry, ideally through another gateway). Reads
+work.</p>
+<p>Fix time sync on that host (<code>chronyc tracking</code>, <code>chronyc makestep</code>).
+Writes resume within a second of the clock coming back in step. Don't
+restart the gateway: it doesn't help.</p>
+<h3 id="meta-has-no-leader-or-elects-often">Meta has no leader, or elects often<a class="headerlink" href="#meta-has-no-leader-or-elects-often" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>No leader for more than a minute:</strong> fewer than a majority of meta
+  nodes are up or can reach each other. Writes fail with 503; reads of
+  object data mostly still work.</li>
+<li><code>curl http://&lt;meta&gt;:9102/status</code> on each node shows its role, its
+    term, and who it thinks leads.</li>
+<li>Bring a majority back. A node lost for good is replaced with
+    <code>POST :9102/add-learner</code> then <code>POST :9102/change-membership</code>
+    (<a href="../meta-ha/">meta HA</a>).</li>
+<li><strong>No procedure exists yet</strong> for a majority lost for good.</li>
+<li><strong>Elections churn:</strong> usually a node that drops off the network
+  intermittently, or a disk too slow for its heartbeats. Compare the
+  nodes' <code>objectio_meta_commit_seconds</code>.</li>
+<li><strong>A follower lags:</strong> it is catching up, or its disk is slow. One far
+  behind is sent a snapshot.</li>
+<li><strong>Heal queue failing:</strong> writes reached a quorum of metadata copies while
+  meta was unreachable; gateways retry queuing them for 10 minutes.
+  Persistent failures mean meta is down: see above.</li>
+</ul>
+<h3 id="repair-not-running">Repair not running<a class="headerlink" href="#repair-not-running" title="Permanent link">&para;</a></h3>
+<p><code>objectio_meta_repair_last_pass_timestamp_seconds</code> hasn't moved in three
+repair intervals (<code>--repair-interval-secs</code>, an hour by default). Repair
+runs on the meta leader:
+- check that there is one (above);
+- check the leader's log for <code>repair:</code> lines;
+- a pass that never ends is usually a target OSD that accepts connections
+  but doesn't answer.</p>
+<p>Scrub stale: an OSD hasn't finished a scrub pass in 8 days. Check that
+OSD's log; a pass on a very full disk at 50 MiB/s
+(<code>--scrub-rate-mib</code>) can take days.</p>
+<h3 id="corrupt-shards">Corrupt shards<a class="headerlink" href="#corrupt-shards" title="Permanent link">&para;</a></h3>
+<p>Scrub or a read found shards that don't match their checksums. The OSD
+reports them, and repair rebuilds them from the rest of the stripe. If the
+count keeps rising on one OSD, its drive is failing: check its SMART
+metrics (<code>objectio_disk_smart_*</code>) and replace it (<a href="#replacing-a-disk">above</a>).</p>
+<h3 id="objects-unreadable-or-unrecoverable">Objects unreadable or unrecoverable<a class="headerlink" href="#objects-unreadable-or-unrecoverable" title="Permanent link">&para;</a></h3>
+<p>Some stripes have fewer than k good shards: more failures at once than the
+code tolerates.
+1. Bring back every OSD that is down but intact (powered off, network).
+   Their shards make the stripes readable again.
+2. Don't set OSDs <code>out</code> or wipe disks until this is resolved.
+3. What can't be brought back is lost. <strong>No tool yet lists which objects
+   are affected.</strong></p>
+<h3 id="a-slow-disk">A slow disk<a class="headerlink" href="#a-slow-disk" title="Permanent link">&para;</a></h3>
+<p>p99 shard fsync over 100 ms. Find the OSD from the per-OSD
+<code>objectio_osd_disk_seconds</code>. A drive getting slower often fails next:
+check SMART, and drain it (<a href="#replacing-a-disk">replacing a disk</a>) if it
+doesn't recover. A drive without power-loss protection is always slow to
+fsync.</p>
+<h3 id="s3-requests-failing-with-5xx">S3 requests failing with 5xx<a class="headerlink" href="#s3-requests-failing-with-5xx" title="Permanent link">&para;</a></h3>
+<ul>
+<li>503s during a fault are expected: clients retry.</li>
+<li>Persistent 503s mean meta has no leader, OSDs are unreachable, or a
+  gateway refuses writes for clock skew. See those runbooks.</li>
+<li>A 500 is a bug: report it with the gateway's log line for the request
+  id.</li>
+</ul>
+<p>Space leaking: shard deletes are failing, so freed space stays allocated
+until a later repair pass. It is usually an OSD that is down. A leak is
+never a loss.</p>
+<h3 id="audit-events-dropped">Audit events dropped<a class="headerlink" href="#audit-events-dropped" title="Permanent link">&para;</a></h3>
+<p>Events are spooled on the gateway's disk until delivered. Drops mean:
+- the spool filled (<code>--audit-spool-max-bytes</code>) because a receiver has been
+  down for long; or
+- a gateway pod was deleted without a clean shutdown.</p>
+<p>Fix the receiver; size the spool for the longest outage you accept
+(<a href="../../administration/audit/">audit</a>).</p>
+<h3 id="replication-lagging">Replication lagging<a class="headerlink" href="#replication-lagging" title="Permanent link">&para;</a></h3>
+<p>The oldest unreplicated version is over an hour old. That is how much a
+loss of this site would lose. Check the target's reachability and
+credentials, and the <code>result="error"</code> count of
+<code>objectio_replication_sent_total</code> (<a href="../../administration/replication/">replication</a>).</p>
+<h3 id="block-volumes">Block volumes<a class="headerlink" href="#block-volumes" title="Permanent link">&para;</a></h3>
+<p>The block gateway journals writes on its own disk before storing them as
+chunks.
+- <strong>Slow journal fsync:</strong> slows every block write.
+- <strong>Flush failing:</strong> chunks aren't being stored; the write cache fills and
+  writes stall.
+- <strong>Read errors:</strong> reads that couldn't be served.</p>
+<p>The journal is a single copy on the block gateway's disk: losing that disk
+loses writes not yet flushed (a known gap; see the block design).</p>
+<h3 id="certificates-expiring">Certificates expiring<a class="headerlink" href="#certificates-expiring" title="Permanent link">&para;</a></h3>
+<p>cert-manager renews 30 days before expiry. The services read their
+certificates only at start, so after a renewal restart them (rolling):
+<code>kubectl rollout restart statefulset/&lt;release&gt;-meta statefulset/&lt;release&gt;-osd deployment/&lt;release&gt;-gateway</code>.
+An expired certificate stops every internal call. There is no expiry
+metric yet: alert on cert-manager's <code>certmanager_certificate_expiration_timestamp_seconds</code>.</p>
+<h3 id="upgrades">Upgrades<a class="headerlink" href="#upgrades" title="Permanent link">&para;</a></h3>
+<p>Follow <a href="../upgrades/">upgrades</a>: meta first, then OSDs, then gateways, one
+at a time. Then <code>obioctl upgrade status</code>, and <code>obioctl upgrade finalize</code>
+once every node runs the new release. Back up <code>meta.redb</code> from a stopped
+follower first.</p>
 
 
 
