@@ -2978,8 +2978,8 @@ run on Linux amd64 and arm64; the latest numbers are there.</p>
 </tr>
 <tr>
 <td>Full-disk behaviour (ENOSPC end to end)</td>
-<td>⬜</td>
-<td>Part of the soak</td>
+<td>✅</td>
+<td>B3: client writes stop at the full ratio (507 <code>StorageFull</code>); the rest kept for repair</td>
 </tr>
 <tr>
 <td>Flush before acknowledge (shard fsync, then its location fsynced)</td>
@@ -3429,7 +3429,7 @@ when the code is written.</p>
 <td>B3</td>
 <td>Full-disk behaviour</td>
 <td>A full OSD refuses writes cleanly, nothing acknowledged is lost, space returns after deletes</td>
-<td>⬜</td>
+<td>✅</td>
 </tr>
 <tr>
 <td>B4</td>

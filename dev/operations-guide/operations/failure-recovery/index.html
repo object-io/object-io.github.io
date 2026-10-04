@@ -1925,6 +1925,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#full-disks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Full disks
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#osd-failures" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2437,6 +2448,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#full-disks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Full disks
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#osd-failures" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2812,6 +2834,27 @@ start the OSD on the new disk, and set it back in:</p>
 rebuilds its shards from the others. Don't put a directly-<code>out</code> OSD back in
 with old data on it: wipe the disk first.</p>
 <hr />
+<h2 id="full-disks">Full disks<a class="headerlink" href="#full-disks" title="Permanent link">&para;</a></h2>
+<p>Client writes may fill each OSD disk up to its <strong>full ratio</strong>
+(<code>--full-ratio</code>, default 0.95, as Ceph's <code>full_ratio</code>). Past that:</p>
+<ul>
+<li><strong>Writes are refused</strong> with <strong>507 <code>StorageFull</code></strong> when a shard's OSD has
+  no room under its ratio and the write can't reach its quorum without it.
+  S3 clients don't retry a 507 blindly, as they would a 503.</li>
+<li><strong>The rest of the disk is kept</strong> for writes that restore redundancy:
+  repair, drain and backfill set <code>use_reserve</code> on their shard writes. A
+  shard lost on a full cluster can still be rebuilt.</li>
+<li><strong>Nothing acknowledged is lost,</strong> and reads and deletes go on.</li>
+<li><strong>Deleting frees the space,</strong> and writes are admitted again.</li>
+</ul>
+<p>Watch for it before it happens. Alert when an OSD passes about 85%:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">objectio_osd_used_bytes</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nv">objectio_osd_capacity_bytes</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0.85</span>
+</code></pre></div>
+<p>Then add OSDs or a pool, or delete data. Tested by the <code>full_disk</code> e2e
+suite: a 4+2 cluster on 1 GiB disks is filled with 4 MiB objects until
+writes are refused. The refusals are <code>StorageFull</code>, no OSD passes about
+95%, the acknowledged objects read back intact, and deleting half lets
+writes in again.</p>
 <h2 id="osd-failures">OSD Failures<a class="headerlink" href="#osd-failures" title="Permanent link">&para;</a></h2>
 <h3 id="types-of-osd-failures">Types of OSD Failures<a class="headerlink" href="#types-of-osd-failures" title="Permanent link">&para;</a></h3>
 <table>
