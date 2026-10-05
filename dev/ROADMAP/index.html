@@ -3574,9 +3574,9 @@ when the code is written.</p>
 </tr>
 <tr>
 <td>B5</td>
-<td>Crash consistency of the OSD</td>
-<td>Power-loss injection (kill -9 during WAL/data/metadata writes) at random points, and real power cuts: a lab VM whose disk has a volatile write-back cache, hard-stopped under write load; recovery loses nothing acknowledged</td>
-<td>⬜</td>
+<td>Crash consistency of the OSD (test)</td>
+<td>Power cuts at random points, replayed from dm-log-writes logs of the shard device and the state filesystem: at marks and between them, with and without the writes a volatile write cache loses; every acknowledged write intact after recovery (60 s, io_uring: 27,264 writes, 40 cuts × 2 modes)</td>
+<td>✅ #156</td>
 </tr>
 <tr>
 <td>B16</td>
