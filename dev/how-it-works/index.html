@@ -8,31 +8,31 @@
       
       
       
-        <link rel="canonical" href="https://object-io.github.io/dev/developer-guide/performance/">
+        <link rel="canonical" href="https://object-io.github.io/dev/how-it-works/">
       
       
-        <link rel="prev" href="../chaos/">
+        <link rel="prev" href="../ROADMAP/">
       
       
-        <link rel="next" href="../s3-compatibility/">
+        <link rel="next" href="../developer-guide/">
       
       
         
       
       
-      <link rel="icon" href="../../assets/brand/favicon.svg">
+      <link rel="icon" href="../assets/brand/favicon.svg">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
-        <title>Performance (B4) - ObjectIO</title>
+        <title>How it works - ObjectIO</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -51,9 +51,9 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/brand/brand.css">
+      <link rel="stylesheet" href="../assets/brand/brand.css">
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#performance-b4" class="md-skip">
+        <a href="#how-it-works" class="md-skip">
           Skip to content
         </a>
       
@@ -98,9 +98,9 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="ObjectIO" class="md-header__button md-logo" aria-label="ObjectIO" data-md-component="logo">
+    <a href=".." title="ObjectIO" class="md-header__button md-logo" aria-label="ObjectIO" data-md-component="logo">
       
-  <img src="../../assets/brand/objectio-mark-on-dark.svg" alt="logo">
+  <img src="../assets/brand/objectio-mark-on-dark.svg" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -117,7 +117,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Performance (B4)
+              How it works
             
           </span>
         </div>
@@ -233,9 +233,9 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="ObjectIO" class="md-nav__button md-logo" aria-label="ObjectIO" data-md-component="logo">
+    <a href=".." title="ObjectIO" class="md-nav__button md-logo" aria-label="ObjectIO" data-md-component="logo">
       
-  <img src="../../assets/brand/objectio-mark-on-dark.svg" alt="logo">
+  <img src="../assets/brand/objectio-mark-on-dark.svg" alt="logo">
 
     </a>
     ObjectIO
@@ -262,7 +262,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href=".." class="md-nav__link">
         
   
   
@@ -289,7 +289,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../ROADMAP/" class="md-nav__link">
+      <a href="../ROADMAP/" class="md-nav__link">
         
   
   
@@ -313,10 +313,37 @@
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../how-it-works/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How it works
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -332,6 +359,103 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-services" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The services
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#placement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Placement
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#writing-an-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Writing an object
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reading-an-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reading an object
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inside-an-osd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inside an OSD
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-something-fails" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When something fails
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-lake-and-block-on-the-same-core" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data lake and block on the same core
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -340,8 +464,6 @@
       
   
   
-    
-  
   
   
     
@@ -354,11 +476,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
         
           
           <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
@@ -379,7 +501,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             
@@ -397,7 +519,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../" class="md-nav__link">
+      <a href="../developer-guide/" class="md-nav__link">
         
   
   
@@ -425,7 +547,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../api-reference/" class="md-nav__link">
+      <a href="../developer-guide/api-reference/" class="md-nav__link">
         
   
   
@@ -453,7 +575,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../features/" class="md-nav__link">
+      <a href="../developer-guide/features/" class="md-nav__link">
         
   
   
@@ -481,7 +603,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../sdk/" class="md-nav__link">
+      <a href="../developer-guide/sdk/" class="md-nav__link">
         
   
   
@@ -558,7 +680,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../chaos/" class="md-nav__link">
+      <a href="../developer-guide/chaos/" class="md-nav__link">
         
   
   
@@ -591,8 +713,6 @@
                 
   
   
-    
-  
   
   
     
@@ -602,11 +722,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_6" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_6" >
         
           
           <label class="md-nav__link" for="__nav_4_6" id="__nav_4_6_label" tabindex="0">
@@ -627,7 +747,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_6_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_6_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4_6">
             <span class="md-nav__icon md-icon"></span>
             
@@ -642,37 +762,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Performance (B4)
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../developer-guide/performance/" class="md-nav__link">
         
   
   
@@ -688,65 +781,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#single-host-2026-10-04" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Single host: 2026-10-04
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Single host: 2026-10-04">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#results" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Results
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#what-it-shows" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        What it shows
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -816,7 +850,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../s3-compatibility/" class="md-nav__link">
+      <a href="../developer-guide/s3-compatibility/" class="md-nav__link">
         
   
   
@@ -893,7 +927,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../s3-compatibility/2026-10-02/summary/" class="md-nav__link">
+      <a href="../developer-guide/s3-compatibility/2026-10-02/summary/" class="md-nav__link">
         
   
   
@@ -1027,7 +1061,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../s3-compatibility/2026-10-03/linux-amd64/summary/" class="md-nav__link">
+      <a href="../developer-guide/s3-compatibility/2026-10-03/linux-amd64/summary/" class="md-nav__link">
         
   
   
@@ -1112,7 +1146,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../s3-compatibility/2026-10-03/linux-arm64/summary/" class="md-nav__link">
+      <a href="../developer-guide/s3-compatibility/2026-10-03/linux-arm64/summary/" class="md-nav__link">
         
   
   
@@ -1223,7 +1257,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../operations-guide/" class="md-nav__link">
+      <a href="../operations-guide/" class="md-nav__link">
         
   
   
@@ -1300,7 +1334,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../operations-guide/administration/" class="md-nav__link">
+      <a href="../operations-guide/administration/" class="md-nav__link">
         
   
   
@@ -1328,7 +1362,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../operations-guide/administration/audit/" class="md-nav__link">
+      <a href="../operations-guide/administration/audit/" class="md-nav__link">
         
   
   
@@ -1356,7 +1390,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../operations-guide/administration/authentication/" class="md-nav__link">
+      <a href="../operations-guide/administration/authentication/" class="md-nav__link">
         
   
   
@@ -1384,7 +1418,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../operations-guide/administration/cli/" class="md-nav__link">
+      <a href="../operations-guide/administration/cli/" class="md-nav__link">
         
   
   
@@ -1412,7 +1446,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../operations-guide/administration/grep/" class="md-nav__link">
+      <a href="../operations-guide/administration/grep/" class="md-nav__link">
         
   
   
@@ -1440,7 +1474,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../operations-guide/administration/iam/" class="md-nav__link">
+      <a href="../operations-guide/administration/iam/" class="md-nav__link">
         
   
   
@@ -1468,7 +1502,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../operations-guide/administration/iceberg-api/" class="md-nav__link">
+      <a href="../operations-guide/administration/iceberg-api/" class="md-nav__link">
         
   
   
@@ -1496,7 +1530,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../operations-guide/administration/mtls/" class="md-nav__link">
+      <a href="../operations-guide/administration/mtls/" class="md-nav__link">
         
   
   
@@ -1524,7 +1558,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../operations-guide/administration/public-access/" class="md-nav__link">
+      <a href="../operations-guide/administration/public-access/" class="md-nav__link">
         
   
   
@@ -1552,7 +1586,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../operations-guide/administration/replication/" class="md-nav__link">
+      <a href="../operations-guide/administration/replication/" class="md-nav__link">
         
   
   
@@ -1580,7 +1614,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../operations-guide/administration/s3-api/" class="md-nav__link">
+      <a href="../operations-guide/administration/s3-api/" class="md-nav__link">
         
   
   
@@ -1665,7 +1699,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../operations-guide/installation/" class="md-nav__link">
+      <a href="../operations-guide/installation/" class="md-nav__link">
         
   
   
@@ -1693,7 +1727,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../operations-guide/installation/configuration/" class="md-nav__link">
+      <a href="../operations-guide/installation/configuration/" class="md-nav__link">
         
   
   
@@ -1721,7 +1755,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../operations-guide/installation/deployment-options/" class="md-nav__link">
+      <a href="../operations-guide/installation/deployment-options/" class="md-nav__link">
         
   
   
@@ -1749,7 +1783,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../operations-guide/installation/docker/" class="md-nav__link">
+      <a href="../operations-guide/installation/docker/" class="md-nav__link">
         
   
   
@@ -1777,7 +1811,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../operations-guide/installation/kubernetes/" class="md-nav__link">
+      <a href="../operations-guide/installation/kubernetes/" class="md-nav__link">
         
   
   
@@ -1805,7 +1839,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../operations-guide/installation/linux/" class="md-nav__link">
+      <a href="../operations-guide/installation/linux/" class="md-nav__link">
         
   
   
@@ -1833,7 +1867,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../operations-guide/installation/macos/" class="md-nav__link">
+      <a href="../operations-guide/installation/macos/" class="md-nav__link">
         
   
   
@@ -1861,7 +1895,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../operations-guide/installation/quickstart/" class="md-nav__link">
+      <a href="../operations-guide/installation/quickstart/" class="md-nav__link">
         
   
   
@@ -1889,7 +1923,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../operations-guide/installation/topologies/" class="md-nav__link">
+      <a href="../operations-guide/installation/topologies/" class="md-nav__link">
         
   
   
@@ -1974,7 +2008,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../operations-guide/operations/" class="md-nav__link">
+      <a href="../operations-guide/operations/" class="md-nav__link">
         
   
   
@@ -2002,7 +2036,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../operations-guide/operations/failure-recovery/" class="md-nav__link">
+      <a href="../operations-guide/operations/failure-recovery/" class="md-nav__link">
         
   
   
@@ -2030,7 +2064,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../operations-guide/operations/meta-ha/" class="md-nav__link">
+      <a href="../operations-guide/operations/meta-ha/" class="md-nav__link">
         
   
   
@@ -2058,7 +2092,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../operations-guide/operations/metrics/" class="md-nav__link">
+      <a href="../operations-guide/operations/metrics/" class="md-nav__link">
         
   
   
@@ -2086,7 +2120,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../operations-guide/operations/monitoring/" class="md-nav__link">
+      <a href="../operations-guide/operations/monitoring/" class="md-nav__link">
         
   
   
@@ -2114,7 +2148,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../operations-guide/operations/production/" class="md-nav__link">
+      <a href="../operations-guide/operations/production/" class="md-nav__link">
         
   
   
@@ -2142,7 +2176,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../operations-guide/operations/upgrades/" class="md-nav__link">
+      <a href="../operations-guide/operations/upgrades/" class="md-nav__link">
         
   
   
@@ -2205,41 +2239,79 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#single-host-2026-10-04" class="md-nav__link">
+  <a href="#the-services" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Single host: 2026-10-04
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Single host: 2026-10-04">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#results" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Results
+        The services
       
     </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#what-it-shows" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#placement" class="md-nav__link">
     <span class="md-ellipsis">
       
-        What it shows
+        Placement
       
     </span>
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#writing-an-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Writing an object
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reading-an-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reading an object
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inside-an-osd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inside an OSD
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-something-fails" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When something fails
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-lake-and-block-on-the-same-core" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data lake and block on the same core
+      
+    </span>
+  </a>
   
 </li>
       
@@ -2263,152 +2335,183 @@
   
 
 
-<h1 id="performance-b4">Performance (B4)<a class="headerlink" href="#performance-b4" title="Permanent link">&para;</a></h1>
-<p>ObjectIO next to RustFS and SeaweedFS, measured with the same client on the
-same disk. This page has the single-host baseline. Multi-host numbers on
-NVMe cloud VMs, and a regression check in CI, come next (B4 in the
-roadmap).</p>
-<h2 id="single-host-2026-10-04">Single host: 2026-10-04<a class="headerlink" href="#single-host-2026-10-04" title="Permanent link">&para;</a></h2>
-<p><strong>Host:</strong> one lab machine. AMD Ryzen 9 7945HX (16 cores, 32 threads),
-64 GB RAM, one consumer NVMe (Corsair MP600 Elite: volatile write cache,
-no power-loss protection), ext4, Linux 6.8. Everything runs on this one
-host, client included.</p>
-<p><strong>Systems:</strong></p>
+<h1 id="how-it-works">How it works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h1>
+<p>ObjectIO is three kinds of service around one storage core. This page
+follows an object through it: where it goes when it's written, how it's
+found and checked when it's read, and what happens when a disk or a
+host fails.</p>
+<h2 id="the-services">The services<a class="headerlink" href="#the-services" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>           S3 / Iceberg / Unity Catalog / Delta Sharing / admin
+                                │
+                     ┌──────────┴──────────┐
+                     │  Gateways (9000)    │  stateless: as many as you like
+                     │  auth, erasure code │
+                     └───┬─────────────┬───┘
+            placement,   │             │   shards and object
+            listings,    │             │   metadata, in parallel
+            IAM          │             │
+          ┌──────────────┴───┐   ┌─────┴──────────────────────────┐
+          │ Meta (9100)      │   │ OSDs (9200), one per host      │
+          │ Raft, 3+ nodes   │◀──│ raw disks: shards, and each    │
+          │ one redb file    │   │ object's metadata copy         │
+          │ each             │   │                                │
+          └──────────────────┘   └────────────────────────────────┘
+</code></pre></div>
 <table>
 <thead>
 <tr>
-<th></th>
-<th>Version</th>
-<th>Layout</th>
-<th>Durability of an acknowledged PUT</th>
+<th>Service</th>
+<th>Holds</th>
+<th>Scales by</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>ObjectIO</td>
-<td><code>main</code> at #143, release build (<code>isal</code>, <code>io-uring</code>)</td>
-<td><code>objectio-aio</code>: meta, six OSDs and the gateway in one process; 4+2 erasure coding; each OSD a 64 GiB sparse file</td>
-<td>shards at write quorum (5 of 6), each fsynced</td>
+<td><strong>Gateway</strong></td>
+<td>Nothing: every request is served from meta and the OSDs. It speaks S3 (SigV4), the data-lake APIs and the admin API, and does the erasure coding</td>
+<td>Adding gateways behind a load balancer</td>
 </tr>
 <tr>
-<td>RustFS</td>
-<td><code>rustfs/rustfs:latest</code> (image of 2026-10-03)</td>
-<td>one server, six directories, <code>EC:2</code> (4+2)</td>
-<td>erasure-coded at write quorum, fsynced</td>
+<td><strong>Meta</strong></td>
+<td>Everything shared that isn't object bytes: buckets, IAM users and policies, tenants, pools and placement groups, bucket listings, catalog tables. Every write goes through Raft; any node answers, followers forward writes to the leader</td>
+<td>3 or 5 nodes; a majority keeps it writable</td>
 </tr>
 <tr>
-<td>SeaweedFS</td>
-<td>4.48</td>
-<td><code>weed server</code> (master, volume, filer, S3) with its defaults</td>
-<td><strong>one copy, not fsynced per write</strong></td>
+<td><strong>OSD</strong></td>
+<td>Shards on raw block devices it owns outright, and a copy of the metadata of every object it holds a shard of</td>
+<td>One per host (or per disk set); add hosts</td>
 </tr>
 </tbody>
 </table>
-<p>The six "drives" of ObjectIO and RustFS share one device here. That is
-fine for comparing the software, not for absolute numbers: on separate
-drives both would write in parallel.</p>
-<p>SeaweedFS's defaults keep one copy and don't fsync each write, so its PUT
-numbers are not comparable with the other two. They show what that
-trade-off buys, not a like-for-like result.</p>
-<p><strong>Client:</strong> warp 1.1.4. For each object size, PUT then GET, 32
-concurrent clients, 30 s per cell. The script is
-<code>scripts/bench/baseline.sh</code> in the code repo.</p>
-<h3 id="results">Results<a class="headerlink" href="#results" title="Permanent link">&para;</a></h3>
-<p>Throughput (p99 latency). ObjectIO and RustFS ran each cell up to 3 times;
-the range is shown where the runs differed by more than 10%.</p>
+<p><code>objectio-aio</code> runs all of them in one process, for a laptop or an
+appliance; the wire protocol is the same. Between services, every gRPC
+hop can be mutual TLS.</p>
+<h2 id="placement">Placement<a class="headerlink" href="#placement" title="Permanent link">&para;</a></h2>
+<p>An object's key hashes (jump consistent hash) to one of a pool's
+<strong>placement groups</strong>. Each placement group is a fixed list of OSDs, one
+per shard, chosen so that no two share a failure domain: a host by
+default, or a rack, zone or region if you declare them. Meta records
+that list; the balancer moves whole placement groups, never single
+objects, so rebalancing costs the number of placement groups, not the
+number of objects.</p>
+<p>A <strong>pool</strong> is an erasure code (4+2 or 8+4 Reed-Solomon, or replicas)
+over a set of OSDs. A cluster grows by adding OSDs to a pool or by
+adding a pool, never by splitting placement groups.</p>
+<h2 id="writing-an-object">Writing an object<a class="headerlink" href="#writing-an-object" title="Permanent link">&para;</a></h2>
+<p>With 4+2 erasure coding:</p>
+<ol>
+<li>The gateway authenticates the request and asks meta for the key's
+   placement group.</li>
+<li>It splits the object into 4 data shards and computes 2 parity shards
+   (ISA-L on x86, SIMD Rust elsewhere; the shards are bit-identical
+   either way), with a CRC32C of each.</li>
+<li>It writes the six shards to the six OSDs in parallel. Each OSD writes
+   its shard to raw disk with <code>O_DIRECT</code>, flushes the drive's cache,
+   then records and flushes the shard's location. The write needs 5 of
+   the 6.</li>
+<li>It writes the object's metadata (size, ETag, version, stamp, where
+   each shard is and its checksum) to every OSD of the placement. This
+   needs a majority: 4 of 6.</li>
+<li>It records the key in the bucket's listing, in meta, through Raft.</li>
+<li>Only then does the client get its <code>200</code>.</li>
+</ol>
+<p>Objects up to 4 KiB skip the shards: they are kept whole inside their
+metadata, on every copy. Small objects written as separate stripes are
+later <strong>packed</strong> together in the background, so a million 8 KiB objects
+don't each take a stripe of their own.</p>
+<p>A multipart upload writes each part this way and records the parts in
+one object at completion.</p>
+<h2 id="reading-an-object">Reading an object<a class="headerlink" href="#reading-an-object" title="Permanent link">&para;</a></h2>
+<ol>
+<li>The gateway reads the object's metadata from the OSDs of its
+   placement and takes the copy with the highest stamp among a read
+   quorum (3 of 6). Any 3 copies include one that took the last
+   acknowledged write, so a copy that missed an overwrite or a delete
+   is outvoted, never served.</li>
+<li>It reads 4 shards, preferring the nearest OSDs, and checks each
+   against the checksum recorded in the metadata.</li>
+<li>If a shard is missing or doesn't match, it reads another and
+   reconstructs: any 4 of the 6 rebuild the object. The bad shard is
+   reported for repair.</li>
+</ol>
+<p>So with 4+2, any two OSDs can be down and every object still reads and
+every write still succeeds.</p>
+<h2 id="inside-an-osd">Inside an OSD<a class="headerlink" href="#inside-an-osd" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Raw disks.</strong> No filesystem: a superblock (kept twice), an
+  allocation bitmap of 4 KiB blocks, and the shards. Each shard carries
+  a header and footer with its own checksum. I/O is <code>O_DIRECT</code>, through
+  io_uring on Linux.</li>
+<li><strong>Its metadata store.</strong> A write-ahead log, flushed before every
+  acknowledgement, in front of an on-disk index with a bounded cache.
+  The OSD's memory stays flat however many objects it holds.</li>
+<li><strong>Scrub.</strong> In the background, at a set rate, the OSD reads every shard
+  it holds and checks it, so a shard that rots on disk is found even if
+  nobody reads it.</li>
+<li><strong>It never formats a disk that holds data.</strong> A disk is formatted only
+  if it's blank: a disk the OSD can't recognise is reported, not wiped.</li>
+</ul>
+<h2 id="when-something-fails">When something fails<a class="headerlink" href="#when-something-fails" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
-<th>Cell</th>
-<th>ObjectIO</th>
-<th>RustFS</th>
-<th>SeaweedFS (one copy, no fsync)</th>
+<th>Fault</th>
+<th>What happens</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>PUT 4 KiB</td>
-<td>553–558 obj/s (195 ms)</td>
-<td>353–477 obj/s (135 ms)</td>
-<td>21,388 obj/s (4.3 ms)</td>
+<td>A disk or an OSD fails</td>
+<td>Reads reconstruct from the remaining shards; writes go on at quorum. Repair rebuilds the missing shards from the survivors, checks each against its recorded checksum, and places it on another OSD in the same placement rules</td>
 </tr>
 <tr>
-<td>PUT 64 KiB</td>
-<td>236–239 obj/s (223 ms)</td>
-<td>348–373 obj/s (145 ms)</td>
-<td>13,913 obj/s (7.5 ms)</td>
+<td>A host loses power</td>
+<td>The same. Every acknowledged write was flushed to stable storage, so it's there when the host returns; copies it missed are healed</td>
 </tr>
 <tr>
-<td>PUT 1 MiB</td>
-<td>111–241 MiB/s (423 ms)</td>
-<td>183–217 MiB/s (239 ms)</td>
-<td>1,595 MiB/s (168 ms)</td>
+<td>A shard rots on disk</td>
+<td>Scrub or a read finds the checksum mismatch; the shard is rebuilt from the others</td>
 </tr>
 <tr>
-<td>PUT 16 MiB</td>
-<td>486–772 MiB/s (1.3 s)</td>
-<td>503 MiB/s (2.8 s)</td>
-<td>failed (internal errors)</td>
+<td>The meta leader fails</td>
+<td>The others elect a new leader in a few seconds; gateways retry. Writes resume, nothing acknowledged is lost</td>
 </tr>
 <tr>
-<td>GET 4 KiB</td>
-<td>8,403–10,511 obj/s (5.9 ms)</td>
-<td>31,692–32,918 obj/s (2.0 ms)</td>
-<td>20,203 obj/s (3.9 ms)</td>
+<td>Meta loses its majority</td>
+<td>Writes are refused with <code>503</code> (retry), never accepted and lost; they resume when the majority is back</td>
 </tr>
 <tr>
-<td>GET 64 KiB</td>
-<td>5,392–5,808 obj/s (9.7 ms)</td>
-<td>25,613–27,141 obj/s (2.4 ms)</td>
-<td>18,931 obj/s (4.2 ms)</td>
+<td>A network partition</td>
+<td>The side with the meta majority carries on; the cut-off side refuses writes. When the partition heals, the cut-off nodes catch up</td>
 </tr>
 <tr>
-<td>GET 1 MiB</td>
-<td>1,785–1,954 MiB/s (25.7 ms)</td>
-<td>2,419–2,479 MiB/s (105 ms)</td>
-<td>3,734 MiB/s (16.7 ms)</td>
+<td>A gateway's clock drifts</td>
+<td>Writes are stamped with the gateway's clock and the newest stamp wins, so a gateway more than 500 ms off meta's clock refuses writes until it's back in step</td>
 </tr>
 <tr>
-<td>GET 16 MiB</td>
-<td>1,716 MiB/s (415 ms)</td>
-<td>2,304 MiB/s (386 ms)</td>
-<td>not run (the PUT failed)</td>
+<td>A disk fills</td>
+<td>Client writes stop at the full ratio (<code>507</code>); the space left is kept for repair</td>
+</tr>
+<tr>
+<td>You remove a disk or host</td>
+<td>Drain moves its shards off first, then it can go</td>
 </tr>
 </tbody>
 </table>
-<h3 id="what-it-shows">What it shows<a class="headerlink" href="#what-it-shows" title="Permanent link">&para;</a></h3>
+<p>Each of these is exercised by the
+<a href="../developer-guide/chaos/">chaos tests</a> or the end-to-end suite
+on every pull request.</p>
+<h2 id="data-lake-and-block-on-the-same-core">Data lake and block on the same core<a class="headerlink" href="#data-lake-and-block-on-the-same-core" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Durable PUTs are bound by the disk.</strong> ObjectIO and RustFS both fsync
-  before they acknowledge, and both land in the hundreds of small PUTs a
-  second on this drive. A drive with power-loss protection makes an
-  fsync nearly free; this one doesn't. SeaweedFS is 40–60 times faster
-  because it skips that work.</li>
-<li><strong>64 KiB PUTs: RustFS is 1.5 times faster.</strong> RustFS writes each drive's
-  erasure-coded piece of a small object inside that drive's metadata file
-  (<code>xl.meta</code>; seen here for 64 KiB and 256 KiB objects), so a small PUT is
-  one fsync round. ObjectIO inlines only objects up to 4 KiB
-  (<code>--inline-max-size</code>), whole, on every copy, and the record is held in
-  the OSD's memory. A 64 KiB object takes two rounds: shards, then
-  metadata.</li>
-<li><strong>Small GETs: RustFS is 3–4.5 times faster.</strong> RustFS reads its own
-  drives. ObjectIO's aio is a cluster in one process: a GET makes one RPC
-  to meta for the placement and asks all six OSDs for the object's
-  metadata, then reads shards (none for an inline object). That is 7
-  RPCs for a 4 KiB GET and 11 for 64 KiB, each over loopback HTTP/2.
-  Under profiling, nearly all the CPU goes to that RPC work and to lock
-  contention inside h2. In a multi-host deployment RustFS makes these
-  calls too, so this gap is partly an artefact of one host. But fewer
-  round trips per small GET is a real gain everywhere: B21.</li>
-<li><strong>Large objects: within 1.3 times.</strong> At 1 MiB and above both are close
-  to the device and to the CPU cost of erasure coding.</li>
+<li>The <strong>Iceberg REST Catalog</strong> and the <strong>Unity Catalog API</strong> keep their
+  tables in meta and their data in buckets, so one deployment is the
+  catalog and the storage. A <strong>Delta Sharing</strong> server shares tables
+  from any tenant.</li>
+<li><strong>Block volumes</strong> (NBD) are 4 MiB chunks erasure-coded the same way,
+  with a write journal flushed before each acknowledgement, and
+  snapshots and clones that share stripes.</li>
 </ul>
-<p>Found along the way and fixed:</p>
-<ul>
-<li>warp could not create buckets: the gateway refused <code>PUT /bucket/</code> with
-  the trailing slash that minio-go clients send (#143).</li>
-<li>The OSD's metadata cache scanned its lists on every lookup: +7% on
-  small GETs (#144).</li>
-</ul>
+<p>The <a href="../ROADMAP/">roadmap</a> has the status of each, and what's next.</p>
 
 
 
@@ -2464,10 +2567,10 @@ the range is shown where the runs differed by more than 10%.</p>
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.top", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "dev", "provider": "mike"}}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.top", "search.highlight", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "dev", "provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>
