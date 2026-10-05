@@ -2367,6 +2367,11 @@ Design: core/upgrade-path.md.</p>
 <p>It is refused while anything blocks it.</p>
 <p>To go back before step 6, run the same steps in reverse order with the
 previous release's binaries.</p>
+<p>After finalize, each meta node moves its Raft log out of its database into
+<code>&lt;data-dir&gt;/raft-log/</code> (the log line "moving the Raft log … (B25)"). It
+is quick (837 entries took 64 ms in the rolling-upgrade test, a debug
+build) and needs the log's size again in free space in the data directory
+for a moment: both copies exist until the move commits.</p>
 <h2 id="kubernetes">Kubernetes<a class="headerlink" href="#kubernetes" title="Permanent link">&para;</a></h2>
 <p>Roll the meta and OSD StatefulSets one pod at a time (<code>partition</code>), each
 gated on readiness, in the order above, then run <code>obioctl upgrade
