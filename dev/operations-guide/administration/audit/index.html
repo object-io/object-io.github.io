@@ -1456,6 +1456,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../bucket-logging/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bucket Logging
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../cli/" class="md-nav__link">
         
   
@@ -2411,8 +2439,9 @@
 <p>Every request to the gateway becomes one audit event: who made it, from
 where, what it did, and how it ended. The operator streams all of them to
 their own systems (a SIEM, a log pipeline), and each tenant can stream its
-own to its own. This is ObjectIO's answer to S3 server access logging,
-delivered as a stream instead of log objects in a bucket.</p>
+own to its own. S3 server access logging (<code>?logging</code>,
+per bucket, into a bucket) is supported too: see <a href="../bucket-logging/">Bucket Logging</a>.
+It is fed by the same layer, and its records carry the same request ids.</p>
 <h2 id="the-event">The event<a class="headerlink" href="#the-event" title="Permanent link">&para;</a></h2>
 <p>One JSON object per request:</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>

@@ -1298,6 +1298,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../bucket-logging/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bucket Logging
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../cli/" class="md-nav__link">
         
   
@@ -3638,14 +3666,12 @@ is <code>400 AccessControlListNotSupported</code>. See <a href="../iam/#acls">AC
 <hr />
 <h2 id="not-yet-implemented">Not Yet Implemented<a class="headerlink" href="#not-yet-implemented" title="Permanent link">&para;</a></h2>
 <p>A request naming one of these sub-resources is refused with <code>501
-NotImplemented</code> (rather than, say, <code>GET /b?website</code> listing the bucket):</p>
+NotImplemented</code> (rather than, say, <code>GET /b?website</code> listing the bucket).
+Bucket logging (<code>?logging</code>) is supported: see <a href="../bucket-logging/">Bucket Logging</a>.</p>
 <ul>
 <li>S3 Select</li>
 <li>Inventory, Analytics, Metrics configuration</li>
-<li>Replication configuration</li>
 <li>Website configuration</li>
-<li>Bucket logging — use the <a href="../audit/">audit stream</a> instead</li>
-<li>Bucket tagging (object tagging is supported)</li>
 <li>Accelerate configuration, Request Payment</li>
 <li>SigV2 — refused with <code>400</code>; use SigV4</li>
 </ul>

@@ -1557,6 +1557,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../operations-guide/administration/bucket-logging/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bucket Logging
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../operations-guide/administration/cli/" class="md-nav__link">
         
   
@@ -2645,7 +2673,7 @@ is on stable storage; nothing trades durability for speed.</p>
 <tr>
 <td><strong>Now</strong></td>
 <td>S3 + core</td>
-<td>Release-candidate gates: the 48-hour soak (B2) is running; IAM API (A15), bucket logging (A12), repair throughput (B24) and the crash-consistency test (B5) are in review; S3 Select (A16) next</td>
+<td>Release-candidate gates: the 48-hour soak (B2) is running; IAM API (A15) is in review; meta recovery after a power cut (B25) and S3 Select (A16) next</td>
 </tr>
 <tr>
 <td><strong>Next</strong></td>
@@ -3483,9 +3511,9 @@ when the code is written.</p>
 </tr>
 <tr>
 <td>A12</td>
-<td>Bucket logging (<code>?logging</code>)</td>
-<td><code>PutBucketLogging</code> delivers S3 access-log-format objects; the ceph s3-tests logging tests pass</td>
-<td>🔨</td>
+<td>Bucket logging (<code>?logging</code>) (design)</td>
+<td>PutBucketLogging delivers S3 access-log-format objects; the ceph s3-tests logging tests pass or fail only where ObjectIO answers as AWS (19 pass; 20 categorized: AWS operation names and delivery semantics vs RGW's 11, AWS-compatible answers 3, ACLs/SigV2 3, cross-tenant targets 2, IAM API 1)</td>
+<td>✅ #159</td>
 </tr>
 <tr>
 <td>A9</td>
