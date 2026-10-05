@@ -3646,7 +3646,7 @@ when the code is written.</p>
 <td>B25</td>
 <td>Meta back in seconds after a power cut</td>
 <td>A meta node reopens its database without walking all of it: today redb rebuilds its allocator state after an unclean shutdown, 5 min for a 1 GB <code>meta.redb</code> on a soak VM (found by B2), growing with the cluster's object count, and a site-wide outage takes every meta node at once. redb's quick repair makes each commit 3.4× slower there, so the fix is in how meta commits (batched applies, or the Raft log apart from the state machine). Exit test: a meta node powered off under load with a 10 GB database answers within 30 s of boot</td>
-<td>⬜</td>
+<td>🔨 design</td>
 </tr>
 <tr>
 <td>B6</td>
