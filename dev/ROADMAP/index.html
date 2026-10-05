@@ -3490,7 +3490,7 @@ when the code is written.</p>
 <tr>
 <td>A9</td>
 <td>Release candidate</td>
-<td>A1–A8c, A8, A15, A16, A12, B2–B5, B22, B23 green on one commit</td>
+<td>A1–A8c, A8, A15, A16, A12, B2–B5, B22, B23, B25 green on one commit</td>
 <td>⬜</td>
 </tr>
 <tr>
@@ -3558,7 +3558,7 @@ when the code is written.</p>
 <td>B2</td>
 <td>Long soak at scale</td>
 <td>Days on a lab host: millions of objects, disks filling, OSD failures, repair; invariant checker finds no lost object and no leaked space</td>
-<td>🔨 48 h run started 2026-10-05</td>
+<td>🔨 The first 48 h run (2026-10-05) stopped after 5 h 13 m: a meta node took 5 min to reopen its database after a power cut (B25); every key read back as expected until then. Restarted with a longer meta wait</td>
 </tr>
 <tr>
 <td>B3</td>
@@ -3612,6 +3612,12 @@ when the code is written.</p>
 <td>B24</td>
 <td>Repair throughput</td>
 <td>Rebuilding is parallel across objects and OSDs, bounded so client I/O keeps priority: a replaced 7.68 TB drive of 1 MiB objects rebuilt in under 8 hours on the lab host (today about 50 shards/s, so about 40 hours); the chaos disk-pull fault restores full redundancy within 15 minutes</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>B25</td>
+<td>Meta back in seconds after a power cut</td>
+<td>A meta node reopens its database without walking all of it: today redb rebuilds its allocator state after an unclean shutdown, 5 min for a 1 GB <code>meta.redb</code> on a soak VM (found by B2), growing with the cluster's object count, and a site-wide outage takes every meta node at once. redb's quick repair makes each commit 3.4× slower there, so the fix is in how meta commits (batched applies, or the Raft log apart from the state machine). Exit test: a meta node powered off under load with a 10 GB database answers within 30 s of boot</td>
 <td>⬜</td>
 </tr>
 <tr>
