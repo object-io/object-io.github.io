@@ -1530,6 +1530,89 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#the-aws-iam-and-sts-apis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The AWS IAM and STS APIs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The AWS IAM and STS APIs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#accounts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Accounts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ARNs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#actions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Actions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        STS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#not-supported" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Not supported
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#upgrading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Upgrading
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#session-and-token-signing" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2392,6 +2475,89 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#the-aws-iam-and-sts-apis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The AWS IAM and STS APIs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The AWS IAM and STS APIs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#accounts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Accounts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ARNs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#actions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Actions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        STS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#not-supported" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Not supported
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#upgrading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Upgrading
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#session-and-token-signing" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2437,9 +2603,12 @@
 <p>Who can do what in an ObjectIO cluster: tenants and their admins, users and
 access keys, IAM policies, groups and roles, identity providers, and
 temporary credentials from an OIDC token (STS).</p>
-<p>Everything here is the admin API under <code>/_admin/*</code>, signed with SigV4 like
-any S3 request. The <a href="../../../developer-guide/sdk/">management SDKs</a> wrap it
-for Go and Python.</p>
+<p>Everything here is reachable two ways: the admin API under <code>/_admin/*</code>,
+and the <strong>AWS IAM and STS APIs</strong> (<code>aws iam</code>, <code>aws sts</code>, boto3, Terraform's
+AWS provider). Both are signed with SigV4 like any S3 request and work on
+the same records: a user created with <code>aws iam create-user</code> is the user
+<code>GET /_admin/users</code> lists. The <a href="../../../developer-guide/sdk/">management SDKs</a>
+wrap the admin API for Go and Python.</p>
 <h2 id="scopes-the-system-and-tenants">Scopes: the system and tenants<a class="headerlink" href="#scopes-the-system-and-tenants" title="Permanent link">&para;</a></h2>
 <p>Every identity object lives in one scope.</p>
 <ul>
@@ -2542,6 +2711,12 @@ takes effect everywhere within that time.</p>
 <p>A <strong>scoped key</strong> (one with a <code>scope</code>) can only reach that bucket or prefix,
 and is refused on the admin API entirely. A credential handed to a workload
 therefore can't mint itself a wider one.</p>
+<p>User names are case-insensitive (<code>Alice</code> and <code>alice</code> are one user) and
+unique across the cluster, not only within a tenant. A user has a path
+(<code>/</code>, or <code>/team/</code>), which is part of its ARN:
+<code>arn:objectio:iam::acme:user/team/alice</code>. Renaming a user or moving it to
+another path changes its ARN; a tenant's <code>admin_users</code> entry that names
+it by ARN must then be updated (one naming its user id needn't).</p>
 <h2 id="policies">Policies<a class="headerlink" href="#policies" title="Permanent link">&para;</a></h2>
 <p>IAM policies are AWS-format JSON documents: <code>Effect</code>, <code>Action</code>, <code>Resource</code>,
 <code>Condition</code>. They are attached to users, groups or roles. A <strong>bucket
@@ -2601,6 +2776,22 @@ different documents. The system admin can mark a system policy
 <code>"shared": true</code> so that every tenant can attach it but none can change it.</p>
 <p>The built-in <code>readonly</code>, <code>readwrite</code> and <code>writeonly</code> policies are shared.
 <code>consoleAdmin</code> (<code>admin:*</code>) is the operator's alone.</p>
+<p><strong>AWS managed policies.</strong> <code>AmazonS3FullAccess</code>, <code>AmazonS3ReadOnlyAccess</code>,
+<code>IAMFullAccess</code> and <code>IAMReadOnlyAccess</code> are built in, the same in every
+cluster, and can't be changed or deleted. Attach one by its AWS ARN through
+the IAM API (<code>arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess</code>), or as
+<code>aws:AmazonS3ReadOnlyAccess</code> through the admin API.</p>
+<p><strong>Inline policies</strong> belong to one user, group or role, by name, and go when
+it goes. They are managed through the IAM API (<code>PutUserPolicy</code>,
+<code>PutGroupPolicy</code>, <code>PutRolePolicy</code>, …) and evaluated with the attached
+ones: a Deny in any of them wins.</p>
+<p><code>s3:*</code> grants S3 actions only. (It used to match every action, which would
+have let an S3 grant make IAM calls once those existed.) Action names are
+case-insensitive.</p>
+<p>Deleting a role or a group, through either API, also deletes its inline
+policies and its attachments: a role created later under the same name
+starts with none. Deleting a user takes its inline policies, attachments
+and group memberships with it.</p>
 <p>Attaching and detaching take effect immediately on the gateway that made the
 change, and within 15 seconds on the others.</p>
 <p>Policies support every IAM condition operator, plus <code>IfExists</code>,
@@ -2648,8 +2839,9 @@ keys</a>.</p>
 <h2 id="roles">Roles<a class="headerlink" href="#roles" title="Permanent link">&para;</a></h2>
 <p>A role is a set of policies that someone can take on for a while, rather
 than an identity of its own. Who may take it on is decided by its <strong>trust
-policy</strong>. Today a role is assumed with an OIDC token through
-<a href="#temporary-credentials-from-an-oidc-token-sts">STS</a>.</p>
+policy</strong>. A role is assumed with an OIDC token through
+<a href="#temporary-credentials-from-an-oidc-token-sts">STS</a>, or by a user or
+another role's session with <a href="#the-aws-iam-and-sts-apis"><code>AssumeRole</code></a>.</p>
 <table>
 <thead>
 <tr>
@@ -2764,6 +2956,209 @@ issued. A system role is not a system admin.</p>
 <p><strong>Errors:</strong> <code>AccessDenied</code> (trust policy, or no such role: the two are
 answered the same, so role names can't be probed), <code>InvalidIdentityToken</code>,
 <code>ExpiredTokenException</code>, <code>ValidationError</code>.</p>
+<h2 id="the-aws-iam-and-sts-apis">The AWS IAM and STS APIs<a class="headerlink" href="#the-aws-iam-and-sts-apis" title="Permanent link">&para;</a></h2>
+<p>The gateway answers the AWS IAM and STS query APIs on its S3 endpoint:
+<code>POST /</code> with a form body (or <code>GET /?Action=…</code>), signed with SigV4 for the
+service <code>iam</code> or <code>sts</code> in any region. Point the client at the S3 endpoint:</p>
+<div class="highlight"><pre><span></span><code>aws<span class="w"> </span>--endpoint-url<span class="w"> </span>https://s3.example.com<span class="w"> </span>iam<span class="w"> </span>create-user<span class="w"> </span>--user-name<span class="w"> </span>alice<span class="w"> </span>--path<span class="w"> </span>/team/
+aws<span class="w"> </span>--endpoint-url<span class="w"> </span>https://s3.example.com<span class="w"> </span>iam<span class="w"> </span>create-access-key<span class="w"> </span>--user-name<span class="w"> </span>alice
+aws<span class="w"> </span>--endpoint-url<span class="w"> </span>https://s3.example.com<span class="w"> </span>iam<span class="w"> </span>attach-user-policy<span class="w"> </span>--user-name<span class="w"> </span>alice<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--policy-arn<span class="w"> </span>arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
+aws<span class="w"> </span>--endpoint-url<span class="w"> </span>https://s3.example.com<span class="w"> </span>sts<span class="w"> </span>get-caller-identity
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">iam</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s2">"iam"</span><span class="p">,</span> <span class="n">endpoint_url</span><span class="o">=</span><span class="s2">"https://s3.example.com"</span><span class="p">,</span> <span class="n">region_name</span><span class="o">=</span><span class="s2">"us-east-1"</span><span class="p">)</span>
+<span class="n">sts</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s2">"sts"</span><span class="p">,</span> <span class="n">endpoint_url</span><span class="o">=</span><span class="s2">"https://s3.example.com"</span><span class="p">,</span> <span class="n">region_name</span><span class="o">=</span><span class="s2">"us-east-1"</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="accounts">Accounts<a class="headerlink" href="#accounts" title="Permanent link">&para;</a></h3>
+<p><strong>A tenant is an IAM account</strong>; its account id is the tenant's name.
+The system scope is the account with the empty id. A call acts in the
+caller's own account: a user of <code>acme</code> creates users in <code>acme</code>, and
+nothing of another tenant exists for it (<code>NoSuchEntity</code>).</p>
+<p>Who may make which call:</p>
+<table>
+<thead>
+<tr>
+<th>Caller</th>
+<th>May</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>the system admin</td>
+<td>any call, in the system account</td>
+</tr>
+<tr>
+<td>a tenant admin</td>
+<td>any call, in its tenant: it is the account's <strong>root</strong></td>
+</tr>
+<tr>
+<td>any other user, or a role's session</td>
+<td>what its own policies allow (<code>iam:CreateUser</code> on <code>arn:aws:iam::acme:user/team/*</code>, …)</td>
+</tr>
+<tr>
+<td>a key scoped to a bucket, the data-lake APIs' vended credentials</td>
+<td>none</td>
+</tr>
+</tbody>
+</table>
+<p><code>GetUser</code> (with no user name) and <code>GetCallerIdentity</code> name the system admin
+and tenant admins <code>arn:aws:iam::&lt;account&gt;:root</code>.</p>
+<h3 id="arns">ARNs<a class="headerlink" href="#arns" title="Permanent link">&para;</a></h3>
+<p>The IAM API shows ARNs as AWS does. Policies may use either spelling.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>IAM API</th>
+<th>stored (admin API)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>user</td>
+<td><code>arn:aws:iam::acme:user/team/alice</code></td>
+<td><code>arn:objectio:iam::acme:user/team/alice</code></td>
+</tr>
+<tr>
+<td>system user</td>
+<td><code>arn:aws:iam:::user/ops</code></td>
+<td><code>arn:objectio:iam::user/ops</code></td>
+</tr>
+<tr>
+<td>group</td>
+<td><code>arn:aws:iam::acme:group/devs</code></td>
+<td><code>arn:obio:iam::acme:group/devs</code></td>
+</tr>
+<tr>
+<td>role</td>
+<td><code>arn:aws:iam::acme:role/apps/ci</code></td>
+<td><code>arn:obio:iam::acme:role/apps/ci</code></td>
+</tr>
+<tr>
+<td>policy</td>
+<td><code>arn:aws:iam::acme:policy/readers</code></td>
+<td><code>acme/readers</code></td>
+</tr>
+<tr>
+<td>a shared system policy</td>
+<td><code>arn:aws:iam:::policy/readonly</code></td>
+<td><code>readonly</code></td>
+</tr>
+<tr>
+<td>AWS managed policy</td>
+<td><code>arn:aws:iam::aws:policy/IAMReadOnlyAccess</code></td>
+<td><code>aws:IAMReadOnlyAccess</code></td>
+</tr>
+<tr>
+<td>a role's session</td>
+<td><code>arn:aws:sts::acme:assumed-role/ci/build-42</code></td>
+<td><code>arn:obio:sts::acme:assumed-role/ci/build-42</code></td>
+</tr>
+</tbody>
+</table>
+<p>In policies, <code>arn:aws:</code>, <code>arn:obio:</code> and <code>arn:objectio:</code> ARNs are the same
+ARN, and an empty account and <code>objectio</code> both name the system scope.</p>
+<h3 id="actions">Actions<a class="headerlink" href="#actions" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Actions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Users</td>
+<td><code>CreateUser</code>, <code>GetUser</code>, <code>ListUsers</code>, <code>UpdateUser</code> (rename, move), <code>DeleteUser</code></td>
+</tr>
+<tr>
+<td>Access keys</td>
+<td><code>CreateAccessKey</code>, <code>ListAccessKeys</code>, <code>UpdateAccessKey</code>, <code>DeleteAccessKey</code></td>
+</tr>
+<tr>
+<td>Groups</td>
+<td><code>CreateGroup</code>, <code>GetGroup</code>, <code>ListGroups</code>, <code>UpdateGroup</code> (rename, move), <code>DeleteGroup</code>, <code>AddUserToGroup</code>, <code>RemoveUserFromGroup</code>, <code>ListGroupsForUser</code></td>
+</tr>
+<tr>
+<td>Managed policies</td>
+<td><code>CreatePolicy</code>, <code>GetPolicy</code>, <code>GetPolicyVersion</code>, <code>ListPolicyVersions</code>, <code>ListPolicies</code>, <code>DeletePolicy</code></td>
+</tr>
+<tr>
+<td>Attachments</td>
+<td><code>Attach</code>/<code>Detach</code>/<code>ListAttached</code> <code>UserPolicies</code>, <code>GroupPolicies</code>, <code>RolePolicies</code></td>
+</tr>
+<tr>
+<td>Inline policies</td>
+<td><code>Put</code>/<code>Get</code>/<code>List</code>/<code>Delete</code> <code>UserPolicy</code>, <code>GroupPolicy</code>, <code>RolePolicy</code></td>
+</tr>
+<tr>
+<td>Roles</td>
+<td><code>CreateRole</code>, <code>GetRole</code>, <code>ListRoles</code>, <code>UpdateRole</code>, <code>UpdateAssumeRolePolicy</code>, <code>DeleteRole</code></td>
+</tr>
+<tr>
+<td>Account</td>
+<td><code>GetAccountSummary</code>, <code>ListOpenIDConnectProviders</code></td>
+</tr>
+<tr>
+<td>STS</td>
+<td><code>GetCallerIdentity</code>, <code>GetSessionToken</code>, <code>AssumeRole</code> (and <code>AssumeRoleWithWebIdentity</code>, unsigned)</td>
+</tr>
+</tbody>
+</table>
+<p>Lists page with <code>Marker</code> and <code>MaxItems</code> and filter with <code>PathPrefix</code>; they
+sort by name, ignoring case.</p>
+<p>As in IAM: names are case-insensitive; deleting a user with access keys
+or policies, a group with members or policies, or a role with policies is
+a <code>DeleteConflict</code>; inline policies are at most 2048 (user), 5120 (group)
+or 10240 (role) characters, managed ones 6144, whitespace aside.</p>
+<h3 id="sts">STS<a class="headerlink" href="#sts" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong><code>AssumeRole</code></strong>: the role's trust policy decides, with the caller as
+  principal (its ARN, and for a user its id too: <code>…:user/&lt;user_id&gt;</code>).
+  Within a tenant that is enough. A caller from another tenant must be
+  named by the trust policy (a grant to <code>*</code> stays in the role's tenant) and
+  its own policies must allow <code>sts:AssumeRole</code> on the role, as IAM's
+  cross-account rule has it; a trust policy naming an account's root
+  (<code>arn:aws:iam::acme:root</code>) lets in that account's users whose own
+  policies allow it. The session acts as the role: its policies (attached
+  and inline), its tenant. 15 minutes to the role's <code>MaxSessionDuration</code>
+  (default 1 hour); a role's session assuming another gets at most 1 hour.
+  Session policies (<code>Policy</code>, <code>PolicyArns</code>) are refused.</li>
+<li><strong><code>GetSessionToken</code></strong>: a user's own access key gets temporary keys that act
+  as the user (its policies, groups, tenant), for 15 minutes to 36 hours
+  (default 12). Requests with them carry <code>sts:authentication</code> = <code>true</code> for
+  policy conditions. Suspending the user stops them within 15 seconds.</li>
+<li><strong><code>GetCallerIdentity</code></strong>: who the credentials are: user, root, or
+  <code>&lt;RoleId&gt;:&lt;session&gt;</code> for a role's session.</li>
+</ul>
+<p>The credentials work against S3 at once, on every gateway.</p>
+<h3 id="not-supported">Not supported<a class="headerlink" href="#not-supported" title="Permanent link">&para;</a></h3>
+<ul>
+<li>OIDC provider management (<code>CreateOpenIDConnectProvider</code>, …):
+  <a href="#identity-providers-oidc">identity providers</a> are configured through
+  the admin API; <code>ListOpenIDConnectProviders</code> lists those the account
+  trusts.</li>
+<li>Policy versions beyond one: a policy has one version, <code>v1</code>
+  (<code>CreatePolicyVersion</code> isn't supported; change a policy through the
+  admin API's <code>PUT /_admin/policies/{name}</code>).</li>
+<li>Login profiles, MFA, signing certificates, SSH keys, service-specific
+  credentials, tags, permission boundaries, instance profiles,
+  <code>GetFederationToken</code>, <code>SimulatePrincipalPolicy</code>.</li>
+<li>IAM quotas: none are enforced. <code>GetAccountSummary</code> reports the counts,
+  and AWS's default quotas for clients that read them.</li>
+<li><code>DeletePolicy</code> detaches the policy everywhere rather than refusing while
+  it is attached.</li>
+<li><code>ListBuckets</code> is never refused for lack of a grant: it lists the buckets
+  the caller owns (AWS refuses a user no policy allows
+  <code>s3:ListAllMyBuckets</code>). An explicit Deny of <code>s3:ListAllMyBuckets</code>
+  refuses it.</li>
+</ul>
+<h3 id="upgrading">Upgrading<a class="headerlink" href="#upgrading" title="Permanent link">&para;</a></h3>
+<p>Paths, descriptions of policies, group renames and inline policies are
+format level 3 (roles and policies created before it get ids derived from
+their ARN and creation time). On a cluster upgraded from level 2 they are
+refused (400 <code>InvalidInput</code>, "finalize the upgrade first") until <code>obioctl
+upgrade finalize</code>; the rest of the IAM API works before that.</p>
 <h2 id="session-and-token-signing">Session and token signing<a class="headerlink" href="#session-and-token-signing" title="Permanent link">&para;</a></h2>
 <p>Temporary credentials, console sessions and listing continuation tokens are
 signed with keys derived from a <strong>cluster secret</strong>. Meta creates the secret

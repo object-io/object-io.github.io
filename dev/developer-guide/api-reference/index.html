@@ -580,10 +580,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#sts" class="md-nav__link">
+  <a href="#iam-and-sts" class="md-nav__link">
     <span class="md-ellipsis">
       
-        STS
+        IAM and STS
       
     </span>
   </a>
@@ -2448,10 +2448,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#sts" class="md-nav__link">
+  <a href="#iam-and-sts" class="md-nav__link">
     <span class="md-ellipsis">
       
-        STS
+        IAM and STS
       
     </span>
   </a>
@@ -2731,7 +2731,7 @@ curl<span class="w"> </span>http://localhost:9000/my-bucket/hello.txt
 </tbody>
 </table>
 <p>See <a href="../../operations-guide/administration/iceberg-api/">Iceberg REST Catalog</a> for the complete reference.</p>
-<h3 id="sts">STS<a class="headerlink" href="#sts" title="Permanent link">&para;</a></h3>
+<h3 id="iam-and-sts">IAM and STS<a class="headerlink" href="#iam-and-sts" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
@@ -2742,14 +2742,25 @@ curl<span class="w"> </span>http://localhost:9000/my-bucket/hello.txt
 </thead>
 <tbody>
 <tr>
-<td>AssumeRoleWithWebIdentity</td>
+<td>IAM (<code>CreateUser</code>, <code>PutUserPolicy</code>, <code>CreateRole</code>, …)</td>
+<td>POST, signed for <code>iam</code>, form body</td>
+<td><code>/</code></td>
+</tr>
+<tr>
+<td>STS <code>AssumeRole</code>, <code>GetSessionToken</code>, <code>GetCallerIdentity</code></td>
+<td>POST, signed for <code>sts</code>, form body</td>
+<td><code>/</code></td>
+</tr>
+<tr>
+<td>STS <code>AssumeRoleWithWebIdentity</code></td>
 <td>POST (unsigned, form body)</td>
 <td><code>/</code></td>
 </tr>
 </tbody>
 </table>
-<p>AWS STS wire format on the S3 endpoint; point an AWS SDK's STS client at
-it. See <a href="../../operations-guide/administration/iam/#temporary-credentials-from-an-oidc-token-sts">STS</a>.</p>
+<p>The AWS IAM and STS wire formats on the S3 endpoint: point an AWS SDK's or
+the AWS CLI's <code>iam</code> and <code>sts</code> clients at it. See
+<a href="../../operations-guide/administration/iam/#the-aws-iam-and-sts-apis">the IAM and STS APIs</a>.</p>
 <h3 id="admin-api-_admin">Admin API (<code>/_admin/*</code>)<a class="headerlink" href="#admin-api-_admin" title="Permanent link">&para;</a></h3>
 <p>SigV4-signed JSON. The system admin uses all of it; a tenant admin the
 tenant-scoped parts for its own tenant. The <a href="../sdk/">management SDKs</a> wrap

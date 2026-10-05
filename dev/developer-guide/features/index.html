@@ -2448,6 +2448,11 @@ deep-dive doc with the full wire format, semantics, and trade-offs.</p>
 </ul>
 <h3 id="identity-public-access-and-where-requests-come-from">Identity, public access and where requests come from<a class="headerlink" href="#identity-public-access-and-where-requests-come-from" title="Permanent link">&para;</a></h3>
 <ul>
+<li><strong>The AWS IAM and STS APIs</strong> (<code>aws iam</code>, <code>aws sts</code>, boto3, Terraform):
+  users, keys, groups, managed and inline policies, roles; <code>AssumeRole</code>,
+  <code>GetSessionToken</code>, <code>GetCallerIdentity</code>. A tenant is an account, its
+  admins its root.
+  <a href="../../operations-guide/administration/iam/#the-aws-iam-and-sts-apis">IAM</a></li>
 <li><strong>STS <code>AssumeRoleWithWebIdentity</code></strong> with per-scope identity providers:
   the operator's OIDC provider for system roles, each tenant's own for its
   roles. <a href="../../operations-guide/administration/iam/#temporary-credentials-from-an-oidc-token-sts">IAM</a></li>

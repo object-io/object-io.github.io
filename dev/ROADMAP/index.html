@@ -2673,7 +2673,7 @@ is on stable storage; nothing trades durability for speed.</p>
 <tr>
 <td><strong>Now</strong></td>
 <td>S3 + core</td>
-<td>Release-candidate gates: the 48-hour soak (B2) is running; IAM API (A15) is in review; meta recovery after a power cut (B25) and S3 Select (A16) next</td>
+<td>Release-candidate gates: the 48-hour soak (B2) is running; meta recovery after a power cut (B25) and S3 Select (A16) next</td>
 </tr>
 <tr>
 <td><strong>Next</strong></td>
@@ -2949,8 +2949,8 @@ run on Linux amd64 and arm64; the latest numbers are there.</p>
 </tr>
 <tr>
 <td>IAM API (<code>iam:*</code> calls)</td>
-<td>⬜</td>
-<td>A15: the AWS IAM query API over our users, groups, policies and keys; STS calls that need it follow</td>
+<td>✅</td>
+<td>A15: the AWS IAM query API over our users, groups, policies, keys and roles; STS AssumeRole, GetSessionToken, GetCallerIdentity</td>
 </tr>
 <tr>
 <td>Static website hosting, inventory, analytics, accelerate, torrent</td>
@@ -3500,8 +3500,8 @@ when the code is written.</p>
 <tr>
 <td>A15</td>
 <td>IAM API</td>
-<td>Users, groups, user/group policies, access keys and roles through the AWS IAM query API (aws-cli <code>iam</code>, boto3), tenant-scoped, the same records as the admin API; STS AssumeRole, GetSessionToken, GetCallerIdentity on top; the ceph s3-tests IAM and STS tests pass</td>
-<td>🔨</td>
+<td>Users, groups, user/group policies, access keys and roles through the AWS IAM query API (aws-cli <code>iam</code>, boto3), tenant-scoped, the same records as the admin API; STS AssumeRole, GetSessionToken, GetCallerIdentity on top; the ceph s3-tests IAM and STS tests pass or fail only for documented reasons (IAM 59/90: tenant boundary, ACLs, OIDC provider management, RGW tenant-less users; STS 4/36: web identity needs an IdP in the run, system-scope ARNs)</td>
+<td>✅ #160</td>
 </tr>
 <tr>
 <td>A16</td>
@@ -3640,7 +3640,7 @@ when the code is written.</p>
 <td>B24</td>
 <td>Repair throughput</td>
 <td>Rebuilding is parallel across objects and OSDs, bounded so client I/O keeps priority: a replaced 7.68 TB drive of 1 MiB objects rebuilt in under 8 hours on the lab host (today about 50 shards/s, so about 40 hours); the chaos disk-pull fault restores full redundancy within 15 minutes</td>
-<td>⬜</td>
+<td>🔨 #161 (10 → 67 shards/s)</td>
 </tr>
 <tr>
 <td>B25</td>
