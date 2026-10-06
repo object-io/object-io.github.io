@@ -927,6 +927,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../developer-guide/performance/profiling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Profiling (B28)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -3633,7 +3661,7 @@ when the code is written.</p>
 <td>B4</td>
 <td>Performance baseline</td>
 <td>Published numbers (<a href="../developer-guide/performance/">lab host</a>) (throughput, p99, small objects) on a lab host, then multi-host on NVMe cloud VMs, on drives with and without power-loss protection; regression check in CI</td>
-<td>🔨</td>
+<td>🔨 lab host and six Azure VMs (Arm, local NVMe) published; PLP drives and the CI check to do</td>
 </tr>
 <tr>
 <td>B5</td>
@@ -3657,7 +3685,7 @@ when the code is written.</p>
 <td>B21</td>
 <td>Small-object path (design)</td>
 <td>A 4 KiB or 64 KiB GET takes fewer internal round trips (metadata from a read quorum, not every copy; placement without a meta call), and a small object's shards travel with its metadata (one round, as RustFS); on the B4 lab host, small GETs within 1.5× of RustFS and 64 KiB PUTs level with it; chaos (A6) still passes</td>
-<td>🔨 built (objectio#170, #173, #176); the RustFS comparison on the B4 host is still to run</td>
+<td>✅ built (objectio#170, #173, #176); measured on six cloud VMs, not the B4 lab host: small GETs 1.5–1.8× RustFS, 64 KiB PUTs 4.3× (<a href="../developer-guide/performance/">performance</a>)</td>
 </tr>
 <tr>
 <td>B22</td>
@@ -3699,7 +3727,7 @@ when the code is written.</p>
 <td>B28</td>
 <td>Profiling pass on the hot paths</td>
 <td>On dedicated cloud machines (objectio-infra): on-CPU flamegraphs, off-CPU time (fsync, locks), allocations, copies and syscalls per operation, hardware counters, for 64 KiB and 4 MiB PUT and GET, a drive's rebuild and listings; one report per path, each finding a fix or a row</td>
-<td>⬜</td>
+<td>🔨 pass 1 (64 KiB PUT): two fixes, objectio#181, #182 (<a href="../developer-guide/performance/profiling/">profiling</a>)</td>
 </tr>
 <tr>
 <td>B6</td>

@@ -14,7 +14,7 @@
         <link rel="prev" href="../chaos/">
       
       
-        <link rel="next" href="../s3-compatibility/">
+        <link rel="next" href="profiling/">
       
       
         
@@ -707,15 +707,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#single-host-2026-10-04" class="md-nav__link">
+  <a href="#six-cloud-vms-2026-10-07" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Single host: 2026-10-04
+        Six cloud VMs: 2026-10-07
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Single host: 2026-10-04">
+    <nav class="md-nav" aria-label="Six cloud VMs: 2026-10-07">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -745,10 +745,77 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#single-host-2026-10-04" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Single host: 2026-10-04
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Single host: 2026-10-04">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#results_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Results
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-it-shows_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What it shows
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="profiling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Profiling (B28)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -2263,15 +2330,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#single-host-2026-10-04" class="md-nav__link">
+  <a href="#six-cloud-vms-2026-10-07" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Single host: 2026-10-04
+        Six cloud VMs: 2026-10-07
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Single host: 2026-10-04">
+    <nav class="md-nav" aria-label="Six cloud VMs: 2026-10-07">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -2287,6 +2354,45 @@
         
           <li class="md-nav__item">
   <a href="#what-it-shows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What it shows
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#single-host-2026-10-04" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Single host: 2026-10-04
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Single host: 2026-10-04">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#results_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Results
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-it-shows_1" class="md-nav__link">
     <span class="md-ellipsis">
       
         What it shows
@@ -2322,10 +2428,121 @@
 
 
 <h1 id="performance-b4">Performance (B4)<a class="headerlink" href="#performance-b4" title="Permanent link">&para;</a></h1>
-<p>ObjectIO next to RustFS and SeaweedFS, measured with the same client on the
-same disk. This page has the single-host baseline. Multi-host numbers on
-NVMe cloud VMs, and a regression check in CI, come next (B4 in the
-roadmap).</p>
+<p>ObjectIO next to RustFS (and SeaweedFS on one host), measured with the same
+client on the same machines and drives: a single-host baseline, and six
+cloud VMs with local NVMe. A regression check in CI comes next (B4 in the
+roadmap). Where the CPU goes is in <a href="profiling/">profiling</a> (B28).</p>
+<h2 id="six-cloud-vms-2026-10-07">Six cloud VMs: 2026-10-07<a class="headerlink" href="#six-cloud-vms-2026-10-07" title="Permanent link">&para;</a></h2>
+<p><strong>Machines:</strong> six Azure <code>Standard_D4pds_v6</code> in Central India, made with
+<code>objectio-infra</code> (<code>./infra up azure</code>): 4 Arm vCPUs (Cobalt 100), 16 GB,
+one local NVMe drive (220 GB) each, accelerated networking, one private
+network. Ubuntu 24.04.</p>
+<p><strong>Systems,</strong> each on the same six drives in turn (the drives erased in
+between):</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Version</th>
+<th>Layout</th>
+<th>Durability of an acknowledged PUT</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ObjectIO</td>
+<td><code>main</code> of 2026-10-07 with objectio#181 and #182, release build, aarch64 (erasure coding by rust-simd: ISA-L is x86 only)</td>
+<td>meta on nodes 1–3, an OSD and a gateway on every node, 4+2. Each drive: 16 GiB for meta, 32 GiB for the OSD's metadata, the rest raw for the OSD</td>
+<td>shards and metadata at write quorum, fsynced</td>
+</tr>
+<tr>
+<td>RustFS</td>
+<td>1.0.1, aarch64</td>
+<td>one server per node, one pool of six drives, XFS, <code>EC:2</code> (4+2; checked: a 4 MiB object puts 1,048,704 bytes on each drive)</td>
+<td>erasure-coded at write quorum, fsynced</td>
+</tr>
+</tbody>
+</table>
+<p>Meta shares each drive with the OSD here (these VMs have one fast drive);
+the guide gives it a drive of its own, and the p99 of PUTs pays for it
+(see below).</p>
+<p><strong>Client:</strong> warp 1.1.4 on node 1, spreading requests over all six nodes'
+S3 ports, 60 s per cell, 64 concurrent requests (32 for 4 MiB). The
+scripts are <code>objectio-infra</code>'s <code>deploy</code> and <code>bench</code>.</p>
+<h3 id="results">Results<a class="headerlink" href="#results" title="Permanent link">&para;</a></h3>
+<p>Throughput (median, p99 latency).</p>
+<table>
+<thead>
+<tr>
+<th>Cell</th>
+<th>ObjectIO</th>
+<th>RustFS</th>
+<th>ObjectIO ÷ RustFS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PUT 4 KiB</td>
+<td>1,921 obj/s (29 ms, 80 ms)</td>
+<td>291–382 obj/s (148–203 ms, 0.8–1.1 s)</td>
+<td>5–6.6</td>
+</tr>
+<tr>
+<td>PUT 64 KiB</td>
+<td>1,496 obj/s (33 ms, 341 ms)</td>
+<td>348 obj/s (139 ms, 812 ms)</td>
+<td>4.3</td>
+</tr>
+<tr>
+<td>PUT 4 MiB</td>
+<td>966 MiB/s (125 ms, 383 ms)</td>
+<td>787 MiB/s (150 ms, 303 ms)</td>
+<td>1.2</td>
+</tr>
+<tr>
+<td>GET 4 KiB</td>
+<td>8,316 obj/s (8.4 ms, 26 ms)</td>
+<td>4,532 obj/s (13.3 ms, 50 ms)</td>
+<td>1.8</td>
+</tr>
+<tr>
+<td>GET 64 KiB</td>
+<td>6,334 obj/s (10.9 ms, 29 ms)</td>
+<td>4,205 obj/s (14.0 ms, 54 ms)</td>
+<td>1.5</td>
+</tr>
+<tr>
+<td>GET 4 MiB</td>
+<td>2,759 MiB/s (43 ms, 115 ms)</td>
+<td>2,544 MiB/s (45 ms, 125 ms)</td>
+<td>1.1</td>
+</tr>
+</tbody>
+</table>
+<h3 id="what-it-shows">What it shows<a class="headerlink" href="#what-it-shows" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Small objects: ObjectIO is ahead, on PUT by 4–6 times.</strong> A small PUT
+  is one round trip to the OSDs and one flush on each (B21): the shards go
+  with the object's metadata, into the OSDs' metadata logs, which batch
+  concurrent writes into one fsync.</li>
+<li><strong>Small GETs: 1.5–1.8 times RustFS,</strong> where the single host had RustFS
+  3–4.5 times ahead: the GET is one round trip (B21), and the single
+  host's loopback RPC costs are gone.</li>
+<li><strong>Large objects: within 1.2 times, ObjectIO ahead.</strong> Both are bound by
+  the network and the drives.</li>
+<li><strong>The p99 of small PUTs</strong> (341 ms at 64 KiB) is meta sharing its drive
+  with the OSD: an OSD's metadata checkpoint holds back meta's syncs (see
+  the hardware guide). The median is 33 ms.</li>
+</ul>
+<p>Found along the way and fixed (details in <a href="profiling/">profiling</a>):</p>
+<ul>
+<li>A regex compiled for every request's <code>Authorization</code> header: 27% of a
+  gateway's CPU (objectio#181).</li>
+<li>Every gateway's poll made every OSD scan all its object metadata: 20%
+  of an OSD's CPU, and growing with the objects held (objectio#182).</li>
+<li>Meta killed in its first seconds could never start again; an OSD given
+  a missing <code>/dev</code> path ran on a file in memory (objectio#183).</li>
+</ul>
 <h2 id="single-host-2026-10-04">Single host: 2026-10-04<a class="headerlink" href="#single-host-2026-10-04" title="Permanent link">&para;</a></h2>
 <p><strong>Host:</strong> one lab machine. AMD Ryzen 9 7945HX (16 cores, 32 threads),
 64 GB RAM, one consumer NVMe (Corsair MP600 Elite: volatile write cache,
@@ -2371,7 +2588,7 @@ trade-off buys, not a like-for-like result.</p>
 <p><strong>Client:</strong> warp 1.1.4. For each object size, PUT then GET, 32
 concurrent clients, 30 s per cell. The script is
 <code>scripts/bench/baseline.sh</code> in the code repo.</p>
-<h3 id="results">Results<a class="headerlink" href="#results" title="Permanent link">&para;</a></h3>
+<h3 id="results_1">Results<a class="headerlink" href="#results_1" title="Permanent link">&para;</a></h3>
 <p>Throughput (p99 latency). ObjectIO and RustFS ran each cell up to 3 times;
 the range is shown where the runs differed by more than 10%.</p>
 <table>
@@ -2434,7 +2651,7 @@ the range is shown where the runs differed by more than 10%.</p>
 </tr>
 </tbody>
 </table>
-<h3 id="what-it-shows">What it shows<a class="headerlink" href="#what-it-shows" title="Permanent link">&para;</a></h3>
+<h3 id="what-it-shows_1">What it shows<a class="headerlink" href="#what-it-shows_1" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Durable PUTs are bound by the disk.</strong> ObjectIO and RustFS both fsync
   before they acknowledge, and both land in the hundreds of small PUTs a
