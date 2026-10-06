@@ -3690,6 +3690,18 @@ when the code is written.</p>
 <td>🔨</td>
 </tr>
 <tr>
+<td>B27</td>
+<td>OSD engines behind interfaces (design)</td>
+<td><code>ShardStore</code>, <code>MetaIndex</code> and <code>ShardTransport</code> extracted from the OSD's handlers with today's engines as their implementations (no behaviour change; e2e, crash and soak green); a conformance suite every implementation passes; one alternative (likely <code>MetaIndex</code> on RocksDB) passing it and measured against today's on identical machines</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>B28</td>
+<td>Profiling pass on the hot paths</td>
+<td>On dedicated cloud machines (objectio-infra): on-CPU flamegraphs, off-CPU time (fsync, locks), allocations, copies and syscalls per operation, hardware counters, for 64 KiB and 4 MiB PUT and GET, a drive's rebuild and listings; one report per path, each finding a fix or a row</td>
+<td>⬜</td>
+</tr>
+<tr>
 <td>B6</td>
 <td>Test what we ship (io levels)</td>
 <td>e2e and the soak run on the release features (io_uring, ISA-L)</td>
