@@ -3655,7 +3655,7 @@ when the code is written.</p>
 </tr>
 <tr>
 <td>B21</td>
-<td>Small-object path</td>
+<td>Small-object path (design)</td>
 <td>A 4 KiB or 64 KiB GET takes fewer internal round trips (metadata from a read quorum, not every copy; placement without a meta call), and a small object's shards travel with its metadata (one round, as RustFS); on the B4 lab host, small GETs within 1.5× of RustFS and 64 KiB PUTs level with it; chaos (A6) still passes</td>
 <td>🔨 design, after B26</td>
 </tr>
