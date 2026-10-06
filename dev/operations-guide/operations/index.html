@@ -2830,7 +2830,7 @@ obioctl<span class="w"> </span>node<span class="w"> </span>list
 </tr>
 <tr>
 <td>Check repair</td>
-<td><code>obioctl metrics query 'objectio_objects_at_risk'</code> (repair is continuous)</td>
+<td><code>obioctl metrics query 'objectio_objects_at_risk'</code> (repair is continuous; each OSD counts at most once a minute, at once when a node goes up or down)</td>
 </tr>
 <tr>
 <td>Drain OSD</td>
