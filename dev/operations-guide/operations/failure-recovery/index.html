@@ -3028,9 +3028,18 @@ reclaimed, and nothing stale can come back with it). Replace the hardware,
 start the OSD on the new disk, and set it back in:</p>
 <div class="highlight"><pre><span></span><code>obioctl<span class="w"> </span>osd<span class="w"> </span>set-state<span class="w"> </span>&lt;osd-id&gt;<span class="w"> </span><span class="k">in</span>
 </code></pre></div>
-<p>For a disk that is already dead, set its OSD <code>out</code> straight away; repair
-rebuilds its shards from the others. Don't put a directly-<code>out</code> OSD back in
-with old data on it: wipe the disk first.</p>
+<p>For a disk or host that is gone for good, set its OSD <code>out</code> straight
+away:</p>
+<div class="highlight"><pre><span></span><code>obioctl<span class="w"> </span>osd<span class="w"> </span>set-state<span class="w"> </span>&lt;osd-id&gt;<span class="w"> </span>out
+obioctl<span class="w"> </span>cluster<span class="w"> </span>drain-status<span class="w">        </span><span class="c1"># progress of the evacuation</span>
+</code></pre></div>
+<p>Everything it held is rebuilt elsewhere, whether or not it still answers:
+each shard from the rest of its stripe (or copied, if the OSD can still
+serve it), and each object's metadata copy, inline objects included, on
+the OSD that takes its place. When nothing refers to it any more it is
+purged. A drive that comes back, or its replacement, joins as a new OSD,
+or is set back <code>in</code> once the purge is done; don't put a directly-<code>out</code>
+OSD back in with old data on it.</p>
 <hr />
 <h2 id="full-disks">Full disks<a class="headerlink" href="#full-disks" title="Permanent link">&para;</a></h2>
 <p>Client writes may fill each OSD disk up to its <strong>full ratio</strong>

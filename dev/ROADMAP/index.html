@@ -3553,7 +3553,7 @@ when the code is written.</p>
 <tr>
 <td>A9</td>
 <td>Release candidate</td>
-<td>A1–A8c, A8, A15, A16, A12, B2–B5, B22, B23, B25 green on one commit</td>
+<td>A1–A8c, A8, A15, A16, A12, B2–B5, B22, B23, B25, B26 green on one commit</td>
 <td>⬜</td>
 </tr>
 <tr>
@@ -3657,7 +3657,7 @@ when the code is written.</p>
 <td>B21</td>
 <td>Small-object path</td>
 <td>A 4 KiB or 64 KiB GET takes fewer internal round trips (metadata from a read quorum, not every copy; placement without a meta call), and a small object's shards travel with its metadata (one round, as RustFS); on the B4 lab host, small GETs within 1.5× of RustFS and 64 KiB PUTs level with it; chaos (A6) still passes</td>
-<td>🔨 design</td>
+<td>🔨 design, after B26</td>
 </tr>
 <tr>
 <td>B22</td>
@@ -3682,6 +3682,12 @@ when the code is written.</p>
 <td>Meta back in seconds after a power cut</td>
 <td>A meta node reopens its database without walking all of it: today redb rebuilds its allocator state after an unclean shutdown, 5 min for a 1 GB <code>meta.redb</code> on a soak VM (found by B2), growing with the cluster's object count, and a site-wide outage takes every meta node at once. redb's quick repair makes each commit 3.4× slower there, so the fix is in how meta commits (batched applies, or the Raft log apart from the state machine). Exit test: a meta node powered off under load with a 10 GB database answers within 30 s of boot</td>
 <td>🔨 design</td>
+</tr>
+<tr>
+<td>B26</td>
+<td>An OSD lost for good is re-protected</td>
+<td>A drive or host gone for good (its metadata with it, as in production, where an OSD's state is on its own drive), set <code>out</code> as the runbook says: every shard it held is rebuilt from the others onto the OSDs that replace it, every object whose placement included it (inline objects too) gets its metadata copy back there, and repair still visits the objects it owned. Found 2026-10-06; fixed in objectio#168 (e2e test in); the chaos fault is still to add: repair skips shards whose OSD doesn't answer, drain needs the OSD to answer, and metadata copies are never re-created. Exit test: e2e, a whole drive lost and set out, then every shard and metadata copy restored and the objects survive two more losses; chaos, a disk pull that loses the OSD's metadata</td>
+<td>🔨</td>
 </tr>
 <tr>
 <td>B6</td>
