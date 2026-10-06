@@ -2833,6 +2833,14 @@ the partition. The calculator gives the partition size.</p>
   host, on NVMe with PLP. Up to a few hundred million objects they can
   share three of the storage hosts; past that, give them servers of their
   own.</li>
+<li><strong>Meta gets a drive of its own</strong> (not an OSD's drive, not the boot
+  disk), even on a shared host. Every PUT waits for meta's commit, and an
+  OSD's metadata checkpoint writes its index in bursts that hold back
+  other syncs on the same drive. Measured with meta and six OSDs on one
+  NVMe: meta's checkpoints took 0.25–1 s whenever an OSD checkpointed, and
+  every PUT in flight waited (64 KiB PUTs: p99 up to 580 ms against a 38 ms
+  median). With meta on its own drive, none took 0.1 s. A small drive
+  does: meta needs 2.2 × its database (above).</li>
 <li><strong>Gateways:</strong> stateless, behind an L4 load balancer. <strong>Converged</strong> (one
   on every storage host) spreads the CPU and network evenly and needs no
   extra servers; <strong>dedicated</strong> gateway servers make sense when the
