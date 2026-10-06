@@ -2415,9 +2415,8 @@ the range is shown where the runs differed by more than 10%.</p>
   erasure-coded piece of a small object inside that drive's metadata file
   (<code>xl.meta</code>; seen here for 64 KiB and 256 KiB objects), so a small PUT is
   one fsync round. ObjectIO inlines only objects up to 4 KiB
-  (<code>--inline-max-size</code>), whole, on every copy, and the record is held in
-  the OSD's memory. A 64 KiB object takes two rounds: shards, then
-  metadata.</li>
+  (<code>--inline-max-size</code>), whole, on every copy. A 64 KiB object takes two
+  rounds: shards, then metadata (B21 makes it one).</li>
 <li><strong>Small GETs: RustFS is 3–4.5 times faster.</strong> RustFS reads its own
   drives. ObjectIO's aio is a cluster in one process: a GET makes one RPC
   to meta for the placement and asks all six OSDs for the object's
