@@ -3011,15 +3011,19 @@
 └─────────────┘                └─────────────────┘
 </code></pre></div>
 <h3 id="initial-admin-user">Initial Admin User<a class="headerlink" href="#initial-admin-user" title="Permanent link">&para;</a></h3>
-<p>On first startup, the metadata service creates a default admin user:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Admin credentials are logged on meta service startup:</span>
-INFO<span class="w"> </span>objectio_meta:<span class="w"> </span><span class="o">============================================</span>
-INFO<span class="w"> </span>objectio_meta:<span class="w"> </span>Admin<span class="w"> </span>credentials<span class="w"> </span><span class="o">(</span>save<span class="w"> </span>these!<span class="o">)</span>:
-INFO<span class="w"> </span>objectio_meta:<span class="w">   </span>Access<span class="w"> </span>Key<span class="w"> </span>ID:<span class="w">     </span>AKIA...
-INFO<span class="w"> </span>objectio_meta:<span class="w">   </span>Secret<span class="w"> </span>Access<span class="w"> </span>Key:<span class="w"> </span>wJalr...
-INFO<span class="w"> </span>objectio_meta:<span class="w"> </span><span class="o">============================================</span>
+<p>On first startup, the metadata service creates a default admin user and
+writes its credentials to <code>admin-creds.env</code> in its data directory,
+readable by its owner only. Meta logs the access key and where the file
+is, never the secret:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># A host install</span>
+sudo<span class="w"> </span>cat<span class="w"> </span>/var/lib/objectio/meta/admin-creds.env
+<span class="c1"># Kubernetes</span>
+kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>&lt;release&gt;-meta-0<span class="w"> </span>--<span class="w"> </span>cat<span class="w"> </span>/var/lib/objectio/meta/admin-creds.env
+<span class="c1"># Docker</span>
+docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>objectio-meta<span class="w"> </span>cat<span class="w"> </span>/var/lib/objectio/meta/admin-creds.env
 </code></pre></div>
-<p><strong>Important</strong>: Save these credentials! They are only shown once at startup.</p>
+<p>The file holds <code>AWS_ACCESS_KEY_ID</code> and <code>AWS_SECRET_ACCESS_KEY</code> as shell
+exports. Create named admins of your own, then delete it.</p>
 <hr />
 <h2 id="aws-signature-version-4">AWS Signature Version 4<a class="headerlink" href="#aws-signature-version-4" title="Permanent link">&para;</a></h2>
 <p>ObjectIO implements AWS SigV4, the standard authentication method for AWS services.</p>
