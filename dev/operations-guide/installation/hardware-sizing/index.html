@@ -2812,8 +2812,11 @@ plan <strong>2.2 × the database</strong> on each meta node's disk.</p>
 <p>Each drive's metadata partition must hold its share of copies:</p>
 <div class="highlight"><pre><span></span><code>index per drive ≈ objects × (k+m) ÷ drives × 1.5 KB
 </code></pre></div>
-<p>At a 1 MiB average object that is under 1% of the drive; at 64 KiB it is
-about 9%. The calculator gives the partition size.</p>
+<p>An object whose shards are 16 KiB or less (64 KiB or less with 4+2)
+keeps them in the index too: add the object's size ÷ k to each copy's
+1.5 KB. At a 1 MiB average object the index is under 1% of the drive; at
+64 KiB, where the shards live there, the whole drive's worth of data is in
+the partition. The calculator gives the partition size.</p>
 <h3 id="network">Network<a class="headerlink" href="#network" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Two ports per host</strong>, bonded or one per switch, to two top-of-rack

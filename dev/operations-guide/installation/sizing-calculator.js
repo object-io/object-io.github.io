@@ -10,6 +10,7 @@
   const META_BYTES_PER_OBJECT = 750; // measured: meta.redb per object
   const META_DISK_FACTOR = 2.2; // database + Raft log + one snapshot
   const INDEX_BYTES_PER_COPY = 1536; // measured: OSD index per object copy
+  const SMALL_SHARD_MAX = 16384; // --small-shard-max: smaller shards live in metadata
   const OSD_RAM_GB = 1.5; // per drive, default --meta-cache-mib
   const OS_RAM_GB = 8;
   const OSD_CORES_PER_DRIVE = 1; // estimate
@@ -159,7 +160,16 @@
           `${n} copies: the drives' metadata partitions hold them (below), not the data space.`,
       );
     }
-    const copyBytes = INDEX_BYTES_PER_COPY + (objBytes <= INLINE_MAX ? objBytes : 0);
+    // Shards of SMALL_SHARD_MAX or less live in the index too, one per copy.
+    const small = objBytes > INLINE_MAX && objBytes / k <= SMALL_SHARD_MAX;
+    if (small) {
+      notes.push(
+        `Objects of ${fmt((k * SMALL_SHARD_MAX) / 1024, 0)} KiB or less keep their shards in the drives' ` +
+          "metadata partitions, not in data blocks: the partitions hold them (below).",
+      );
+    }
+    const copyBytes =
+      INDEX_BYTES_PER_COPY + (objBytes <= INLINE_MAX ? objBytes : small ? objBytes / k : 0);
     const indexPerDrive = (objects * n * copyBytes) / drives;
     const partitionBytes = indexPerDrive * 1.5;
     const partitionPct = (100 * partitionBytes) / driveBytes;
