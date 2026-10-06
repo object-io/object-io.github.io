@@ -53,6 +53,8 @@
     
       <link rel="stylesheet" href="../../../assets/brand/brand.css">
     
+      <link rel="stylesheet" href="../../installation/sizing-calculator.css">
+    
     <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -1717,6 +1719,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../installation/hardware-sizing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hardware design and sizing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../installation/kubernetes/" class="md-nav__link">
         
   
@@ -2135,56 +2165,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Sizing">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#capacity" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Capacity
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#memory" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Memory
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#metadata-on-disk" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Metadata on disk
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#throughput" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Throughput
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -2478,56 +2458,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Sizing">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#capacity" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Capacity
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#memory" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Memory
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#metadata-on-disk" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Metadata on disk
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#throughput" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Throughput
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -2763,7 +2693,7 @@ can't check for you.</p>
 <tbody>
 <tr>
 <td><strong>Redundancy</strong></td>
-<td>Set an erasure code: <code>ec.k</code>/<code>ec.m</code> in the chart (its default is <code>k: 1, m: 0</code>, <strong>no redundancy</strong>), or <code>--ec-k</code>/<code>--ec-m</code>. 4+2 for 6–11 hosts, 8+4 from 12.</td>
+<td>Set an erasure code: <code>ec.k</code>/<code>ec.m</code> in the chart (its default is <code>k: 1, m: 0</code>, <strong>no redundancy</strong>), or <code>--ec-k</code>/<code>--ec-m</code>. 4+2 for 7–12 hosts, 8+4 from 13.</td>
 <td>With m = 0, one lost disk loses data.</td>
 </tr>
 <tr>
@@ -2814,68 +2744,19 @@ can't check for you.</p>
 </tbody>
 </table>
 <h2 id="sizing">Sizing<a class="headerlink" href="#sizing" title="Permanent link">&para;</a></h2>
-<h3 id="capacity">Capacity<a class="headerlink" href="#capacity" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>usable ≈ raw × k / (k + m) × 0.95 − one host's worth (for rebuilds)
-</code></pre></div>
+<p><a href="../../installation/hardware-sizing/">Hardware design and sizing</a> goes
+from a capacity and throughput requirement to a bill of quantities, with
+a calculator: hosts, drives, CPU, memory, network, meta and gateways. In
+short:</p>
 <ul>
-<li><strong>k/(k+m):</strong> 4+2 stores 1.5 bytes per byte (67% efficient), 8+4 the
-  same, 10+4 1.4.</li>
-<li><strong>0.95:</strong> an OSD refuses client writes past 95% of its disk
-  (<code>--full-ratio</code>) and keeps the rest for repair, drain and backfill.
-  Clients get 507 <code>StorageFull</code>.</li>
-<li><strong>One host's worth:</strong> when a host is lost for good, its shards are
-  rebuilt onto the others. Keep that much free, or a host loss fills the
-  cluster.</li>
+<li><strong>Capacity:</strong> usable ≈ raw × k/(k+m) × 0.95, less one host's worth for
+  rebuilds.</li>
+<li><strong>Memory:</strong> about 1.5 GB per OSD (one per drive), flat however many
+  objects it holds; 64 GB for a host of 18 drives.</li>
+<li><strong>Metadata:</strong> about 1.5 KB per object copy in each OSD's index, on a
+  partition of the same drive; about 750 bytes per object on each meta
+  node.</li>
 </ul>
-<p>Worked example: 8 hosts × 18 × 7.68 TB = 1,106 TB raw. 4+2:
-1,106 × 0.67 × 0.95 = 704 TB, less one host (88 TB) = about 616 TB usable.</p>
-<h3 id="memory">Memory<a class="headerlink" href="#memory" title="Permanent link">&para;</a></h3>
-<p>Since B22 an OSD's memory no longer depends on how many objects it holds:</p>
-<table>
-<thead>
-<tr>
-<th>Per OSD</th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Metadata index page cache</td>
-<td><code>--meta-cache-mib</code>, 1024 by default</td>
-</tr>
-<tr>
-<td>Memtables (changes not yet checkpointed)</td>
-<td>up to 2 × 64 MiB</td>
-</tr>
-<tr>
-<td>Shard I/O buffers and the rest</td>
-<td>about 200 MB</td>
-</tr>
-</tbody>
-</table>
-<p>Plan about <strong>1.5 GB per OSD</strong> with the default cache. Per host:
-18 OSDs × 1.5 GB = 27 GB, plus the gateway (2–4 GB) and the OS. <strong>64 GB
-per host</strong> leaves room. A smaller cache (<code>--meta-cache-mib 256</code>) cuts it
-to about 0.7 GB per OSD, at the cost of more metadata reads from disk for
-objects not read recently.</p>
-<p>Meta: plan 4–8 GB per node. Its index is in redb on disk, with a bounded
-cache.</p>
-<h3 id="metadata-on-disk">Metadata on disk<a class="headerlink" href="#metadata-on-disk" title="Permanent link">&para;</a></h3>
-<p>Each object keeps a metadata copy on each of its k + m OSDs, about 600
-bytes each, plus its shard location on each OSD holding a shard:</p>
-<div class="highlight"><pre><span></span><code>OSD metadata per host ≈ objects_on_host × 6 copies / hosts × ~700 B
-</code></pre></div>
-<p>For the example above at a 1 MiB average object: about 420 million copies
-per host, about 300 GB, roughly 16 GB per drive. That is why the state
-partition is about 2% of each drive.</p>
-<h3 id="throughput">Throughput<a class="headerlink" href="#throughput" title="Permanent link">&para;</a></h3>
-<p>The <a href="../../../developer-guide/performance/">performance page</a> has
-the lab baseline. What bounds it:
-- <strong>Small PUTs</strong> wait for fsyncs. A drive with power-loss protection makes
-  them cheap; one without doesn't.
-- <strong>Small GETs</strong> cost several internal calls each (B21 reduces them).
-- <strong>Large objects</strong> are bound by the network and by erasure coding: ISA-L
-  on x86_64.</p>
 <h2 id="alerts">Alerts<a class="headerlink" href="#alerts" title="Permanent link">&para;</a></h2>
 <p>The chart ships the rules in <code>deploy/helm/objectio/alerts/objectio-rules.yaml</code>:
 - its own Prometheus loads them when <code>monitoring.enabled</code> is set;
@@ -3208,6 +3089,8 @@ follower first.</p>
     
     
       <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../installation/sizing-calculator.js"></script>
       
     
   </body>

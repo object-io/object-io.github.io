@@ -8,13 +8,13 @@
       
       
       
-        <link rel="canonical" href="https://object-io.github.io/dev/operations-guide/installation/linux/">
+        <link rel="canonical" href="https://object-io.github.io/dev/operations-guide/installation/hardware-sizing/">
       
       
-        <link rel="prev" href="../kubernetes/">
+        <link rel="prev" href="../docker/">
       
       
-        <link rel="next" href="../macos/">
+        <link rel="next" href="../kubernetes/">
       
       
         
@@ -25,7 +25,7 @@
     
     
       
-        <title>Linux - ObjectIO</title>
+        <title>Hardware design and sizing - ObjectIO</title>
       
     
     
@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#linux" class="md-skip">
+        <a href="#hardware-design-and-sizing" class="md-skip">
           Skip to content
         </a>
       
@@ -119,7 +119,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Linux
+              Hardware design and sizing
             
           </span>
         </div>
@@ -1718,10 +1718,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../hardware-sizing/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hardware design and sizing
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1737,6 +1764,175 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#where-to-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where to start
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-rules-behind-the-numbers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The rules behind the numbers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The rules behind the numbers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#protection-and-hosts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Protection and hosts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#capacity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Capacity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#drives" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Drives
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#throughput" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Throughput
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CPU
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Memory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#objects-and-metadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objects and metadata
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Network
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#where-meta-and-the-gateways-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where meta and the gateways run
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#calculator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Calculator
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-isnt-in-the-calculator-yet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What isn't in the calculator yet
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1774,37 +1970,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Linux
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../linux/" class="md-nav__link">
         
   
   
@@ -1820,214 +1989,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#system-requirements" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        System requirements
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#1-release-binaries" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        1. Release binaries
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#2-bootstrapping-a-node-with-objectio-install" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2. Bootstrapping a node with objectio-install
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="2. Bootstrapping a node with objectio-install">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#create-the-service-user" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Create the service user
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#inspect-candidate-disks" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Inspect candidate disks
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#initialize-the-node" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Initialize the node
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#joining-an-existing-cluster" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Joining an existing cluster
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#what-gets-written" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        What gets written
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#3-build-from-source" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3. Build from source
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="3. Build from source">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#toolchain" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Toolchain
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#console-spa-prerequisites" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Console (SPA) prerequisites
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#build" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Build
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#run-the-test-suite" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Run the test suite
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#disk-preparation-production-checklist" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Disk preparation — production checklist
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#systemd-unit-reference" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        systemd unit reference
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#uninstall" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Uninstall
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -2412,10 +2373,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#system-requirements" class="md-nav__link">
+  <a href="#where-to-start" class="md-nav__link">
     <span class="md-ellipsis">
       
-        System requirements
+        Where to start
       
     </span>
   </a>
@@ -2423,33 +2384,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#1-release-binaries" class="md-nav__link">
+  <a href="#the-rules-behind-the-numbers" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. Release binaries
+        The rules behind the numbers
       
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#2-bootstrapping-a-node-with-objectio-install" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2. Bootstrapping a node with objectio-install
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="2. Bootstrapping a node with objectio-install">
+    <nav class="md-nav" aria-label="The rules behind the numbers">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#create-the-service-user" class="md-nav__link">
+  <a href="#protection-and-hosts" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Create the service user
+        Protection and hosts
       
     </span>
   </a>
@@ -2457,10 +2407,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#inspect-candidate-disks" class="md-nav__link">
+  <a href="#capacity" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Inspect candidate disks
+        Capacity
       
     </span>
   </a>
@@ -2468,10 +2418,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#initialize-the-node" class="md-nav__link">
+  <a href="#drives" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Initialize the node
+        Drives
       
     </span>
   </a>
@@ -2479,10 +2429,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#joining-an-existing-cluster" class="md-nav__link">
+  <a href="#throughput" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Joining an existing cluster
+        Throughput
       
     </span>
   </a>
@@ -2490,10 +2440,54 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#what-gets-written" class="md-nav__link">
+  <a href="#cpu" class="md-nav__link">
     <span class="md-ellipsis">
       
-        What gets written
+        CPU
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Memory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#objects-and-metadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objects and metadata
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Network
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#where-meta-and-the-gateways-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where meta and the gateways run
       
     </span>
   </a>
@@ -2506,71 +2500,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3-build-from-source" class="md-nav__link">
+  <a href="#calculator" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3. Build from source
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="3. Build from source">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#toolchain" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Toolchain
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#console-spa-prerequisites" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Console (SPA) prerequisites
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#build" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Build
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#run-the-test-suite" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Run the test suite
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#disk-preparation-production-checklist" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Disk preparation — production checklist
+        Calculator
       
     </span>
   </a>
@@ -2578,21 +2511,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#systemd-unit-reference" class="md-nav__link">
+  <a href="#what-isnt-in-the-calculator-yet" class="md-nav__link">
     <span class="md-ellipsis">
       
-        systemd unit reference
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#uninstall" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Uninstall
+        What isn't in the calculator yet
       
     </span>
   </a>
@@ -2619,300 +2541,317 @@
   
 
 
-<h1 id="linux">Linux<a class="headerlink" href="#linux" title="Permanent link">&para;</a></h1>
-<p>Linux is the primary production target. Both <code>amd64</code> and <code>arm64</code> are
-first-class — <code>amd64</code> gets hardware-accelerated erasure coding via
-ISA-L, <code>arm64</code> uses a pure-Rust SIMD implementation. Wire format is
-identical; you can mix architectures in a cluster.</p>
-<p>This page covers the three installation paths, in increasing order of
-commitment:</p>
+<h1 id="hardware-design-and-sizing">Hardware design and sizing<a class="headerlink" href="#hardware-design-and-sizing" title="Permanent link">&para;</a></h1>
+<p>How to go from a requirement (so many terabytes, so many GB/s) to a bill
+of quantities: how many hosts, which drives, how much CPU, memory and
+network, and where meta and the gateways run. The <a href="#calculator">calculator</a>
+at the end does the arithmetic; the sections before it say where each
+number comes from.</p>
+<p>ObjectIO is pre-1.0 and its multi-host performance numbers are still being
+measured (roadmap B4). Each figure here says whether it was <strong>measured</strong>
+(and where) or is an <strong>estimate</strong>. Size from the estimates with headroom,
+and check them on your own hardware before you buy at scale.</p>
+<h2 id="where-to-start">Where to start<a class="headerlink" href="#where-to-start" title="Permanent link">&para;</a></h2>
+<p>Work through these in order; each one can only raise the count the
+previous one gave.</p>
 <ol>
-<li><strong><a href="#1-release-binaries">Release binaries</a></strong> — drop-in <code>objectio-*</code> binaries</li>
-<li><strong><a href="#2-bootstrapping-a-node-with-objectio-install"><code>objectio-install</code></a></strong> — automated node bootstrap with systemd units</li>
-<li><strong><a href="#3-build-from-source">From source</a></strong> — Rust toolchain, for contributors</li>
+<li><strong>Protection.</strong> Choose the erasure code: 4+2 for 7 to 12 hosts, 8+4
+   from 13. It sets the overhead (1.5× raw for both) and the minimum
+   number of hosts: one per shard plus one to rebuild onto (7 for 4+2,
+   13 for 8+4).</li>
+<li><strong>Capacity.</strong> Usable terabytes, with the headroom you want, gives raw
+   terabytes, then drives and hosts.</li>
+<li><strong>Throughput.</strong> GB/s of writes and of reads gives the drives and hosts
+   the bytes need, and the network every host needs.</li>
+<li><strong>Objects.</strong> The average object size gives the object count, which
+   sizes the metadata: meta's disks and each drive's metadata partition.</li>
+<li><strong>CPU and memory.</strong> From drives per host, and from the GB/s the
+   gateways carry.</li>
+<li><strong>Placement of services.</strong> Meta and the gateways on the storage hosts
+   (converged), or on their own servers.</li>
 </ol>
-<p>If you just want a quick local endpoint, use
-<a href="../quickstart/#1-aio-binary-fastest--no-docker"><code>objectio-aio</code></a> — one
-binary, no daemons. The rest of this page is about real
-multi-process / multi-node deployments.</p>
-<hr />
-<h2 id="system-requirements">System requirements<a class="headerlink" href="#system-requirements" title="Permanent link">&para;</a></h2>
+<h2 id="the-rules-behind-the-numbers">The rules behind the numbers<a class="headerlink" href="#the-rules-behind-the-numbers" title="Permanent link">&para;</a></h2>
+<h3 id="protection-and-hosts">Protection and hosts<a class="headerlink" href="#protection-and-hosts" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
-<th>Component</th>
-<th>Minimum</th>
-<th>Recommended</th>
+<th>Code</th>
+<th>Raw per usable byte</th>
+<th>Survives</th>
+<th>Hosts at least</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Kernel</td>
-<td>4.19+</td>
-<td>5.15+ (for <code>io_uring</code>)</td>
+<td>4+2</td>
+<td>1.5</td>
+<td>any 2 hosts</td>
+<td>7</td>
 </tr>
 <tr>
-<td>CPU</td>
-<td>2 cores</td>
-<td>8+ cores</td>
+<td>8+4</td>
+<td>1.5</td>
+<td>any 4 hosts</td>
+<td>13</td>
 </tr>
 <tr>
-<td>RAM</td>
-<td>4 GB</td>
-<td>16+ GB (OSD), 8 GB (meta), 4 GB (gateway)</td>
-</tr>
-<tr>
-<td>Disks (OSD)</td>
-<td>1 × any block device</td>
-<td>4+ dedicated raw disks per OSD node</td>
-</tr>
-<tr>
-<td>Network</td>
-<td>1 Gbps</td>
-<td>10+ Gbps (especially between OSDs)</td>
+<td>10+4</td>
+<td>1.4</td>
+<td>any 4 hosts</td>
+<td>15</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Filesystem:</strong> OSDs prefer raw block devices (<code>/dev/sdb</code>,
-<code>/dev/nvme0n1</code>). File-backed disks (<code>/mnt/.../disk.raw</code>) work but skip
-the <code>O_DIRECT</code> fast path and lose some durability guarantees. Disks
-are formatted with ObjectIO's own on-disk layout (superblock + WAL +
-blocks), not ext4/xfs — <code>mkfs</code>-ing first is <em>not</em> required and is
-<em>not</em> recommended for production OSDs.</p>
-<p><strong>Kernel features used:</strong></p>
+<p>Placement puts each shard of a stripe on a different host. With fewer
+hosts than shards it would put two on one host, and losing that host
+would lose both: the minimum is one host per shard, plus one so a lost
+host can be rebuilt onto the others.</p>
+<h3 id="capacity">Capacity<a class="headerlink" href="#capacity" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>usable = raw × k/(k+m) × 0.95 − one host's worth
+</code></pre></div>
 <ul>
-<li><code>O_DIRECT</code> on raw block devices (required for OSD disks)</li>
-<li><code>ioctl BLKGETSIZE64</code> for disk sizing</li>
-<li><code>io_uring</code> when available (5.15+); falls back to threaded I/O</li>
+<li><strong>0.95:</strong> an OSD refuses client writes past 95% of its drive
+  (<code>--full-ratio</code>) and keeps the rest for repair, drain and backfill.</li>
+<li><strong>One host's worth:</strong> when a host is lost for good, its shards are
+  rebuilt onto the others; keep that much free.</li>
+<li>Add your own headroom on top: growth, and the "near full" alert at 85%.</li>
 </ul>
-<p><strong>Supported distributions:</strong> any glibc 2.31+ (Ubuntu 22.04+, Debian
-12+, RHEL 9+, Amazon Linux 2023, Rocky/Alma 9+). For older glibc, build
-from source.</p>
-<hr />
-<h2 id="1-release-binaries">1. Release binaries<a class="headerlink" href="#1-release-binaries" title="Permanent link">&para;</a></h2>
-<p>Released binaries are statically linked except for glibc and OpenSSL.
-Pick the right arch:</p>
-<div class="highlight"><pre><span></span><code><span class="nv">ARCH</span><span class="o">=</span><span class="k">$(</span>uname<span class="w"> </span>-m<span class="w"> </span><span class="p">|</span><span class="w"> </span>sed<span class="w"> </span><span class="s1">'s/x86_64/amd64/;s/aarch64/arm64/'</span><span class="k">)</span>
-curl<span class="w"> </span>-L<span class="w"> </span>-o<span class="w"> </span>/tmp/objectio.tar.gz<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>https://github.com/object-io/objectio/releases/latest/download/objectio-linux-<span class="si">${</span><span class="nv">ARCH</span><span class="si">}</span>.tar.gz
-sudo<span class="w"> </span>tar<span class="w"> </span>-xzf<span class="w"> </span>/tmp/objectio.tar.gz<span class="w"> </span>-C<span class="w"> </span>/usr/local/bin<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>objectio-aio<span class="w"> </span>objectio-gateway<span class="w"> </span>objectio-meta<span class="w"> </span>objectio-osd<span class="w"> </span>obioctl<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>objectio-install<span class="w"> </span>objectio-block-gateway
-</code></pre></div>
-<p>Verify:</p>
-<div class="highlight"><pre><span></span><code>obioctl<span class="w"> </span>--version
-objectio-aio<span class="w"> </span>--help
-</code></pre></div>
-<p>Runtime packages (all installed automatically as dependencies of the
-systemd unit on RPM/DEB-based distros, or install manually for the
-tarball):</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Debian / Ubuntu</span>
-sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>ca-certificates<span class="w"> </span>libssl3
-
-<span class="c1"># RHEL / Rocky / Alma 9+</span>
-sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>ca-certificates<span class="w"> </span>openssl-libs
-</code></pre></div>
-<hr />
-<h2 id="2-bootstrapping-a-node-with-objectio-install">2. Bootstrapping a node with <code>objectio-install</code><a class="headerlink" href="#2-bootstrapping-a-node-with-objectio-install" title="Permanent link">&para;</a></h2>
-<p><code>objectio-install</code> is the one-shot node bootstrapper. It prepares
-disks, writes config files, and optionally installs and enables
-systemd units. Use it for fresh metal / VMs.</p>
-<h3 id="create-the-service-user">Create the service user<a class="headerlink" href="#create-the-service-user" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>groupadd<span class="w"> </span>-r<span class="w"> </span>objectio
-sudo<span class="w"> </span>useradd<span class="w"> </span>-r<span class="w"> </span>-g<span class="w"> </span>objectio<span class="w"> </span>-d<span class="w"> </span>/var/lib/objectio<span class="w"> </span>-s<span class="w"> </span>/usr/sbin/nologin<span class="w"> </span>objectio
-sudo<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span>/etc/objectio<span class="w"> </span>/var/lib/objectio<span class="w"> </span>/var/log/objectio
-sudo<span class="w"> </span>chown<span class="w"> </span>objectio:objectio<span class="w"> </span>/var/lib/objectio<span class="w"> </span>/var/log/objectio
-</code></pre></div>
-<h3 id="inspect-candidate-disks">Inspect candidate disks<a class="headerlink" href="#inspect-candidate-disks" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>objectio-install<span class="w"> </span>disk<span class="w"> </span>list<span class="w">           </span><span class="c1"># only unused disks</span>
-sudo<span class="w"> </span>objectio-install<span class="w"> </span>disk<span class="w"> </span>list<span class="w"> </span>--all<span class="w">     </span><span class="c1"># everything, including mounted ones</span>
-</code></pre></div>
-<p>Output shows path, size, model, and whether the disk already contains
-an ObjectIO superblock. <strong><code>objectio-install disk prepare</code> is
-destructive</strong> — it overwrites the device with a fresh superblock.</p>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>objectio-install<span class="w"> </span>disk<span class="w"> </span>prepare<span class="w"> </span>/dev/sdb<span class="w"> </span>--block-size-mb<span class="w"> </span><span class="m">4</span>
-sudo<span class="w"> </span>objectio-install<span class="w"> </span>disk<span class="w"> </span>check<span class="w"> </span>/dev/sdb<span class="w">   </span><span class="c1"># verify</span>
-</code></pre></div>
-<h3 id="initialize-the-node">Initialize the node<a class="headerlink" href="#initialize-the-node" title="Permanent link">&para;</a></h3>
-<p>The <code>init</code> subcommand generates <code>/etc/objectio/{gateway,meta,osd}.toml</code>
-and (with <code>--systemd</code>) installs <code>/etc/systemd/system/objectio-*.service</code>.</p>
-<p><strong>Single-node (all roles on one box, good for edge / appliance):</strong></p>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>objectio-install<span class="w"> </span>init<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--role<span class="w"> </span>all<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--disks<span class="w"> </span>/dev/sdb,/dev/sdc,/dev/sdd,/dev/sde,/dev/sdf,/dev/sdg<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--ec-profile<span class="w"> </span><span class="m">4</span>+2<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--systemd
-sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>--now<span class="w"> </span>objectio-meta<span class="w"> </span>objectio-osd<span class="w"> </span>objectio-gateway
-</code></pre></div>
-<p><strong>Meta node (Raft):</strong></p>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>objectio-install<span class="w"> </span>init<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--role<span class="w"> </span>meta<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--raft-peers<span class="w"> </span>meta1.internal:9101,meta2.internal:9101,meta3.internal:9101<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--systemd
-sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>--now<span class="w"> </span>objectio-meta
-</code></pre></div>
-<p><strong>OSD node (storage):</strong></p>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>objectio-install<span class="w"> </span>init<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--role<span class="w"> </span>osd<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--disks<span class="w"> </span>/dev/sdb,/dev/sdc,/dev/sdd,/dev/sde<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--meta-endpoint<span class="w"> </span>http://meta1.internal:9100,http://meta2.internal:9100,http://meta3.internal:9100<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--systemd
-sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>--now<span class="w"> </span>objectio-osd
-</code></pre></div>
-<p><strong>Gateway node (S3 API):</strong></p>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>objectio-install<span class="w"> </span>init<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--role<span class="w"> </span>gateway<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--meta-endpoint<span class="w"> </span>http://meta1.internal:9100,http://meta2.internal:9100,http://meta3.internal:9100<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--systemd
-sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>--now<span class="w"> </span>objectio-gateway
-</code></pre></div>
-<h3 id="joining-an-existing-cluster">Joining an existing cluster<a class="headerlink" href="#joining-an-existing-cluster" title="Permanent link">&para;</a></h3>
-<p>Skip config generation; point at the running meta and attach the
-local disks:</p>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>objectio-install<span class="w"> </span>join<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--meta-endpoint<span class="w"> </span>http://meta1.internal:9100,http://meta2.internal:9100,http://meta3.internal:9100<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--disks<span class="w"> </span>/dev/sdb,/dev/sdc
-</code></pre></div>
-<h3 id="what-gets-written">What gets written<a class="headerlink" href="#what-gets-written" title="Permanent link">&para;</a></h3>
+<p>Objects of 4 KiB or less are kept whole inside their metadata, on all
+k + m copies (<code>--inline-max-size</code>): they take metadata space (below), not
+data space. Small objects in general are packed into shared stripes in the
+background, so a million 8 KiB objects don't each take a stripe.</p>
+<h3 id="drives">Drives<a class="headerlink" href="#drives" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Power-loss protection (PLP).</strong> An acknowledgement means the data is
+  on stable storage: every shard and its location are flushed before the
+  client hears back. On a drive without PLP a flush is slow (it empties
+  a volatile cache) and a power cut can still lose what the cache held.
+  Use enterprise NVMe with PLP; otherwise a UPS for every host.</li>
+<li><strong>One OSD per drive.</strong> The shards go on the raw device; the OSD's
+  metadata (its write-ahead log and index) goes on a small partition of
+  <strong>the same drive</strong>, not the boot disk (see <a href="#objects-and-metadata">Objects and
+  metadata</a> for its size).</li>
+<li><strong>Boot:</strong> two small drives (M.2, mirrored) for the OS.</li>
+</ul>
+<h3 id="throughput">Throughput<a class="headerlink" href="#throughput" title="Permanent link">&para;</a></h3>
+<p>What a write costs, with a k+m code:</p>
 <table>
 <thead>
 <tr>
-<th>Path</th>
-<th>Purpose</th>
+<th></th>
+<th>Per GB/s of client writes</th>
+<th>Per GB/s of client reads</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>/etc/objectio/gateway.toml</code> / <code>meta.toml</code> / <code>osd.toml</code></td>
-<td>Per-service config</td>
+<td>Bytes written to drives</td>
+<td>(k+m)/k GB/s (1.5 for 4+2)</td>
+<td>—</td>
 </tr>
 <tr>
-<td><code>/etc/systemd/system/objectio-*.service</code></td>
-<td>systemd units (if <code>--systemd</code>)</td>
+<td>Bytes read from drives</td>
+<td>—</td>
+<td>1 GB/s (k shards of the object)</td>
 </tr>
 <tr>
-<td><code>/var/lib/objectio/{meta,osd}/</code></td>
-<td>Persistent state</td>
+<td>Gateway → OSD network</td>
+<td>(k+m)/k GB/s</td>
+<td>1 GB/s (OSD → gateway)</td>
 </tr>
 <tr>
-<td><code>/var/log/objectio/</code></td>
-<td>Log output (journald in parallel)</td>
+<td>Client ↔ gateway network</td>
+<td>1 GB/s</td>
+<td>1 GB/s</td>
 </tr>
 </tbody>
 </table>
-<p><code>objectio-install status</code> shows the current config + detected roles.</p>
-<hr />
-<h2 id="3-build-from-source">3. Build from source<a class="headerlink" href="#3-build-from-source" title="Permanent link">&para;</a></h2>
-<p>Needed if you want to track <code>main</code>, run a custom branch, or build for
-an older glibc.</p>
-<h3 id="toolchain">Toolchain<a class="headerlink" href="#toolchain" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Rust (1.93+)</span>
-curl<span class="w"> </span>--proto<span class="w"> </span><span class="s1">'=https'</span><span class="w"> </span>--tlsv1.2<span class="w"> </span>-sSf<span class="w"> </span>https://sh.rustup.rs<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh<span class="w"> </span>-s<span class="w"> </span>--<span class="w"> </span>-y
-<span class="nb">source</span><span class="w"> </span><span class="s2">"</span><span class="nv">$HOME</span><span class="s2">/.cargo/env"</span>
-rustup<span class="w"> </span>toolchain<span class="w"> </span>install<span class="w"> </span><span class="m">1</span>.93
-
-<span class="c1"># Build deps</span>
-<span class="c1"># Debian / Ubuntu</span>
-sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>build-essential<span class="w"> </span>nasm<span class="w"> </span>autoconf<span class="w"> </span>automake<span class="w"> </span>libtool<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>libclang-dev<span class="w"> </span>pkg-config<span class="w"> </span>protobuf-compiler<span class="w"> </span>libprotobuf-dev<span class="w"> </span>cmake
-
-<span class="c1"># RHEL / Rocky / Alma 9+</span>
-sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>gcc-c++<span class="w"> </span>make<span class="w"> </span>nasm<span class="w"> </span>autoconf<span class="w"> </span>automake<span class="w"> </span>libtool<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>clang-devel<span class="w"> </span>pkgconf<span class="w"> </span>protobuf-compiler<span class="w"> </span>protobuf-devel<span class="w"> </span>cmake
+<p>How much one drive sustains under ObjectIO is not yet measured on
+enterprise NVMe (B4). The calculator assumes <strong>1 GB/s of writes and
+2 GB/s of reads per drive</strong>, a fraction of what a PCIe 4 drive is rated
+for; change it to what you measure.</p>
+<p>Small objects are bound by operations, not bytes. <strong>Measured</strong> on one lab
+host (consumer NVMe without PLP, everything on one machine, 4+2): 550
+PUTs/s and 8,400–10,500 GETs/s of 4 KiB objects; the
+<a href="../../../developer-guide/performance/">performance page</a> has the
+details. A drive with PLP makes each flush much cheaper, and fewer
+internal round trips per small GET are on the roadmap (B21). Treat small-
+object rates as something to measure on your hardware.</p>
+<h3 id="cpu">CPU<a class="headerlink" href="#cpu" title="Permanent link">&para;</a></h3>
+<p><strong>Measured</strong> per core on an AMD Ryzen 9 7945HX (Zen 4), 4 MiB stripes:</p>
+<table>
+<thead>
+<tr>
+<th>Work</th>
+<th>GB/s per core</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Erasure coding, ISA-L, 4+2: encode / decode with 2 shards lost</td>
+<td>9.9 / 11.3</td>
+</tr>
+<tr>
+<td>Erasure coding, ISA-L, 8+4</td>
+<td>8.8 / 9.3</td>
+</tr>
+<tr>
+<td>Erasure coding, pure Rust (arm64, or x86 without ISA-L), 4+2</td>
+<td>5.5 / 2.2</td>
+</tr>
+<tr>
+<td>MD5 (every PUT's ETag)</td>
+<td>0.80</td>
+</tr>
+<tr>
+<td>SHA-256 (clients that sign the payload; CPU with SHA extensions)</td>
+<td>2.4</td>
+</tr>
+<tr>
+<td>CRC32C (every shard, written and read)</td>
+<td>8.4</td>
+</tr>
+</tbody>
+</table>
+<p>What a gateway spends per GB/s:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Writes</th>
+<th>Reads</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MD5 for the ETag</td>
+<td>1.25 cores</td>
+<td>—</td>
+</tr>
+<tr>
+<td>SHA-256, if clients sign the payload (most SDKs over HTTPS don't)</td>
+<td>0.4</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Erasure coding and checksums</td>
+<td>0.3</td>
+<td>0.15</td>
+</tr>
+<tr>
+<td>Network stack and HTTP (<strong>estimate</strong>)</td>
+<td>1–2 without offload; about 0.3 with TSO/GRO offload or RDMA</td>
+<td>1 without; about 0.2 with</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td><strong>about 3 without offload, 1.6 with</strong></td>
+<td><strong>about 1.2 without, 0.35 with</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The MD5 is computed in the gateway over every byte written, and no NIC
+can take it: it sets the floor. Offloads take the network stack, and the
+shard traffic can go over RDMA (behind a flag today). mTLS between
+services costs about 0.35 cores per GB/s of shard traffic (AES-GCM,
+estimate).</p>
+<p>An OSD's own work is light (checksums, I/O submission, RPC): plan about
+<strong>one core per NVMe drive</strong> (estimate), plus a few for the OS.</p>
+<h3 id="memory">Memory<a class="headerlink" href="#memory" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Plan</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OSD</td>
+<td>1.5 GB per drive: its metadata index cache (<code>--meta-cache-mib</code>, 1 GiB by default), memtables, buffers. Flat however many objects it holds</td>
+</tr>
+<tr>
+<td>Gateway</td>
+<td>4 GB, plus 2 GB per GB/s it carries (buffers for objects in flight)</td>
+</tr>
+<tr>
+<td>Meta</td>
+<td>16 GB; 32 GB above 500 million objects (its database cache)</td>
+</tr>
+<tr>
+<td>OS</td>
+<td>8 GB per host</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Measured</strong> on the soak cluster (6 hosts, 69,000 objects, before the
+caches filled): OSD 164 MB, gateway 100 MB, meta 91 MB resident.</p>
+<h3 id="objects-and-metadata">Objects and metadata<a class="headerlink" href="#objects-and-metadata" title="Permanent link">&para;</a></h3>
+<p>The object count (usable bytes ÷ average object size) sizes the
+metadata. <strong>Measured</strong> on the soak cluster:</p>
+<table>
+<thead>
+<tr>
+<th>Where</th>
+<th>Per object</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Meta's database, on every meta node</td>
+<td>about 750 bytes (its listing entry and the rest)</td>
+</tr>
+<tr>
+<td>An OSD's metadata index, on every OSD holding a copy (k + m of them)</td>
+<td>about 1.5 KB (the object's metadata copy and its shard's location)</td>
+</tr>
+</tbody>
+</table>
+<p>Meta also keeps its Raft log and one snapshot of the database beside it:
+plan <strong>2.2 × the database</strong> on each meta node's disk.</p>
+<p>Each drive's metadata partition must hold its share of copies:</p>
+<div class="highlight"><pre><span></span><code>index per drive ≈ objects × (k+m) ÷ drives × 1.5 KB
 </code></pre></div>
-<p><strong>NASM is only required on x86_64</strong> — it drives ISA-L's assembly. On
-ARM64 omit it and drop <code>--features isal</code>.</p>
-<h3 id="console-spa-prerequisites">Console (SPA) prerequisites<a class="headerlink" href="#console-spa-prerequisites" title="Permanent link">&para;</a></h3>
-<p><code>objectio-aio</code> and the gateway's <code>/_console/</code> surface embed a
-pre-built React bundle. If you're only building server binaries and
-don't need the console, nothing to do. To build the console you need
-Node 22+:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Ubuntu — NodeSource 22.x</span>
-curl<span class="w"> </span>-fsSL<span class="w"> </span>https://deb.nodesource.com/setup_22.x<span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>-E<span class="w"> </span>bash<span class="w"> </span>-
-sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>nodejs
-
-<span class="nb">cd</span><span class="w"> </span>console<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>npm<span class="w"> </span>ci<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>npm<span class="w"> </span>run<span class="w"> </span>build<span class="w">   </span><span class="c1"># → console/dist</span>
-</code></pre></div>
-<h3 id="build">Build<a class="headerlink" href="#build" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/object-io/objectio
-<span class="nb">cd</span><span class="w"> </span>objectio
-
-<span class="c1"># amd64 — ISA-L on</span>
-cargo<span class="w"> </span>build<span class="w"> </span>--workspace<span class="w"> </span>--release<span class="w"> </span>--features<span class="w"> </span>isal
-
-<span class="c1"># arm64 — pure-Rust EC</span>
-cargo<span class="w"> </span>build<span class="w"> </span>--workspace<span class="w"> </span>--release
-</code></pre></div>
-<p>Binaries land in <code>target/release/</code>. For a system install:</p>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>install<span class="w"> </span>-m<span class="w"> </span><span class="m">0755</span><span class="w"> </span>target/release/objectio-<span class="o">{</span>aio,gateway,meta,osd,cli,install,block-gateway<span class="o">}</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>/usr/local/bin/
-</code></pre></div>
-<p>Then proceed as in
-<a href="#2-bootstrapping-a-node-with-objectio-install">section 2</a>.</p>
-<h3 id="run-the-test-suite">Run the test suite<a class="headerlink" href="#run-the-test-suite" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>cargo<span class="w"> </span><span class="nb">test</span><span class="w"> </span>--workspace<span class="w"> </span>--features<span class="w"> </span>isal
-cargo<span class="w"> </span>clippy<span class="w"> </span>--workspace<span class="w"> </span>--all-targets<span class="w"> </span>--features<span class="w"> </span>isal<span class="w"> </span>--<span class="w"> </span>-D<span class="w"> </span>warnings
-cargo<span class="w"> </span>fmt<span class="w"> </span>--all<span class="w"> </span>--<span class="w"> </span>--check
-<span class="c1"># Or the one-shot:</span>
-make<span class="w"> </span>ci
-</code></pre></div>
-<hr />
-<h2 id="disk-preparation-production-checklist">Disk preparation — production checklist<a class="headerlink" href="#disk-preparation-production-checklist" title="Permanent link">&para;</a></h2>
+<p>At a 1 MiB average object that is under 1% of the drive; at 64 KiB it is
+about 9%. The calculator gives the partition size.</p>
+<h3 id="network">Network<a class="headerlink" href="#network" title="Permanent link">&para;</a></h3>
 <ul>
-<li>[ ] Dedicate whole disks to OSDs (no partitioning, no filesystem).</li>
-<li>[ ] Disable write-cache on SAS/SATA drives with non-battery-backed
-  controllers: <code>hdparm -W 0 /dev/sdX</code>.</li>
-<li>[ ] For NVMe, confirm the drive supports FUA (Force Unit Access) —
-  check <code>nvme id-ctrl -H &lt;dev&gt; | grep -i fua</code>.</li>
-<li>[ ] Raise <code>/proc/sys/fs/file-max</code> and <code>ulimit -n</code> (OSD opens one fd
-  per concurrent operation × disk).</li>
-<li>[ ] Pin CPUs / set <code>tuned-adm profile throughput-performance</code>.</li>
-<li>[ ] If using <code>io_uring</code>, make sure the kernel is 5.15+ and
-  <code>/proc/sys/kernel/io_uring_disabled</code> is 0.</li>
+<li><strong>Two ports per host</strong>, bonded or one per switch, to two top-of-rack
+  switches: losing a switch or a cable must not take a host away.</li>
+<li><strong>Size for repair too.</strong> Rebuilding a lost host moves its whole
+  contents across the network; the calculator doubles the client traffic
+  to leave room for it.</li>
+<li>Client-facing TLS terminates at the load balancer (or an ingress);
+  between services, mTLS.</li>
 </ul>
-<p>See <a href="../topologies/">topologies.md</a> for how many disks and nodes to
-size for a given durability target.</p>
-<hr />
-<h2 id="systemd-unit-reference">systemd unit reference<a class="headerlink" href="#systemd-unit-reference" title="Permanent link">&para;</a></h2>
-<p><code>objectio-install --systemd</code> installs standard units. If you're
-bootstrapping manually, here's the skeleton for the OSD (the others
-are analogous — replace paths and drop the <code>CAP_SYS_RAWIO</code> bits for
-non-OSD roles):</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># /etc/systemd/system/objectio-osd.service</span>
-<span class="k">[Unit]</span>
-<span class="na">Description</span><span class="o">=</span><span class="s">ObjectIO Object Storage Daemon</span>
-<span class="na">After</span><span class="o">=</span><span class="s">network-online.target</span>
-<span class="na">Wants</span><span class="o">=</span><span class="s">network-online.target</span>
+<h3 id="where-meta-and-the-gateways-run">Where meta and the gateways run<a class="headerlink" href="#where-meta-and-the-gateways-run" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meta:</strong> three nodes (five to survive two at once), each on its own
+  host, on NVMe with PLP. Up to a few hundred million objects they can
+  share three of the storage hosts; past that, give them servers of their
+  own.</li>
+<li><strong>Gateways:</strong> stateless, behind an L4 load balancer. <strong>Converged</strong> (one
+  on every storage host) spreads the CPU and network evenly and needs no
+  extra servers; <strong>dedicated</strong> gateway servers make sense when the
+  storage hosts are small or the GB/s are high.</li>
+</ul>
+<h2 id="calculator">Calculator<a class="headerlink" href="#calculator" title="Permanent link">&para;</a></h2>
+<p>Fill in the requirement; the bill of quantities updates as you type. It
+runs in your browser and sends nothing anywhere.</p>
+<div id="sizing-calculator" markdown="0">
+<noscript>The calculator needs JavaScript.</noscript>
+</div>
 
-<span class="k">[Service]</span>
-<span class="na">Type</span><span class="o">=</span><span class="s">simple</span>
-<span class="c1"># OSD needs raw-disk access. Use CAP_SYS_RAWIO rather than running as root.</span>
-<span class="na">User</span><span class="o">=</span><span class="s">objectio</span>
-<span class="na">Group</span><span class="o">=</span><span class="s">objectio</span>
-<span class="na">AmbientCapabilities</span><span class="o">=</span><span class="s">CAP_SYS_RAWIO</span>
-<span class="na">CapabilityBoundingSet</span><span class="o">=</span><span class="s">CAP_SYS_RAWIO</span>
-<span class="na">ExecStart</span><span class="o">=</span><span class="s">/usr/local/bin/objectio-osd --config /etc/objectio/osd.toml</span>
-<span class="na">Restart</span><span class="o">=</span><span class="s">always</span>
-<span class="na">RestartSec</span><span class="o">=</span><span class="s">5</span>
-<span class="na">LimitNOFILE</span><span class="o">=</span><span class="s">1048576</span>
-<span class="c1"># Durability: kill -9 only after giving the OSD time to checkpoint</span>
-<span class="na">TimeoutStopSec</span><span class="o">=</span><span class="s">60</span>
-
-<span class="k">[Install]</span>
-<span class="na">WantedBy</span><span class="o">=</span><span class="s">multi-user.target</span>
-</code></pre></div>
-<p>For the gateway and meta services, drop <code>CAP_SYS_RAWIO</code> and keep the
-same shape.</p>
-<hr />
-<h2 id="uninstall">Uninstall<a class="headerlink" href="#uninstall" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>disable<span class="w"> </span>--now<span class="w"> </span>objectio-gateway<span class="w"> </span>objectio-meta<span class="w"> </span>objectio-osd
-sudo<span class="w"> </span>rm<span class="w"> </span>/etc/systemd/system/objectio-<span class="o">{</span>gateway,meta,osd<span class="o">}</span>.service
-sudo<span class="w"> </span>systemctl<span class="w"> </span>daemon-reload
-sudo<span class="w"> </span>rm<span class="w"> </span>/usr/local/bin/objectio-*
-<span class="c1"># Data + config (destructive):</span>
-sudo<span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>/etc/objectio<span class="w"> </span>/var/lib/objectio<span class="w"> </span>/var/log/objectio
-sudo<span class="w"> </span>userdel<span class="w"> </span>objectio<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>groupdel<span class="w"> </span>objectio
-</code></pre></div>
+<h2 id="what-isnt-in-the-calculator-yet">What isn't in the calculator yet<a class="headerlink" href="#what-isnt-in-the-calculator-yet" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Repair time.</strong> How long rebuilding a lost drive or host takes depends
+  on repair throughput, which is being raised (roadmap B24); the
+  calculator doesn't estimate it yet.</li>
+<li><strong>Small-object operation rates.</strong> See <a href="#throughput">Throughput</a>:
+  measure them on your hardware.</li>
+<li><strong>Multi-site.</strong> Replication between clusters doubles the hardware, one
+  cluster per site, plus the link between them.</li>
+</ul>
 
 
 
