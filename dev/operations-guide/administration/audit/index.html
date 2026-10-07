@@ -2609,7 +2609,8 @@ a host path is not something an API caller should choose.</p>
   events to (below).</li>
 </ul>
 <p>Every gateway re-reads the configuration within 10 seconds; the one that
-took the change applies it at once. <code>GET /_admin/audit</code> reads it back with
+took the change applies it before it answers, so a target added there gets
+the event of every request that gateway answers afterwards. <code>GET /_admin/audit</code> reads it back with
 tokens as <code>********</code>. Writing that placeholder back keeps the stored token.</p>
 <h3 id="a-tenants-targets">A tenant's targets<a class="headerlink" href="#a-tenants-targets" title="Permanent link">&para;</a></h3>
 <p>A tenant admin configures the same way, for its own tenant:</p>
