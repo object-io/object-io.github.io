@@ -3730,6 +3730,12 @@ when the code is written.</p>
 <td>🔨 pass 1 (64 KiB PUT): two fixes, objectio#181, #182 (<a href="../developer-guide/performance/profiling/">profiling</a>)</td>
 </tr>
 <tr>
+<td>B29</td>
+<td>Degraded objects recorded when written, repaired first (design)</td>
+<td>A PUT acknowledged short of shards is recorded in the Raft commit that creates it and repaired at once, most at risk first; an evacuation that meets an unrecoverable object finishes and reports it as lost. Exit test: a PUT with one OSD down, then two other OSDs lost: the object survives; the soak checks every key after each fault and no object stays short of shards</td>
+<td>🔨 built (objectio#186–#188); exit test in soak run 10</td>
+</tr>
+<tr>
 <td>B6</td>
 <td>Test what we ship (io levels)</td>
 <td>e2e and the soak run on the release features (io_uring, ISA-L)</td>
