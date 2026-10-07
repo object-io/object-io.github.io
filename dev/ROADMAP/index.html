@@ -3649,7 +3649,7 @@ when the code is written.</p>
 <td>B2</td>
 <td>Long soak at scale</td>
 <td>Days on a lab host: millions of objects, disks filling, OSD failures, repair; invariant checker finds no lost object and no leaked space</td>
-<td>🔨 The first 48 h run (2026-10-05) stopped after 5 h 13 m: a meta node took 5 min to reopen its database after a power cut (B25); every key read back as expected until then. Restarted with a longer meta wait</td>
+<td>🔨 The first 48 h run (2026-10-05) stopped after 5 h 13 m: a meta node took 5 min to reopen its database after a power cut (B25); every key read back as expected until then. Restarted with a longer meta wait. Run 10 (2026-10-07) stopped after 2 h 44 m: a small PUT refused (503) during a partition was left on four copies of six, readable but unrecorded, and a drive lost later made it unreadable; refused small writes are now kept and repaired at once on k copies, withdrawn below (objectio#195)</td>
 </tr>
 <tr>
 <td>B3</td>
