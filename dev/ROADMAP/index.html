@@ -3837,7 +3837,7 @@ when the code is written.</p>
 <td>B31</td>
 <td>Recovery by placement group (design)</td>
 <td>Every pool (the default too) has PGs whose acting set and epoch are committed before any write uses them, and OSDs refuse writes under an older epoch; recovery is a state machine per PG (peering compares members by digest and listing; recovering and backfilling with reservations, priority and a cursor in Raft; too-full targets wait; down, incomplete and unfound reported, nothing loops), replacing the degraded worker, the drain's moves, the walk's rebuilds and the heal queue. Exit test: per phase in the design; finally the 48-hour soak with every fault, and no PG left not clean for an hour with every OSD up</td>
-<td>🔨 design approved 2026-10-08; phases 1, 1b and 2 built (objectio <code>feat/b31-pg</code>), 3a in progress</td>
+<td>🔨 design approved 2026-10-08; phases 1, 1b, 2 and 3a built (objectio <code>feat/b31-pg</code>), in soak (run 18); 3b (replicas, LRC, parts, versions) in progress</td>
 </tr>
 <tr>
 <td>B30</td>
