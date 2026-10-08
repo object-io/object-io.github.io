@@ -2731,7 +2731,7 @@ is on stable storage; nothing trades durability for speed.</p>
 <tr>
 <td><strong>Now</strong></td>
 <td>S3 + core</td>
-<td>Release-candidate gates: the 48-hour soak (B2) is running; meta recovery after a power cut (B25) and S3 Select (A16) next</td>
+<td>Release-candidate gates: recovery by placement group (B31), the soak (B2) on its fixes branch; meta recovery after a power cut (B25) and S3 Select (A16) next</td>
 </tr>
 <tr>
 <td><strong>Next</strong></td>
@@ -3228,6 +3228,11 @@ run on Linux amd64 and arm64; the latest numbers are there.</p>
 <td>v0.5.0 → main rolled under traffic in CI on every PR; <a href="../operations-guide/operations/upgrades/">guide</a></td>
 </tr>
 <tr>
+<td>Recovery by placement group: epochs, fencing, peering, per-PG state machine</td>
+<td>🔨</td>
+<td>B31; design approved before the release candidate</td>
+</tr>
+<tr>
 <td>Ceph (RADOS) as an optional data backend</td>
 <td>⬜</td>
 <td>B30: after the release candidate; ObjectIO's own engine stays the default</td>
@@ -3591,7 +3596,7 @@ when the code is written.</p>
 <tr>
 <td>A9</td>
 <td>Release candidate</td>
-<td>A1–A8c, A8, A15, A16, A12, B2–B5, B22, B23, B25, B26 green on one commit</td>
+<td>A1–A8c, A8, A15, A16, A12, B2–B5, B22, B23, B25, B26, B31 green on one commit</td>
 <td>⬜</td>
 </tr>
 <tr>
@@ -3821,7 +3826,13 @@ when the code is written.</p>
 <td>B10</td>
 <td>Every protection scheme tested</td>
 <td>LRC and 2/3-way replica pools through the same e2e as 4+2 EC (loss, repair, drain)</td>
-<td>⬜</td>
+<td>⬜ Found 2026-10-08: repair and drain rebuild MDS stripes only; LRC and replicated pools are never repaired. B31 phase 3 recovers every scheme. Until then neither is released: meta refuses to make an LRC or replicated pool (objectio soak/b2). LRC ships with its local-group-first rebuild, the reason it exists</td>
+</tr>
+<tr>
+<td>B31</td>
+<td>Recovery by placement group (design)</td>
+<td>Every pool (the default too) has PGs whose acting set and epoch are committed before any write uses them, and OSDs refuse writes under an older epoch; recovery is a state machine per PG (peering compares members by digest and listing; recovering and backfilling with reservations, priority and a cursor in Raft; too-full targets wait; down, incomplete and unfound reported, nothing loops), replacing the degraded worker, the drain's moves, the walk's rebuilds and the heal queue. Exit test: per phase in the design; finally the 48-hour soak with every fault, and no PG left not clean for an hour with every OSD up</td>
+<td>🔨 design approved 2026-10-08; phases 1, 1b and 2 built (objectio <code>feat/b31-pg</code>), 3a in progress</td>
 </tr>
 <tr>
 <td>B30</td>
