@@ -2862,14 +2862,10 @@ model as Iceberg — IAM-style policies, three-level policy walk
 per-object CRUSH with a fixed set of placement groups (PGs), each
 PG mapped to a specific <code>(k+m)</code>-tuple of OSDs. Modelled on Ceph's
 PG model + Cidon/Stutsman copyset diversity.</p>
-<h3 id="two-placement-modes">Two placement modes<a class="headerlink" href="#two-placement-modes" title="Permanent link">&para;</a></h3>
-<ul>
-<li><strong>Legacy CRUSH2</strong> — per-object HRW hash picks OSDs on every write.
-  Pools created with <code>pg_count = 0</code> use this path for back-compat.</li>
-<li><strong>Placement groups</strong> <em>(recommended)</em> — pool created with <code>pg_count &gt; 0</code>
-  pre-allocates N PGs. Writes hash object key → PG via jump-consistent
-  hash; PG → OSDs is an explicit Meta lookup.</li>
-</ul>
+<h3 id="every-pool-has-placement-groups">Every pool has placement groups<a class="headerlink" href="#every-pool-has-placement-groups" title="Permanent link">&para;</a></h3>
+<p>Every pool, the default one too, pre-allocates its PGs when it is made
+(B31). Writes hash object key → PG via jump-consistent hash; PG → OSDs is
+an explicit Meta lookup, committed with an epoch before any write uses it.</p>
 <h3 id="object-pg-routing">Object → PG routing<a class="headerlink" href="#object-pg-routing" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Algorithm</strong>: Lamping &amp; Veach jump consistent hash (Google 2014).
@@ -2979,21 +2975,27 @@ the transition.</p>
 <p>Each knob re-reads on every tick — no restart required. Ticks
 themselves are skipped when the sweep interval changes so the
 clock stays monotonic.</p>
-<h3 id="sizing-guidance">Sizing guidance<a class="headerlink" href="#sizing-guidance" title="Permanent link">&para;</a></h3>
-<p>Rule of thumb (Ceph / AIStor convention):</p>
-<div class="highlight"><pre><span></span><code>pg_count ≈ 100 × active_osds / (k+m), rounded to power of 2
+<h3 id="sizing">Sizing<a class="headerlink" href="#sizing" title="Permanent link">&para;</a></h3>
+<p>A pool made without a <code>pg_count</code> (the default pool too) gets one sized
+from the OSDs in service when it is made:</p>
+<div class="highlight"><pre><span></span><code>pg_count = 100 × OSDs in service / copies per PG,
+           rounded up to a power of 2, from 256 to 4096
 </code></pre></div>
+<p>The 100 is config <code>pg/members_per_osd</code>. The reason is rebuild speed: a
+lost drive's PGs are rebuilt onto as many drives as it held PG members,
+so with too few PGs a large cluster rebuilds barely faster than a small
+one (B24).</p>
 <table>
 <thead>
 <tr>
 <th>Cluster shape</th>
-<th>Suggested <code>pg_count</code></th>
+<th><code>pg_count</code> made</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>9 OSDs, 2+1 EC</td>
-<td>256 or 512</td>
+<td>512</td>
 </tr>
 <tr>
 <td>24 OSDs, 4+2 EC</td>
@@ -3005,12 +3007,13 @@ clock stays monotonic.</p>
 </tr>
 <tr>
 <td>1,000 OSDs, 8+4 EC</td>
-<td>8192</td>
+<td>4096 (the ceiling; give 8192 explicitly)</td>
 </tr>
 </tbody>
 </table>
-<p>Cost: ~200 bytes per PG row; <code>pg_count=4096</code> is ~1 MB of Meta
-state per pool. Hard cap is 65,536 per pool (plan invariant).</p>
+<p>A count given when the pool is made is kept. Cost: ~200 bytes per PG row;
+<code>pg_count=4096</code> is ~1 MB of Meta state per pool, and each PG is peered,
+scrubbed and recovered on its own. Hard cap is 65,536 per pool.</p>
 <h3 id="scaling-without-pg-split">Scaling without PG split<a class="headerlink" href="#scaling-without-pg-split" title="Permanent link">&para;</a></h3>
 <p><code>pg_count</code> is fixed at pool creation (v1 non-goal: growable
 pg_count). Three escape hatches cover the scale range without

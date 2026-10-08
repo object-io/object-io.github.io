@@ -3723,7 +3723,7 @@ when the code is written.</p>
 <td>B24</td>
 <td>Repair throughput</td>
 <td>Rebuilding is parallel across objects and OSDs, bounded so client I/O keeps priority: a replaced 7.68 TB drive of 1 MiB objects rebuilt in under 8 hours on the lab host (today about 50 shards/s, so about 40 hours); the chaos disk-pull fault restores full redundancy within 15 minutes</td>
-<td>🔨 #161 (10 → 67 shards/s)</td>
+<td>🔨 #161 (10 → 67 shards/s); next: a pool's PG count sized from its drives (about 100 PG members a drive, a power of two, 256 to 16384) so a lost drive's PGs rebuild onto many drives at once (the lab's 6 hosts give a 4+2 PG one place to go: run 18's drive-lost took 61 min onto one drive); measured on an Azure cluster</td>
 </tr>
 <tr>
 <td>B25</td>
@@ -3837,7 +3837,7 @@ when the code is written.</p>
 <td>B31</td>
 <td>Recovery by placement group (design)</td>
 <td>Every pool (the default too) has PGs whose acting set and epoch are committed before any write uses them, and OSDs refuse writes under an older epoch; recovery is a state machine per PG (peering compares members by digest and listing; recovering and backfilling with reservations, priority and a cursor in Raft; too-full targets wait; down, incomplete and unfound reported, nothing loops), replacing the degraded worker, the drain's moves, the walk's rebuilds and the heal queue. Exit test: per phase in the design; finally the 48-hour soak with every fault, and no PG left not clean for an hour with every OSD up</td>
-<td>🔨 design approved 2026-10-08; phases 1 to 3b built (objectio <code>feat/b31-pg</code>); 3a in soak (run 18); phase 4 next</td>
+<td>🔨 design approved 2026-10-08; phases 1 to 4 built (objectio <code>feat/b31-pg</code>); in soak (run 19)</td>
 </tr>
 <tr>
 <td>B30</td>
