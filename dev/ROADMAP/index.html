@@ -3807,7 +3807,7 @@ when the code is written.</p>
 <td>B15</td>
 <td>Rack-local LRC</td>
 <td>Losing a rack rebuilds from inside the rack only</td>
-<td>⬜</td>
+<td>🔨 Groups kept per rack (B31 phase 1b) and rebuilt from inside the group (phase 3b, 2 reads for 4+2+1); a whole rack lost is beyond 4+2+1</td>
 </tr>
 <tr>
 <td>B18</td>
@@ -3831,13 +3831,13 @@ when the code is written.</p>
 <td>B10</td>
 <td>Every protection scheme tested</td>
 <td>LRC and 2/3-way replica pools through the same e2e as 4+2 EC (loss, repair, drain)</td>
-<td>⬜ Found 2026-10-08: repair and drain rebuild MDS stripes only; LRC and replicated pools are never repaired. B31 phase 3 recovers every scheme. Until then neither is released: meta refuses to make an LRC or replicated pool (objectio soak/b2). LRC ships with its local-group-first rebuild, the reason it exists</td>
+<td>🔨 Repair for both built and tested (objectio <code>feat/b31-pg</code>, B31 phase 3b: replica copy with checksums; LRC local group first, global when it can't; an LRC global rebuild failed in the codec until then). Released after a soak with LRC and replicated pools</td>
 </tr>
 <tr>
 <td>B31</td>
 <td>Recovery by placement group (design)</td>
 <td>Every pool (the default too) has PGs whose acting set and epoch are committed before any write uses them, and OSDs refuse writes under an older epoch; recovery is a state machine per PG (peering compares members by digest and listing; recovering and backfilling with reservations, priority and a cursor in Raft; too-full targets wait; down, incomplete and unfound reported, nothing loops), replacing the degraded worker, the drain's moves, the walk's rebuilds and the heal queue. Exit test: per phase in the design; finally the 48-hour soak with every fault, and no PG left not clean for an hour with every OSD up</td>
-<td>🔨 design approved 2026-10-08; phases 1, 1b, 2 and 3a built (objectio <code>feat/b31-pg</code>), in soak (run 18); 3b (replicas, LRC, parts, versions) in progress</td>
+<td>🔨 design approved 2026-10-08; phases 1 to 3b built (objectio <code>feat/b31-pg</code>); 3a in soak (run 18); phase 4 next</td>
 </tr>
 <tr>
 <td>B30</td>
