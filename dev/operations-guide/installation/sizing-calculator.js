@@ -25,6 +25,15 @@
   const RAM_HEADROOM = 1.25;
   const NET_HEADROOM = 2; // repair traffic and bursts
   const NIC_GBIT = [25, 50, 100, 200, 400]; // 25 GbE at least: a rebuild crosses it
+  const FILL = 0.85; // how full a drive is when it fails: the 85% the headroom aims at
+  const REPAIR_SHARE = 0.3; // of each drive's write rate a rebuild may take, beside clients
+  const REPLACE_HOURS = {
+    "4 h (spares on site)": 4,
+    "1 day (next business day)": 24,
+    "3 days": 72,
+    "5 days (OEM, parts shipped)": 120,
+    "10 days": 240,
+  };
   const RAM_SIZES = [32, 64, 96, 128, 192, 256, 384, 512, 768, 1024];
   const CORE_SIZES = [8, 12, 16, 24, 32, 48, 64, 96, 128, 192];
   const CODES = {
@@ -41,6 +50,9 @@
     ["drive", "Drive size", "select", "7.68", ["3.84", "7.68", "15.36", "30.72", "61.44"]],
     ["perhost", "Drives per storage host", "number", 12, "drives"],
     ["plp", "Drives have power-loss protection", "checkbox", true],
+    ["afr", "Drive failures per year (annualized failure rate)", "number", 1, "%"],
+    ["replace", "Time to replace a failed drive", "select", "1 day (next business day)", Object.keys(REPLACE_HOURS)],
+    ["spares", "Hot spare drives per host (installed, not in use)", "number", 0, "drives"],
     ["write", "Write throughput needed", "number", 5, "GB/s"],
     ["read", "Read throughput needed", "number", 10, "GB/s"],
     ["drivew", "Sustained writes per drive (measure yours)", "number", 1, "GB/s"],
@@ -56,6 +68,7 @@
   const fmt = (x, d = 0) =>
     Number(x).toLocaleString("en-US", { maximumFractionDigits: d, minimumFractionDigits: d });
   const tb = (bytes) => bytes / 1e12;
+  const hours = (h) => (h < 1 ? `${fmt(Math.max(1, h * 60), 0)} min` : `${fmt(h, 1)} h`);
   const gbOf = (bytes) => bytes / 1e9;
   const sizeTxt = (bytes) =>
     bytes >= 1e12 ? `${fmt(tb(bytes), 1)} TB` : `${fmt(gbOf(bytes), 0)} GB`;
@@ -230,7 +243,60 @@
       );
     }
 
+    // Drive failures. A failed drive's shards are rebuilt at once onto the
+    // free space of every other drive; replacing the drive only gives the
+    // capacity back. So the replacement time sizes the spare space, not the
+    // time data is at risk: enough to hold every drive likely to be failed
+    // and not yet replaced (Poisson, 99.9%), next to the host held already.
+    const spares = Math.max(0, Math.round(v.spares || 0));
+    const replaceHours = REPLACE_HOURS[v.replace] ?? 24;
+    const failuresPerYear = (drives * Math.max(0, v.afr)) / 100;
+    // Hot spares swap in within minutes, until they run out; then the
+    // replacement time applies again.
+    const swapHours = spares > 0 ? 0.5 : replaceHours;
+    const outMean = (failuresPerYear * swapHours) / 8760;
+    let outAt999 = 0;
+    for (let c = 0, p = Math.exp(-outMean), cum = p; ; c += 1) {
+      if (cum >= 0.999 || c > 1000) {
+        outAt999 = c;
+        break;
+      }
+      p = (p * outMean) / (c + 1);
+      cum += p;
+    }
+    const spareDrives = perHost; // the host held for rebuilds
+    const sparesUsedPerYear = failuresPerYear;
+    const spareStock = spares * hosts;
+    const driveData = driveBytes * FILL;
+    // Onto every other drive's free space: writes spread over them, the
+    // reads (k shards per one rebuilt) too.
+    // And over the network: each rebuilt shard reads k others across it.
+    const netRate = ((hosts - 1) * 2 * hostNic * 1e9 * REPAIR_SHARE) / 8 / (k + 1); // two ports
+    const rebuildRate = Math.min(
+      (drives - 1) * v.drivew * 1e9 * REPAIR_SHARE,
+      ((drives - 1) * v.driver * 1e9 * REPAIR_SHARE) / k,
+      netRate,
+    );
+    const rebuildSpread = rebuildRate > 0 ? driveData / rebuildRate / 3600 : 0;
+    // Onto one spare drive, as a RAID array does: one drive's writes.
+    const rebuildOne = v.drivew > 0 ? driveData / (v.drivew * 1e9 * REPAIR_SHARE) / 3600 : 0;
+    if (outAt999 > spareDrives) {
+      notes.push(
+        `With a ${v.replace.split(" (")[0]} replacement, up to ${outAt999} drives may be failed and not yet ` +
+          `replaced at once (99.9%): more than the ${spareDrives} drives of spare space held. Add hosts or ` +
+          "drives, keep hot spares, or shorten the replacement time.",
+      );
+    }
+    if (spares > 0 && spareStock < sparesUsedPerYear) {
+      notes.push(
+        `About ${fmt(sparesUsedPerYear, 1)} drives fail a year and ${spareStock} hot spares are installed: ` +
+          "restock them at least as often, or the replacement time applies again.",
+      );
+    }
+
     return {
+      failuresPerYear, outMean, outAt999, spareDrives, spares, spareStock, rebuildSpread,
+      rebuildOne, replaceHours,
       k, m, n, hosts, why, drives, rawBytes, usableBuilt, objects, indexPerDrive,
       partitionBytes, partitionPct, metaDb, metaDisk, metaRam, metaPlacement,
       gwCores, gwRam, gwServers, converged, hostCores, hostRam, rx, tx,
@@ -280,6 +346,32 @@
       ),
     );
 
+    h("Drive failures and replacement");
+    frag.appendChild(
+      table(
+        null,
+        [
+          ["Drive failures a year (expected)", fmt(r.failuresPerYear, 1)],
+          [
+            "Drives failed and not yet replaced, at once",
+            `${fmt(r.outMean, 2)} on average, up to ${r.outAt999} (99.9%)` +
+              (r.spares > 0 ? ", with hot spares swapped in within the hour" : ""),
+          ],
+          [
+            "Spare space for rebuilds",
+            `${r.spareDrives} drives' worth (one host)` +
+              (r.outAt999 > r.spareDrives ? ": not enough, see the notes" : ": enough"),
+          ],
+          [
+            "Rebuild a failed drive onto every other drive's free space",
+            `${hours(r.rebuildSpread)} at best: what the drives and network allow with ` +
+              `${fmt(REPAIR_SHARE * 100, 0)}% of them for repair. Today's repair is slower (roadmap B24).`,
+          ],
+          ["The same onto one spare drive (as RAID does)", `${hours(r.rebuildOne)} at best`],
+        ],
+      ),
+    );
+
     h("Bill of quantities");
     const rows = [];
     const hostCpu = roundUp(r.hostCores, CORE_SIZES);
@@ -291,6 +383,7 @@
         `${hostCpu} cores (x86_64 for ISA-L)`,
         `${hostRam} GB RAM`,
         `${r.perHost} × ${r.driveTb} TB NVMe${v.plp ? " with PLP" : ""}, each with a ${sizeTxt(r.partitionBytes)} metadata partition (${fmt(r.partitionPct, 1)}%)`,
+        ...(r.spares > 0 ? [`plus ${r.spares} × ${r.driveTb} TB hot spare`] : []),
         "2 × 480 GB M.2 boot (mirrored)",
         `2 × ${r.hostNic} GbE`,
         r.converged ? "runs an OSD per drive and a gateway" : "runs an OSD per drive",

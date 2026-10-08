@@ -1920,6 +1920,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#drive-failures-replacement-and-hot-spares" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Drive failures, replacement and hot spares
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#where-meta-and-the-gateways-run" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2512,6 +2523,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#drive-failures-replacement-and-hot-spares" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Drive failures, replacement and hot spares
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#where-meta-and-the-gateways-run" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2855,6 +2877,30 @@ the partition. The calculator gives the partition size.</p>
 <li>Client-facing TLS terminates at the load balancer (or an ingress);
   between services, mTLS.</li>
 </ul>
+<h3 id="drive-failures-replacement-and-hot-spares">Drive failures, replacement and hot spares<a class="headerlink" href="#drive-failures-replacement-and-hot-spares" title="Permanent link">&para;</a></h3>
+<p>A failed drive's data is rebuilt at once, onto the free space of every
+other drive in the cluster: many drives write in parallel, so it takes
+minutes to hours where rebuilding onto one spare disk, as a RAID array
+does, is held to one drive's write rate. Replacing the drive afterwards
+only gives its capacity back. So how fast a vendor replaces drives decides
+how long capacity is down, not how long data is at risk, as long as
+there is free space to rebuild into.</p>
+<ul>
+<li><strong>Spare space, not idle disks.</strong> The calculator holds one host's worth
+  of drives free for rebuilds. With the drives' failure rate and the time
+  to replace one (on-site spares, next business day, an OEM's five days),
+  it works out how many drives may be failed and not yet replaced at once
+  (99.9%) and says when that is more than the space held: add hosts or
+  drives, keep hot spares, or shorten the replacement time.</li>
+<li><strong>Hot spares</strong> (drives installed but not in use) make sense where
+  replacement is slow: a remote site, an OEM contract measured in days.
+  One is put in service in minutes, with no site visit, and the capacity
+  is back; restock them at least as fast as drives fail. They don't make
+  data safer: the rebuild has already happened on the other drives.</li>
+<li><strong>Rebuild times</strong> in the calculator are what the drives and the network
+  allow with 30% of them given to repair: a bound. Today's repair is
+  slower than that; roadmap B24 raises it.</li>
+</ul>
 <h3 id="where-meta-and-the-gateways-run">Where meta and the gateways run<a class="headerlink" href="#where-meta-and-the-gateways-run" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Meta:</strong> three nodes (five to survive two at once), each on its own
@@ -2883,9 +2929,9 @@ runs in your browser and sends nothing anywhere.</p>
 
 <h2 id="what-isnt-in-the-calculator-yet">What isn't in the calculator yet<a class="headerlink" href="#what-isnt-in-the-calculator-yet" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Repair time.</strong> How long rebuilding a lost drive or host takes depends
-  on repair throughput, which is being raised (roadmap B24); the
-  calculator doesn't estimate it yet.</li>
+<li><strong>Repair time as measured.</strong> The calculator gives what the hardware
+  allows; repair's own throughput is being raised to meet it (roadmap
+  B24).</li>
 <li><strong>Small-object operation rates.</strong> See <a href="#throughput">Throughput</a>:
   measure them on your hardware.</li>
 <li><strong>Multi-site.</strong> Replication between clusters doubles the hardware, one
