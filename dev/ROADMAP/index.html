@@ -2760,6 +2760,11 @@ is on stable storage; nothing trades durability for speed.</p>
 </tr>
 <tr>
 <td><strong>Later</strong></td>
+<td>Core</td>
+<td>Ceph (RADOS) as an optional data backend, for sites that already run Ceph (B30)</td>
+</tr>
+<tr>
+<td><strong>Later</strong></td>
 <td>File</td>
 <td>NFS gateway design</td>
 </tr>
@@ -3221,6 +3226,11 @@ run on Linux amd64 and arm64; the latest numbers are there.</p>
 <td>Rolling upgrade, format migrations</td>
 <td>✅</td>
 <td>v0.5.0 → main rolled under traffic in CI on every PR; <a href="../operations-guide/operations/upgrades/">guide</a></td>
+</tr>
+<tr>
+<td>Ceph (RADOS) as an optional data backend</td>
+<td>⬜</td>
+<td>B30: after the release candidate; ObjectIO's own engine stays the default</td>
 </tr>
 </tbody>
 </table>
@@ -3812,6 +3822,12 @@ when the code is written.</p>
 <td>Every protection scheme tested</td>
 <td>LRC and 2/3-way replica pools through the same e2e as 4+2 EC (loss, repair, drain)</td>
 <td>⬜</td>
+</tr>
+<tr>
+<td>B30</td>
+<td>Ceph (RADOS) as an optional data backend</td>
+<td>ObjectIO's S3, IAM, tenants, data lake APIs and console on an existing Ceph cluster: object data in a RADOS erasure-coded pool through librados (dynamically linked, LGPL), ObjectIO's meta keeping the namespace. Placement, repair and recovery are Ceph's; packing, the small-object path, dedup and RDMA are not offered on it. Selected per pool, so one cluster can hold both. Exit test: the S3 compatibility runs and the e2e suites that don't depend on ObjectIO's engine pass against a Ceph pool; a Ceph OSD lost under load loses no acknowledged object; no orphaned RADOS objects after a gateway killed mid-write</td>
+<td>⬜ After A9</td>
 </tr>
 </tbody>
 </table>
