@@ -549,6 +549,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#s3-select" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        S3 Select
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#gateway-side-grep-for-s3-objects" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2378,6 +2389,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#s3-select" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        S3 Select
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#gateway-side-grep-for-s3-objects" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2528,6 +2550,17 @@ deep-dive doc with the full wire format, semantics, and trade-offs.</p>
 <li><strong>Management SDKs</strong> for Go and Python cover the whole admin API.
   <a href="../sdk/">SDKs</a></li>
 </ul>
+<h3 id="s3-select">S3 Select<a class="headerlink" href="#s3-select" title="Permanent link">&para;</a></h3>
+<p><code>SelectObjectContent</code> (<code>POST /{bucket}/{key}?select&amp;select-type=2</code>): SQL
+over a CSV, JSON or Parquet object, CSV and JSON plain, GZIP or BZIP2,
+answered in AWS's event stream with only the selected rows. AWS's SQL
+subset (projection, <code>WHERE</code>, <code>LIMIT</code>, <code>CAST</code>, string/date/conditional
+functions, aggregates) with AWS's meaning, plus RGW's additions where AWS
+would refuse the text; scan ranges; progress. The object
+is read in ranges and parsed as it arrives, Parquet by the columns the
+query names, so memory doesn't grow with the object.
+<a href="../../operations-guide/administration/s3-api/#s3-select">S3 API</a> ·
+design</p>
 <h3 id="gateway-side-grep-for-s3-objects">Gateway-side grep for S3 objects<a class="headerlink" href="#gateway-side-grep-for-s3-objects" title="Permanent link">&para;</a></h3>
 <p><code>POST /{bucket}/{key}?grep</code> (single object) and <code>POST /{bucket}?grep</code>
 (prefix across many keys) — streams NDJSON match events with <strong>byte
@@ -2636,6 +2669,7 @@ model as Iceberg — IAM-style policies, three-level policy walk
 <li><strong>Multipart upload</strong>: InitiateMultipartUpload, UploadPart, CompleteMultipartUpload, AbortMultipartUpload, ListParts, ListMultipartUploads</li>
 <li><strong>Range requests</strong>: HTTP Range header support (<code>bytes=0-99</code>, suffix ranges, open-ended ranges)</li>
 <li><strong>Copy object</strong>: Server-side copy via <code>x-amz-copy-source</code> header (metadata-only fast path when on same OSD)</li>
+<li><strong>S3 Select</strong>: SelectObjectContent on CSV, JSON and Parquet objects (GZIP/BZIP2 for CSV and JSON), CSV or JSON output</li>
 <li><strong>User metadata</strong>: <code>x-amz-meta-*</code> headers stored and returned</li>
 <li><strong>S3 error responses</strong>: Standard XML error format with S3 error codes</li>
 </ul>

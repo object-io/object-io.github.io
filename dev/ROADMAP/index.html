@@ -2731,7 +2731,7 @@ is on stable storage; nothing trades durability for speed.</p>
 <tr>
 <td><strong>Now</strong></td>
 <td>S3 + core</td>
-<td>Release-candidate gates: recovery by placement group (B31), the soak (B2) on its fixes branch; meta recovery after a power cut (B25) and S3 Select (A16) next</td>
+<td>Release-candidate gates: recovery by placement group (B31), the soak (B2) on its fixes branch; meta recovery after a power cut (B25) next</td>
 </tr>
 <tr>
 <td><strong>Next</strong></td>
@@ -3002,8 +3002,8 @@ run on Linux amd64 and arm64; the latest numbers are there.</p>
 </tr>
 <tr>
 <td>S3 Select</td>
-<td>⬜</td>
-<td>A16: CSV, JSON and Parquet input</td>
+<td>✅</td>
+<td>A16: CSV, JSON (DOCUMENT, LINES) and Parquet input, GZIP and BZIP2, CSV or JSON output, scan ranges (design)</td>
 </tr>
 <tr>
 <td>Bucket logging (<code>?logging</code>, S3 access-log format)</td>
@@ -3588,9 +3588,9 @@ when the code is written.</p>
 </tr>
 <tr>
 <td>A16</td>
-<td>S3 Select</td>
-<td><code>SelectObjectContent</code> on CSV, JSON and Parquet objects (SQL subset as AWS, event-stream response); the ceph s3-tests S3 Select tests pass</td>
-<td>⬜</td>
+<td>S3 Select (design)</td>
+<td><code>SelectObjectContent</code> on CSV, JSON and Parquet objects (SQL subset as AWS, event-stream response); the ceph s3-tests S3 Select tests pass or fail only where ObjectIO answers as AWS (29 of 34 pass; 5 expect RGW's dialect or output: JSON output as bare numbers and a FROM array read as its elements 2, <code>[a-z]</code> sets in LIKE 1, <code>null</code> for an empty CSV field 1, RGW's error code and text 1)</td>
+<td>✅ <a href="https://github.com/object-io/objectio/pull/200">#200</a></td>
 </tr>
 <tr>
 <td>A12</td>

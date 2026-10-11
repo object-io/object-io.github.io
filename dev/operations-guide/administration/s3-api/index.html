@@ -2038,6 +2038,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#s3-select" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        S3 Select
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#not-yet-implemented" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3115,6 +3126,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#s3-select" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        S3 Select
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#not-yet-implemented" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3722,12 +3744,50 @@ is <code>400 AccessControlListNotSupported</code>. See <a href="../iam/#acls">AC
 <div class="highlight"><pre><span></span><code>GET /{bucket}?versions
 </code></pre></div>
 <hr />
+<h2 id="s3-select">S3 Select<a class="headerlink" href="#s3-select" title="Permanent link">&para;</a></h2>
+<p><code>SelectObjectContent</code>: run SQL over one CSV, JSON or Parquet object and get
+back only what it selects.</p>
+<div class="highlight"><pre><span></span><code>POST /{bucket}/{key}?select&amp;select-type=2
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">r</span> <span class="o">=</span> <span class="n">s3</span><span class="o">.</span><span class="n">select_object_content</span><span class="p">(</span>
+    <span class="n">Bucket</span><span class="o">=</span><span class="s2">"logs"</span><span class="p">,</span> <span class="n">Key</span><span class="o">=</span><span class="s2">"2026/10/app.csv.gz"</span><span class="p">,</span>
+    <span class="n">ExpressionType</span><span class="o">=</span><span class="s2">"SQL"</span><span class="p">,</span>
+    <span class="n">Expression</span><span class="o">=</span><span class="s2">"SELECT s.ts, s.msg FROM S3Object s WHERE s.level = 'ERROR' LIMIT 100"</span><span class="p">,</span>
+    <span class="n">InputSerialization</span><span class="o">=</span><span class="p">{</span><span class="s2">"CSV"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"FileHeaderInfo"</span><span class="p">:</span> <span class="s2">"USE"</span><span class="p">},</span> <span class="s2">"CompressionType"</span><span class="p">:</span> <span class="s2">"GZIP"</span><span class="p">},</span>
+    <span class="n">OutputSerialization</span><span class="o">=</span><span class="p">{</span><span class="s2">"JSON"</span><span class="p">:</span> <span class="p">{}})</span>
+<span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">r</span><span class="p">[</span><span class="s2">"Payload"</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="s2">"Records"</span> <span class="ow">in</span> <span class="n">event</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="s2">"Records"</span><span class="p">][</span><span class="s2">"Payload"</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(),</span> <span class="n">end</span><span class="o">=</span><span class="s2">""</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li><strong>Input:</strong> CSV (<code>FileHeaderInfo</code>, delimiters, quote and escape,
+  <code>Comments</code>, <code>AllowQuotedRecordDelimiter</code>), JSON (<code>DOCUMENT</code> or <code>LINES</code>),
+  Parquet. CSV and JSON may be <code>GZIP</code> or <code>BZIP2</code>.</li>
+<li><strong>Output:</strong> CSV (delimiters, quoting <code>ASNEEDED</code>/<code>ALWAYS</code>) or JSON.</li>
+<li><strong>SQL:</strong> AWS's subset — <code>SELECT</code> list with aliases, <code>FROM
+  S3Object[*].path alias</code>, <code>WHERE</code>, <code>LIMIT</code>, <code>CAST</code>, string, date and
+  conditional functions, <code>COUNT/SUM/AVG/MIN/MAX</code>, with AWS's meaning.
+  RGW's additions that AWS would refuse also work (double-quoted strings,
+  <code>INT(x)</code>, aliases in <code>WHERE</code>); where RGW gives a valid AWS statement
+  another meaning, ObjectIO follows AWS: in <code>LIKE</code>, <code>[</code> and <code>]</code> are
+  themselves (RGW: <code>[a-z]</code> sets), and <code>FROM S3Object[*].arr</code> gives the
+  array as one record (<code>arr[*]</code> reads its elements; RGW reads them in
+  both). See the design.</li>
+<li><strong>Response:</strong> AWS's event stream: <code>Records</code>, <code>Progress</code> when
+  <code>RequestProgress</code> is on, <code>Stats</code>, <code>End</code>; a failure after the stream began
+  is an error event.</li>
+<li><code>ScanRange</code> on uncompressed CSV, JSON Lines and Parquet.</li>
+<li><strong>Permission:</strong> <code>s3:GetObject</code> on the key. SSE-C objects need their key
+  headers, as for a GET.</li>
+<li>Limits: a record or result row at most 1 MB; the expression at most
+  256 KB. The object is read in ranges, never whole into memory.</li>
+</ul>
+<hr />
 <h2 id="not-yet-implemented">Not Yet Implemented<a class="headerlink" href="#not-yet-implemented" title="Permanent link">&para;</a></h2>
 <p>A request naming one of these sub-resources is refused with <code>501
 NotImplemented</code> (rather than, say, <code>GET /b?website</code> listing the bucket).
 Bucket logging (<code>?logging</code>) is supported: see <a href="../bucket-logging/">Bucket Logging</a>.</p>
 <ul>
-<li>S3 Select</li>
 <li>Inventory, Analytics, Metrics configuration</li>
 <li>Website configuration</li>
 <li>Accelerate configuration, Request Payment</li>
