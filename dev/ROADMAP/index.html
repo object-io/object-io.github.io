@@ -2731,11 +2731,6 @@ is on stable storage; nothing trades durability for speed.</p>
 <tr>
 <td><strong>Now</strong></td>
 <td>S3 + core</td>
-<td>Release-candidate gates: an OSD back in seconds after a restart (B32)</td>
-</tr>
-<tr>
-<td><strong>Next</strong></td>
-<td>S3 + core</td>
 <td>Multi-host performance numbers and a regression check in CI (B4); fewer round trips on small GETs (B21); then the release candidate (A9)</td>
 </tr>
 <tr>
@@ -3601,7 +3596,7 @@ when the code is written.</p>
 <tr>
 <td>A9</td>
 <td>Release candidate</td>
-<td>A1–A8c, A8, A15, A16, A12, B2–B5, B22, B23, B25, B26, B31 green on one commit</td>
+<td>A1–A8c, A8, A15, A16, A12, B2–B5, B22, B23, B25, B26, B31, B32 green on one commit</td>
 <td>⬜</td>
 </tr>
 <tr>
@@ -3843,7 +3838,7 @@ when the code is written.</p>
 <td>B32</td>
 <td>OSD back in seconds after a restart</td>
 <td>An OSD serves without first reading all its metadata: today a start walks every shard location (to count shards and mark used blocks) and every object's metadata (bucket usage), one cold page at a time, so it grows with the shard count: 50 s for 104,000 shards on a soak VM, 5 min before small shards' bytes moved out of their location records (soak run 24). Reads issued in parallel, usage counted after serving starts, or kept as it changes. Exit test: an OSD of 10 million shards on the lab host serves within 30 s of a power cut</td>
-<td>🔨 started 2026-10-14: measuring where a start goes at 1–10 M shards, then the design; found by B2; the per-delete bitmap write it turned up is gone (objectio#201)</td>
+<td>✅ 2026-10-14 (objectio#207, #208; design): an OSD of 10 M shards serves 16.9 s after a power cut (was 351 s); PG summaries and bucket usage are counted after it serves, a chunk at a time, with the writes made meanwhile folded in; found by B2; the per-delete bitmap write it turned up is gone (objectio#201)</td>
 </tr>
 <tr>
 <td>B30</td>
