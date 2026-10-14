@@ -2731,7 +2731,7 @@ is on stable storage; nothing trades durability for speed.</p>
 <tr>
 <td><strong>Now</strong></td>
 <td>S3 + core</td>
-<td>Release-candidate gates: recovery by placement group (B31), the soak (B2) on its fixes branch; meta recovery after a power cut (B25) next</td>
+<td>Release-candidate gates: meta recovery after a power cut (B25, soaked with B31), then an OSD back in seconds after a restart (B32)</td>
 </tr>
 <tr>
 <td><strong>Next</strong></td>
@@ -3669,7 +3669,7 @@ when the code is written.</p>
 <td>B2</td>
 <td>Long soak at scale</td>
 <td>Days on a lab host: millions of objects, disks filling, OSD failures, repair; invariant checker finds no lost object and no leaked space</td>
-<td>🔨 The first 48 h run (2026-10-05) stopped after 5 h 13 m: a meta node took 5 min to reopen its database after a power cut (B25); every key read back as expected until then. Restarted with a longer meta wait. Run 10 (2026-10-07) stopped after 2 h 44 m: a small PUT refused (503) during a partition was left on four copies of six, readable but unrecorded, and a drive lost later made it unreadable; refused small writes are now kept and repaired at once on k copies, withdrawn below (objectio#195). Run 11 (2026-10-07) stopped after 1 h 53 m: one such write was recorded but waited 23 minutes behind a single pass over about 6,000 records left by a partition, and a disk pull took it below k; degraded records are now worked in short, re-sorted rounds, 16 at a time</td>
+<td>✅ 2026-10-14, soak run 29 on <a href="https://github.com/object-io/objectio/pull/201">objectio#201</a> with B25: 48 h, 6.37 M acknowledged operations, 1.37 TB written, 2.76 M keys, 91 faults (power-offs, meta power-offs and leader kills, partitions of the leader, disk pulls, drives lost with their metadata) and disks filled past 95% again and again; every key read back as expected after each fault, nothing lost, nothing leaked. Runs 1 to 28 each stopped on a bug, fixed with a regression test and a 3-hour quick soak before the next 48-hour run (objectio#168–#197, B25, B26, B29, B31)</td>
 </tr>
 <tr>
 <td>B3</td>
@@ -3723,7 +3723,7 @@ when the code is written.</p>
 <td>B24</td>
 <td>Repair throughput</td>
 <td>Rebuilding is parallel across objects and OSDs, bounded so client I/O keeps priority: a replaced 7.68 TB drive of 1 MiB objects rebuilt in under 8 hours on the lab host (today about 50 shards/s, so about 40 hours); the chaos disk-pull fault restores full redundancy within 15 minutes</td>
-<td>🔨 #161 (10 → 67 shards/s); next: a pool's PG count sized from its drives (about 100 PG members a drive, a power of two, 256 to 16384) so a lost drive's PGs rebuild onto many drives at once (the lab's 6 hosts give a 4+2 PG one place to go: run 18's drive-lost took 61 min onto one drive); measured on an Azure cluster</td>
+<td>🔨 #161 (10 → 67 shards/s); a pool's PG count sized from its drives (<a href="https://github.com/object-io/objectio/pull/201">objectio#201</a>) (about 100 PG members a drive, a power of two, 256 to 16384) so a lost drive's PGs rebuild onto many drives at once (the lab's 6 hosts give a 4+2 PG one place to go: run 18's drive-lost took 61 min onto one drive); measured on an Azure cluster</td>
 </tr>
 <tr>
 <td>B25</td>
@@ -3735,7 +3735,7 @@ when the code is written.</p>
 <td>B26</td>
 <td>An OSD lost for good is re-protected</td>
 <td>A drive or host gone for good (its metadata with it, as in production, where an OSD's state is on its own drive), set <code>out</code> as the runbook says: every shard it held is rebuilt from the others onto the OSDs that replace it, every object whose placement included it (inline objects too) gets its metadata copy back there, and repair still visits the objects it owned. Found 2026-10-06; fixed in objectio#168 (e2e test in); the chaos fault is still to add: repair skips shards whose OSD doesn't answer, drain needs the OSD to answer, and metadata copies are never re-created. Exit test: e2e, a whole drive lost and set out, then every shard and metadata copy restored and the objects survive two more losses; chaos, a disk pull that loses the OSD's metadata</td>
-<td>🔨</td>
+<td>✅ objectio#168, #174–#177, #185; the chaos drive-lost fault (drive and metadata gone, set out) evacuated and every key read back, 23 times in soak run 29</td>
 </tr>
 <tr>
 <td>B27</td>
@@ -3753,7 +3753,7 @@ when the code is written.</p>
 <td>B29</td>
 <td>Degraded objects recorded when written, repaired first (design)</td>
 <td>A PUT acknowledged short of shards is recorded in the Raft commit that creates it and repaired at once, most at risk first; an evacuation that meets an unrecoverable object finishes and reports it as lost. Exit test: a PUT with one OSD down, then two other OSDs lost: the object survives; the soak checks every key after each fault and no object stays short of shards</td>
-<td>🔨 built (objectio#186–#188); exit test in soak run 10</td>
+<td>✅ objectio#186–#188; exit test passed in soak run 29 (every key read after each of 91 faults, no object left short)</td>
 </tr>
 <tr>
 <td>B6</td>
@@ -3831,13 +3831,19 @@ when the code is written.</p>
 <td>B10</td>
 <td>Every protection scheme tested</td>
 <td>LRC and 2/3-way replica pools through the same e2e as 4+2 EC (loss, repair, drain)</td>
-<td>🔨 Repair for both built and tested (objectio <code>feat/b31-pg</code>, B31 phase 3b: replica copy with checksums; LRC local group first, global when it can't; an LRC global rebuild failed in the codec until then). Released after a soak with LRC and replicated pools</td>
+<td>🔨 Repair for both built and tested (objectio#201, B31 phase 3b: replica copy with checksums; LRC local group first, global when it can't; an LRC global rebuild failed in the codec until then). Released after a soak with LRC and replicated pools</td>
 </tr>
 <tr>
 <td>B31</td>
 <td>Recovery by placement group (design)</td>
 <td>Every pool (the default too) has PGs whose acting set and epoch are committed before any write uses them, and OSDs refuse writes under an older epoch; recovery is a state machine per PG (peering compares members by digest and listing; recovering and backfilling with reservations, priority and a cursor in Raft; too-full targets wait; down, incomplete and unfound reported, nothing loops), replacing the degraded worker, the drain's moves, the walk's rebuilds and the heal queue. Exit test: per phase in the design; finally the 48-hour soak with every fault, and no PG left not clean for an hour with every OSD up</td>
-<td>🔨 design approved 2026-10-08; phases 1 to 4 built (objectio <code>feat/b31-pg</code>); in soak (run 19)</td>
+<td>✅ <a href="https://github.com/object-io/objectio/pull/201">objectio#201</a> (design approved 2026-10-08; exit test: the 48-hour soak, run 29)</td>
+</tr>
+<tr>
+<td>B32</td>
+<td>OSD back in seconds after a restart</td>
+<td>An OSD serves without first reading all its metadata: today a start walks every shard location (to count shards and mark used blocks) and every object's metadata (bucket usage), one cold page at a time, so it grows with the shard count: 50 s for 104,000 shards on a soak VM, 5 min before small shards' bytes moved out of their location records (soak run 24). Reads issued in parallel, usage counted after serving starts, or kept as it changes. Exit test: an OSD of 10 million shards on the lab host serves within 30 s of a power cut</td>
+<td>⬜ found by B2; the per-delete bitmap write it turned up is gone (objectio#201)</td>
 </tr>
 <tr>
 <td>B30</td>
