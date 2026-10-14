@@ -643,6 +643,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#the-soak" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The soak
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2295,6 +2306,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#the-soak" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The soak
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2438,6 +2460,20 @@ problems the runs found and the fixes for them:</p>
 </tr>
 </tbody>
 </table>
+<h2 id="the-soak">The soak<a class="headerlink" href="#the-soak" title="Permanent link">&para;</a></h2>
+<p>The soak (roadmap B2) runs the same faults, plus a drive lost for good,
+for 48 hours while twelve writers fill the cluster past the OSDs' full
+ratio and delete it back down. It passed for the first time on
+2026-10-14, run 29: 6.37 M acknowledged operations, 1.37 TB written, 91
+faults, nothing lost, and no space left with every key deleted. Every
+48-hour run before it stopped at the first bug it met, or was stopped
+by hand to take a fix; each bug got a fix and a regression test.</p>
+<p>A fix goes through the 3-hour quick soak first, then the 48-hour one.
+<code>deploy/chaos/run-soak.sh</code> (its README) runs either on the lab host for
+any commit at origin. It builds the commit in a clone of its own and
+brings the cluster up on it, then records the run: logs and a
+<code>summary.json</code> with faults by kind, the leak check and the verdict, plus
+one line in <code>runs.tsv</code>.</p>
 
 
 
