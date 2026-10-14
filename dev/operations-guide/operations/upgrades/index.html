@@ -2422,7 +2422,10 @@ Design: core/upgrade-path.md.</p>
 </ol>
 <div class="highlight"><pre><span></span><code>obioctl<span class="w"> </span>upgrade<span class="w"> </span>finalize
 </code></pre></div>
-<p>It is refused while anything blocks it.</p>
+<p>It is refused while anything blocks it. It answers once the default
+   pool's placement groups are made, which can take up to 40 s if an OSD
+   is still coming up. Until then, a write to a bucket without a pool of
+   its own is refused with a 503 that S3 clients retry.</p>
 <p>To go back before step 6, run the same steps in reverse order with the
 previous release's binaries.</p>
 <p>After finalize, each meta node moves its Raft log out of its database into
