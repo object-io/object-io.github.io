@@ -25,7 +25,7 @@
     
     
       
-        <title>Profiling (B28) - ObjectIO</title>
+        <title>Profiling - ObjectIO</title>
       
     
     
@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#profiling-b28" class="md-skip">
+        <a href="#profiling" class="md-skip">
           Skip to content
         </a>
       
@@ -119,7 +119,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Profiling (B28)
+              Profiling
             
           </span>
         </div>
@@ -691,7 +691,7 @@
   <span class="md-ellipsis">
     
   
-    Profiling (B28)
+    Profiling
   
 
     
@@ -709,7 +709,7 @@
   <span class="md-ellipsis">
     
   
-    Profiling (B28)
+    Profiling
   
 
     
@@ -735,6 +735,29 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#memory-heap-profiles-b33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Memory: heap profiles (B33)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cpu-b28" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CPU (B28)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CPU (B28)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#pass-1-64-kib-puts-six-azure-vms-2026-10-07" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -787,6 +810,11 @@
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -2313,6 +2341,29 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#memory-heap-profiles-b33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Memory: heap profiles (B33)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cpu-b28" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CPU (B28)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CPU (B28)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#pass-1-64-kib-puts-six-azure-vms-2026-10-07" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2372,6 +2423,11 @@
     </nav>
   
 </li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
     </ul>
   
@@ -2393,18 +2449,87 @@
   
 
 
-<h1 id="profiling-b28">Profiling (B28)<a class="headerlink" href="#profiling-b28" title="Permanent link">&para;</a></h1>
-<p>Where the CPU goes on the hot paths, measured on dedicated cloud machines
-(<code>objectio-infra</code>: <code>./bench profile</code> records a running service with
-<code>perf</code> and brings back a flamegraph). Each pass ends in fixes or roadmap
-rows.</p>
-<h2 id="pass-1-64-kib-puts-six-azure-vms-2026-10-07">Pass 1: 64 KiB PUTs, six Azure VMs, 2026-10-07<a class="headerlink" href="#pass-1-64-kib-puts-six-azure-vms-2026-10-07" title="Permanent link">&para;</a></h2>
+<h1 id="profiling">Profiling<a class="headerlink" href="#profiling" title="Permanent link">&para;</a></h1>
+<p>Where the CPU goes on the hot paths (B28), and what holds a running
+service's memory (B33).</p>
+<h2 id="memory-heap-profiles-b33">Memory: heap profiles (B33)<a class="headerlink" href="#memory-heap-profiles-b33" title="Permanent link">&para;</a></h2>
+<p>With jemalloc's own profiler and <code>jeprof</code>; nothing of ObjectIO's. Every
+service binary's allocator, jemalloc, is built with its profiler, which
+stays off. Start a process with it on, and jemalloc writes heap dumps
+itself:</p>
+<div class="highlight"><pre><span></span><code>mkdir<span class="w"> </span>-p<span class="w"> </span>/tmp/jeprof
+<span class="nv">_RJEM_MALLOC_CONF</span><span class="o">=</span>prof:true,lg_prof_interval:30,prof_final:true,prof_prefix:/tmp/jeprof/osd<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>objectio-osd<span class="w"> </span>...
+</code></pre></div>
+<ul>
+<li><code>prof:true</code>: the profiler on; it records the stack of about one
+  allocation in every 512 KiB allocated (<code>lg_prof_sample:19</code>, the
+  default).</li>
+<li><code>lg_prof_interval:30</code>: a dump every 2^30 bytes (1 GiB) allocated;
+  <code>prof_final:true</code> one more at exit. <code>prof_gdump:true</code> dumps whenever
+  the heap reaches a new high instead.</li>
+<li><code>_RJEM_</code>: the binaries' jemalloc is prefixed (<code>tikv-jemallocator</code>), so
+  the variable is <code>_RJEM_MALLOC_CONF</code>, not <code>MALLOC_CONF</code>.</li>
+</ul>
+<p><code>jeprof</code> (Debian and Ubuntu: <code>libjemalloc-dev</code>; it needs <code>binutils</code>)
+reads a dump against the binary that wrote it, at the path that process
+ran it from:</p>
+<div class="highlight"><pre><span></span><code>jeprof<span class="w"> </span>--text<span class="w"> </span>--cum<span class="w"> </span>/usr/local/bin/objectio-osd<span class="w"> </span>/tmp/jeprof/osd.&lt;pid&gt;.&lt;n&gt;.i&lt;n&gt;.heap
+jeprof<span class="w"> </span>--svg<span class="w"> </span>/usr/local/bin/objectio-osd<span class="w"> </span>/tmp/jeprof/osd.&lt;pid&gt;.&lt;n&gt;.i&lt;n&gt;.heap<span class="w"> </span>&gt;<span class="w"> </span>osd.svg<span class="w">   </span><span class="c1"># call graph</span>
+jeprof<span class="w"> </span>--text<span class="w"> </span>--base<span class="o">=</span>first.heap<span class="w"> </span>/usr/local/bin/objectio-osd<span class="w"> </span>last.heap<span class="w">                  </span><span class="c1"># what grew</span>
+</code></pre></div>
+<p>A dump counts what the program asked jemalloc for, scaled up from the
+samples. Resident memory (<code>process_resident_memory_bytes</code>) also counts
+what jemalloc keeps but no longer uses, the page cache of mapped files,
+stacks and code, so the two differ; a dump that grows is a program that
+grows.</p>
+<p>For example, a release aio of 6 OSDs under 64 KiB PUTs: 1 GB live, of
+which redb's page cache held about 700 MB while the OSDs checkpointed
+their index (<code>DiskIndex::flush_frozen</code> into redb's <code>commit</code>).</p>
+<p><strong>The soak</strong> (<code>deploy/chaos</code>, B2) records every service's resident
+memory in each 5-minute progress line (<code>rss_mb</code>), and each service's
+peak over the run in <code>summary.json</code>. A soak VM has 3 GiB: a service that
+leaks shows there long before the kernel kills it, and the run to repeat
+with the profiler on is the one whose peak climbs.</p>
+<p><strong>What the profiler costs while off.</strong> Measured on datacore (one NVMe
+host, a release aio of 6 OSDs at 4+2, 64 KiB objects, 64 in flight,
+20,000 PUTs then their GETs; the builds alternated, two runs each):</p>
+<table>
+<thead>
+<tr>
+<th>Build</th>
+<th>PUT/s</th>
+<th>GET/s</th>
+<th>Peak resident</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>jemalloc 5.3.0, no profiler (main before B33)</td>
+<td>710, 717</td>
+<td>9,660, 11,190</td>
+<td>6.6, 6.7 GB</td>
+</tr>
+<tr>
+<td>jemalloc 5.3.1, profiler built in, off</td>
+<td>715, 715</td>
+<td>11,060, 10,600</td>
+<td>6.3, 6.3 GB</td>
+</tr>
+</tbody>
+</table>
+<p>No difference beyond the runs' own spread.</p>
+<h2 id="cpu-b28">CPU (B28)<a class="headerlink" href="#cpu-b28" title="Permanent link">&para;</a></h2>
+<p>Measured on dedicated cloud machines (<code>objectio-infra</code>: <code>./bench
+profile</code> records a running service with <code>perf</code> and brings back a
+flamegraph). Each pass ends in fixes or roadmap rows.</p>
+<h3 id="pass-1-64-kib-puts-six-azure-vms-2026-10-07">Pass 1: 64 KiB PUTs, six Azure VMs, 2026-10-07<a class="headerlink" href="#pass-1-64-kib-puts-six-azure-vms-2026-10-07" title="Permanent link">&para;</a></h3>
 <p><strong>Set-up:</strong> the six-VM cluster of the <a href="../">performance</a> page
 (Arm, 4 vCPUs each), warp sending 64 KiB PUTs at 64 concurrent requests.
 On one storage node, the OSD and the gateway, and the meta leader, each
 recorded for 30 s at 499 Hz (<code>perf record -g</code>). Percentages are of that
 process's samples, inclusive unless marked <em>self</em>.</p>
-<h3 id="before">Before<a class="headerlink" href="#before" title="Permanent link">&para;</a></h3>
+<h4 id="before">Before<a class="headerlink" href="#before" title="Permanent link">&para;</a></h4>
 <table>
 <thead>
 <tr>
@@ -2441,7 +2566,7 @@ process's samples, inclusive unless marked <em>self</em>.</p>
 </tr>
 </tbody>
 </table>
-<h3 id="fixed">Fixed<a class="headerlink" href="#fixed" title="Permanent link">&para;</a></h3>
+<h4 id="fixed">Fixed<a class="headerlink" href="#fixed" title="Permanent link">&para;</a></h4>
 <ul>
 <li><strong>The regex</strong> (objectio#181): the SigV4 header is parsed by hand, by one
   parser in <code>objectio-auth</code>. Policy wildcards, also turned into a regex per
@@ -2456,7 +2581,7 @@ process's samples, inclusive unless marked <em>self</em>.</p>
 <p>Throughput on a fresh cluster, before → after both fixes: GET 4 KiB
 +23%, GET 64 KiB +16%, PUT 4 KiB +14% (p99 262 → 80 ms), PUT 64 KiB +10%;
 4 MiB unchanged (bound by network and drives).</p>
-<h3 id="after">After<a class="headerlink" href="#after" title="Permanent link">&para;</a></h3>
+<h4 id="after">After<a class="headerlink" href="#after" title="Permanent link">&para;</a></h4>
 <table>
 <thead>
 <tr>
@@ -2496,7 +2621,7 @@ process's samples, inclusive unless marked <em>self</em>.</p>
 <p>No single hotspot is left outside the storage engines: the OSD's metadata
 store is the next place to gain, which is what B27 (<code>MetaIndex</code>, and an
 alternative behind it) is for.</p>
-<h3 id="next">Next<a class="headerlink" href="#next" title="Permanent link">&para;</a></h3>
+<h4 id="next">Next<a class="headerlink" href="#next" title="Permanent link">&para;</a></h4>
 <ul>
 <li>The OSD's metadata store under B27: the same profile with another
   <code>MetaIndex</code> implementation.</li>

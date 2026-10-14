@@ -941,7 +941,7 @@
   <span class="md-ellipsis">
     
   
-    Profiling (B28)
+    Profiling
   
 
     
@@ -3839,6 +3839,12 @@ when the code is written.</p>
 <td>OSD back in seconds after a restart</td>
 <td>An OSD serves without first reading all its metadata: today a start walks every shard location (to count shards and mark used blocks) and every object's metadata (bucket usage), one cold page at a time, so it grows with the shard count: 50 s for 104,000 shards on a soak VM, 5 min before small shards' bytes moved out of their location records (soak run 24). Reads issued in parallel, usage counted after serving starts, or kept as it changes. Exit test: an OSD of 10 million shards on the lab host serves within 30 s of a power cut</td>
 <td>✅ 2026-10-14 (objectio#207, #208; design): an OSD of 10 M shards serves 16.9 s after a power cut (was 351 s); PG summaries and bucket usage are counted after it serves, a chunk at a time, with the writes made meanwhile folded in; found by B2; the per-delete bitmap write it turned up is gone (objectio#201)</td>
+</tr>
+<tr>
+<td>B33</td>
+<td>Memory you can see (<a href="../developer-guide/performance/profiling/#memory-heap-profiles-b33">profiling</a>)</td>
+<td>With standard tools, no code of ours: every service binary's jemalloc built with its heap profiler, off until a process is started with <code>_RJEM_MALLOC_CONF=prof:true</code>, its dumps read with <code>jeprof</code>. The soak records each service's resident memory every 5 minutes and its peak per run. Exit: dumps from a release service under load name what holds its memory; no cost measured with the profiler off; a soak run records every service's peak</td>
+<td>✅ 2026-10-14 (objectio#209): built with the profiler, no cost measured with it off (PUT 715/s against 710–717, GET within noise); jeprof names the holders of a release OSD's memory under load (redb's page cache, about 700 MB of 1 GB); soak run 33 recorded every service's peak (meta 119 MB, OSD 1.3 GB, gateway 197 MB of 3 GiB)</td>
 </tr>
 <tr>
 <td>B30</td>
