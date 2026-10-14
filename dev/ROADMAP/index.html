@@ -2731,7 +2731,7 @@ is on stable storage; nothing trades durability for speed.</p>
 <tr>
 <td><strong>Now</strong></td>
 <td>S3 + core</td>
-<td>Release-candidate gates: meta recovery after a power cut (B25, soaked with B31), then an OSD back in seconds after a restart (B32)</td>
+<td>Release-candidate gates: an OSD back in seconds after a restart (B32)</td>
 </tr>
 <tr>
 <td><strong>Next</strong></td>
@@ -3729,7 +3729,7 @@ when the code is written.</p>
 <td>B25</td>
 <td>Meta back in seconds after a power cut</td>
 <td>A meta node reopens its database without walking all of it: today redb rebuilds its allocator state after an unclean shutdown, 5 min for a 1 GB <code>meta.redb</code> on a soak VM (found by B2), growing with the cluster's object count, and a site-wide outage takes every meta node at once. redb's quick repair makes each commit 3.4× slower there, so the fix is in how meta commits (batched applies, or the Raft log apart from the state machine). Exit test: a meta node powered off under load with a 10 GB database answers within 30 s of boot</td>
-<td>🔨 design</td>
+<td>✅ <a href="https://github.com/object-io/objectio/pull/202">objectio#202</a> on the Raft log of its own (#166; design): sealed log segments open from an index; an 8.63 GB <code>meta.redb</code> killed under load listens 252 ms after start and is in step after 255 ms (e2e <code>meta_reopen</code>, limit 30 s); every one of 16 meta faults in soak run 29 back in step within 30 s</td>
 </tr>
 <tr>
 <td>B26</td>
