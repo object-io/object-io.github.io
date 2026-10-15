@@ -3700,7 +3700,7 @@ when the code is written.</p>
 <td>B21</td>
 <td>Small-object path (design)</td>
 <td>A 4 KiB or 64 KiB GET takes fewer internal round trips (metadata from a read quorum, not every copy; placement without a meta call), and a small object's shards travel with its metadata (one round, as RustFS); on the B4 lab host, small GETs within 1.5× of RustFS and 64 KiB PUTs level with it; chaos (A6) still passes</td>
-<td>✅ built (objectio#170, #173, #176); measured on six cloud VMs, not the B4 lab host: small GETs 1.5–1.8× RustFS, 64 KiB PUTs 4.3× (<a href="../developer-guide/performance/">performance</a>)</td>
+<td>✅ 2026-10-15 (objectio#170, #173, #176, #214; <a href="../developer-guide/performance/#single-host-2026-10-15-b21">performance</a>): on the B4 lab host RustFS is 1.16–1.24× ahead on 4 KiB GETs and 1.39–1.47× on 64 KiB, and 64 KiB PUTs are ahead of it (988–1,096 a second against 302–371, and above its best of the day, 880); part 5 found there: meta commits writes together, a gateway reads an OSD's metadata several to a call, the OSD index's values fit its pages (format level 8); quick soak run 35 passed (499,786 operations, 20 faults, nothing lost)</td>
 </tr>
 <tr>
 <td>B22</td>

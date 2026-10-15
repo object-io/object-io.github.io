@@ -729,6 +729,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#single-host-2026-10-15-b21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Single host: 2026-10-15 (B21)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#six-cloud-vms-2026-10-07" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2374,6 +2385,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#single-host-2026-10-15-b21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Single host: 2026-10-15 (B21)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#six-cloud-vms-2026-10-07" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2473,8 +2495,8 @@
 
 <h1 id="performance-b4">Performance (B4)<a class="headerlink" href="#performance-b4" title="Permanent link">&para;</a></h1>
 <p>ObjectIO next to RustFS (and SeaweedFS on one host), measured with the same
-client on the same machines and drives: a single-host baseline, and six
-cloud VMs with local NVMe. Every change is checked against the tree it
+client on the same machines and drives: a single-host baseline (again for
+B21's exit, 2026-10-15), and six cloud VMs with local NVMe. Every change is checked against the tree it
 lands on by a <a href="#the-regression-check-in-ci">regression check in CI</a>. What
 a drive's write cache costs, with and without power-loss protection, is
 under <a href="#drives-with-and-without-power-loss-protection">drives</a>.
@@ -2735,6 +2757,78 @@ drive in turn; throughput (PUT p99):</p>
 <p>The operations guide already requires PLP (or a UPS) for production:
 without it, a power cut can lose what the cache held, whatever the
 speed.</p>
+<h2 id="single-host-2026-10-15-b21">Single host: 2026-10-15 (B21)<a class="headerlink" href="#single-host-2026-10-15-b21" title="Permanent link">&para;</a></h2>
+<p>The single-host baseline again, for B21's exit (small GETs within 1.5
+times RustFS, 64 KiB PUTs level with it), on the same host and drive as
+2026-10-04 below.</p>
+<p><strong>Systems:</strong> ObjectIO at objectio#214 (<code>objectio-aio</code>, release, <code>isal</code>
+and <code>io-uring</code>, 4+2, six OSDs on 64 GiB sparse files), the build before
+it (<code>main</code> at objectio#210), and RustFS (<code>rustfs/rustfs:latest</code> of
+2026-10-03, EC:2 over six directories). RustFS syncs before it answers a
+PUT: <code>strace</code> of its PUT cells showed <code>fsync</code> and <code>fdatasync</code> throughout
+(about 29 a PUT, which ext4 folds into about 2.4 device flushes).</p>
+<p><strong>Client:</strong> warp 1.1.4, 32 concurrent clients, 30 s per cell, PUT then
+GET for each size. Three rounds, the three systems in turn in each. Other
+work (builds and tests of other branches) ran on the host meanwhile, at a
+load of 8–13 on its 32 threads: read the ratios, not the absolutes.</p>
+<p>Objects per second (p99 latency):</p>
+<table>
+<thead>
+<tr>
+<th>Cell</th>
+<th>ObjectIO (#214)</th>
+<th>RustFS</th>
+<th>ObjectIO before</th>
+<th>RustFS ÷ ObjectIO (#214)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PUT 4 KiB</td>
+<td>1,146–1,300 (44–47 ms)</td>
+<td>285–341 (144–201 ms)</td>
+<td>205–316</td>
+<td>0.24–0.27</td>
+</tr>
+<tr>
+<td>PUT 64 KiB</td>
+<td>988–1,096 (121–142 ms)</td>
+<td>302–371 (140–152 ms)</td>
+<td>162–318 (1.0–1.5 s)</td>
+<td>0.30–0.34</td>
+</tr>
+<tr>
+<td>GET 4 KiB</td>
+<td>25,854–27,044 (2.2 ms)</td>
+<td>31,473–32,177 (2.3–2.7 ms)</td>
+<td>17,643–17,713</td>
+<td>1.16–1.24</td>
+</tr>
+<tr>
+<td>GET 64 KiB</td>
+<td>17,608–18,191 (3.0–3.5 ms)</td>
+<td>25,270–25,823 (2.7–2.9 ms)</td>
+<td>12,357–12,554</td>
+<td>1.39–1.47</td>
+</tr>
+</tbody>
+</table>
+<p>RustFS's PUTs depend on the state of the disk more than ObjectIO's: the
+same cells reached 859–880 64 KiB PUTs a second earlier in the day (when
+ObjectIO before #214 did 337–719). ObjectIO's are above that too.</p>
+<p><strong>What changed</strong> (small-object path,
+part 5):</p>
+<ul>
+<li><strong>Meta commits writes together.</strong> It used to take one write per Raft
+  log sync, and a 64 KiB PUT spent 95–186 ms waiting for <code>CreateObject</code>.</li>
+<li><strong>An OSD's index values fit its pages.</strong> A 16 KiB small shard took a
+  32 KiB page of the index file; checkpoints wrote twice their bytes and
+  held PUTs for seconds.</li>
+<li><strong>A gateway reads an OSD's metadata several to a call</strong>, and the parity
+  copies send no shard: CPU per 4 KiB GET fell from 1,020 µs to 463–524
+  (RustFS: 575–593).</li>
+</ul>
+<p>All three need format level 8.</p>
 <h2 id="six-cloud-vms-2026-10-07">Six cloud VMs: 2026-10-07<a class="headerlink" href="#six-cloud-vms-2026-10-07" title="Permanent link">&para;</a></h2>
 <p><strong>Machines:</strong> six Azure <code>Standard_D4pds_v6</code> in Central India, made with
 <code>objectio-infra</code> (<code>./infra up azure</code>): 4 Arm vCPUs (Cobalt 100), 16 GB,

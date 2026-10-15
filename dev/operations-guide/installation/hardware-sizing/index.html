@@ -2721,11 +2721,11 @@ enterprise NVMe (B4). The calculator assumes <strong>1 GB/s of writes and
 2 GB/s of reads per drive</strong>, a fraction of what a PCIe 4 drive is rated
 for; change it to what you measure.</p>
 <p>Small objects are bound by operations, not bytes. <strong>Measured</strong> on one lab
-host (consumer NVMe without PLP, everything on one machine, 4+2): 550
-PUTs/s and 8,400–10,500 GETs/s of 4 KiB objects; the
+host (consumer NVMe without PLP, everything on one machine, 4+2, 32
+clients): 1,150–1,300 PUTs/s and 25,900–27,000 GETs/s of 4 KiB objects,
+990–1,100 PUTs/s and 17,600–18,200 GETs/s of 64 KiB; the
 <a href="../../../developer-guide/performance/">performance page</a> has the
-details. A drive with PLP makes each flush much cheaper, and fewer
-internal round trips per small GET are on the roadmap (B21). Treat small-
+details. A drive with PLP makes each flush much cheaper. Treat small-
 object rates as something to measure on your hardware.</p>
 <h3 id="cpu">CPU<a class="headerlink" href="#cpu" title="Permanent link">&para;</a></h3>
 <p><strong>Measured</strong> per core on an AMD Ryzen 9 7945HX (Zen 4), 4 MiB stripes:</p>
@@ -2864,7 +2864,8 @@ plan <strong>2.2 × the database</strong> on each meta node's disk.</p>
 </code></pre></div>
 <p>An object whose shards are 16 KiB or less (64 KiB or less with 4+2)
 keeps them in the index too: add the object's size ÷ k to each copy's
-1.5 KB. At a 1 MiB average object the index is under 1% of the drive; at
+1.5 KB (from format level 8; before it, a shard just past a power of two,
+such as a 64 KiB object's 16 KiB with 4+2, took twice its size there). At a 1 MiB average object the index is under 1% of the drive; at
 64 KiB, where the shards live there, the whole drive's worth of data is in
 the partition. The calculator gives the partition size.</p>
 <h3 id="network">Network<a class="headerlink" href="#network" title="Permanent link">&para;</a></h3>
