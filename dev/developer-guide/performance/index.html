@@ -2476,13 +2476,14 @@
 client on the same machines and drives: a single-host baseline, and six
 cloud VMs with local NVMe. Every change is checked against the tree it
 lands on by a <a href="#the-regression-check-in-ci">regression check in CI</a>. What
-drives without power-loss protection cost, and what is still to measure
-on drives with it, is under <a href="#drives-with-and-without-power-loss-protection">drives</a>.
+a drive's write cache costs, with and without power-loss protection, is
+under <a href="#drives-with-and-without-power-loss-protection">drives</a>.
 Where the CPU goes is in <a href="profiling/">profiling</a> (B28).</p>
 <h2 id="the-regression-check-in-ci">The regression check in CI<a class="headerlink" href="#the-regression-check-in-ci" title="Permanent link">&para;</a></h2>
 <p>The <code>performance</code> job in the code repo's CI runs in the merge queue, so
-every change is measured before it lands (it doesn't block a merge until
-it is made a required check), and on a pull request labelled
+every change is measured before it lands; it is a required check on
+<code>main</code>, so a change that fails it doesn't merge. It also runs on a pull
+request labelled
 <code>perf</code> (add the label, then push: a label alone doesn't start a run). It
 builds the tree that lands and the tree it lands on (the base), both
 release builds with ISA-L and io_uring, and runs
@@ -2642,21 +2643,95 @@ running on the host):</p>
 </table>
 <p>The six cloud VMs' local NVMe was not checked for a volatile cache while
 they ran, and they are gone.</p>
-<p><strong>Not yet measured: a drive with PLP.</strong> None is within reach without
-making cloud machines for it, and production hosts are not ours to
-benchmark. This part of B4 is open. When a machine with enterprise NVMe
-is available:</p>
-<ol>
-<li>Check the drive: <code>nvme id-ctrl /dev/nvme0 | grep vwc</code> (0 means no
-   volatile write cache, what a drive with PLP usually reports), and
-   <code>cat /sys/block/nvme0n1/queue/write_cache</code> (<code>write through</code> means the
-   kernel sends it no flushes).</li>
-<li>Measure a flush: <code>fio --name=flush --filename=&lt;a file on the drive&gt;
-   --rw=write --bs=4k --size=64m --ioengine=sync --fdatasync=1</code>, and
-   compare its <code>sync</code> latencies with the table above.</li>
-<li>Run the small-object cells (PUT 4 KiB and 64 KiB, as in the baselines
-   below) on that machine and on one without PLP, same client.</li>
-</ol>
+<p><strong>Measured: a drive with no volatile cache, and a cloud disk.</strong> One Azure
+<code>Standard_L8s_v4</code> VM (Intel Xeon Platinum 8573C, 8 vCPUs, 64 GB, Linux
+6.17), 2026-10-15, for an hour:</p>
+<ul>
+<li>Its local NVMe ("Microsoft NVMe Direct Disk v2") reports <code>vwc 0</code>: no
+  volatile write cache, and the kernel marks it <code>write through</code>, so a
+  write is durable when it completes and an <code>fdatasync</code> sends no flush.
+  That is what a drive with PLP gives an fsync, however the drive gets
+  there.</li>
+<li>A Premium SSD v2 disk (64 GiB, its baseline 3,000 IOPS and 125 MB/s) is
+  network storage: it reports a write-back cache with FUA, so flushes go
+  through and each one is a round trip to the storage service.</li>
+</ul>
+<p>The same <code>fio</code> flush test as above, three runs of 3,000 each:</p>
+<table>
+<thead>
+<tr>
+<th>Drive</th>
+<th>Volatile write cache</th>
+<th>Flush p50</th>
+<th>Flush p99</th>
+<th>Flushes a second</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Azure L8s_v4 local NVMe</td>
+<td>no (<code>vwc 0</code>)</td>
+<td>0.11 ms</td>
+<td>0.20–0.22 ms</td>
+<td>7,300–8,400</td>
+</tr>
+<tr>
+<td>Azure Premium SSD v2, 64 GiB</td>
+<td>write-back, flushed</td>
+<td>1.97 ms</td>
+<td>4.5–4.7 ms</td>
+<td>450–465</td>
+</tr>
+</tbody>
+</table>
+<p>Then the small-object cells of the single-host baseline (warp, 32
+clients, 30 s; <code>scripts/bench/baseline.sh</code> with <code>SIZES="4KiB 64KiB"</code>), on
+one 4+2 <code>objectio-aio</code> built from <code>main</code> at objectio#211 (<code>isal</code>,
+<code>io-uring</code>), its six OSDs' files on the drive under test. Two rounds, each
+drive in turn; throughput (PUT p99):</p>
+<table>
+<thead>
+<tr>
+<th>Cell</th>
+<th>Local NVMe, no write cache</th>
+<th>Premium SSD v2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PUT 4 KiB</td>
+<td>1,547–1,571 obj/s (66 ms)</td>
+<td>333 obj/s (166–172 ms)</td>
+</tr>
+<tr>
+<td>PUT 64 KiB</td>
+<td>717–756 obj/s (104–119 ms)</td>
+<td>270–271 obj/s (1.8–2.0 s)</td>
+</tr>
+<tr>
+<td>GET 4 KiB</td>
+<td>8,694–8,704 obj/s</td>
+<td>8,840–8,849 obj/s</td>
+</tr>
+<tr>
+<td>GET 64 KiB</td>
+<td>6,350–6,362 obj/s</td>
+<td>6,370–6,381 obj/s</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Durable small PUTs follow the flush.</strong> Where a flush costs 0.1 ms,
+  4 KiB PUTs run 4.7 times as fast as on the network disk, where it costs
+  2 ms. The Premium SSD v2's 64 KiB PUTs also meet its baseline IOPS and
+  bandwidth caps (six OSDs' writes share one disk); a production cloud
+  disk would be provisioned past them.</li>
+<li><strong>GETs don't care</strong>: the objects were just written and are in the page
+  cache, so both drives read the same.</li>
+<li>Not the same machine as the lab host, so the absolute numbers aren't
+  comparable with its tables; the flush cost, 0.11 ms here against
+  0.25–0.67 ms on the lab host's two consumer drives, is.</li>
+</ul>
 <p>The operations guide already requires PLP (or a UPS) for production:
 without it, a power cut can lose what the cache held, whatever the
 speed.</p>

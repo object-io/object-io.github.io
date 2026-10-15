@@ -3676,7 +3676,7 @@ when the code is written.</p>
 <td>B4</td>
 <td>Performance baseline</td>
 <td>Published numbers (<a href="../developer-guide/performance/">lab host</a>) (throughput, p99, small objects) on a lab host, then multi-host on NVMe cloud VMs, on drives with and without power-loss protection; regression check in CI</td>
-<td>🔨 lab host and six Azure VMs (Arm, local NVMe) published; <a href="../developer-guide/performance/#the-regression-check-in-ci">CI check</a> runs in the merge queue since 2026-10-15, not yet a required check (objectio#211: release builds of the change and its base on one runner, fails a cell below 0.85; caught 1 ms of CPU per PUT at 0.78, no-change runs 0.99–1.08); drives without PLP measured, <strong>a drive with PLP still to measure</strong> (none reachable without new cloud machines)</td>
+<td>✅ 2026-10-15: lab host and six Azure VMs (Arm, local NVMe) published; <a href="../developer-guide/performance/#the-regression-check-in-ci">CI check</a> required on <code>main</code> (objectio#211: release builds of the change and its base on one runner, fails a cell below 0.85; caught 1 ms of CPU per PUT at 0.78, no-change runs 0.99–1.08); <a href="../developer-guide/performance/#drives-with-and-without-power-loss-protection">drives</a> with and without a volatile write cache (lab host consumer NVMe, flush 0.25–0.67 ms; Azure L8s_v4 local NVMe with none, 0.11 ms, 4 KiB PUTs 1,560 obj/s; Premium SSD v2, 2 ms, 333 obj/s)</td>
 </tr>
 <tr>
 <td>B5</td>
