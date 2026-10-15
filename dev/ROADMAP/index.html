@@ -3676,7 +3676,7 @@ when the code is written.</p>
 <td>B4</td>
 <td>Performance baseline</td>
 <td>Published numbers (<a href="../developer-guide/performance/">lab host</a>) (throughput, p99, small objects) on a lab host, then multi-host on NVMe cloud VMs, on drives with and without power-loss protection; regression check in CI</td>
-<td>🔨 lab host and six Azure VMs (Arm, local NVMe) published; PLP drives and the CI check to do</td>
+<td>🔨 lab host and six Azure VMs (Arm, local NVMe) published; <a href="../developer-guide/performance/#the-regression-check-in-ci">CI check</a> runs in the merge queue since 2026-10-15, not yet a required check (objectio#211: release builds of the change and its base on one runner, fails a cell below 0.85; caught 1 ms of CPU per PUT at 0.78, no-change runs 0.99–1.08); drives without PLP measured, <strong>a drive with PLP still to measure</strong> (none reachable without new cloud machines)</td>
 </tr>
 <tr>
 <td>B5</td>

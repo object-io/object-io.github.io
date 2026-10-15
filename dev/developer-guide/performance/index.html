@@ -707,6 +707,28 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#the-regression-check-in-ci" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The regression check in CI
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#drives-with-and-without-power-loss-protection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Drives with and without power-loss protection
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#six-cloud-vms-2026-10-07" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2330,6 +2352,28 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#the-regression-check-in-ci" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The regression check in CI
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#drives-with-and-without-power-loss-protection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Drives with and without power-loss protection
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#six-cloud-vms-2026-10-07" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2430,8 +2474,192 @@
 <h1 id="performance-b4">Performance (B4)<a class="headerlink" href="#performance-b4" title="Permanent link">&para;</a></h1>
 <p>ObjectIO next to RustFS (and SeaweedFS on one host), measured with the same
 client on the same machines and drives: a single-host baseline, and six
-cloud VMs with local NVMe. A regression check in CI comes next (B4 in the
-roadmap). Where the CPU goes is in <a href="profiling/">profiling</a> (B28).</p>
+cloud VMs with local NVMe. Every change is checked against the tree it
+lands on by a <a href="#the-regression-check-in-ci">regression check in CI</a>. What
+drives without power-loss protection cost, and what is still to measure
+on drives with it, is under <a href="#drives-with-and-without-power-loss-protection">drives</a>.
+Where the CPU goes is in <a href="profiling/">profiling</a> (B28).</p>
+<h2 id="the-regression-check-in-ci">The regression check in CI<a class="headerlink" href="#the-regression-check-in-ci" title="Permanent link">&para;</a></h2>
+<p>The <code>performance</code> job in the code repo's CI runs in the merge queue, so
+every change is measured before it lands (it doesn't block a merge until
+it is made a required check), and on a pull request labelled
+<code>perf</code> (add the label, then push: a label alone doesn't start a run). It
+builds the tree that lands and the tree it lands on (the base), both
+release builds with ISA-L and io_uring, and runs
+<code>scripts/bench/regression.py</code> on them.</p>
+<p><strong>What it runs.</strong> Each build five times, in turn on the same runner:
+base, head, head, base, and so on. Every run starts a fresh
+<code>objectio-aio</code> (six OSDs, 4+2) and, with <code>objectio-s3-bench</code>, puts 6,000
+objects of 64 KiB (32 in flight) and gets each of them four times, then
+puts 400 objects of 4 MiB (8 in flight) and gets each three times. A short
+unmeasured warm-up comes first.</p>
+<p><strong>How it decides.</strong> For each of the four cells (PUT and GET, 64 KiB and
+4 MiB), the head's median throughput is divided by the base's. Any cell
+below <strong>0.85</strong> fails the job. p99 latency is shown next to it but not
+judged: on a shared runner it moves too much from run to run.</p>
+<p><strong>Why it is built this way.</strong></p>
+<ul>
+<li><strong>Relative, on one runner.</strong> GitHub's runners differ from one another by
+  more than most regressions, so no absolute number can gate anything.
+  Both builds run on the same runner in the same job, and alternating
+  them means a runner that slows down part way through slows both.</li>
+<li><strong>Medians of five.</strong> One run in five can be off by a quarter (a cold
+  first run, a noisy neighbour); the median ignores it.</li>
+<li><strong>Data in memory.</strong> The aio keeps its data on a tmpfs. On a runner's
+  disk, one build's 64 KiB PUTs went from 208 to 372 a second between
+  runs, more than any regression this is for. In memory the check
+  measures the software (CPU, copies, RPCs, locks), which is what changes
+  from commit to commit.</li>
+</ul>
+<p><strong>What it doesn't see.</strong> A change that adds work on the drive (another
+fsync per PUT) costs almost nothing in memory, so it passes here. Drive
+costs are measured by the baselines below, on real drives, and by the
+soak.</p>
+<p><strong>Reading it.</strong> The job summary has a table:</p>
+<table>
+<thead>
+<tr>
+<th>Cell</th>
+<th>Base</th>
+<th>Head</th>
+<th>Head ÷ base</th>
+<th>p99 (not judged)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PUT 64KiB</td>
+<td>1,237 ops/s (±1%)</td>
+<td>1,235 ops/s (±7%)</td>
+<td><strong>1.00</strong> ✅</td>
+<td>85 → 88 ms</td>
+</tr>
+</tbody>
+</table>
+<p>The ± is half the range of the five runs. A wide range on either side
+means that cell was noisy on this runner. The artifact <code>performance</code> has
+every run's numbers (<code>perf.json</code>) and each aio's log. To run it locally:</p>
+<div class="highlight"><pre><span></span><code>cargo<span class="w"> </span>build<span class="w"> </span>--release<span class="w"> </span>--features<span class="w"> </span>objectio-aio/isal,objectio-aio/io-uring<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--bin<span class="w"> </span>objectio-aio<span class="w"> </span>--bin<span class="w"> </span>objectio-s3-bench<span class="w">          </span><span class="c1"># on each tree, into two directories</span>
+scripts/bench/regression.py<span class="w"> </span>--base<span class="w"> </span>&lt;dir&gt;<span class="w"> </span>--head<span class="w"> </span>&lt;dir&gt;<span class="w"> </span>--workdir<span class="w"> </span>&lt;a<span class="w"> </span>tmpfs&gt;
+</code></pre></div>
+<p>The work directory must not be under <code>/dev</code>: an OSD takes a path there
+for a device.</p>
+<p><strong>How well it works.</strong></p>
+<p>Runs on GitHub's runners (objectio#211 for no change, and a throwaway
+pull request that added 1 ms of CPU to every PUT, about 30% of a 64 KiB
+PUT's CPU on a runner and almost none of a 4 MiB PUT's):</p>
+<table>
+<thead>
+<tr>
+<th>Run</th>
+<th>PUT 64KiB</th>
+<th>GET 64KiB</th>
+<th>PUT 4MiB</th>
+<th>GET 4MiB</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No change</td>
+<td>1.01</td>
+<td>1.00</td>
+<td>1.05</td>
+<td>1.02</td>
+<td>pass</td>
+</tr>
+<tr>
+<td>No change, another runner</td>
+<td>1.01</td>
+<td>1.01</td>
+<td>1.08</td>
+<td>0.99</td>
+<td>pass</td>
+</tr>
+<tr>
+<td>1 ms more CPU in every PUT</td>
+<td><strong>0.78</strong></td>
+<td>1.00</td>
+<td>0.95</td>
+<td>0.96</td>
+<td>fail: PUT 64KiB</td>
+</tr>
+</tbody>
+</table>
+<p>The two "no change" runners differed by 65% in absolute speed (1,151
+against 1,906 PUTs of 64 KiB a second); the ratios stayed within 1%.
+Getting there:</p>
+<ul>
+<li><strong>On the runner's disk</strong>, the first version caught a 15 ms sleep in
+  every PUT (PUT 64 KiB at 0.83), but on that runner the base alone
+  ranged from 208 to 372 PUTs a second. Its data moved to a tmpfs.</li>
+<li><strong>With a 4 MiB phase of 1.5 s</strong>, one no-change run came out at 0.87 for
+  PUT 4 MiB, too close to the threshold. The phase now writes 400
+  objects instead of 150.</li>
+</ul>
+<p>So it fails a change that costs a cell about 20% of its throughput or
+more; a smaller loss usually passes, so it is no substitute for the
+baselines. 4 MiB PUTs are the noisiest cell (one runner's runs spread
+±24%).</p>
+<h2 id="drives-with-and-without-power-loss-protection">Drives with and without power-loss protection<a class="headerlink" href="#drives-with-and-without-power-loss-protection" title="Permanent link">&para;</a></h2>
+<p>An acknowledged PUT waits for a flush on every OSD it writes to. On a
+drive with a volatile write cache and no power-loss protection (PLP), a
+flush empties that cache to flash; on one with PLP, capacitors cover the
+cache, so the drive can acknowledge a flush without emptying it. Small
+PUTs, which are mostly flushes, gain the most.</p>
+<p><strong>Measured: the drives we have, both without PLP.</strong> The lab host of the
+single-host baseline has two consumer NVMe drives. Both report a volatile
+write cache, and neither has PLP. 4 KiB writes, each followed by
+<code>fdatasync</code>, one at a time (3,000 of them, 2026-10-15; other tests were
+running on the host):</p>
+<table>
+<thead>
+<tr>
+<th>Drive</th>
+<th>Volatile write cache</th>
+<th>Flush p50</th>
+<th>Flush p99</th>
+<th>Flushes a second</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Corsair MP600 Elite 2 TB (the baselines' drive)</td>
+<td>yes</td>
+<td>0.67 ms</td>
+<td>0.89 ms</td>
+<td>1,440</td>
+</tr>
+<tr>
+<td>OEM 1 TB, Phison controller (ESL01TBTLCZ; through LVM)</td>
+<td>yes</td>
+<td>0.25 ms</td>
+<td>0.58 ms</td>
+<td>3,670</td>
+</tr>
+</tbody>
+</table>
+<p>The six cloud VMs' local NVMe was not checked for a volatile cache while
+they ran, and they are gone.</p>
+<p><strong>Not yet measured: a drive with PLP.</strong> None is within reach without
+making cloud machines for it, and production hosts are not ours to
+benchmark. This part of B4 is open. When a machine with enterprise NVMe
+is available:</p>
+<ol>
+<li>Check the drive: <code>nvme id-ctrl /dev/nvme0 | grep vwc</code> (0 means no
+   volatile write cache, what a drive with PLP usually reports), and
+   <code>cat /sys/block/nvme0n1/queue/write_cache</code> (<code>write through</code> means the
+   kernel sends it no flushes).</li>
+<li>Measure a flush: <code>fio --name=flush --filename=&lt;a file on the drive&gt;
+   --rw=write --bs=4k --size=64m --ioengine=sync --fdatasync=1</code>, and
+   compare its <code>sync</code> latencies with the table above.</li>
+<li>Run the small-object cells (PUT 4 KiB and 64 KiB, as in the baselines
+   below) on that machine and on one without PLP, same client.</li>
+</ol>
+<p>The operations guide already requires PLP (or a UPS) for production:
+without it, a power cut can lose what the cache held, whatever the
+speed.</p>
 <h2 id="six-cloud-vms-2026-10-07">Six cloud VMs: 2026-10-07<a class="headerlink" href="#six-cloud-vms-2026-10-07" title="Permanent link">&para;</a></h2>
 <p><strong>Machines:</strong> six Azure <code>Standard_D4pds_v6</code> in Central India, made with
 <code>objectio-infra</code> (<code>./infra up azure</code>): 4 Arm vCPUs (Cobalt 100), 16 GB,
