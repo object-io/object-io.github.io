@@ -1617,6 +1617,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#existing-objects-resync" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Existing objects: resync
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bandwidth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bandwidth
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#watching-it" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2340,6 +2362,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#existing-objects-resync" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Existing objects: resync
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bandwidth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bandwidth
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#watching-it" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2403,8 +2447,17 @@ admin manages the system's (no <code>?tenant=</code>) and any tenant's (<code>?t
 <span class="w">  </span>--aws-sigv4<span class="w"> </span>aws:amz:us-east-1:s3<span class="w"> </span>--user<span class="w"> </span><span class="s2">"</span><span class="nv">$AK</span><span class="s2">:</span><span class="nv">$SK</span><span class="s2">"</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-H<span class="w"> </span><span class="s1">'content-type: application/json'</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-d<span class="w"> </span><span class="s1">'{"name": "site-b", "endpoint": "https://site-b:9000", "bucket": "dr-copy",</span>
-<span class="s1">       "access_key": "...", "secret_key": "..."}'</span>
+<span class="s1">       "access_key": "...", "secret_key": "...", "bandwidth": 104857600}'</span>
 </code></pre></div>
+<p>Or with <code>obioctl</code> (the remote secret from <code>OBIOCTL_REMOTE_SECRET_KEY</code> if
+not given, which keeps it out of the process list):</p>
+<div class="highlight"><pre><span></span><code>obioctl<span class="w"> </span>replication<span class="w"> </span>target<span class="w"> </span><span class="nb">set</span><span class="w"> </span>site-b<span class="w"> </span>--remote-endpoint<span class="w"> </span>https://site-b:9000<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--remote-bucket<span class="w"> </span>dr-copy<span class="w"> </span>--remote-access-key<span class="w"> </span>...<span class="w"> </span>--bandwidth<span class="w"> </span>100M
+obioctl<span class="w"> </span>replication<span class="w"> </span>target<span class="w"> </span>list
+</code></pre></div>
+<p><code>bandwidth</code> is optional: the bytes a second the whole cluster may send to
+the target (see <a href="#bandwidth">Bandwidth</a>); without it, as fast as the
+link goes.</p>
 <p><code>GET /_admin/replication/targets</code> lists a tenant's targets (the caller's
 own, for a tenant admin; secrets never shown);
 <code>DELETE /_admin/replication/targets/{name}</code> removes one. Both take
@@ -2468,7 +2521,7 @@ versioned; the rules are refused otherwise.</p>
 </tr>
 <tr>
 <td>Objects written before the rule</td>
-<td>Not yet (a resync is coming); copy them once with your usual tooling</td>
+<td>Only through a <a href="#existing-objects-resync">resync</a></td>
 </tr>
 </tbody>
 </table>
@@ -2492,6 +2545,57 @@ pointing at each other don't loop.</p>
   once: a send repeated after a crash changes nothing. An older version
   arriving after a newer one is kept as a version, never made current.</li>
 </ul>
+<h2 id="existing-objects-resync">Existing objects: resync<a class="headerlink" href="#existing-objects-resync" title="Permanent link">&para;</a></h2>
+<p>A rule sends what is written after it. To send what a bucket already
+holds (turning replication on for a bucket with data, or bringing a new
+or rebuilt target up to date), start a resync of the bucket to one of its
+targets. The bucket's tenant's admin, or the system admin, may:</p>
+<div class="highlight"><pre><span></span><code>obioctl<span class="w"> </span>replication<span class="w"> </span>resync<span class="w"> </span>start<span class="w"> </span>photos<span class="w"> </span>site-b
+<span class="c1"># or: POST /_admin/replication/resync {"bucket": "photos", "target": "site-b"}</span>
+</code></pre></div>
+<p>The bucket must have an enabled rule sending to the target. The scanner
+(one gateway at a time) walks the bucket in key order, a page of 1000
+keys at a time: every version a rule sends to the target and that the
+target hasn't got is marked <code>PENDING</code> and sent. Up to 8 sends run at
+once, within the target's bandwidth limit. Each pass gives resyncs a
+minute, then scans for versions not yet sent as usual, so a resync of a
+big bucket doesn't hold back other buckets' retries.</p>
+<p>A version already <code>COMPLETED</code> for the target is left alone, and so is one
+<code>PENDING</code> or <code>FAILED</code> (the fast path and the scanner send it). To send
+everything again, for a target that was replaced or lost data, add
+<code>--again</code> (<code>"again": true</code>): versions already sent are marked and sent
+too; the target keeps one copy of each.</p>
+<p>Watching and stopping it:</p>
+<div class="highlight"><pre><span></span><code>obioctl<span class="w"> </span>replication<span class="w"> </span>resync<span class="w"> </span>status<span class="w"> </span>photos
+<span class="c1"># TARGET  STATE    AFTER        SCANNED  MARKED  SENT    FAILED  BYTES     ERROR</span>
+<span class="c1"># site-b  running  img/0412.jpg 412000   409870  409870  0       88123456  -</span>
+obioctl<span class="w"> </span>replication<span class="w"> </span>resync<span class="w"> </span>cancel<span class="w"> </span>photos<span class="w"> </span>site-b
+</code></pre></div>
+<p><code>GET /_admin/replication/resync?bucket=</code> gives each target's resync
+(running, or the last one, <code>done</code> or <code>cancelled</code>): the last key done
+(<code>after</code>), the versions looked at (<code>scanned</code>), those a rule sends to the
+target (<code>covered</code>), marked, sent, failed, the bytes, and the last error.
+Starting a resync that is running returns it as it is.</p>
+<p>A resync survives restarts. Its record in meta moves past a page only
+once every version in it is marked and sent. If the gateway stops
+mid-page, the scanner, wherever it runs next, takes the page again (after
+the scanner's lease runs out, up to a minute or three scan intervals);
+what that page had marked but not sent is <code>PENDING</code> by then and goes out
+with the scanner's next pass. Cancelling keeps what was sent and marked;
+the marked versions still go.</p>
+<h2 id="bandwidth">Bandwidth<a class="headerlink" href="#bandwidth" title="Permanent link">&para;</a></h2>
+<p>A target's <code>bandwidth</code> is the cluster's limit for it: the fast path, the
+scanner and resyncs on every gateway together send it no more than that
+many bytes a second. Each gateway takes an equal share (the limit divided
+by the gateways up, as meta last heard from them, refreshed every 30 s)
+and paces its sends to it, 64 KiB at a time; a quiet spell saves nothing
+up, so no burst follows it. A gateway can't use another's idle share, so
+with traffic on one gateway only, the cluster sends below the limit, not
+above it; and for the seconds before a new gateway first reports, the
+others still use the old shares.</p>
+<p>The limit counts request bodies (the objects' bytes), not headers. A
+paced send may take longer than the 5-minute send timeout; its timeout
+grows with what its bytes take at the gateway's share.</p>
 <h2 id="watching-it">Watching it<a class="headerlink" href="#watching-it" title="Permanent link">&para;</a></h2>
 <ul>
 <li><code>x-amz-replication-status</code> on HEAD and GET: <code>PENDING</code>, <code>COMPLETED</code> or
@@ -2506,8 +2610,8 @@ pointing at each other don't loop.</p>
 </ul>
 <p>Alert on lag that keeps growing, and on <code>result="error"</code>.</p>
 <h2 id="not-yet">Not yet<a class="headerlink" href="#not-yet" title="Permanent link">&para;</a></h2>
-<p>Existing-object resync, per-target bandwidth limits, and targets that
-aren't ObjectIO (AWS S3, MinIO) are the next phases.</p>
+<p>Two-way replication's conflict tests, and targets that aren't ObjectIO
+(AWS S3, MinIO), are the next phases.</p>
 
 
 

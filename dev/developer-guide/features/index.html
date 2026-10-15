@@ -2854,6 +2854,11 @@ model as Iceberg — IAM-style policies, three-level policy walk
 <li>Reliable by construction: the replication mark is written with the
   version, a scanner finds anything the immediate send missed, and the
   target stores a repeated send once.</li>
+<li>Existing objects reach a target through a resync
+  (<code>/_admin/replication/resync</code>, <code>obioctl replication resync</code>), which
+  survives restarts and shows its progress.</li>
+<li>A per-target bandwidth limit, the cluster's, shared by every gateway's
+  sends.</li>
 <li><code>x-amz-replication-status</code>, backlog and lag metrics. Guide:
   <code>operations-guide/administration/replication.md</code>.</li>
 </ul>
