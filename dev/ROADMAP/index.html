@@ -3597,7 +3597,7 @@ when the code is written.</p>
 <td>A9</td>
 <td>Release candidate</td>
 <td>A1–A8c, A8, A15, A16, A12, B2–B5, B22, B23, B25, B26, B31, B32 green on one commit</td>
-<td>🔨 2026-10-15: on objectio <code>ec710f02</code> CI and the merge queue passed (e2e, rolling upgrade, performance) and s3-tests passed 681 of 687 applicable (the rest gaps, no bugs); the 48 h soak (run 36) stopped at 4 h, an OSD 305 s to serve after a power cut (location records a page each); the candidate moves to the commit with that fix</td>
+<td>🔨 2026-10-15: on objectio <code>ec710f02</code> CI and the merge queue passed (e2e, rolling upgrade, performance) and s3-tests passed 681 of 687 applicable (the rest gaps, no bugs); the 48 h soak (run 36) stopped at 4 h, an OSD 305 s to serve after a power cut (location records a page each); on <code>8e0b480e</code>, with that fix, s3-tests passed 680 (the one more failure a timing flake of the bucket-log roll under the soak's load, passing alone) and the soak's power-off OSD, 138,053 shards, served in 17 s; the soak (run 37) stopped at 4.8 h, a meta node not starting after a power cut (a torn append); the candidate moves to the commit with that fix</td>
 </tr>
 <tr>
 <td>A14</td>
