@@ -9,6 +9,10 @@
          <lastmod>2026-10-18</lastmod>
     </url>
     <url>
+         <loc>https://object-io.github.io/dev/features/</loc>
+         <lastmod>2026-10-18</lastmod>
+    </url>
+    <url>
          <loc>https://object-io.github.io/dev/how-it-works/</loc>
          <lastmod>2026-10-18</lastmod>
     </url>
@@ -178,6 +182,10 @@
     </url>
     <url>
          <loc>https://object-io.github.io/dev/operations-guide/operations/upgrades/</loc>
+         <lastmod>2026-10-18</lastmod>
+    </url>
+    <url>
+         <loc>https://object-io.github.io/dev/releases/0.1.0/</loc>
          <lastmod>2026-10-18</lastmod>
     </url>
 </urlset>

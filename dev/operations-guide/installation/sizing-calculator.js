@@ -198,7 +198,7 @@
     if (objects > 1e9) {
       notes.push(
         `${fmt(objects / 1e9, 1)} billion objects: meta keeps a listing entry for each. Meta has been ` +
-          "tested (B2 soak) far below this; test it at your object count before relying on these figures.",
+          "tested (in the soak) far below this; test it at your object count before relying on these figures.",
       );
     }
     const metaPlacement =
@@ -365,7 +365,7 @@
           [
             "Rebuild a failed drive onto every other drive's free space",
             `${hours(r.rebuildSpread)} at best: what the drives and network allow with ` +
-              `${fmt(REPAIR_SHARE * 100, 0)}% of them for repair. Today's repair is slower (roadmap B24).`,
+              `${fmt(REPAIR_SHARE * 100, 0)}% of them for repair. Today's repair is slower (raising it is on the roadmap).`,
           ],
           ["The same onto one spare drive (as RAID does)", `${hours(r.rebuildOne)} at best`],
         ],
