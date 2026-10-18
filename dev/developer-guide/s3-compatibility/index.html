@@ -820,15 +820,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#latest-2026-10-03" class="md-nav__link">
+  <a href="#latest-2026-10-15-the-a9-release-candidate" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Latest: 2026-10-03
+        Latest: 2026-10-15 (the A9 release candidate)
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Latest: 2026-10-03">
+    <nav class="md-nav" aria-label="Latest: 2026-10-15 (the A9 release candidate)">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1154,6 +1154,148 @@
   
     <li class="md-nav__item">
       <a href="2026-10-03/linux-arm64/summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ceph s3-tests results
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_7_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_7_4" id="__nav_4_7_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026 10 15
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_7_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_7_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2026 10 15
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_7_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_7_4_1" id="__nav_4_7_4_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux amd64
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_4_7_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_7_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Linux amd64
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="2026-10-15/linux-amd64/summary/" class="md-nav__link">
         
   
   
@@ -2302,15 +2444,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#latest-2026-10-03" class="md-nav__link">
+  <a href="#latest-2026-10-15-the-a9-release-candidate" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Latest: 2026-10-03
+        Latest: 2026-10-15 (the A9 release candidate)
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Latest: 2026-10-03">
+    <nav class="md-nav" aria-label="Latest: 2026-10-15 (the A9 release candidate)">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -2376,9 +2518,10 @@
 the S3 compatibility suite RGW is built against: 1053 tests. Each run is in a
 dated folder here, with every test's outcome and, for each failure, why it
 fails.</p>
-<h2 id="latest-2026-10-03">Latest: 2026-10-03<a class="headerlink" href="#latest-2026-10-03" title="Permanent link">&para;</a></h2>
-<p><strong>Passes 591 of 591 applicable tests, on Linux x86_64 and Linux arm64.</strong>
-Every test had the same outcome on both.</p>
+<h2 id="latest-2026-10-15-the-a9-release-candidate">Latest: 2026-10-15 (the A9 release candidate)<a class="headerlink" href="#latest-2026-10-15-the-a9-release-candidate" title="Permanent link">&para;</a></h2>
+<p><strong>Passes 680 of 687 applicable tests, on Linux x86_64.</strong> The 7 that don't
+pass: 6 gaps, below, and 1 a test interfering with another as they run in
+parallel. None is a bug.</p>
 <table>
 <thead>
 <tr>
@@ -2391,23 +2534,18 @@ Every test had the same outcome on both.</p>
 <tbody>
 <tr>
 <td>Linux x86_64 (NVMe)</td>
-<td><code>dcb4cd1</code></td>
-<td><a href="2026-10-03/linux-amd64/summary/">summary</a></td>
-<td><a href="2026-10-03/linux-amd64/results.csv">results.csv</a></td>
-</tr>
-<tr>
-<td>Linux arm64 (container on Apple silicon)</td>
-<td><code>ebeddb1</code></td>
-<td><a href="2026-10-03/linux-arm64/summary/">summary</a></td>
-<td><a href="2026-10-03/linux-arm64/results.csv">results.csv</a></td>
+<td><code>d8b2676a</code></td>
+<td><a href="2026-10-15/linux-amd64/summary/">summary</a></td>
+<td><a href="2026-10-15/linux-amd64/results.csv">results.csv</a></td>
 </tr>
 </tbody>
 </table>
-<p>s3-tests <code>5522d1c</code>; a debug <code>objectio-aio</code> (6 OSDs, 4+2 erasure coding,
-auth on), fresh for each run.</p>
+<p>s3-tests <code>5522d1c</code>, now 1057 tests; a debug <code>objectio-aio</code> (6 OSDs, 4+2
+erasure coding, auth on), fresh for the run. The arm64 run was last done
+on 2026-10-03 (below) and wasn't repeated for this one.</p>
 <h3 id="applicable-and-not">Applicable, and not<a class="headerlink" href="#applicable-and-not" title="Permanent link">&para;</a></h3>
 <p>A test is applicable when it isn't skipped and doesn't fail for a reason
-that isn't ObjectIO's to fix. Of the 1053:</p>
+that isn't ObjectIO's to fix. Of the 1057:</p>
 <table>
 <thead>
 <tr>
@@ -2419,28 +2557,28 @@ that isn't ObjectIO's to fix. Of the 1053:</p>
 <tbody>
 <tr>
 <td><strong>Applicable</strong></td>
-<td style="text-align: right;"><strong>591</strong></td>
-<td><strong>all pass</strong></td>
+<td style="text-align: right;"><strong>687</strong></td>
+<td><strong>680 pass</strong></td>
 </tr>
 <tr>
 <td>Skipped by the suite</td>
-<td style="text-align: right;">162</td>
-<td>IAM (63), S3 (94) and SNS (5) tests the suite itself skips here</td>
+<td style="text-align: right;">92</td>
+<td>S3 tests the suite itself skips here</td>
 </tr>
 <tr>
 <td>Not implemented, by design</td>
-<td style="text-align: right;">237</td>
+<td style="text-align: right;">189</td>
 <td>below</td>
 </tr>
 <tr>
 <td>Test environment</td>
-<td style="text-align: right;">35</td>
-<td>27 need a web-identity provider for STS; the rest are the suite's own assumptions (botocore re-signing a header the test removed, leftover buckets, virtual-host DNS)</td>
+<td style="text-align: right;">41</td>
+<td>27 need a web-identity provider for STS; 6 expect RGW's tenant-less IAM ARNs; the rest are the suite's own assumptions (botocore re-signing a header the test removed, a header on the wrong client, a leftover bucket, virtual-host DNS)</td>
 </tr>
 <tr>
 <td>ObjectIO does what AWS does</td>
-<td style="text-align: right;">28</td>
-<td>the test expects RGW's behaviour instead (owner display names, <code>&lt;And&gt;</code> in lifecycle filters, <code>NoSuchBucketPolicy</code>, a part named twice in a completion, …)</td>
+<td style="text-align: right;">48</td>
+<td>the test expects RGW's behaviour instead (owner display names, how bucket logs name a copy or a batch delete, <code>&lt;And&gt;</code> in lifecycle filters, <code>NoSuchBucketPolicy</code>, S3 Select's AWS output, …)</td>
 </tr>
 </tbody>
 </table>
@@ -2455,8 +2593,8 @@ that isn't ObjectIO's to fix. Of the 1053:</p>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: right;">95</td>
-<td>ACLs (grants, <code>x-amz-grant-*</code>, public-read ACLs)</td>
+<td style="text-align: right;">107</td>
+<td>ACLs (grants, <code>x-amz-grant-*</code>, public-read ACLs, ownership controls)</td>
 <td>Never: buckets are BucketOwnerEnforced, AWS's default since 2023; bucket policies instead</td>
 </tr>
 <tr>
@@ -2465,19 +2603,14 @@ that isn't ObjectIO's to fix. Of the 1053:</p>
 <td>Never: AWS deprecated it; SigV4 only</td>
 </tr>
 <tr>
-<td style="text-align: right;">39</td>
-<td>Bucket logging</td>
-<td>Planned: <a href="../../ROADMAP/">roadmap</a> A12</td>
+<td style="text-align: right;">13</td>
+<td>Access across tenants (bucket policies, role assumption, a log target in another tenant)</td>
+<td>Never: a tenant is a hard boundary</td>
 </tr>
 <tr>
-<td style="text-align: right;">36</td>
-<td>The IAM API, and the STS calls built on it</td>
-<td>Built in #160 (A15); the next published run recounts these. Expected to remain: web identity (no IdP in the run), cross-tenant access and ACL grants (by design), OIDC provider management (a gap), and tests that assume RGW's tenant-less users</td>
-</tr>
-<tr>
-<td style="text-align: right;">12</td>
-<td>S3 Select</td>
-<td>Built since (A16, design); the next published run recounts these. Of the 34 S3 Select tests, 29 pass; 5 expect RGW's dialect or output where ObjectIO answers as AWS (JSON output as bare numbers and a FROM array read as its elements, <code>[a-z]</code> sets in LIKE, <code>null</code> for an empty CSV field, RGW's error code for a missing column)</td>
+<td style="text-align: right;">9</td>
+<td>SNS (topics, bucket notifications)</td>
+<td>Not planned</td>
 </tr>
 <tr>
 <td style="text-align: right;">8</td>
@@ -2485,13 +2618,34 @@ that isn't ObjectIO's to fix. Of the 1053:</p>
 <td>Never: not S3</td>
 </tr>
 <tr>
+<td style="text-align: right;">4</td>
+<td>ListBuckets refused to a user no policy allows</td>
+<td>ListBuckets lists what the caller owns; only an explicit Deny refuses it</td>
+</tr>
+<tr>
 <td style="text-align: right;">1</td>
 <td>Torrent</td>
 <td>Never: AWS dropped it</td>
 </tr>
+<tr>
+<td style="text-align: right;">1</td>
+<td>IAM <code>CreateRole</code> as the test calls it</td>
+<td></td>
+</tr>
 </tbody>
 </table>
-<p>Nothing failed intermittently.</p>
+<p>Gaps (6):</p>
+<ul>
+<li>An account root (tenant admin) isn't exempt from its own bucket's
+  policy for the bucket-policy calls, as AWS's root is (1).</li>
+<li>IAM OpenID Connect provider management (5): providers are configured
+  through the admin API, and <code>ListOpenIDConnectProviders</code> lists them.</li>
+</ul>
+<p>Not a gap: <code>test_s3select::test_cast_expressions</code> passed, but its
+teardown failed. It lists buckets as the suite's second user while
+another test, running at the same time, denies that user ListBuckets for
+a few seconds (<code>test_deny_bucket_actions_in_user_policy</code>). Run alone, it
+passes with its teardown.</p>
 <h2 id="running-it">Running it<a class="headerlink" href="#running-it" title="Permanent link">&para;</a></h2>
 <p>From the objectio repo, on Linux (on a Mac, inside a Linux VM or
 container: native macOS syncs are far slower, and its timings mean
@@ -2518,7 +2672,15 @@ there.</p>
 </thead>
 <tbody>
 <tr>
-<td>2026-10-03</td>
+<td><a href="2026-10-15/linux-amd64/summary/">2026-10-15</a></td>
+<td><code>d8b2676a</code>, Linux x86_64</td>
+<td style="text-align: right;">680 of 687</td>
+<td style="text-align: right;">680</td>
+<td style="text-align: right;">280 (+5 errors)</td>
+<td style="text-align: right;">92</td>
+</tr>
+<tr>
+<td>2026-10-03 (<a href="2026-10-03/linux-amd64/summary/">x86_64</a>, <a href="2026-10-03/linux-arm64/summary/">arm64</a>)</td>
 <td><code>dcb4cd1</code> / <code>ebeddb1</code>, Linux x86_64 and arm64</td>
 <td style="text-align: right;">591 of 591</td>
 <td style="text-align: right;">591</td>
