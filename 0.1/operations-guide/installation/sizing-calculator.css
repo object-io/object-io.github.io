@@ -1,0 +1,45 @@
+/* The sizing calculator on hardware-sizing.md. Colours come from the
+   theme, so it follows light and dark mode. */
+#sizing-calculator .oio-calc-form {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.4rem;
+  padding: 1rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.4rem;
+  margin-bottom: 1rem;
+}
+#sizing-calculator .oio-calc-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 9rem 3.5rem;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.75rem;
+}
+#sizing-calculator .oio-calc-row input[type="number"],
+#sizing-calculator .oio-calc-row select {
+  width: 100%;
+  padding: 0.2rem 0.4rem;
+  font: inherit;
+  color: var(--md-default-fg-color);
+  background: var(--md-default-bg-color);
+  border: 1px solid var(--md-default-fg-color--lighter);
+  border-radius: 0.2rem;
+}
+#sizing-calculator .oio-calc-row input[type="checkbox"] {
+  justify-self: start;
+}
+#sizing-calculator .oio-calc-row em {
+  color: var(--md-default-fg-color--light);
+  font-style: normal;
+}
+#sizing-calculator .oio-calc-fine {
+  font-size: 0.7rem;
+  color: var(--md-default-fg-color--light);
+}
+@media (max-width: 40em) {
+  #sizing-calculator .oio-calc-row {
+    grid-template-columns: 1fr;
+    gap: 0.2rem;
+  }
+}

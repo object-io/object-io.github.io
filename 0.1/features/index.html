@@ -1,0 +1,3583 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://object-io.github.io/0.1/features/">
+      
+      
+        <link rel="prev" href="../ROADMAP/">
+      
+      
+        <link rel="next" href="../how-it-works/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/brand/favicon.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>ObjectIO features - ObjectIO</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:300,300i,400,400i,700,700i%7CIBM+Plex+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"IBM Plex Sans";--md-code-font:"IBM Plex Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/brand/brand.css">
+    
+      <link rel="stylesheet" href="../operations-guide/installation/sizing-calculator.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#objectio-features" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="ObjectIO" class="md-header__button md-logo" aria-label="ObjectIO" data-md-component="logo">
+      
+  <img src="../assets/brand/objectio-mark-on-dark.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ObjectIO
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              ObjectIO features
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/object-io/objectio" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    object-io/objectio
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="ObjectIO" class="md-nav__button md-logo" aria-label="ObjectIO" data-md-component="logo">
+      
+  <img src="../assets/brand/objectio-mark-on-dark.svg" alt="logo">
+
+    </a>
+    ObjectIO
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/object-io/objectio" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    object-io/objectio
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ObjectIO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ROADMAP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ObjectIO roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ObjectIO features
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ObjectIO features
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-far-010-has-been-proven" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How far 0.1.0 has been proven
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#s3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        S3
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-lake" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data lake
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#security" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Security
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#block" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Block
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#platform" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Platform
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how-it-works/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How it works
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Developer guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Developer guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../developer-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Developer Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../developer-guide/api-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../developer-guide/features/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ObjectIO — Feature Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../developer-guide/sdk/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Management SDKs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_5" id="__nav_5_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chaos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Chaos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../developer-guide/chaos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chaos: faults on a multi-host cluster
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_6" id="__nav_5_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Performance
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Performance
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../developer-guide/performance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Performance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../developer-guide/performance/profiling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Profiling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_7" id="__nav_5_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S3 compatibility
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    S3 compatibility
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../developer-guide/s3-compatibility/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S3 compatibility: ceph s3-tests
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_7_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_7_2" id="__nav_5_7_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026 10 02
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_7_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_7_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2026 10 02
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../developer-guide/s3-compatibility/2026-10-02/summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ceph s3-tests against ObjectIO, run 2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_7_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_7_3" id="__nav_5_7_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026 10 03
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_7_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_7_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2026 10 03
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_7_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_7_3_1" id="__nav_5_7_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux amd64
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_5_7_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_7_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Linux amd64
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../developer-guide/s3-compatibility/2026-10-03/linux-amd64/summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ceph s3-tests results
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_7_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_7_3_2" id="__nav_5_7_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux arm64
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_5_7_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_7_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Linux arm64
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../developer-guide/s3-compatibility/2026-10-03/linux-arm64/summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ceph s3-tests results
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_7_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_7_4" id="__nav_5_7_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026 10 15
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_7_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_7_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2026 10 15
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_7_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_7_4_1" id="__nav_5_7_4_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux amd64
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_5_7_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_7_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Linux amd64
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../developer-guide/s3-compatibility/2026-10-15/linux-amd64/summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ceph s3-tests results
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operations guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Operations guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operations Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Administration
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Administration
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/administration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Administration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/administration/audit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audit Stream
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/administration/authentication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Authentication
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/administration/bucket-logging/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bucket Logging
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/administration/cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI (obioctl)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/administration/grep/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gateway-side grep — searching objects without downloading
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/administration/iam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Identity and Access
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/administration/iceberg-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Iceberg REST Catalog API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/administration/mtls/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mutual TLS between the services
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/administration/public-access/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Public Access
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/administration/replication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bucket replication
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/administration/s3-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S3 API Operations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Installation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/installation/configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/installation/deployment-options/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ObjectIO Deployment Options
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/installation/docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/installation/hardware-sizing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hardware design and sizing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/installation/kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kubernetes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/installation/linux/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/installation/macos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    macOS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/installation/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/installation/topologies/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment Topologies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_4" id="__nav_6_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operations
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Operations
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/operations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operations Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/operations/failure-recovery/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Failure Recovery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/operations/meta-ha/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Meta high availability
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/operations/metrics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Metrics reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/operations/monitoring/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Monitoring
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/operations/production/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Running ObjectIO in production
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations-guide/operations/upgrades/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Upgrades
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Releases
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Releases
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../releases/0.1.0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0.1.0
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-far-010-has-been-proven" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How far 0.1.0 has been proven
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#s3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        S3
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-lake" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data lake
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#security" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Security
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#block" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Block
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#platform" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Platform
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="objectio-features">ObjectIO features<a class="headerlink" href="#objectio-features" title="Permanent link">&para;</a></h1>
+<p>Everything ObjectIO does today, by domain, and how far each part has been
+proven. A feature on this page exists; one that isn't here doesn't (what
+is planned is in the <a href="../ROADMAP/">roadmap</a>). How each feature works, with
+its wire format and settings, is in the
+<a href="../developer-guide/features/">feature reference</a> and the guides.</p>
+<p><strong>Reading the columns</strong></p>
+<ul>
+<li><strong>Status</strong>: ✅ shipped and covered by end-to-end tests; 🟡 shipped, but
+  not yet proven for production (the gap is named); ✖ not supported, by
+  decision (the reason is given).</li>
+<li><strong>Guide</strong>: where a user or operator reads how to use it.</li>
+<li><strong>Design</strong>: how it works inside.</li>
+</ul>
+<h2 id="how-far-010-has-been-proven">How far 0.1.0 has been proven<a class="headerlink" href="#how-far-010-has-been-proven" title="Permanent link">&para;</a></h2>
+<p>0.1.0 is the first release, and an early one. <strong>S3 and the storage core
+are tested for production</strong>; the data lake APIs, block volumes and file
+access are previews.</p>
+<ul>
+<li><strong>S3</strong>: <a href="../developer-guide/s3-compatibility/">ceph s3-tests</a>,
+  680 of 687 applicable tests pass at the release candidate; the other 7
+  are written down (6 known gaps, 1 test caught by another running beside
+  it, which passes alone). None is a bug.</li>
+<li><strong>The storage core</strong>: a <a href="../developer-guide/chaos/#the-soak">48-hour soak</a>
+  of 84 faults (power cuts, meta leader kills, network partitions, disks
+  pulled and drives lost for good) under 7.02 M acknowledged operations
+  and 1.50 TB written: no acknowledged object lost, no space leaked. The
+  <a href="../developer-guide/chaos/">chaos suite</a> on six machines: 81,436
+  acknowledged writes intact through every fault. Recorded disk writes
+  replayed up to random power-cut points: nothing acknowledged lost.</li>
+<li><strong>Data lake, block, file</strong>: the data lake APIs and block volumes are
+  built and unit- or end-to-end-tested, but not yet tested with real
+  engines (Spark, Trino, pyiceberg) or under a filesystem and a database;
+  file access is not built.</li>
+</ul>
+<p>Adjacent releases upgrade one node at a time, under traffic, with every
+object readable after (<a href="../operations-guide/operations/upgrades/">upgrades</a>).
+The admin API and the CLI may still change between 0.x releases; the
+release notes say when they do.</p>
+<h2 id="s3">S3<a class="headerlink" href="#s3" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Status</th>
+<th>Notes</th>
+<th>Guide</th>
+<th>Design</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Buckets: create, delete, head, list</td>
+<td>✅</td>
+<td></td>
+<td><a href="../operations-guide/administration/s3-api/">S3 API</a></td>
+<td></td>
+</tr>
+<tr>
+<td>Objects: PUT, GET, HEAD, DELETE, DeleteObjects</td>
+<td>✅</td>
+<td></td>
+<td><a href="../operations-guide/administration/s3-api/">S3 API</a></td>
+<td></td>
+</tr>
+<tr>
+<td>Range reads, conditional requests (<code>If-*</code>), conditional writes (<code>If-None-Match: *</code>, <code>If-Match</code>)</td>
+<td>✅</td>
+<td></td>
+<td><a href="../operations-guide/administration/s3-api/">S3 API</a></td>
+<td></td>
+</tr>
+<tr>
+<td>Multipart upload (every call, 10,000 parts)</td>
+<td>✅</td>
+<td>Completion is two-phase in meta</td>
+<td><a href="../operations-guide/administration/s3-api/">S3 API</a></td>
+<td></td>
+</tr>
+<tr>
+<td>CopyObject, UploadPartCopy, copy by reference</td>
+<td>✅</td>
+<td></td>
+<td><a href="../operations-guide/administration/s3-api/">S3 API</a></td>
+<td></td>
+</tr>
+<tr>
+<td><code>x-amz-meta-*</code>, content headers, <code>response-*</code> overrides</td>
+<td>✅</td>
+<td></td>
+<td><a href="../operations-guide/administration/s3-api/">S3 API</a></td>
+<td></td>
+</tr>
+<tr>
+<td>Checksums (CRC32, CRC32C, SHA1, SHA256; aws-chunked)</td>
+<td>✅</td>
+<td></td>
+<td><a href="../operations-guide/administration/s3-api/">S3 API</a></td>
+<td></td>
+</tr>
+<tr>
+<td>Object tagging</td>
+<td>✅</td>
+<td></td>
+<td><a href="../operations-guide/administration/s3-api/">S3 API</a></td>
+<td></td>
+</tr>
+<tr>
+<td>Versioning, delete markers, ListObjectVersions</td>
+<td>✅</td>
+<td></td>
+<td><a href="../developer-guide/features/#bucket-versioning">feature reference</a></td>
+<td></td>
+</tr>
+<tr>
+<td>Object Lock (governance, compliance, legal hold)</td>
+<td>✅</td>
+<td></td>
+<td><a href="../developer-guide/features/#object-locking-worm">feature reference</a></td>
+<td></td>
+</tr>
+<tr>
+<td>Lifecycle: expiration, noncurrent versions, delete markers, abort incomplete uploads</td>
+<td>✅</td>
+<td></td>
+<td><a href="../developer-guide/features/#lifecycle-management">feature reference</a></td>
+<td></td>
+</tr>
+<tr>
+<td>Lifecycle transitions</td>
+<td>✖</td>
+<td>One storage class; refused with <code>InvalidStorageClass</code>. Revisited with tiering</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>CORS, presigned URLs, POST Object</td>
+<td>✅</td>
+<td></td>
+<td><a href="../developer-guide/features/#cors-and-browser-uploads">feature reference</a></td>
+<td></td>
+</tr>
+<tr>
+<td>S3 Select</td>
+<td>✅</td>
+<td>CSV, JSON (document, lines) and Parquet input, GZIP and BZIP2, CSV or JSON output, scan ranges; AWS's SQL subset. 29 of 34 ceph s3-tests pass; the other 5 expect RGW's dialect</td>
+<td><a href="../operations-guide/administration/s3-api/#s3-select">S3 API</a></td>
+<td>S3 Select</td>
+</tr>
+<tr>
+<td>Gateway-side grep (<code>?grep</code> on an object or a prefix)</td>
+<td>✅</td>
+<td>Matches streamed as NDJSON with byte offsets; <code>regex</code>, <code>pcre2</code>, <code>hyperscan</code></td>
+<td><a href="../operations-guide/administration/grep/">grep</a></td>
+<td></td>
+</tr>
+<tr>
+<td>Bucket logging (<code>?logging</code>, S3 access-log format)</td>
+<td>✅</td>
+<td>Delivered through the audit pipeline into the tenant's target bucket</td>
+<td><a href="../operations-guide/administration/bucket-logging/">bucket logging</a></td>
+<td>bucket logging</td>
+</tr>
+<tr>
+<td>Audit stream (webhook, file, stdout; per tenant)</td>
+<td>✅</td>
+<td>One event per request, with the request ID the client got</td>
+<td><a href="../operations-guide/administration/audit/">audit</a></td>
+<td></td>
+</tr>
+<tr>
+<td>Audit that loses nothing</td>
+<td>✅</td>
+<td>Events fsynced to a spool on the gateway before delivery, a cursor per target: a gateway killed and a receiver down for an hour lose no event</td>
+<td><a href="../operations-guide/administration/audit/">audit</a></td>
+<td></td>
+</tr>
+<tr>
+<td>Audit on by default for the system</td>
+<td>✅</td>
+<td>Every event into an internal bucket (the Helm default), with retention</td>
+<td><a href="../operations-guide/administration/audit/">audit</a></td>
+<td></td>
+</tr>
+<tr>
+<td>Bucket replication, one way, between ObjectIO clusters</td>
+<td>✅</td>
+<td>New writes as they happen; targets scoped to a tenant</td>
+<td><a href="../operations-guide/administration/replication/">replication</a></td>
+<td>bucket replication</td>
+</tr>
+<tr>
+<td>Replication resync of existing objects, bandwidth limit</td>
+<td>✅</td>
+<td>A resync resumes from its last page after a kill; a 256 KiB/s limit held over every 4 s window</td>
+<td><a href="../operations-guide/administration/replication/">replication</a></td>
+<td>bucket replication</td>
+</tr>
+<tr>
+<td>Quotas: bucket count per tenant</td>
+<td>✅</td>
+<td>Enforced by meta</td>
+<td><a href="../operations-guide/administration/iam/">IAM</a></td>
+<td></td>
+</tr>
+<tr>
+<td>Quotas: bytes and objects, per tenant and per bucket</td>
+<td>✅</td>
+<td>403 <code>QuotaExceeded</code>; overshoot across gateways is bounded</td>
+<td><a href="../operations-guide/administration/iam/">IAM</a></td>
+<td>quotas</td>
+</tr>
+<tr>
+<td>Static website hosting, inventory, analytics, transfer acceleration, torrent</td>
+<td>✖</td>
+<td>Refused with 501, never misread</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="core">Core<a class="headerlink" href="#core" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Status</th>
+<th>Notes</th>
+<th>Guide</th>
+<th>Design</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Raw-disk OSD: <code>O_DIRECT</code>, 4 KiB blocks, a write-ahead log</td>
+<td>✅</td>
+<td></td>
+<td><a href="../operations-guide/installation/deployment-options/">deployment</a></td>
+<td>storage engine</td>
+</tr>
+<tr>
+<td>Flush before acknowledge</td>
+<td>✅</td>
+<td>Each shard fsynced, then its location record; a drive's volatile cache flushed on every write; a failed location record fails the write</td>
+<td><a href="../operations-guide/operations/production/">production</a></td>
+<td>storage engine</td>
+</tr>
+<tr>
+<td>Crash consistency of the OSD</td>
+<td>✅</td>
+<td>The shard device's and state filesystem's writes recorded and replayed up to random power-cut points: every acknowledged write survives</td>
+<td></td>
+<td>storage engine</td>
+</tr>
+<tr>
+<td>On-disk format checks</td>
+<td>✅</td>
+<td>Superblock feature words, protobuf records, strict logs and snapshots</td>
+<td></td>
+<td>disk layout</td>
+</tr>
+<tr>
+<td>Superblock safety</td>
+<td>✅</td>
+<td>Two copies; a torn one mounts from the other; deletes no longer rewrite it</td>
+<td></td>
+<td>disk layout</td>
+</tr>
+<tr>
+<td>OSD metadata store (WAL, on-disk index, bounded cache)</td>
+<td>✅</td>
+<td>Memory flat with the object count; snapshots streamed, not cloned</td>
+<td></td>
+<td>storage engine</td>
+</tr>
+<tr>
+<td>OSD back in seconds after a restart</td>
+<td>✅</td>
+<td>An OSD of 10 M shards serves 16.9 s after a power cut; its counts are rebuilt after it serves</td>
+<td><a href="../operations-guide/operations/failure-recovery/">failure recovery</a></td>
+<td>OSD start</td>
+</tr>
+<tr>
+<td>io_uring shard I/O</td>
+<td>🟡</td>
+<td>The default in Linux release builds; the end-to-end suite runs on <code>pread</code></td>
+<td></td>
+<td>I/O levels</td>
+</tr>
+<tr>
+<td>Erasure coding: Reed-Solomon (rust-simd; ISA-L on x86_64)</td>
+<td>✅</td>
+<td>4+2 by default</td>
+<td></td>
+<td>erasure coding</td>
+</tr>
+<tr>
+<td>LRC</td>
+<td>🟡</td>
+<td>Repair built and tested; not yet through the full end-to-end suite or a soak</td>
+<td></td>
+<td>erasure coding</td>
+</tr>
+<tr>
+<td>Replica pools (2-way, 3-way)</td>
+<td>🟡</td>
+<td>Repair built and tested; not yet through the full end-to-end suite or a soak</td>
+<td></td>
+<td>data protection</td>
+</tr>
+<tr>
+<td>End-to-end shard checksums, scrub</td>
+<td>✅</td>
+<td>Each shard's checksum kept with the object and checked on every read and repair, besides the OSD's own</td>
+<td></td>
+<td>data protection</td>
+</tr>
+<tr>
+<td>Object metadata at quorum</td>
+<td>✅</td>
+<td>With one or two OSDs down (4+2), PUT, overwrite and DELETE go on; reads get the newest copy, never a deleted object</td>
+<td></td>
+<td>object metadata quorum</td>
+</tr>
+<tr>
+<td>Small-object path</td>
+<td>✅</td>
+<td>A small object's shards travel with its metadata, one round trip; a small GET reads metadata from a read quorum</td>
+<td><a href="../developer-guide/performance/">performance</a></td>
+<td>small-object path</td>
+</tr>
+<tr>
+<td>Small-object packing (pack, reconcile, compact)</td>
+<td>✅</td>
+<td></td>
+<td></td>
+<td>packing</td>
+</tr>
+<tr>
+<td>Placement: CRUSH2, placement groups, copyset allocator</td>
+<td>✅</td>
+<td></td>
+<td><a href="../developer-guide/features/#every-pool-has-placement-groups">feature reference</a></td>
+<td>topology</td>
+</tr>
+<tr>
+<td>Failure-domain topology (5 levels), locality-aware reads</td>
+<td>✅</td>
+<td></td>
+<td><a href="../operations-guide/installation/topologies/">topologies</a></td>
+<td>topology</td>
+</tr>
+<tr>
+<td>Refusing placements the topology can't satisfy</td>
+<td>🟡</td>
+<td>A validation endpoint; enforcement on write is planned</td>
+<td></td>
+<td>topology</td>
+</tr>
+<tr>
+<td>Storage pools (expand by adding a pool), balancer</td>
+<td>✅</td>
+<td></td>
+<td><a href="../developer-guide/features/#storage-pools">feature reference</a></td>
+<td></td>
+</tr>
+<tr>
+<td>Recovery by placement group</td>
+<td>✅</td>
+<td>Every pool has PGs whose acting set and epoch are committed before a write uses them; OSDs refuse writes from an older epoch; peering and a state machine per PG</td>
+<td><a href="../operations-guide/operations/failure-recovery/">failure recovery</a></td>
+<td>PG recovery</td>
+</tr>
+<tr>
+<td>Repair after a disk or host is lost</td>
+<td>✅</td>
+<td>Rebuilt from the surviving shards onto the rest of the cluster, without an operator; parallel across PGs, sized from the drives</td>
+<td><a href="../operations-guide/operations/failure-recovery/">failure recovery</a></td>
+<td>PG recovery</td>
+</tr>
+<tr>
+<td>Degraded objects recorded when written, repaired first</td>
+<td>✅</td>
+<td>A PUT acknowledged short of shards is recorded in the Raft commit that creates it</td>
+<td></td>
+<td>degraded objects</td>
+</tr>
+<tr>
+<td>An OSD lost for good is re-protected</td>
+<td>✅</td>
+<td>A drive gone with its metadata, set out: every shard it held is rebuilt elsewhere</td>
+<td><a href="../operations-guide/operations/failure-recovery/">failure recovery</a></td>
+<td>PG recovery</td>
+</tr>
+<tr>
+<td>Backfill</td>
+<td>✅</td>
+<td>A stripe with two shards on one OSD is re-spread once a distinct OSD can take one</td>
+<td></td>
+<td>PG recovery</td>
+</tr>
+<tr>
+<td>Drain (planned removal of an OSD)</td>
+<td>✅</td>
+<td></td>
+<td><a href="../operations-guide/operations/failure-recovery/">failure recovery</a></td>
+<td></td>
+</tr>
+<tr>
+<td>Full-disk behaviour</td>
+<td>✅</td>
+<td>Client writes stop at the full ratio (507 <code>StorageFull</code>); the rest is kept for repair; space returns after deletes</td>
+<td><a href="../operations-guide/operations/production/">production</a></td>
+<td></td>
+</tr>
+<tr>
+<td>Meta: Raft (openraft), replicated state, snapshots, log compaction</td>
+<td>✅</td>
+<td>A node that was down longer than the kept log catches up from a snapshot</td>
+<td><a href="../operations-guide/operations/meta-ha/">meta HA</a></td>
+<td>meta</td>
+</tr>
+<tr>
+<td>Meta's own Raft log</td>
+<td>✅</td>
+<td>Sealed segments open from an index; a meta node listens within a second of a power cut, a torn last append cut off</td>
+<td></td>
+<td>meta log</td>
+</tr>
+<tr>
+<td>Meta HA: any node serves, failover, node loss</td>
+<td>✅</td>
+<td>Leader killed, frozen and replaced under S3 traffic, in multi-process tests and on Kubernetes (3 metas through Helm)</td>
+<td><a href="../operations-guide/operations/meta-ha/">meta HA</a></td>
+<td>meta</td>
+</tr>
+<tr>
+<td>Rolling upgrade, format levels</td>
+<td>✅</td>
+<td>Meta, then OSDs, then gateways, under traffic; new formats gated until every node runs the new release; tested on every change to <code>main</code></td>
+<td><a href="../operations-guide/operations/upgrades/">upgrades</a></td>
+<td>upgrade path</td>
+</tr>
+<tr>
+<td>RDMA data plane (Mooncake Transfer Engine)</td>
+<td>🟡</td>
+<td>Single-part erasure-coded objects, behind a flag</td>
+<td></td>
+<td>RDMA data plane</td>
+</tr>
+</tbody>
+</table>
+<h2 id="data-lake">Data lake<a class="headerlink" href="#data-lake" title="Permanent link">&para;</a></h2>
+<p>Previews: built and unit-tested, not yet tested with real engines (the
+<a href="../ROADMAP/">roadmap</a> has the engine tests as the next release's first
+items).</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Status</th>
+<th>Notes</th>
+<th>Guide</th>
+<th>Design</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Iceberg REST Catalog (namespaces, tables, commits)</td>
+<td>🟡</td>
+<td>Unit tests only; no engine tests</td>
+<td><a href="../operations-guide/administration/iceberg-api/">Iceberg API</a></td>
+<td></td>
+</tr>
+<tr>
+<td>Warehouses (a backing bucket each)</td>
+<td>🟡</td>
+<td></td>
+<td><a href="../operations-guide/administration/iceberg-api/">Iceberg API</a></td>
+<td></td>
+</tr>
+<tr>
+<td>Namespace and table policies, data filters</td>
+<td>🟡</td>
+<td></td>
+<td><a href="../operations-guide/administration/iceberg-api/">Iceberg API</a></td>
+<td></td>
+</tr>
+<tr>
+<td>Vended credentials (STS)</td>
+<td>🟡</td>
+<td></td>
+<td><a href="../operations-guide/administration/iceberg-api/">Iceberg API</a></td>
+<td></td>
+</tr>
+<tr>
+<td>Unity Catalog API (catalogs to model versions; row filters, column masks)</td>
+<td>🟡</td>
+<td>Unit tests only</td>
+<td><a href="../developer-guide/features/#3b-unity-catalog-rest-api">feature reference</a></td>
+<td></td>
+</tr>
+<tr>
+<td>Delta Sharing (shares, recipients, presigned query)</td>
+<td>🟡</td>
+<td>Unit tests only; shares may reference buckets in any tenant</td>
+<td><a href="../developer-guide/features/#3c-table-sharing-delta-sharing-protocol">feature reference</a></td>
+<td></td>
+</tr>
+<tr>
+<td>Delta log: JSON commits</td>
+<td>🟡</td>
+<td>Checkpoints (Parquet) not read yet</td>
+<td><a href="../developer-guide/features/#3c-table-sharing-delta-sharing-protocol">feature reference</a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="security">Security<a class="headerlink" href="#security" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Status</th>
+<th>Notes</th>
+<th>Guide</th>
+<th>Design</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Users, access keys, groups, policies</td>
+<td>✅</td>
+<td></td>
+<td><a href="../operations-guide/administration/iam/">IAM</a></td>
+<td></td>
+</tr>
+<tr>
+<td>IAM API (<code>aws iam</code>, boto3, Terraform)</td>
+<td>✅</td>
+<td>Users, groups, managed and inline policies, keys and roles, scoped to a tenant; the ceph s3-tests IAM tests pass or fail only for documented reasons</td>
+<td><a href="../operations-guide/administration/iam/#the-aws-iam-and-sts-apis">IAM</a></td>
+<td></td>
+</tr>
+<tr>
+<td>STS: AssumeRole, AssumeRoleWithWebIdentity, GetSessionToken, GetCallerIdentity</td>
+<td>✅</td>
+<td>Identity providers per scope: the operator's for system roles, each tenant's for its own</td>
+<td><a href="../operations-guide/administration/iam/#temporary-credentials-from-an-oidc-token-sts">IAM</a></td>
+<td></td>
+</tr>
+<tr>
+<td>Tenants, tenant admins, tenant isolation</td>
+<td>✅</td>
+<td>A tenant is an account, its admins its root</td>
+<td><a href="../operations-guide/administration/iam/">IAM</a></td>
+<td></td>
+</tr>
+<tr>
+<td>OIDC sign-in (external providers: Keycloak, Entra ID, …)</td>
+<td>✅</td>
+<td></td>
+<td><a href="../operations-guide/administration/authentication/">authentication</a></td>
+<td></td>
+</tr>
+<tr>
+<td>Bucket policies (conditions, <code>obio:CredentialType</code>)</td>
+<td>✅</td>
+<td></td>
+<td><a href="../operations-guide/administration/authentication/">authentication</a></td>
+<td></td>
+</tr>
+<tr>
+<td>Anonymous access and Block Public Access (bucket, tenant, cluster)</td>
+<td>✅</td>
+<td>New buckets start blocked</td>
+<td><a href="../operations-guide/administration/public-access/">public access</a></td>
+<td></td>
+</tr>
+<tr>
+<td>Named endpoints and client addresses in policies (<code>aws:SourceVpce</code>, <code>aws:SourceIp</code>, trusted proxies)</td>
+<td>✅</td>
+<td></td>
+<td><a href="../operations-guide/administration/public-access/">public access</a></td>
+<td></td>
+</tr>
+<tr>
+<td>ACLs</td>
+<td>✖</td>
+<td>Bucket owner enforced only, AWS's default; use policies</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>SigV4 (header, query, streaming)</td>
+<td>✅</td>
+<td></td>
+<td><a href="../operations-guide/administration/authentication/">authentication</a></td>
+<td></td>
+</tr>
+<tr>
+<td>SigV2</td>
+<td>✖</td>
+<td>Deprecated by AWS</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>SSE-S3, SSE-KMS (built-in KMS)</td>
+<td>✅</td>
+<td></td>
+<td><a href="../developer-guide/features/#server-side-encryption-sse">feature reference</a></td>
+<td></td>
+</tr>
+<tr>
+<td>SSE-C</td>
+<td>✅</td>
+<td>Not yet on a CopyObject source or destination</td>
+<td><a href="../developer-guide/features/#sse-c-customer-provided-keys">feature reference</a></td>
+<td></td>
+</tr>
+<tr>
+<td>Tenant-scoped audit and replication targets</td>
+<td>✅</td>
+<td>Host allowlist set by the operator</td>
+<td><a href="../operations-guide/administration/audit/">audit</a></td>
+<td></td>
+</tr>
+<tr>
+<td>Admin and console listeners separate from the data plane</td>
+<td>✅</td>
+<td></td>
+<td><a href="../operations-guide/installation/configuration/">configuration</a></td>
+<td>console split</td>
+</tr>
+<tr>
+<td>TLS between services (gateway, meta, OSD, block)</td>
+<td>✅</td>
+<td>mTLS on every gRPC hop; client-facing TLS is at the ingress</td>
+<td><a href="../operations-guide/administration/mtls/">mTLS</a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="block">Block<a class="headerlink" href="#block" title="Permanent link">&para;</a></h2>
+<p>Preview: the crash tests under a filesystem and a database are the gate
+for production.</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Status</th>
+<th>Notes</th>
+<th>Guide</th>
+<th>Design</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Volumes over NBD and gRPC: read, write, flush, trim</td>
+<td>🟡</td>
+<td></td>
+<td><a href="../developer-guide/features/#7-block-storage">feature reference</a></td>
+<td>block storage</td>
+</tr>
+<tr>
+<td>Thin provisioning</td>
+<td>🟡</td>
+<td></td>
+<td><a href="../developer-guide/features/#7-block-storage">feature reference</a></td>
+<td>block storage</td>
+</tr>
+<tr>
+<td>Write journal (fsynced before the acknowledgement), replay</td>
+<td>🟡</td>
+<td></td>
+<td></td>
+<td>block write path</td>
+</tr>
+<tr>
+<td>Snapshots, clones (shared stripes)</td>
+<td>🟡</td>
+<td></td>
+<td><a href="../developer-guide/features/#7-block-storage">feature reference</a></td>
+<td>block storage</td>
+</tr>
+<tr>
+<td>Volume metadata in meta (the gateway's disk holds only the journal)</td>
+<td>🟡</td>
+<td></td>
+<td></td>
+<td>block storage</td>
+</tr>
+<tr>
+<td>Repair of block stripes</td>
+<td>🟡</td>
+<td></td>
+<td></td>
+<td>block storage</td>
+</tr>
+</tbody>
+</table>
+<h2 id="file">File<a class="headerlink" href="#file" title="Permanent link">&para;</a></h2>
+<p>Not built. Files are reached through S3 today; NFS on the same core is on
+the <a href="../ROADMAP/">roadmap</a>.</p>
+<h2 id="platform">Platform<a class="headerlink" href="#platform" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Status</th>
+<th>Notes</th>
+<th>Guide</th>
+<th>Design</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>objectio-aio</code>: meta, OSDs and the gateway in one process</td>
+<td>✅</td>
+<td></td>
+<td><a href="../operations-guide/installation/quickstart/">quickstart</a></td>
+<td></td>
+</tr>
+<tr>
+<td>Linux binaries (x86_64, arm64), macOS for development</td>
+<td>✅</td>
+<td></td>
+<td><a href="../operations-guide/installation/linux/">Linux</a></td>
+<td></td>
+</tr>
+<tr>
+<td>Container image (amd64, arm64) and Docker Compose cluster</td>
+<td>✅</td>
+<td></td>
+<td><a href="../operations-guide/installation/docker/">Docker</a></td>
+<td></td>
+</tr>
+<tr>
+<td>Helm chart (HA defaults: 2 gateways, 3 metas; PDBs; optional HPA)</td>
+<td>✅</td>
+<td>Meta HA tested on kind in CI</td>
+<td><a href="../operations-guide/installation/kubernetes/">Kubernetes</a></td>
+<td></td>
+</tr>
+<tr>
+<td>Web console (operator and tenant)</td>
+<td>✅</td>
+<td></td>
+<td><a href="../developer-guide/features/#8-web-console">feature reference</a></td>
+<td>console split</td>
+</tr>
+<tr>
+<td>Admin CLI (<code>obioctl</code>)</td>
+<td>✅</td>
+<td></td>
+<td><a href="../operations-guide/administration/cli/">CLI</a></td>
+<td></td>
+</tr>
+<tr>
+<td>Management SDKs (Go, Python) for the whole admin API</td>
+<td>✅</td>
+<td></td>
+<td><a href="../developer-guide/sdk/">SDKs</a></td>
+<td></td>
+</tr>
+<tr>
+<td>Prometheus metrics (S3, Iceberg, replication, I/O)</td>
+<td>✅</td>
+<td></td>
+<td><a href="../operations-guide/operations/metrics/">metrics</a></td>
+<td></td>
+</tr>
+<tr>
+<td>Grafana dashboards, alert rules</td>
+<td>🟡</td>
+<td>The docker-compose monitoring stack only</td>
+<td><a href="../operations-guide/operations/monitoring/">monitoring</a></td>
+<td></td>
+</tr>
+<tr>
+<td>Heap profiles of any service with standard tools</td>
+<td>✅</td>
+<td>jemalloc's profiler built in, off until turned on; read with <code>jeprof</code></td>
+<td><a href="../developer-guide/performance/profiling/#memory-heap-profiles">profiling</a></td>
+<td></td>
+</tr>
+<tr>
+<td>Performance check on every change</td>
+<td>✅</td>
+<td>Release builds of a change and its base on one runner; a drop in any cell fails it</td>
+<td><a href="../developer-guide/performance/#the-regression-check-in-ci">performance</a></td>
+<td></td>
+</tr>
+<tr>
+<td>Production guide: sizing, alerts, runbooks</td>
+<td>✅</td>
+<td></td>
+<td><a href="../operations-guide/operations/production/">production</a></td>
+<td></td>
+</tr>
+<tr>
+<td>Hardware design and sizing guide, with a calculator</td>
+<td>✅</td>
+<td>From capacity and performance to a bill of quantities; drive failures, replacement time and hot spares</td>
+<td><a href="../operations-guide/installation/hardware-sizing/">hardware sizing</a></td>
+<td></td>
+</tr>
+<tr>
+<td>Documentation site, a version per release</td>
+<td>✅</td>
+<td></td>
+<td><a href="https://object-io.github.io">object-io.github.io</a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.top", "search.highlight", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "dev", "provider": "mike"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../operations-guide/installation/sizing-calculator.js"></script>
+      
+    
+  </body>
+</html>

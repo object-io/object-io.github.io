@@ -1,0 +1,3405 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://object-io.github.io/0.1/developer-guide/performance/">
+      
+      
+        <link rel="prev" href="../chaos/">
+      
+      
+        <link rel="next" href="profiling/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/brand/favicon.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Performance - ObjectIO</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:300,300i,400,400i,700,700i%7CIBM+Plex+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"IBM Plex Sans";--md-code-font:"IBM Plex Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/brand/brand.css">
+    
+      <link rel="stylesheet" href="../../operations-guide/installation/sizing-calculator.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#performance" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="ObjectIO" class="md-header__button md-logo" aria-label="ObjectIO" data-md-component="logo">
+      
+  <img src="../../assets/brand/objectio-mark-on-dark.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ObjectIO
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Performance
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/object-io/objectio" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    object-io/objectio
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="ObjectIO" class="md-nav__button md-logo" aria-label="ObjectIO" data-md-component="logo">
+      
+  <img src="../../assets/brand/objectio-mark-on-dark.svg" alt="logo">
+
+    </a>
+    ObjectIO
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/object-io/objectio" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    object-io/objectio
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ObjectIO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ROADMAP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ObjectIO roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ObjectIO features
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-it-works/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How it works
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Developer guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Developer guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Developer Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../features/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ObjectIO — Feature Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdk/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Management SDKs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_5" id="__nav_5_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chaos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Chaos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chaos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chaos: faults on a multi-host cluster
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5_6" id="__nav_5_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Performance
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Performance
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Performance
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Performance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-regression-check-in-ci" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The regression check in CI
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#drives-with-and-without-power-loss-protection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Drives with and without power-loss protection
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#single-host-2026-10-15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Single host: 2026-10-15
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#six-cloud-vms-2026-10-07" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Six cloud VMs: 2026-10-07
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Six cloud VMs: 2026-10-07">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Results
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-it-shows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What it shows
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#single-host-2026-10-04" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Single host: 2026-10-04
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Single host: 2026-10-04">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#results_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Results
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-it-shows_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What it shows
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="profiling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Profiling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_7" id="__nav_5_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S3 compatibility
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    S3 compatibility
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../s3-compatibility/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S3 compatibility: ceph s3-tests
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_7_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_7_2" id="__nav_5_7_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026 10 02
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_7_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_7_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2026 10 02
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../s3-compatibility/2026-10-02/summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ceph s3-tests against ObjectIO, run 2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_7_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_7_3" id="__nav_5_7_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026 10 03
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_7_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_7_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2026 10 03
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_7_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_7_3_1" id="__nav_5_7_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux amd64
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_5_7_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_7_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Linux amd64
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../s3-compatibility/2026-10-03/linux-amd64/summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ceph s3-tests results
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_7_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_7_3_2" id="__nav_5_7_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux arm64
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_5_7_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_7_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Linux arm64
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../s3-compatibility/2026-10-03/linux-arm64/summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ceph s3-tests results
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_7_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_7_4" id="__nav_5_7_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026 10 15
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_7_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_7_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2026 10 15
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_7_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_7_4_1" id="__nav_5_7_4_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux amd64
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_5_7_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_7_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Linux amd64
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../s3-compatibility/2026-10-15/linux-amd64/summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ceph s3-tests results
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operations guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Operations guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operations Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Administration
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Administration
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/administration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Administration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/administration/audit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audit Stream
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/administration/authentication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Authentication
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/administration/bucket-logging/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bucket Logging
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/administration/cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI (obioctl)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/administration/grep/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gateway-side grep — searching objects without downloading
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/administration/iam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Identity and Access
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/administration/iceberg-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Iceberg REST Catalog API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/administration/mtls/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mutual TLS between the services
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/administration/public-access/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Public Access
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/administration/replication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bucket replication
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/administration/s3-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S3 API Operations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Installation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/installation/configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/installation/deployment-options/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ObjectIO Deployment Options
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/installation/docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/installation/hardware-sizing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hardware design and sizing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/installation/kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kubernetes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/installation/linux/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/installation/macos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    macOS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/installation/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/installation/topologies/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment Topologies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_4" id="__nav_6_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operations
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Operations
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/operations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operations Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/operations/failure-recovery/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Failure Recovery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/operations/meta-ha/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Meta high availability
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/operations/metrics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Metrics reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/operations/monitoring/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Monitoring
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/operations/production/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Running ObjectIO in production
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations-guide/operations/upgrades/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Upgrades
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Releases
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Releases
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../releases/0.1.0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0.1.0
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-regression-check-in-ci" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The regression check in CI
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#drives-with-and-without-power-loss-protection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Drives with and without power-loss protection
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#single-host-2026-10-15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Single host: 2026-10-15
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#six-cloud-vms-2026-10-07" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Six cloud VMs: 2026-10-07
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Six cloud VMs: 2026-10-07">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Results
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-it-shows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What it shows
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#single-host-2026-10-04" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Single host: 2026-10-04
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Single host: 2026-10-04">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#results_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Results
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-it-shows_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What it shows
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="performance">Performance<a class="headerlink" href="#performance" title="Permanent link">&para;</a></h1>
+<p>ObjectIO next to RustFS (and SeaweedFS on one host), measured with the same
+client on the same machines and drives: a single-host baseline (again on
+2026-10-15, after the small-object path), and six cloud VMs with local NVMe. Every change is checked against the tree it
+lands on by a <a href="#the-regression-check-in-ci">regression check in CI</a>. What
+a drive's write cache costs, with and without power-loss protection, is
+under <a href="#drives-with-and-without-power-loss-protection">drives</a>.
+Where the CPU goes is in <a href="profiling/">profiling</a>.</p>
+<h2 id="the-regression-check-in-ci">The regression check in CI<a class="headerlink" href="#the-regression-check-in-ci" title="Permanent link">&para;</a></h2>
+<p>The <code>performance</code> job in the code repo's CI runs in the merge queue, so
+every change is measured before it lands; it is a required check on
+<code>main</code>, so a change that fails it doesn't merge. It also runs on a pull
+request labelled
+<code>perf</code> (add the label, then push: a label alone doesn't start a run). It
+builds the tree that lands and the tree it lands on (the base), both
+release builds with ISA-L and io_uring, and runs
+<code>scripts/bench/regression.py</code> on them.</p>
+<p><strong>What it runs.</strong> Each build five times, in turn on the same runner:
+base, head, head, base, and so on. Every run starts a fresh
+<code>objectio-aio</code> (six OSDs, 4+2) and, with <code>objectio-s3-bench</code>, puts 6,000
+objects of 64 KiB (32 in flight) and gets each of them four times, then
+puts 400 objects of 4 MiB (8 in flight) and gets each three times. A short
+unmeasured warm-up comes first.</p>
+<p><strong>How it decides.</strong> For each of the four cells (PUT and GET, 64 KiB and
+4 MiB), the head's median throughput is divided by the base's. Any cell
+below <strong>0.85</strong> fails the job. p99 latency is shown next to it but not
+judged: on a shared runner it moves too much from run to run.</p>
+<p><strong>Why it is built this way.</strong></p>
+<ul>
+<li><strong>Relative, on one runner.</strong> GitHub's runners differ from one another by
+  more than most regressions, so no absolute number can gate anything.
+  Both builds run on the same runner in the same job, and alternating
+  them means a runner that slows down part way through slows both.</li>
+<li><strong>Medians of five.</strong> One run in five can be off by a quarter (a cold
+  first run, a noisy neighbour); the median ignores it.</li>
+<li><strong>Data in memory.</strong> The aio keeps its data on a tmpfs. On a runner's
+  disk, one build's 64 KiB PUTs went from 208 to 372 a second between
+  runs, more than any regression this is for. In memory the check
+  measures the software (CPU, copies, RPCs, locks), which is what changes
+  from commit to commit.</li>
+</ul>
+<p><strong>What it doesn't see.</strong> A change that adds work on the drive (another
+fsync per PUT) costs almost nothing in memory, so it passes here. Drive
+costs are measured by the baselines below, on real drives, and by the
+soak.</p>
+<p><strong>Reading it.</strong> The job summary has a table:</p>
+<table>
+<thead>
+<tr>
+<th>Cell</th>
+<th>Base</th>
+<th>Head</th>
+<th>Head ÷ base</th>
+<th>p99 (not judged)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PUT 64KiB</td>
+<td>1,237 ops/s (±1%)</td>
+<td>1,235 ops/s (±7%)</td>
+<td><strong>1.00</strong> ✅</td>
+<td>85 → 88 ms</td>
+</tr>
+</tbody>
+</table>
+<p>The ± is half the range of the five runs. A wide range on either side
+means that cell was noisy on this runner. The artifact <code>performance</code> has
+every run's numbers (<code>perf.json</code>) and each aio's log. To run it locally:</p>
+<div class="highlight"><pre><span></span><code>cargo<span class="w"> </span>build<span class="w"> </span>--release<span class="w"> </span>--features<span class="w"> </span>objectio-aio/isal,objectio-aio/io-uring<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--bin<span class="w"> </span>objectio-aio<span class="w"> </span>--bin<span class="w"> </span>objectio-s3-bench<span class="w">          </span><span class="c1"># on each tree, into two directories</span>
+scripts/bench/regression.py<span class="w"> </span>--base<span class="w"> </span>&lt;dir&gt;<span class="w"> </span>--head<span class="w"> </span>&lt;dir&gt;<span class="w"> </span>--workdir<span class="w"> </span>&lt;a<span class="w"> </span>tmpfs&gt;
+</code></pre></div>
+<p>The work directory must not be under <code>/dev</code>: an OSD takes a path there
+for a device.</p>
+<p><strong>How well it works.</strong></p>
+<p>Runs on GitHub's runners (a pull request with no change, and a throwaway
+pull request that added 1 ms of CPU to every PUT, about 30% of a 64 KiB
+PUT's CPU on a runner and almost none of a 4 MiB PUT's):</p>
+<table>
+<thead>
+<tr>
+<th>Run</th>
+<th>PUT 64KiB</th>
+<th>GET 64KiB</th>
+<th>PUT 4MiB</th>
+<th>GET 4MiB</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No change</td>
+<td>1.01</td>
+<td>1.00</td>
+<td>1.05</td>
+<td>1.02</td>
+<td>pass</td>
+</tr>
+<tr>
+<td>No change, another runner</td>
+<td>1.01</td>
+<td>1.01</td>
+<td>1.08</td>
+<td>0.99</td>
+<td>pass</td>
+</tr>
+<tr>
+<td>1 ms more CPU in every PUT</td>
+<td><strong>0.78</strong></td>
+<td>1.00</td>
+<td>0.95</td>
+<td>0.96</td>
+<td>fail: PUT 64KiB</td>
+</tr>
+</tbody>
+</table>
+<p>The two "no change" runners differed by 65% in absolute speed (1,151
+against 1,906 PUTs of 64 KiB a second); the ratios stayed within 1%.
+Getting there:</p>
+<ul>
+<li><strong>On the runner's disk</strong>, the first version caught a 15 ms sleep in
+  every PUT (PUT 64 KiB at 0.83), but on that runner the base alone
+  ranged from 208 to 372 PUTs a second. Its data moved to a tmpfs.</li>
+<li><strong>With a 4 MiB phase of 1.5 s</strong>, one no-change run came out at 0.87 for
+  PUT 4 MiB, too close to the threshold. The phase now writes 400
+  objects instead of 150.</li>
+</ul>
+<p>So it fails a change that costs a cell about 20% of its throughput or
+more; a smaller loss usually passes, so it is no substitute for the
+baselines. 4 MiB PUTs are the noisiest cell (one runner's runs spread
+±24%).</p>
+<h2 id="drives-with-and-without-power-loss-protection">Drives with and without power-loss protection<a class="headerlink" href="#drives-with-and-without-power-loss-protection" title="Permanent link">&para;</a></h2>
+<p>An acknowledged PUT waits for a flush on every OSD it writes to. On a
+drive with a volatile write cache and no power-loss protection (PLP), a
+flush empties that cache to flash; on one with PLP, capacitors cover the
+cache, so the drive can acknowledge a flush without emptying it. Small
+PUTs, which are mostly flushes, gain the most.</p>
+<p><strong>Measured: the drives we have, both without PLP.</strong> The lab host of the
+single-host baseline has two consumer NVMe drives. Both report a volatile
+write cache, and neither has PLP. 4 KiB writes, each followed by
+<code>fdatasync</code>, one at a time (3,000 of them, 2026-10-15; other tests were
+running on the host):</p>
+<table>
+<thead>
+<tr>
+<th>Drive</th>
+<th>Volatile write cache</th>
+<th>Flush p50</th>
+<th>Flush p99</th>
+<th>Flushes a second</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Corsair MP600 Elite 2 TB (the baselines' drive)</td>
+<td>yes</td>
+<td>0.67 ms</td>
+<td>0.89 ms</td>
+<td>1,440</td>
+</tr>
+<tr>
+<td>OEM 1 TB, Phison controller (ESL01TBTLCZ; through LVM)</td>
+<td>yes</td>
+<td>0.25 ms</td>
+<td>0.58 ms</td>
+<td>3,670</td>
+</tr>
+</tbody>
+</table>
+<p>The six cloud VMs' local NVMe was not checked for a volatile cache while
+they ran, and they are gone.</p>
+<p><strong>Measured: a drive with no volatile cache, and a cloud disk.</strong> One Azure
+<code>Standard_L8s_v4</code> VM (Intel Xeon Platinum 8573C, 8 vCPUs, 64 GB, Linux
+6.17), 2026-10-15, for an hour:</p>
+<ul>
+<li>Its local NVMe ("Microsoft NVMe Direct Disk v2") reports <code>vwc 0</code>: no
+  volatile write cache, and the kernel marks it <code>write through</code>, so a
+  write is durable when it completes and an <code>fdatasync</code> sends no flush.
+  That is what a drive with PLP gives an fsync, however the drive gets
+  there.</li>
+<li>A Premium SSD v2 disk (64 GiB, its baseline 3,000 IOPS and 125 MB/s) is
+  network storage: it reports a write-back cache with FUA, so flushes go
+  through and each one is a round trip to the storage service.</li>
+</ul>
+<p>The same <code>fio</code> flush test as above, three runs of 3,000 each:</p>
+<table>
+<thead>
+<tr>
+<th>Drive</th>
+<th>Volatile write cache</th>
+<th>Flush p50</th>
+<th>Flush p99</th>
+<th>Flushes a second</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Azure L8s_v4 local NVMe</td>
+<td>no (<code>vwc 0</code>)</td>
+<td>0.11 ms</td>
+<td>0.20–0.22 ms</td>
+<td>7,300–8,400</td>
+</tr>
+<tr>
+<td>Azure Premium SSD v2, 64 GiB</td>
+<td>write-back, flushed</td>
+<td>1.97 ms</td>
+<td>4.5–4.7 ms</td>
+<td>450–465</td>
+</tr>
+</tbody>
+</table>
+<p>Then the small-object cells of the single-host baseline (warp, 32
+clients, 30 s; <code>scripts/bench/baseline.sh</code> with <code>SIZES="4KiB 64KiB"</code>), on
+one 4+2 <code>objectio-aio</code> built from <code>main</code> of 2026-10-15 (<code>isal</code>,
+<code>io-uring</code>), its six OSDs' files on the drive under test. Two rounds, each
+drive in turn; throughput (PUT p99):</p>
+<table>
+<thead>
+<tr>
+<th>Cell</th>
+<th>Local NVMe, no write cache</th>
+<th>Premium SSD v2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PUT 4 KiB</td>
+<td>1,547–1,571 obj/s (66 ms)</td>
+<td>333 obj/s (166–172 ms)</td>
+</tr>
+<tr>
+<td>PUT 64 KiB</td>
+<td>717–756 obj/s (104–119 ms)</td>
+<td>270–271 obj/s (1.8–2.0 s)</td>
+</tr>
+<tr>
+<td>GET 4 KiB</td>
+<td>8,694–8,704 obj/s</td>
+<td>8,840–8,849 obj/s</td>
+</tr>
+<tr>
+<td>GET 64 KiB</td>
+<td>6,350–6,362 obj/s</td>
+<td>6,370–6,381 obj/s</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Durable small PUTs follow the flush.</strong> Where a flush costs 0.1 ms,
+  4 KiB PUTs run 4.7 times as fast as on the network disk, where it costs
+  2 ms. The Premium SSD v2's 64 KiB PUTs also meet its baseline IOPS and
+  bandwidth caps (six OSDs' writes share one disk); a production cloud
+  disk would be provisioned past them.</li>
+<li><strong>GETs don't care</strong>: the objects were just written and are in the page
+  cache, so both drives read the same.</li>
+<li>Not the same machine as the lab host, so the absolute numbers aren't
+  comparable with its tables; the flush cost, 0.11 ms here against
+  0.25–0.67 ms on the lab host's two consumer drives, is.</li>
+</ul>
+<p>The operations guide already requires PLP (or a UPS) for production:
+without it, a power cut can lose what the cache held, whatever the
+speed.</p>
+<h2 id="single-host-2026-10-15">Single host: 2026-10-15<a class="headerlink" href="#single-host-2026-10-15" title="Permanent link">&para;</a></h2>
+<p>The single-host baseline again, after the small-object path (the goal:
+small GETs within 1.5 times RustFS, 64 KiB PUTs level with it), on the same host and drive as
+2026-10-04 below.</p>
+<p><strong>Systems:</strong> ObjectIO with the small-object path's last part
+(<code>objectio-aio</code>, release, <code>isal</code> and <code>io-uring</code>, 4+2, six OSDs on 64 GiB
+sparse files), the build before that part (<code>main</code> of 2026-10-14), and RustFS (<code>rustfs/rustfs:latest</code> of
+2026-10-03, EC:2 over six directories). RustFS syncs before it answers a
+PUT: <code>strace</code> of its PUT cells showed <code>fsync</code> and <code>fdatasync</code> throughout
+(about 29 a PUT, which ext4 folds into about 2.4 device flushes).</p>
+<p><strong>Client:</strong> warp 1.1.4, 32 concurrent clients, 30 s per cell, PUT then
+GET for each size. Three rounds, the three systems in turn in each. Other
+work (builds and tests of other branches) ran on the host meanwhile, at a
+load of 8–13 on its 32 threads: read the ratios, not the absolutes.</p>
+<p>Objects per second (p99 latency):</p>
+<table>
+<thead>
+<tr>
+<th>Cell</th>
+<th>ObjectIO</th>
+<th>RustFS</th>
+<th>ObjectIO before</th>
+<th>RustFS ÷ ObjectIO</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PUT 4 KiB</td>
+<td>1,146–1,300 (44–47 ms)</td>
+<td>285–341 (144–201 ms)</td>
+<td>205–316</td>
+<td>0.24–0.27</td>
+</tr>
+<tr>
+<td>PUT 64 KiB</td>
+<td>988–1,096 (121–142 ms)</td>
+<td>302–371 (140–152 ms)</td>
+<td>162–318 (1.0–1.5 s)</td>
+<td>0.30–0.34</td>
+</tr>
+<tr>
+<td>GET 4 KiB</td>
+<td>25,854–27,044 (2.2 ms)</td>
+<td>31,473–32,177 (2.3–2.7 ms)</td>
+<td>17,643–17,713</td>
+<td>1.16–1.24</td>
+</tr>
+<tr>
+<td>GET 64 KiB</td>
+<td>17,608–18,191 (3.0–3.5 ms)</td>
+<td>25,270–25,823 (2.7–2.9 ms)</td>
+<td>12,357–12,554</td>
+<td>1.39–1.47</td>
+</tr>
+</tbody>
+</table>
+<p>RustFS's PUTs depend on the state of the disk more than ObjectIO's: the
+same cells reached 859–880 64 KiB PUTs a second earlier in the day (when
+ObjectIO before did 337–719). ObjectIO's are above that too.</p>
+<p><strong>What changed</strong> (small-object path,
+part 5):</p>
+<ul>
+<li><strong>Meta commits writes together.</strong> It used to take one write per Raft
+  log sync, and a 64 KiB PUT spent 95–186 ms waiting for <code>CreateObject</code>.</li>
+<li><strong>An OSD's index values fit its pages.</strong> A 16 KiB small shard took a
+  32 KiB page of the index file; checkpoints wrote twice their bytes and
+  held PUTs for seconds.</li>
+<li><strong>A gateway reads an OSD's metadata several to a call</strong>, and the parity
+  copies send no shard: CPU per 4 KiB GET fell from 1,020 µs to 463–524
+  (RustFS: 575–593).</li>
+</ul>
+<p>All three need format level 8.</p>
+<h2 id="six-cloud-vms-2026-10-07">Six cloud VMs: 2026-10-07<a class="headerlink" href="#six-cloud-vms-2026-10-07" title="Permanent link">&para;</a></h2>
+<p><strong>Machines:</strong> six Azure <code>Standard_D4pds_v6</code> in Central India, made with
+<code>objectio-infra</code> (<code>./infra up azure</code>): 4 Arm vCPUs (Cobalt 100), 16 GB,
+one local NVMe drive (220 GB) each, accelerated networking, one private
+network. Ubuntu 24.04.</p>
+<p><strong>Systems,</strong> each on the same six drives in turn (the drives erased in
+between):</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Version</th>
+<th>Layout</th>
+<th>Durability of an acknowledged PUT</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ObjectIO</td>
+<td><code>main</code> of 2026-10-07 with the two profiling fixes below, release build, aarch64 (erasure coding by rust-simd: ISA-L is x86 only)</td>
+<td>meta on nodes 1–3, an OSD and a gateway on every node, 4+2. Each drive: 16 GiB for meta, 32 GiB for the OSD's metadata, the rest raw for the OSD</td>
+<td>shards and metadata at write quorum, fsynced</td>
+</tr>
+<tr>
+<td>RustFS</td>
+<td>1.0.1, aarch64</td>
+<td>one server per node, one pool of six drives, XFS, <code>EC:2</code> (4+2; checked: a 4 MiB object puts 1,048,704 bytes on each drive)</td>
+<td>erasure-coded at write quorum, fsynced</td>
+</tr>
+</tbody>
+</table>
+<p>Meta shares each drive with the OSD here (these VMs have one fast drive);
+the guide gives it a drive of its own, and the p99 of PUTs pays for it
+(see below).</p>
+<p><strong>Client:</strong> warp 1.1.4 on node 1, spreading requests over all six nodes'
+S3 ports, 60 s per cell, 64 concurrent requests (32 for 4 MiB). The
+scripts are <code>objectio-infra</code>'s <code>deploy</code> and <code>bench</code>.</p>
+<h3 id="results">Results<a class="headerlink" href="#results" title="Permanent link">&para;</a></h3>
+<p>Throughput (median, p99 latency).</p>
+<table>
+<thead>
+<tr>
+<th>Cell</th>
+<th>ObjectIO</th>
+<th>RustFS</th>
+<th>ObjectIO ÷ RustFS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PUT 4 KiB</td>
+<td>1,921 obj/s (29 ms, 80 ms)</td>
+<td>291–382 obj/s (148–203 ms, 0.8–1.1 s)</td>
+<td>5–6.6</td>
+</tr>
+<tr>
+<td>PUT 64 KiB</td>
+<td>1,496 obj/s (33 ms, 341 ms)</td>
+<td>348 obj/s (139 ms, 812 ms)</td>
+<td>4.3</td>
+</tr>
+<tr>
+<td>PUT 4 MiB</td>
+<td>966 MiB/s (125 ms, 383 ms)</td>
+<td>787 MiB/s (150 ms, 303 ms)</td>
+<td>1.2</td>
+</tr>
+<tr>
+<td>GET 4 KiB</td>
+<td>8,316 obj/s (8.4 ms, 26 ms)</td>
+<td>4,532 obj/s (13.3 ms, 50 ms)</td>
+<td>1.8</td>
+</tr>
+<tr>
+<td>GET 64 KiB</td>
+<td>6,334 obj/s (10.9 ms, 29 ms)</td>
+<td>4,205 obj/s (14.0 ms, 54 ms)</td>
+<td>1.5</td>
+</tr>
+<tr>
+<td>GET 4 MiB</td>
+<td>2,759 MiB/s (43 ms, 115 ms)</td>
+<td>2,544 MiB/s (45 ms, 125 ms)</td>
+<td>1.1</td>
+</tr>
+</tbody>
+</table>
+<h3 id="what-it-shows">What it shows<a class="headerlink" href="#what-it-shows" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Small objects: ObjectIO is ahead, on PUT by 4–6 times.</strong> A small PUT
+  is one round trip to the OSDs and one flush on each: the shards go
+  with the object's metadata, into the OSDs' metadata logs, which batch
+  concurrent writes into one fsync.</li>
+<li><strong>Small GETs: 1.5–1.8 times RustFS,</strong> where the single host had RustFS
+  3–4.5 times ahead: the GET is one round trip, and the single
+  host's loopback RPC costs are gone.</li>
+<li><strong>Large objects: within 1.2 times, ObjectIO ahead.</strong> Both are bound by
+  the network and the drives.</li>
+<li><strong>The p99 of small PUTs</strong> (341 ms at 64 KiB) is meta sharing its drive
+  with the OSD: an OSD's metadata checkpoint holds back meta's syncs (see
+  the hardware guide). The median is 33 ms.</li>
+</ul>
+<p>Found along the way and fixed (details in <a href="profiling/">profiling</a>):</p>
+<ul>
+<li>A regex compiled for every request's <code>Authorization</code> header: 27% of a
+  gateway's CPU.</li>
+<li>Every gateway's poll made every OSD scan all its object metadata: 20%
+  of an OSD's CPU, and growing with the objects held.</li>
+<li>Meta killed in its first seconds could never start again; an OSD given
+  a missing <code>/dev</code> path ran on a file in memory.</li>
+</ul>
+<h2 id="single-host-2026-10-04">Single host: 2026-10-04<a class="headerlink" href="#single-host-2026-10-04" title="Permanent link">&para;</a></h2>
+<p><strong>Host:</strong> one lab machine. AMD Ryzen 9 7945HX (16 cores, 32 threads),
+64 GB RAM, one consumer NVMe (Corsair MP600 Elite: volatile write cache,
+no power-loss protection), ext4, Linux 6.8. Everything runs on this one
+host, client included.</p>
+<p><strong>Systems:</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Version</th>
+<th>Layout</th>
+<th>Durability of an acknowledged PUT</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ObjectIO</td>
+<td><code>main</code> of 2026-10-04, release build (<code>isal</code>, <code>io-uring</code>)</td>
+<td><code>objectio-aio</code>: meta, six OSDs and the gateway in one process; 4+2 erasure coding; each OSD a 64 GiB sparse file</td>
+<td>shards at write quorum (5 of 6), each fsynced</td>
+</tr>
+<tr>
+<td>RustFS</td>
+<td><code>rustfs/rustfs:latest</code> (image of 2026-10-03)</td>
+<td>one server, six directories, <code>EC:2</code> (4+2)</td>
+<td>erasure-coded at write quorum, fsynced</td>
+</tr>
+<tr>
+<td>SeaweedFS</td>
+<td>4.48</td>
+<td><code>weed server</code> (master, volume, filer, S3) with its defaults</td>
+<td><strong>one copy, not fsynced per write</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The six "drives" of ObjectIO and RustFS share one device here. That is
+fine for comparing the software, not for absolute numbers: on separate
+drives both would write in parallel.</p>
+<p>SeaweedFS's defaults keep one copy and don't fsync each write, so its PUT
+numbers are not comparable with the other two. They show what that
+trade-off buys, not a like-for-like result.</p>
+<p><strong>Client:</strong> warp 1.1.4. For each object size, PUT then GET, 32
+concurrent clients, 30 s per cell. The script is
+<code>scripts/bench/baseline.sh</code> in the code repo.</p>
+<h3 id="results_1">Results<a class="headerlink" href="#results_1" title="Permanent link">&para;</a></h3>
+<p>Throughput (p99 latency). ObjectIO and RustFS ran each cell up to 3 times;
+the range is shown where the runs differed by more than 10%.</p>
+<table>
+<thead>
+<tr>
+<th>Cell</th>
+<th>ObjectIO</th>
+<th>RustFS</th>
+<th>SeaweedFS (one copy, no fsync)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PUT 4 KiB</td>
+<td>553–558 obj/s (195 ms)</td>
+<td>353–477 obj/s (135 ms)</td>
+<td>21,388 obj/s (4.3 ms)</td>
+</tr>
+<tr>
+<td>PUT 64 KiB</td>
+<td>236–239 obj/s (223 ms)</td>
+<td>348–373 obj/s (145 ms)</td>
+<td>13,913 obj/s (7.5 ms)</td>
+</tr>
+<tr>
+<td>PUT 1 MiB</td>
+<td>111–241 MiB/s (423 ms)</td>
+<td>183–217 MiB/s (239 ms)</td>
+<td>1,595 MiB/s (168 ms)</td>
+</tr>
+<tr>
+<td>PUT 16 MiB</td>
+<td>486–772 MiB/s (1.3 s)</td>
+<td>503 MiB/s (2.8 s)</td>
+<td>failed (internal errors)</td>
+</tr>
+<tr>
+<td>GET 4 KiB</td>
+<td>8,403–10,511 obj/s (5.9 ms)</td>
+<td>31,692–32,918 obj/s (2.0 ms)</td>
+<td>20,203 obj/s (3.9 ms)</td>
+</tr>
+<tr>
+<td>GET 64 KiB</td>
+<td>5,392–5,808 obj/s (9.7 ms)</td>
+<td>25,613–27,141 obj/s (2.4 ms)</td>
+<td>18,931 obj/s (4.2 ms)</td>
+</tr>
+<tr>
+<td>GET 1 MiB</td>
+<td>1,785–1,954 MiB/s (25.7 ms)</td>
+<td>2,419–2,479 MiB/s (105 ms)</td>
+<td>3,734 MiB/s (16.7 ms)</td>
+</tr>
+<tr>
+<td>GET 16 MiB</td>
+<td>1,716 MiB/s (415 ms)</td>
+<td>2,304 MiB/s (386 ms)</td>
+<td>not run (the PUT failed)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="what-it-shows_1">What it shows<a class="headerlink" href="#what-it-shows_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Durable PUTs are bound by the disk.</strong> ObjectIO and RustFS both fsync
+  before they acknowledge, and both land in the hundreds of small PUTs a
+  second on this drive. A drive with power-loss protection makes an
+  fsync nearly free; this one doesn't. SeaweedFS is 40–60 times faster
+  because it skips that work.</li>
+<li><strong>64 KiB PUTs: RustFS is 1.5 times faster.</strong> RustFS writes each drive's
+  erasure-coded piece of a small object inside that drive's metadata file
+  (<code>xl.meta</code>; seen here for 64 KiB and 256 KiB objects), so a small PUT is
+  one fsync round. ObjectIO inlines only objects up to 4 KiB
+  (<code>--inline-max-size</code>), whole, on every copy. A 64 KiB object takes two
+  rounds: shards, then metadata (the small-object path, since, makes it
+  one).</li>
+<li><strong>Small GETs: RustFS is 3–4.5 times faster.</strong> RustFS reads its own
+  drives. ObjectIO's aio is a cluster in one process: a GET makes one RPC
+  to meta for the placement and asks all six OSDs for the object's
+  metadata, then reads shards (none for an inline object). That is 7
+  RPCs for a 4 KiB GET and 11 for 64 KiB, each over loopback HTTP/2.
+  Under profiling, nearly all the CPU goes to that RPC work and to lock
+  contention inside h2. In a multi-host deployment RustFS makes these
+  calls too, so this gap is partly an artefact of one host. But fewer
+  round trips per small GET is a real gain everywhere (since built: the
+  small-object path).</li>
+<li><strong>Large objects: within 1.3 times.</strong> At 1 MiB and above both are close
+  to the device and to the CPU cost of erasure coding.</li>
+</ul>
+<p>Found along the way and fixed:</p>
+<ul>
+<li>warp could not create buckets: the gateway refused <code>PUT /bucket/</code> with
+  the trailing slash that minio-go clients send.</li>
+<li>The OSD's metadata cache scanned its lists on every lookup: +7% on
+  small GETs.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.top", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "dev", "provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../operations-guide/installation/sizing-calculator.js"></script>
+      
+    
+  </body>
+</html>
