@@ -1256,6 +1256,148 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_7_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_7_5" id="__nav_5_7_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026 10 18
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_7_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_7_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2026 10 18
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_7_5_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_7_5_1" id="__nav_5_7_5_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux arm64
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_5_7_5_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_7_5_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Linux arm64
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer-guide/s3-compatibility/2026-10-18/linux-arm64/summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ceph s3-tests results
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -2904,6 +3046,10 @@ the same core. Apache-2.0, every feature.</p>
 <td>680 of 687 applicable pass; the other 7 are 6 known gaps and 1 test caught by another running beside it (it passes alone). No bugs</td>
 </tr>
 <tr>
+<td><a href="../../developer-guide/s3-compatibility/">ceph s3-tests</a>, Linux arm64</td>
+<td>679 of 687 applicable pass; the other 8 are the same 6 gaps and 2 tests that fail only beside others (each passes alone). No bugs</td>
+</tr>
+<tr>
 <td><a href="../../developer-guide/chaos/#the-soak">Soak</a>: 48 hours on a lab host, faults every half hour or so</td>
 <td>Pass: 84 faults (power cuts, meta leader kills and partitions, disks pulled, drives lost for good), 7.02 M acknowledged operations, 1.50 TB written; every key audited at the end, nothing lost, no space leaked</td>
 </tr>
@@ -2933,8 +3079,6 @@ the same core. Apache-2.0, every feature.</p>
   VMs, every placement group took up to 8 minutes to be clean again after
   a one-minute outage. Objects stay readable meanwhile, but until repair
   is done some have less redundancy than their pool's scheme gives.</li>
-<li><strong>s3-tests on Linux arm64</strong> have not been rerun on the release
-  candidate (they passed on 2026-10-03).</li>
 </ul>
 
 

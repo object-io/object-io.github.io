@@ -1359,6 +1359,148 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_7_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_7_5" id="__nav_5_7_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026 10 18
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_7_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_7_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2026 10 18
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_7_5_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_7_5_1" id="__nav_5_7_5_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux arm64
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_5_7_5_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_7_5_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Linux arm64
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="2026-10-18/linux-arm64/summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ceph s3-tests results
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -2633,9 +2775,11 @@ the S3 compatibility suite RGW is built against: 1053 tests. Each run is in a
 dated folder here, with every test's outcome and, for each failure, why it
 fails.</p>
 <h2 id="latest-2026-10-15-the-010-release-candidate">Latest: 2026-10-15 (the 0.1.0 release candidate)<a class="headerlink" href="#latest-2026-10-15-the-010-release-candidate" title="Permanent link">&para;</a></h2>
-<p><strong>Passes 680 of 687 applicable tests, on Linux x86_64.</strong> The 7 that don't
-pass: 6 gaps, below, and 1 a test interfering with another as they run in
-parallel. None is a bug.</p>
+<p><strong>Passes 680 of 687 applicable tests on Linux x86_64, and 679 on Linux
+arm64.</strong> The 7 that don't pass on x86_64: 6 gaps, below, and 1 a test
+interfering with another as they run in parallel. On arm64 the same 6
+gaps, and 2 tests that fail only when run in parallel (below); none is a
+bug.</p>
 <table>
 <thead>
 <tr>
@@ -2652,11 +2796,18 @@ parallel. None is a bug.</p>
 <td><a href="2026-10-15/linux-amd64/summary/">summary</a></td>
 <td><a href="2026-10-15/linux-amd64/results.csv">results.csv</a></td>
 </tr>
+<tr>
+<td>Linux arm64 (Ubuntu 24.04 VM on Apple silicon)</td>
+<td>0.1.0-rc.1</td>
+<td><a href="2026-10-18/linux-arm64/summary/">summary</a></td>
+<td><a href="2026-10-18/linux-arm64/results.csv">results.csv</a></td>
+</tr>
 </tbody>
 </table>
 <p>s3-tests <code>5522d1c</code>, now 1057 tests; a debug <code>objectio-aio</code> (6 OSDs, 4+2
-erasure coding, auth on), fresh for the run. The arm64 run was last done
-on 2026-10-03 (below) and wasn't repeated for this one.</p>
+erasure coding, auth on), fresh for the run. arm64 ran on 2026-10-18,
+on the tagged 0.1.0-rc.1; its 1057 tests fall into the same groups below,
+test for test, apart from the three named at the end.</p>
 <h3 id="applicable-and-not">Applicable, and not<a class="headerlink" href="#applicable-and-not" title="Permanent link">&para;</a></h3>
 <p>A test is applicable when it isn't skipped and doesn't fail for a reason
 that isn't ObjectIO's to fix. Of the 1057:</p>
@@ -2760,6 +2911,16 @@ teardown failed. It lists buckets as the suite's second user while
 another test, running at the same time, denies that user ListBuckets for
 a few seconds (<code>test_deny_bucket_actions_in_user_policy</code>). Run alone, it
 passes with its teardown.</p>
+<p>On arm64 that test passed, and two others failed only in the parallel
+run; run alone, each passed three times out of three:</p>
+<ul>
+<li><code>test_headers::test_object_create_bad_md5_bad</code>: the same interference,
+  its ListBuckets denied by the other test's user policy.</li>
+<li><code>test_s3::test_bucket_logging_single_prefix</code>: found two log objects
+  where it expects one. Logs roll every 3 seconds for the suite and the
+  test waits 5.5; with the VM busy running four workers, a second roll
+  landed inside its wait.</li>
+</ul>
 <h2 id="running-it">Running it<a class="headerlink" href="#running-it" title="Permanent link">&para;</a></h2>
 <p>From the objectio repo, on Linux (on a Mac, inside a Linux VM or
 container: native macOS syncs are far slower, and its timings mean
@@ -2785,6 +2946,14 @@ there.</p>
 </tr>
 </thead>
 <tbody>
+<tr>
+<td><a href="2026-10-18/linux-arm64/summary/">2026-10-18</a></td>
+<td>0.1.0-rc.1, Linux arm64</td>
+<td style="text-align: right;">679 of 687</td>
+<td style="text-align: right;">679</td>
+<td style="text-align: right;">281 (+5 errors)</td>
+<td style="text-align: right;">92</td>
+</tr>
 <tr>
 <td><a href="2026-10-15/linux-amd64/summary/">2026-10-15</a></td>
 <td>0.1.0 release candidate, Linux x86_64</td>
