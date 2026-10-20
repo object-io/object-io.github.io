@@ -3083,6 +3083,11 @@ the same core. Apache-2.0, every feature.</p>
   disks are healthy. The block gateway is a StatefulSet of one pod over
   its journal; <code>helm install --wait</code> completes. The kind setup sets its
   own development values (<a href="../../operations-guide/installation/kubernetes/">Kubernetes</a>).</li>
+<li>The Linux binaries need glibc 2.28 or later and no other library:
+  PCRE2 is linked in and TLS loads no OpenSSL. Each is run on Ubuntu
+  22.04, Debian 12, Rocky Linux 9 and Amazon Linux 2023 before the
+  release is published
+  (<a href="../../operations-guide/installation/linux/#1-release-binary">Linux</a>).</li>
 <li>Every service stops cleanly on SIGTERM: it finishes its work in
   flight and exits 0, and the gateway leaves the load balancer, drains,
   and delivers its audit spool first, so a rollout loses no request or

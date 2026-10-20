@@ -3158,16 +3158,59 @@ objectio-aio<span class="w"> </span>--version
 </code></pre></div>
 <p><code>releases/latest/download/…</code> doesn't work for a pre-release such as
 <code>v0.1.0-rc.1</code>: name the tag.</p>
-<p>The release binary is built on Ubuntu 24.04 and links glibc
-dynamically, with OpenSSL and PCRE2: it needs <strong>glibc 2.39 or later</strong>
-(Ubuntu 24.04+, Debian 13+, Fedora 40+, RHEL 10) and:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Debian / Ubuntu</span>
-sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>ca-certificates<span class="w"> </span>libssl3<span class="w"> </span>libpcre2-8-0
-
-<span class="c1"># Fedora / RHEL 10</span>
-sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>ca-certificates<span class="w"> </span>openssl-libs<span class="w"> </span>pcre2
-</code></pre></div>
-<p>On an older distribution, build from source or use the container image.</p>
+<p>The release binary needs <strong>glibc 2.28 or later</strong> and nothing else. It
+is built on AlmaLinux 8 (glibc 2.28); PCRE2 is linked in, and its TLS
+is rustls, so it loads no OpenSSL. The only shared libraries it loads
+are glibc's own, <code>libgcc_s</code> and the dynamic loader. By glibc, that
+covers (the kernel must meet the <a href="#system-requirements">system requirements</a>
+too):</p>
+<table>
+<thead>
+<tr>
+<th>Distribution</th>
+<th>Release</th>
+<th>glibc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RHEL, Rocky Linux, AlmaLinux</td>
+<td>8 and later</td>
+<td>2.28+</td>
+</tr>
+<tr>
+<td>Debian</td>
+<td>10 and later</td>
+<td>2.28+</td>
+</tr>
+<tr>
+<td>Ubuntu</td>
+<td>20.04 and later</td>
+<td>2.31+</td>
+</tr>
+<tr>
+<td>Amazon Linux</td>
+<td>2023</td>
+<td>2.34</td>
+</tr>
+<tr>
+<td>Fedora</td>
+<td>29 and later</td>
+<td>2.28+</td>
+</tr>
+</tbody>
+</table>
+<p>Before a release is published, each Linux binary (<code>amd64</code> and <code>arm64</code>)
+is checked to need no glibc symbol newer than 2.28 and no other library,
+and is run on Ubuntu 22.04, Debian 12, Rocky Linux 9 and Amazon Linux
+2023. Amazon Linux 2 (glibc 2.26) and CentOS 7 (2.17) are too old: use
+the container image there.</p>
+<p>Outbound HTTPS (to an OIDC provider, for one) trusts Mozilla's root
+certificates, which are built in, and the system's certificate store,
+so a private CA added there (<code>update-ca-certificates</code>,
+<code>update-ca-trust</code>) is trusted too.</p>
+<p><code>v0.1.0-rc.1</code>'s binaries are the exception: built on Ubuntu 24.04, they
+need glibc 2.39, <code>libssl3</code> and <code>libpcre2-8-0</code>.</p>
 <hr />
 <h2 id="2-a-cluster-under-systemd">2. A cluster under systemd<a class="headerlink" href="#2-a-cluster-under-systemd" title="Permanent link">&para;</a></h2>
 <p>Every service is configured with flags; only <code>objectio-osd</code> also reads a
@@ -3254,8 +3297,12 @@ generated <code>osd.toml</code> has no <code>data_dir</code> or <code>advertise_
 units yourself, as below.</p>
 <hr />
 <h2 id="3-build-from-source">3. Build from source<a class="headerlink" href="#3-build-from-source" title="Permanent link">&para;</a></h2>
-<p>Needed if you want to track <code>main</code>, run a custom branch, run the
-services outside the image, or build for an older glibc.</p>
+<p>Needed if you want to track <code>main</code>, run a custom branch, or run the
+services outside the image. A binary needs the glibc it was built
+against or newer: to build one that runs where the release's does,
+build in an <code>almalinux:8</code> container, with <code>PCRE2_SYS_STATIC=1</code> to link
+PCRE2 in (the release workflow, <code>.github/workflows/release.yml</code>, is the
+recipe).</p>
 <h3 id="toolchain">Toolchain<a class="headerlink" href="#toolchain" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Rust (1.93+)</span>
 curl<span class="w"> </span>--proto<span class="w"> </span><span class="s1">'=https'</span><span class="w"> </span>--tlsv1.2<span class="w"> </span>-sSf<span class="w"> </span>https://sh.rustup.rs<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh<span class="w"> </span>-s<span class="w"> </span>--<span class="w"> </span>-y
