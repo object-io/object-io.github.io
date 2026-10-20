@@ -2846,7 +2846,13 @@ at it.</p>
 <li><strong>A node that stops answering is skipped.</strong> Clients probe each meta
   address every second, with a one-second timeout, and leave out the ones
   that don't answer until they do. That covers a node that is down, and one
-  that is frozen or cut off but still accepting connections.</li>
+  that is frozen or cut off but still accepting connections, and a leader
+  that says it can't serve (below).</li>
+<li><strong>The leader answers only while a majority confirms it leads.</strong> A
+  leader cut off from the other meta nodes still believes it leads, but
+  it stops answering within about 3 seconds (calls fail, 503 to S3
+  clients) rather than serve state the others may have changed since: a
+  key revoked on the majority's side is not accepted on its side.</li>
 <li><strong>No call waits forever.</strong> A call to meta gives up after 5 seconds. The
   gateway answers S3 clients 503 when meta can't be reached, which they
   retry.</li>
@@ -2870,7 +2876,7 @@ at it.</p>
 </tr>
 <tr>
 <td>The leader, cut off (frozen, partitioned)</td>
-<td>As above. When it returns it finds a newer term and steps down: it never leads a second cluster.</td>
+<td>As above. While cut off it answers nothing from its own state: within about 3 seconds its calls fail (503) and clients go to the others. When it returns it finds a newer term and steps down: it never leads a second cluster.</td>
 </tr>
 <tr>
 <td>A majority</td>
@@ -2916,6 +2922,8 @@ gateways:</p>
   killed and the cluster carries on;</li>
 <li>the leader frozen (SIGSTOP): a new leader is elected, and the old one
   steps down when it thaws;</li>
+<li>both followers frozen: the leader, cut off, refuses reads sent to it
+  directly (<code>UNAVAILABLE</code>), and serves again once they thaw;</li>
 <li>two of three lost: writes refused, then resumed when one returns;</li>
 <li>a KMS key, the objects encrypted under it, a multipart upload in
   progress, and the admin's credentials all survive a failover;</li>

@@ -3328,6 +3328,13 @@ release notes say when they do.</p>
 <td>meta</td>
 </tr>
 <tr>
+<td>Meta reads confirmed by a quorum (read index)</td>
+<td>✅</td>
+<td>The leader answers only while a majority has confirmed it leads within the last second; one cut off from its followers answers <code>UNAVAILABLE</code> within about 3 s, in a multi-process test</td>
+<td><a href="../operations-guide/operations/meta-ha/">meta HA</a></td>
+<td>meta</td>
+</tr>
+<tr>
 <td>Rolling upgrade, format levels</td>
 <td>✅</td>
 <td>Meta, then OSDs, then gateways, under traffic; new formats gated until every node runs the new release; tested on every change to <code>main</code></td>

@@ -3003,7 +3003,9 @@ the same core. Apache-2.0, every feature.</p>
   trip, and many are packed into one stripe.</li>
 <li>Meta on Raft (openraft) on three or more nodes, any node serving, with
   its own log: a meta node is back within a second of a power cut, and an
-  OSD of 10 M shards serves 17 s after one.</li>
+  OSD of 10 M shards serves 17 s after one. The leader answers only while
+  a majority confirms it still leads: one cut off from its followers stops
+  answering, rather than serve what may have changed elsewhere.</li>
 <li>Rolling upgrades under traffic, new formats gated until every node runs
   the new release.</li>
 <li>Bucket listings seek to the continuation marker and past each common
