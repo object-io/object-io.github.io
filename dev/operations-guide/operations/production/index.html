@@ -3355,7 +3355,16 @@ and the audit spool's size.</p>
 3. If the host or drive is gone for good: <code>obioctl osd set-state &lt;node_id&gt;
    out</code>. Repair then rebuilds its shards elsewhere. Do this within a few
    hours: until then every stripe it held is one failure from unreadable
-   (<code>ObjectIOObjectsAtRisk</code>).</p>
+   (<code>ObjectIOObjectsAtRisk</code>).
+4. If it won't start, and its log says its metadata log is damaged
+   ("damage, not a torn append", or records missing): what it holds can't
+   be trusted. Treat it as a failed drive (step 3, then
+   <a href="#replacing-a-disk">replace the disk</a> with a fresh state directory).
+   A crash alone leaves a torn tail, which the OSD cuts off by itself.</p>
+<p>An OSD whose metadata log failed a write or an fsync ("refusing every
+write until it is reopened" in its log) stays up but refuses every write.
+Restart it: the restart finds where the log really ends. If it happens
+again, the drive is failing; replace it.</p>
 <p><strong>Done when</strong> <code>ObjectIOObjectsAtRisk</code> clears and the repair counters
 (<code>objectio_meta_repair_shards_rebuilt_total</code>) stop rising.</p>
 <h3 id="replacing-a-disk">Replacing a disk<a class="headerlink" href="#replacing-a-disk" title="Permanent link">&para;</a></h3>
@@ -3473,6 +3482,15 @@ chunks.
 - <strong>Read errors:</strong> reads that couldn't be served.</p>
 <p>The journal is a single copy on the block gateway's disk: losing that disk
 loses writes not yet flushed (a known gap; see the block design).</p>
+<ul>
+<li><strong>Journal failed a write or fsync</strong> ("refusing every write until it is
+  reopened" in the gateway's log): every block write fails. Restart the
+  gateway; if it happens again, replace its disk.</li>
+<li><strong>Gateway won't start, journal damaged</strong> ("damage, not a torn write"):
+  the entries after the damage are acknowledged writes, possibly not yet
+  stored on the OSDs, and this file is their only copy. Keep the file;
+  moving it aside starts the gateway with those writes lost.</li>
+</ul>
 <h3 id="certificates-expiring">Certificates expiring<a class="headerlink" href="#certificates-expiring" title="Permanent link">&para;</a></h3>
 <p>cert-manager renews 30 days before expiry. The services read their
 certificates only at start, so after a renewal restart them (rolling):
