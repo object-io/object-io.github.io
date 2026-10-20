@@ -2836,7 +2836,7 @@ how it is tested. Moving an item between releases is an edit to this
 page, in a pull request like any other change. Each item links to its
 GitHub issue, and the <a href="https://github.com/orgs/object-io/projects/1">ObjectIO project</a>
 shows which are in progress.</p>
-<p><strong>Last reviewed:</strong> 2026-10-18, at the 0.1.0 release candidate.</p>
+<p><strong>Last reviewed:</strong> 2026-10-20, after an external production-readiness review of the release candidate.</p>
 <h2 id="priorities">Priorities<a class="headerlink" href="#priorities" title="Permanent link">&para;</a></h2>
 <ol>
 <li><strong>S3: production-ready and bug-free.</strong> The product we ship first. No
@@ -3009,6 +3009,97 @@ have the evidence). These close it out before 0.1.0 is final.</p>
 <td><a href="https://github.com/object-io/objectio/issues/60">#60</a></td>
 </tr>
 <tr>
+<td>Reads never return wrong data across codec builds: every reconstructed data shard is checked against its recorded checksum before it is served, one codec (or a recorded one) for every build, and a cross-backend test</td>
+<td>Core</td>
+<td>data protection</td>
+<td><a href="../operations-guide/installation/linux/">Linux</a></td>
+<td><a href="https://github.com/object-io/objectio/issues/70">#70</a></td>
+</tr>
+<tr>
+<td>A replicated multipart part is acknowledged at the same replica quorum as a PUT; one stripe writer serves PUT, multipart, packs and block</td>
+<td>S3</td>
+<td>data protection</td>
+<td>—</td>
+<td><a href="https://github.com/object-io/objectio/issues/71">#71</a></td>
+</tr>
+<tr>
+<td>Gateway memory bounded: GET streamed stripe by stripe, request bodies limited before they are read, concurrency and timeouts that answer 503 SlowDown under overload</td>
+<td>S3</td>
+<td>—</td>
+<td><a href="../operations-guide/operations/production/">production</a></td>
+<td><a href="https://github.com/object-io/objectio/issues/72">#72</a></td>
+</tr>
+<tr>
+<td>Every service drains and exits cleanly on SIGTERM (rollouts lose no in-flight request or audit record)</td>
+<td>Platform</td>
+<td>—</td>
+<td><a href="../operations-guide/operations/upgrades/">upgrades</a></td>
+<td><a href="https://github.com/object-io/objectio/issues/73">#73</a></td>
+</tr>
+<tr>
+<td>An OSD with several disks refuses to start when one is missing, extra or reordered; reads and scrub check each shard's identity and checksum</td>
+<td>Core</td>
+<td>storage engine</td>
+<td><a href="../operations-guide/operations/failure-recovery/">failure recovery</a></td>
+<td><a href="https://github.com/object-io/objectio/issues/74">#74</a></td>
+</tr>
+<tr>
+<td>Meta serves reads only while it still leads (read-index check): a leader cut off from its peers stops answering</td>
+<td>Core</td>
+<td>meta</td>
+<td>—</td>
+<td><a href="https://github.com/object-io/objectio/issues/75">#75</a></td>
+</tr>
+<tr>
+<td>Listings seek to the continuation marker: paging through a bucket costs the same per page at the start and the end</td>
+<td>Core</td>
+<td>meta</td>
+<td>—</td>
+<td><a href="https://github.com/object-io/objectio/issues/76">#76</a></td>
+</tr>
+<tr>
+<td>Pool creation refuses protection schemes the codecs can't serve; LRC writes of any size succeed</td>
+<td>Core</td>
+<td>data protection</td>
+<td><a href="../operations-guide/administration/cli/">CLI</a></td>
+<td><a href="https://github.com/object-io/objectio/issues/77">#77</a></td>
+</tr>
+<tr>
+<td>The Helm chart can express a production deployment: placement constraints, NetworkPolicy, OSD disruption budget, probes, raw devices, per-pod failure domains, an existing SSE key</td>
+<td>Platform</td>
+<td>—</td>
+<td><a href="../operations-guide/installation/kubernetes/">Kubernetes</a></td>
+<td><a href="https://github.com/object-io/objectio/issues/78">#78</a></td>
+</tr>
+<tr>
+<td>No path reports success for work it didn't do: stubs either work, fail clearly, or are removed; a bad config file is fatal</td>
+<td>Platform</td>
+<td>—</td>
+<td>—</td>
+<td><a href="https://github.com/object-io/objectio/issues/79">#79</a></td>
+</tr>
+<tr>
+<td>Dead code and unused abstractions removed; unknown flags refused</td>
+<td>Platform</td>
+<td>—</td>
+<td>—</td>
+<td><a href="https://github.com/object-io/objectio/issues/80">#80</a></td>
+</tr>
+<tr>
+<td>Tests fail when they can't run, and an end-to-end shard runs the release build's features</td>
+<td>Core</td>
+<td>—</td>
+<td>—</td>
+<td><a href="https://github.com/object-io/objectio/issues/81">#81</a></td>
+</tr>
+<tr>
+<td>Meta backup and restore: <code>obioctl meta export</code> of a live cluster; a fresh cluster restored from it serves every bucket, user and object listing</td>
+<td>Platform</td>
+<td>meta</td>
+<td><a href="../operations-guide/operations/failure-recovery/">failure recovery</a></td>
+<td><a href="https://github.com/object-io/objectio/issues/13">#13</a></td>
+</tr>
+<tr>
 <td>Release notes reviewed; the 0.1 version of the site and the release's binaries, image and chart published</td>
 <td>Platform</td>
 <td>—</td>
@@ -3063,13 +3154,6 @@ have the evidence). These close it out before 0.1.0 is final.</p>
 <td>—</td>
 <td><a href="../developer-guide/features/#3c-table-sharing-delta-sharing-protocol">feature reference</a></td>
 <td><a href="https://github.com/object-io/objectio/issues/12">#12</a></td>
-</tr>
-<tr>
-<td>Meta backup and restore: <code>obioctl meta export</code> of a live cluster; a fresh cluster restored from it serves every bucket, user and object listing</td>
-<td>Platform</td>
-<td>meta</td>
-<td><a href="../operations-guide/operations/failure-recovery/">failure recovery</a></td>
-<td><a href="https://github.com/object-io/objectio/issues/13">#13</a></td>
 </tr>
 <tr>
 <td>A tenant's audit events into a bucket of its own: turned on by the tenant admin, only its own events, within a minute, none missing after a gateway crash</td>
@@ -3147,6 +3231,41 @@ have the evidence). These close it out before 0.1.0 is final.</p>
 <td>—</td>
 <td>—</td>
 <td><a href="https://github.com/object-io/objectio/issues/67">#67</a></td>
+</tr>
+<tr>
+<td>Host maintenance without a full backfill: a noout flag and maintenance mode, and no automatic stand-ins when a whole host or rack is down</td>
+<td>Core</td>
+<td>PG recovery</td>
+<td><a href="../operations-guide/operations/failure-recovery/">failure recovery</a></td>
+<td><a href="https://github.com/object-io/objectio/issues/82">#82</a></td>
+</tr>
+<tr>
+<td>Orphaned shards reclaimed: a gateway crash mid-PUT leaks nothing for good; incomplete uploads expire by default</td>
+<td>Core</td>
+<td>—</td>
+<td>—</td>
+<td><a href="https://github.com/object-io/objectio/issues/83">#83</a></td>
+</tr>
+<tr>
+<td>Tail latency: writes return at quorum, stripes pipelined, reads hedged, coding off the async runtime</td>
+<td>Core</td>
+<td>—</td>
+<td>—</td>
+<td><a href="https://github.com/object-io/objectio/issues/84">#84</a></td>
+</tr>
+<tr>
+<td>Data lake correctness: warehouse-scoped keys for every table call, metadata beyond 4 MiB, caches refreshed on every node, metadata files written to S3</td>
+<td>Data lake</td>
+<td>—</td>
+<td><a href="../operations-guide/administration/iceberg-api/">Iceberg API</a></td>
+<td><a href="https://github.com/object-io/objectio/issues/85">#85</a></td>
+</tr>
+<tr>
+<td>Block volumes: acknowledged writes survive the loss of the gateway's node, exclusive attach, a bounded journal, chunks on the volume's pool</td>
+<td>Block</td>
+<td>block storage</td>
+<td>—</td>
+<td><a href="https://github.com/object-io/objectio/issues/86">#86</a></td>
 </tr>
 </tbody>
 </table>
@@ -3343,13 +3462,6 @@ have the evidence). These close it out before 0.1.0 is final.</p>
 <td>block storage</td>
 <td>—</td>
 <td><a href="https://github.com/object-io/objectio/issues/47">#47</a></td>
-</tr>
-<tr>
-<td>The unused <code>BlockMetaService</code> removed from meta</td>
-<td>Block</td>
-<td>—</td>
-<td>—</td>
-<td><a href="https://github.com/object-io/objectio/issues/48">#48</a></td>
 </tr>
 <tr>
 <td>File: a design (namespace model, rename, locking) on the shared core, then an NFS v3/v4 gateway</td>
