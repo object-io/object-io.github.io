@@ -2984,8 +2984,9 @@ the same core. Apache-2.0, every feature.</p>
 <h3 id="core">Core<a class="headerlink" href="#core" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Raw-disk OSDs: <code>O_DIRECT</code>, a write-ahead log, io_uring in Linux release
-  builds. Each shard is fsynced, then its location record, before a PUT
-  is acknowledged.</li>
+  builds (pread, with a warning, on a host that denies io_uring, such as
+  a container under docker's default seccomp profile). Each shard is
+  fsynced, then its location record, before a PUT is acknowledged.</li>
 <li>An OSD's disks are known by the ids in their superblocks, not by their
   paths or order: an OSD missing one of its disks, or given a disk not its
   own, doesn't start, and a blank disk replaces a missing one. Every read
@@ -3083,7 +3084,7 @@ the same core. Apache-2.0, every feature.</p>
 </thead>
 <tbody>
 <tr>
-<td>Unit and end-to-end tests against real processes, a meta HA test on Kubernetes (kind), a rolling upgrade under traffic, and a performance check, on every change</td>
+<td>Unit and end-to-end tests against real processes, a meta HA test on Kubernetes (kind), a rolling upgrade under traffic, the crash-consistency test, and a performance check, on every change; the data-path end-to-end tests also on binaries built with the release's features (io_uring). A test that can't run where it is run (no root, no previous release, no Mooncake build) fails, never passes untested</td>
 <td>Pass</td>
 </tr>
 <tr>

@@ -2265,6 +2265,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#falling-back-to-pread-in-an-osds-log" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "falling back to pread" in an OSD's log
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#gateway-cant-reach-meta" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2995,6 +3006,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#falling-back-to-pread-in-an-osds-log" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "falling back to pread" in an OSD's log
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#gateway-cant-reach-meta" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3392,6 +3414,14 @@ In <code>docker-compose.yml</code>:</p>
 <span class="w">    </span><span class="nt">cap_add</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">SYS_RAWIO</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">SYS_ADMIN</span><span class="p p-Indicator">]</span>
 <span class="w">    </span><span class="nt">devices</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">/dev/sdb</span><span class="p p-Indicator">:</span><span class="nv">/dev/sdb</span><span class="p p-Indicator">]</span>
 </code></pre></div>
+<h3 id="falling-back-to-pread-in-an-osds-log">"falling back to pread" in an OSD's log<a class="headerlink" href="#falling-back-to-pread-in-an-osds-log" title="Permanent link">&para;</a></h3>
+<p>The image does its disk I/O through io_uring, and docker's default
+seccomp profile denies the io_uring system calls. The OSD (or aio) then
+logs <code>storage error: io_uring setup for &lt;device&gt;: Operation not
+permitted (os error 1); falling back to pread</code> for each device and
+serves with pread: correct, but slower. A <code>privileged: true</code> container, or a seccomp profile that
+allows <code>io_uring_setup</code>, <code>io_uring_enter</code> and <code>io_uring_register</code>
+(<code>--security-opt seccomp=&lt;file&gt;</code>), gets io_uring.</p>
 <h3 id="gateway-cant-reach-meta">Gateway can't reach meta<a class="headerlink" href="#gateway-cant-reach-meta" title="Permanent link">&para;</a></h3>
 <p>Gateways and OSDs take every meta node's address in one comma-separated
 <code>--meta-endpoint</code> (for example

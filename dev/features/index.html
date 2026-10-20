@@ -3127,7 +3127,7 @@ release notes say when they do.</p>
 <tr>
 <td>Crash consistency of the OSD</td>
 <td>✅</td>
-<td>The shard device's and state filesystem's writes recorded and replayed up to random power-cut points: every acknowledged write survives</td>
+<td>The shard device's and state filesystem's writes recorded and replayed up to random power-cut points: every acknowledged write survives. Run in CI on every merge</td>
 <td></td>
 <td>storage engine</td>
 </tr>
@@ -3169,8 +3169,8 @@ release notes say when they do.</p>
 <tr>
 <td>io_uring shard I/O</td>
 <td>🟡</td>
-<td>The default in Linux release builds; the end-to-end suite runs on <code>pread</code></td>
-<td></td>
+<td>The default in Linux release builds; a host that denies io_uring (docker's default seccomp profile) gets <code>pread</code>, with a warning. The data-path end-to-end tests run on it in CI (S3 calls, multipart, repair, restarts, packing, checksums, removed disks); the rest of the suite and the soak on <code>pread</code></td>
+<td><a href="../operations-guide/installation/docker/#falling-back-to-pread-in-an-osds-log">Docker</a></td>
 <td>I/O levels</td>
 </tr>
 <tr>

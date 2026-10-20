@@ -3137,7 +3137,9 @@ blocks), not ext4/xfs — <code>mkfs</code>-ing first is <em>not</em> required a
 <ul>
 <li><code>O_DIRECT</code> on raw block devices (required for OSD disks)</li>
 <li><code>ioctl BLKGETSIZE64</code> for disk sizing</li>
-<li><code>io_uring</code> when available (5.15+); falls back to threaded I/O</li>
+<li><code>io_uring</code> when available (5.15+); falls back to threaded I/O, with a
+  warning in the OSD's log, where the kernel or a seccomp profile denies
+  it</li>
 </ul>
 <p><strong>Supported distributions:</strong> any glibc 2.31+ (Ubuntu 22.04+, Debian
 12+, RHEL 9+, Amazon Linux 2023, Rocky/Alma 9+). For older glibc, build
@@ -3320,7 +3322,8 @@ make<span class="w"> </span>ci
   per concurrent operation × disk).</li>
 <li>[ ] Pin CPUs / set <code>tuned-adm profile throughput-performance</code>.</li>
 <li>[ ] If using <code>io_uring</code>, make sure the kernel is 5.15+ and
-  <code>/proc/sys/kernel/io_uring_disabled</code> is 0.</li>
+  <code>/proc/sys/kernel/io_uring_disabled</code> is 0, and that the OSD's log has
+  no <code>falling back to pread</code> warning.</li>
 </ul>
 <p>See <a href="../topologies/">topologies.md</a> for how many disks and nodes to
 size for a given durability target.</p>

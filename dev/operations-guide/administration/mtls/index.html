@@ -2891,7 +2891,8 @@ gets a test CA's certificate. One test checks that a node refuses a
 plaintext client, a client with no certificate and one with another CA's
 certificate, and serves the cluster's own. The rolling-upgrade test starts
 from the previous release, before TLS existed, so it runs plain.
-<code>OBJECTIO_E2E_PLAIN=1</code> runs the whole suite plain.</p>
+<code>OBJECTIO_E2E_PLAIN=1</code> runs the whole suite plain; the mTLS test then
+fails, since it has nothing to test.</p>
 
 
 
