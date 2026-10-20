@@ -3191,8 +3191,8 @@ can't check for you.</p>
 <tbody>
 <tr>
 <td><strong>Redundancy</strong></td>
-<td>Set an erasure code: <code>replication: 0</code> and <code>ec.k</code>/<code>ec.m</code> in the chart (its default is <code>replication: 1</code>, one copy of each object: <strong>no redundancy</strong>), or <code>--ec-k</code>/<code>--ec-m</code>. 4+2 for 7–12 hosts, 8+4 from 13; these profiles only.</td>
-<td>With one copy, one lost disk loses data.</td>
+<td>An erasure code: the chart's default is 4+2 (<code>replication: 0</code>, <code>ec.k</code>/<code>ec.m</code>), and it refuses to render with fewer OSDs than k + m; on hosts, <code>--ec-k</code>/<code>--ec-m</code>. 4+2 for 7–12 hosts, 8+4 from 13; these profiles only.</td>
+<td>Without parity (or with one copy), one lost disk loses data.</td>
 </tr>
 <tr>
 <td><strong>Hosts</strong></td>
@@ -3206,7 +3206,7 @@ can't check for you.</p>
 </tr>
 <tr>
 <td><strong>Authentication</strong></td>
-<td><code>gateway.noAuth: false</code> in the chart (its default is <code>true</code>).</td>
+<td>On: <code>gateway.noAuth: false</code>, the chart's default.</td>
 <td>Without it anyone who reaches the gateway can read and write everything.</td>
 </tr>
 <tr>

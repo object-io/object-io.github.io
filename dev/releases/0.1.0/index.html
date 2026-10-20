@@ -3000,8 +3000,7 @@ the same core. Apache-2.0, every feature.</p>
   it is served.</li>
 <li>A pool's protection scheme is checked when the pool is made or
   changed, and meta's default scheme when it starts: a profile with no
-  parity (1+0; one unprotected copy is replication of 1, the Helm chart's
-  default), an LRC whose data shards don't split evenly into its groups
+  parity (1+0; one unprotected copy is replication of 1), an LRC whose data shards don't split evenly into its groups
   or that has no local or global parity, a replica count of 0, or more
   than 255 shards is refused with what is wrong with it
   (data protection).</li>
@@ -3070,10 +3069,20 @@ the same core. Apache-2.0, every feature.</p>
 <h3 id="platform">Platform<a class="headerlink" href="#platform" title="Permanent link">&para;</a></h3>
 <ul>
 <li><code>objectio-aio</code>, the whole cluster in one process; binaries for Linux
-  x86_64 and arm64 (and macOS for development); a multi-arch image; a
-  Helm chart with HA defaults (2 gateways, 3 metas, PDBs)
-  (<a href="../../operations-guide/installation/quickstart/">quickstart</a>,
-  <a href="../../operations-guide/installation/kubernetes/">Kubernetes</a>).</li>
+  x86_64 and arm64 (and macOS for development); a multi-arch image
+  (<a href="../../operations-guide/installation/quickstart/">quickstart</a>).</li>
+<li>A Helm chart whose defaults protect data and require auth: 4+2 erasure
+  coding over 6 OSDs (it refuses to render with fewer OSDs than the code
+  needs), 3 metas, 2 gateways, disruption budgets for all three. A values
+  file can express a production deployment: placement (node selectors,
+  affinity, tolerations, spread constraints), NetworkPolicies, raw block
+  volumes for OSDs, each OSD's zone and rack read from its node's labels,
+  existing Secrets for the SSE key, OIDC and Delta Sharing (a generated
+  SSE key is kept across upgrades and on uninstall), and probes that ask
+  meta whether its Raft runs and has a leader and the OSDs whether their
+  disks are healthy. The block gateway is a StatefulSet of one pod over
+  its journal; <code>helm install --wait</code> completes. The kind setup sets its
+  own development values (<a href="../../operations-guide/installation/kubernetes/">Kubernetes</a>).</li>
 <li>Every service stops cleanly on SIGTERM: it finishes its work in
   flight and exits 0, and the gateway leaves the load balancer, drains,
   and delivers its audit spool first, so a rollout loses no request or

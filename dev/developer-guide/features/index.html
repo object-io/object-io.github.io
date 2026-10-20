@@ -3504,12 +3504,14 @@ What exists today is file-like access through S3:</p>
 <ul>
 <li><strong>Real consensus, not a placeholder</strong>: <code>RaftStorage</code> implemented over redb (log + vote + state in <code>raft_logs</code>, <code>raft_vote</code>, <code>raft_state</code> tables); <code>RaftNetwork</code> over tonic gRPC on the existing meta port, JSON-encoded envelopes</li>
 <li><strong>Cluster size is a deployment choice</strong>: <code>meta.replicas=1</code> boots a single-voter cluster (no election drama, same operational behavior as pre-Raft meta); <code>meta.replicas=3+</code> gets true quorum, leader election, log replication. Same binary, same code path</li>
-<li><strong>Bootstrap automated via helm</strong>: post-install Job calls <code>/init</code> on meta-0, adds peers as learners, promotes the voter set. Re-runs safely on upgrade</li>
+<li><strong>Bootstrap automated via helm</strong>: a Job created with each install and upgrade calls <code>/init</code> on meta-0 unless the cluster exists, adds the pods that aren't voters as learners through the leader, and promotes the voter set; with every pod a voter it changes nothing</li>
 <li><strong>Admin API</strong> at <code>:9102</code> per meta pod:</li>
 <li><code>POST /init</code> — bootstrap a single-voter cluster (idempotent)</li>
 <li><code>POST /add-learner {node_id, addr}</code> — onboard a peer non-voting</li>
 <li><code>POST /change-membership {voters}</code> — promote the voter set</li>
 <li><code>GET /status</code> — leader id, term, voters, learners, <code>last_log_index</code>, <code>last_applied</code></li>
+<li><code>GET /health</code> — 200 while this node's Raft runs, 503 once it has stopped (the chart's liveness probe)</li>
+<li><code>GET /ready</code> — 200 while this node is a member with a leader known, 503 with the reason otherwise (the chart's readiness probe)</li>
 <li><strong>Every meta write goes through Raft</strong>: config, buckets, IAM, tenants, OSD registrations, KMS keys, multipart uploads; replicas apply them in order</li>
 <li><strong>Any meta node serves any client</strong>: a follower forwards each gRPC call to the leader (<code>x-objectio-forwarded</code>); clients take a comma-separated <code>--meta-endpoint</code> list, balanced over health-probed nodes, with a 5 s call timeout, so a dead or frozen meta is routed around</li>
 <li><strong>Snapshots</strong>: the whole state machine, built from the tables on demand and installed in full on a lagging or new node</li>

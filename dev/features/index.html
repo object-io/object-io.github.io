@@ -3658,9 +3658,9 @@ the <a href="../ROADMAP/">roadmap</a>.</p>
 <td></td>
 </tr>
 <tr>
-<td>Helm chart (HA defaults: 2 gateways, 3 metas; PDBs; optional HPA)</td>
+<td>Helm chart</td>
 <td>🟡</td>
-<td>Meta HA tested on kind in CI. Its defaults are for a laptop (no redundancy, auth off): set <code>ec.k</code>/<code>ec.m</code> and <code>gateway.noAuth: false</code> for anything else</td>
+<td>Production defaults: 4+2 over 6 OSDs (it refuses to render with fewer OSDs than the code needs), 3 metas, 2 gateways, auth on, disruption budgets. Placement constraints, NetworkPolicy, probes that ask meta's Raft and the OSDs' disks, raw block OSDs, failure domains from node labels, existing Secrets (SSE key kept on uninstall), a block gateway of one pod; a production example. Meta HA tested on kind in CI; installs, upgrades and failure-domain labels checked on kind, raw block volumes and NetworkPolicy beyond kind's not yet on a real cluster</td>
 <td><a href="../operations-guide/installation/kubernetes/">Kubernetes</a></td>
 <td></td>
 </tr>

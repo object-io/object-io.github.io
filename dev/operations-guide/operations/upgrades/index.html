@@ -2950,9 +2950,9 @@ with ISA-L already, and upgrades in place.</p>
 <p><strong>An rc.1 cluster installed with the Helm chart's default protection
 (<code>ec.k: 1, ec.m: 0</code>) sets <code>replication: 1</code> when it upgrades.</strong> 0.1.0's
 meta refuses to start with a default profile of no parity, and the
-chart's default is now one copy by replication (<code>replication: 1</code>); with
-<code>--reuse-values</code> the old values are kept, so pass
-<code>--set replication=1</code>. Its default pool, made 1+0, never took an object
+chart's default is now 4+2 erasure coding over 6 OSDs, which such a
+cluster's default pool isn't; pass <code>--set replication=1</code> (one copy) and
+its <code>osd.replicas</code> (<a href="../../installation/kubernetes/#upgrading-from-010-rc1">Kubernetes</a>). Its default pool, made 1+0, never took an object
 over the inline limit (4 KiB) and stays as it was made: install 0.1.0
 fresh and copy the objects across, as above.</p>
 
