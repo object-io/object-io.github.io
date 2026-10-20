@@ -3735,7 +3735,7 @@ Raft leader creates the admin user and every node writes its keys to
 <tr>
 <td><code>-c, --config &lt;path&gt;</code></td>
 <td><code>/etc/objectio/osd.toml</code></td>
-<td>TOML config file (read if it exists)</td>
+<td>TOML config file, read if it exists; one that doesn't parse stops the OSD</td>
 </tr>
 <tr>
 <td><code>-l, --listen &lt;addr&gt;</code></td>
@@ -3809,8 +3809,8 @@ Raft leader creates the admin user and every node writes its keys to
 </tr>
 <tr>
 <td><code>--log-level &lt;lvl&gt;</code></td>
-<td><code>info</code></td>
-<td></td>
+<td>the file's <code>[logging] level</code>, else <code>info</code></td>
+<td><code>RUST_LOG</code>, when set, wins</td>
 </tr>
 <tr>
 <td><code>--tls-cert</code>, <code>--tls-key</code>, <code>--tls-ca</code></td>
