@@ -3002,6 +3002,9 @@ the same core. Apache-2.0, every feature.</p>
   OSD of 10 M shards serves 17 s after one.</li>
 <li>Rolling upgrades under traffic, new formats gated until every node runs
   the new release.</li>
+<li>Bucket listings seek to the continuation marker and past each common
+  prefix, so a page costs the same at the end of a large bucket as at its
+  start.</li>
 </ul>
 <h3 id="security">Security<a class="headerlink" href="#security" title="Permanent link">&para;</a></h3>
 <ul>

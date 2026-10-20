@@ -3307,6 +3307,13 @@ release notes say when they do.</p>
 <td>meta log</td>
 </tr>
 <tr>
+<td>Bucket listings that cost the same per page anywhere in the bucket</td>
+<td>✅</td>
+<td>The scan seeks to the continuation marker and past each common prefix: paging through 100,000 keys reads each row once</td>
+<td></td>
+<td>meta</td>
+</tr>
+<tr>
 <td>Meta HA: any node serves, failover, node loss</td>
 <td>✅</td>
 <td>Leader killed, frozen and replaced under S3 traffic, in multi-process tests and on Kubernetes (3 metas through Helm)</td>
