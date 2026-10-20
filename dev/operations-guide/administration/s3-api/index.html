@@ -1951,6 +1951,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#addressing-and-signing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Addressing and signing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#bucket-operations" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3126,6 +3137,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#addressing-and-signing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Addressing and signing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#bucket-operations" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3595,6 +3617,25 @@
 
 <h1 id="s3-api-operations">S3 API Operations<a class="headerlink" href="#s3-api-operations" title="Permanent link">&para;</a></h1>
 <p>Supported S3 API operations in ObjectIO.</p>
+<h2 id="addressing-and-signing">Addressing and signing<a class="headerlink" href="#addressing-and-signing" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Path-style only.</strong> Requests name the bucket in the path
+  (<code>https://s3.example.com/bucket/key</code>). A virtual-hosted-style request
+  (<code>https://bucket.s3.example.com/key</code>) is not recognised: the bucket in
+  the host is ignored and the path is read as bucket and key
+  (<a href="https://github.com/object-io/objectio/issues/65">objectio#65</a>). Set
+  path style in clients: boto3
+  <code>Config(s3={"addressing_style": "path"})</code>, the AWS CLI
+  <code>aws configure set default.s3.addressing_style path</code>, the Java and Go
+  SDKs <code>forcePathStyle</code> / <code>UsePathStyle</code>, Iceberg and Spark
+  <code>s3.path-style-access=true</code>.</li>
+<li><strong>SigV4 only</strong>, for requests and presigned URLs; SigV2 is refused with
+  <code>400</code>. Against a custom endpoint, boto3 without
+  <code>signature_version="s3v4"</code> and AWS CLI v1's <code>aws s3 presign</code> produce
+  SigV2 presigned URLs: set
+  <code>Config(signature_version="s3v4")</code> in boto3, and
+  <code>aws configure set default.s3.signature_version s3v4</code> for the CLI.</li>
+</ul>
 <h2 id="bucket-operations">Bucket Operations<a class="headerlink" href="#bucket-operations" title="Permanent link">&para;</a></h2>
 <h3 id="listbuckets">ListBuckets<a class="headerlink" href="#listbuckets" title="Permanent link">&para;</a></h3>
 <p>List all buckets owned by the authenticated user.</p>
@@ -3760,7 +3801,10 @@ x-amz-copy-source: /source-bucket/source-key
 </code></pre></div>
 <hr />
 <h2 id="multipart-upload">Multipart Upload<a class="headerlink" href="#multipart-upload" title="Permanent link">&para;</a></h2>
-<p>Multipart upload allows uploading large objects in parts, which is required for files larger than 5GB and recommended for files larger than 100MB.</p>
+<p>Multipart upload allows uploading large objects in parts. It is
+required for objects over 100 MiB: the gateway takes a request body of
+at most 100 MiB, so a larger single PUT, or a larger part, is refused
+with <code>413</code> (<a href="https://github.com/object-io/objectio/issues/64">objectio#64</a>).</p>
 <h3 id="limits-and-behavior">Limits and Behavior<a class="headerlink" href="#limits-and-behavior" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -3778,8 +3822,13 @@ x-amz-copy-source: /source-bucket/source-key
 </tr>
 <tr>
 <td>Maximum part size</td>
-<td>5 GB</td>
-<td></td>
+<td>100 MiB</td>
+<td>S3's is 5 GiB; a larger part gets <code>413</code></td>
+</tr>
+<tr>
+<td>Maximum single PUT</td>
+<td>100 MiB</td>
+<td>S3's is 5 GiB</td>
 </tr>
 <tr>
 <td>Maximum parts</td>
@@ -3788,13 +3837,13 @@ x-amz-copy-source: /source-bucket/source-key
 </tr>
 <tr>
 <td>Maximum object size</td>
-<td>5 TB</td>
-<td>10,000 × 5GB</td>
+<td>about 976 GiB</td>
+<td>10,000 × 100 MiB (S3's is 5 TiB)</td>
 </tr>
 <tr>
 <td>Default AWS CLI part size</td>
 <td>8 MB</td>
-<td>Configurable via <code>--multipart-chunk-size</code></td>
+<td><code>multipart_chunksize</code> in the CLI's S3 config; keep it at most 100 MiB</td>
 </tr>
 </tbody>
 </table>

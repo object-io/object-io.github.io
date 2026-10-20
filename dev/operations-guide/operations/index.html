@@ -2442,45 +2442,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Cluster States">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#healthy" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Healthy
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#degraded" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Degraded
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#critical" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Critical
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -2997,45 +2958,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Cluster States">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#healthy" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Healthy
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#degraded" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Degraded
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#critical" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Critical
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -3224,14 +3146,19 @@ sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class=
 sudo<span class="w"> </span>systemctl<span class="w"> </span>status<span class="w"> </span>objectio-gateway
 </code></pre></div>
 <h3 id="health-checks">Health Checks<a class="headerlink" href="#health-checks" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Gateway health</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Gateway: process up, and ready to serve (meta and OSDs reachable)</span>
 curl<span class="w"> </span>http://localhost:9000/health
+curl<span class="w"> </span>http://localhost:9000/_ready
 
-<span class="c1"># Check cluster status via CLI</span>
-obioctl<span class="w"> </span>cluster<span class="w"> </span>info
+<span class="c1"># Meta: this node's view of the Raft group (role, leader, term, voters)</span>
+curl<span class="w"> </span>-s<span class="w"> </span>http://meta1:9102/status
 
-<span class="c1"># Check OSD status</span>
+<span class="c1"># OSDs: status and admin state of each</span>
 obioctl<span class="w"> </span>node<span class="w"> </span>list
+
+<span class="c1"># Placement groups not Clean, and every node's release</span>
+obioctl<span class="w"> </span>pg<span class="w"> </span>list<span class="w"> </span>--state<span class="w"> </span>Degraded
+obioctl<span class="w"> </span>upgrade<span class="w"> </span>status
 </code></pre></div>
 <h3 id="common-operations">Common Operations<a class="headerlink" href="#common-operations" title="Permanent link">&para;</a></h3>
 <table>
@@ -3255,8 +3182,8 @@ obioctl<span class="w"> </span>node<span class="w"> </span>list
 <td><code>obioctl cluster topology</code></td>
 </tr>
 <tr>
-<td>Check repair</td>
-<td><code>obioctl metrics query 'objectio_objects_at_risk'</code> (repair is continuous; each OSD counts at most once a minute, at once when a node goes up or down)</td>
+<td>Check data safety</td>
+<td><code>curl -s http://&lt;gateway&gt;:9000/metrics \| grep objectio_objects_at_risk</code>, or <code>obioctl metrics query 'max(objectio_objects_at_risk)'</code> with Prometheus (below); each OSD counts at most once a minute, and at once when a node goes up or down</td>
 </tr>
 <tr>
 <td>Drain OSD</td>
@@ -3264,77 +3191,56 @@ obioctl<span class="w"> </span>node<span class="w"> </span>list
 </tr>
 </tbody>
 </table>
+<p><code>obioctl metrics query</code> runs PromQL through the gateway, which forwards
+it to the Prometheus named by its <code>--prometheus-url</code>; without one it
+answers that none is configured. Reading <code>/metrics</code> (on the admin
+listener, if split off) needs no Prometheus.</p>
 <hr />
 <h2 id="cluster-states">Cluster States<a class="headerlink" href="#cluster-states" title="Permanent link">&para;</a></h2>
-<h3 id="healthy">Healthy<a class="headerlink" href="#healthy" title="Permanent link">&para;</a></h3>
-<p>All components operational:</p>
-<div class="highlight"><pre><span></span><code>┌─────────────────────────────────────────────────────────┐
-│ Cluster Status: HEALTHY                                 │
-├─────────────────────────────────────────────────────────┤
-│ Gateways:  2/2 healthy                                  │
-│ Metadata:  3/3 healthy (leader: meta1)                  │
-│ OSDs:      7/7 healthy                                  │
-│ Objects:   1,234,567                                    │
-│ Capacity:  45% used (4.5 TB / 10 TB)                   │
-└─────────────────────────────────────────────────────────┘
-</code></pre></div>
-<h3 id="degraded">Degraded<a class="headerlink" href="#degraded" title="Permanent link">&para;</a></h3>
-<p>Some redundancy lost but data accessible:</p>
-<div class="highlight"><pre><span></span><code>┌─────────────────────────────────────────────────────────┐
-│ Cluster Status: DEGRADED                                │
-├─────────────────────────────────────────────────────────┤
-│ Gateways:  2/2 healthy                                  │
-│ Metadata:  3/3 healthy (leader: meta2)                  │
-│ OSDs:      6/7 healthy (osd3: DOWN)                     │
-│ Objects:   1,234,567 (5,432 degraded)                   │
-│ Repair:    In progress (ETA: 2h 15m)                    │
-└─────────────────────────────────────────────────────────┘
-</code></pre></div>
-<h3 id="critical">Critical<a class="headerlink" href="#critical" title="Permanent link">&para;</a></h3>
-<p>Data at risk of loss:</p>
-<div class="highlight"><pre><span></span><code>┌─────────────────────────────────────────────────────────┐
-│ Cluster Status: CRITICAL                                │
-├─────────────────────────────────────────────────────────┤
-│ Gateways:  1/2 healthy                                  │
-│ Metadata:  2/3 healthy (leader: meta1)                  │
-│ OSDs:      4/7 healthy (osd2, osd3, osd5: DOWN)         │
-│ Objects:   1,234,567 (50,000 at risk)                   │
-│ Action:    RESTORE OSDs IMMEDIATELY                     │
-└─────────────────────────────────────────────────────────┘
-</code></pre></div>
+<p>No single command prints a cluster state; these signals make it up:</p>
+<table>
+<thead>
+<tr>
+<th>State</th>
+<th>Signals</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Healthy</strong></td>
+<td>Every OSD <code>up</code> and <code>in</code> (<code>obioctl node list</code>); meta has a leader (<code>objectio_meta_raft_has_leader</code> 1); every placement group <code>Clean</code> (<code>objectio_meta_pgs_not_clean</code> 0); <code>objectio_objects_at_risk</code> 0</td>
+</tr>
+<tr>
+<td><strong>Degraded</strong></td>
+<td>An OSD down or PGs <code>Degraded</code>, <code>Recovering</code> or <code>Backfilling</code>: data readable, redundancy being restored. A down OSD's PGs get a stand-in after 120 s (<code>pg/down_out_seconds</code>) and backfill onto it</td>
+</tr>
+<tr>
+<td><strong>Critical</strong></td>
+<td><code>objectio_objects_unreadable</code> above 0, PGs <code>Down</code> or <code>Incomplete</code>, or meta without a leader: bring failed OSDs or meta nodes back (<a href="production/#runbooks">runbooks</a>)</td>
+</tr>
+</tbody>
+</table>
 <hr />
 <h2 id="maintenance-windows">Maintenance Windows<a class="headerlink" href="#maintenance-windows" title="Permanent link">&para;</a></h2>
 <h3 id="rolling-upgrades">Rolling Upgrades<a class="headerlink" href="#rolling-upgrades" title="Permanent link">&para;</a></h3>
-<ol>
-<li>
-<p><strong>Upgrade OSDs first</strong>, one at a time. Don't drain them: a drain moves
-   all of an OSD's data, and a restart doesn't need it — 4+2 serves reads
-   and writes with an OSD briefly down.
-   <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>stop<span class="w"> </span>objectio-osd@osd1
-<span class="c1"># ... upgrade binary ...</span>
-sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>objectio-osd@osd1
-
-<span class="c1"># Before the next one: nothing one failure from unreadable</span>
-obioctl<span class="w"> </span>metrics<span class="w"> </span>query<span class="w"> </span><span class="s1">'objectio_objects_at_risk'</span><span class="w">     </span><span class="c1"># expect 0</span>
-</code></pre></div></p>
-</li>
-<li>
-<p><strong>Upgrade metadata nodes</strong> (one at a time):
-   <div class="highlight"><pre><span></span><code><span class="c1"># Check which node is leader</span>
+<p><a href="upgrades/">Upgrades</a> has the procedure: back up meta, then the meta
+nodes (followers first, leader last), then the OSDs one failure domain
+at a time, then the gateways, then <code>obioctl upgrade finalize</code>. In short:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># 1. Meta, one node at a time: which one leads?</span>
 curl<span class="w"> </span>-s<span class="w"> </span>http://meta1:9102/status
+sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>objectio-meta<span class="w">      </span><span class="c1"># on meta2, meta3, then meta1</span>
 
-<span class="c1"># Upgrade followers first, leader last</span>
-sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>objectio-meta@meta2
-sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>objectio-meta@meta3
-sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>objectio-meta@meta1<span class="w">  </span><span class="c1"># leader</span>
-</code></pre></div></p>
-</li>
-<li>
-<p><strong>Upgrade gateways</strong> (one at a time):
-   <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>objectio-gateway
-</code></pre></div></p>
-</li>
-</ol>
+<span class="c1"># 2. OSDs, one host at a time. No drain: a restart doesn't need one.</span>
+sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>objectio-osd
+obioctl<span class="w"> </span>node<span class="w"> </span>list<span class="w">                          </span><span class="c1"># up again before the next</span>
+
+<span class="c1"># 3. Gateways</span>
+sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>objectio-gateway
+
+<span class="c1"># 4. Every node on the new release, then finalize</span>
+obioctl<span class="w"> </span>upgrade<span class="w"> </span>status
+obioctl<span class="w"> </span>upgrade<span class="w"> </span>finalize
+</code></pre></div>
 <h3 id="adding-capacity">Adding Capacity<a class="headerlink" href="#adding-capacity" title="Permanent link">&para;</a></h3>
 <p>Start an OSD on the new host; it registers itself with meta and joins
 placement. Placement groups rebalance onto it in the background:</p>
@@ -3350,18 +3256,16 @@ and take the hardware away.</p>
 <hr />
 <h2 id="backup-and-recovery">Backup and Recovery<a class="headerlink" href="#backup-and-recovery" title="Permanent link">&para;</a></h2>
 <h3 id="metadata-backup">Metadata Backup<a class="headerlink" href="#metadata-backup" title="Permanent link">&para;</a></h3>
-<p>Raft log + state are persisted in each meta pod's redb database on its
-PVC. Log compaction (snapshotting) is on the Raft roadmap; until then
-logs grow without bound on long-lived clusters, so periodically
-back up the PVC contents:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Snapshot each meta pod's PVC (use your storage class's snapshot</span>
-<span class="c1"># mechanism — VolumeSnapshot API, CSI snapshotter, etc.)</span>
-kubectl<span class="w"> </span>get<span class="w"> </span>pvc<span class="w"> </span>-n<span class="w"> </span>objectio<span class="w"> </span>-l<span class="w"> </span>app.kubernetes.io/component<span class="o">=</span>meta
-
-<span class="c1"># For disaster recovery, restore the PVCs before redeploying — a fresh</span>
-<span class="c1"># helm install against empty PVCs starts a new cluster with no</span>
-<span class="c1"># history.</span>
-</code></pre></div>
+<p>Each meta node keeps its state in <code>&lt;data-dir&gt;/meta.redb</code> and its Raft
+log beside it. The log is compacted into a snapshot every
+<code>--raft-snapshot-every</code> entries (default 500,000), keeping the last
+<code>--raft-keep-logs</code> (10,000), so it doesn't grow without bound
+(<a href="meta-ha/#log-compaction">meta HA</a>).</p>
+<p>To back up, stop one follower and copy its data directory (or snapshot
+its volume: on Kubernetes, the meta pod's PVC with your storage class's
+snapshot mechanism), then start it again. There is no online export
+command. A fresh install against empty volumes starts a new cluster with
+no history: restore the volumes first.</p>
 <h3 id="object-recovery">Object Recovery<a class="headerlink" href="#object-recovery" title="Permanent link">&para;</a></h3>
 <p>Repair is continuous: any stripe with at least k readable shards is
 rebuilt automatically. An object below k shards can't be recovered by any
@@ -3409,18 +3313,20 @@ command; <code>objectio_meta_repair_unrecoverable_stripes_total</code> counts th
 <h3 id="complete-cluster-recovery">Complete Cluster Recovery<a class="headerlink" href="#complete-cluster-recovery" title="Permanent link">&para;</a></h3>
 <p>If all metadata nodes fail but their PVCs survive:</p>
 <ol>
-<li><code>kubectl rollout restart statefulset/objectio-meta</code> — each pod
-   restarts, reads its persisted Raft log from redb, and re-joins.
-   openraft handles log alignment and re-election automatically.</li>
+<li>Restart the meta nodes (on Kubernetes, <code>kubectl rollout restart
+   statefulset/&lt;name&gt;-meta</code>, where <code>&lt;name&gt;</code> is the release name if it
+   contains <code>objectio</code>, else <code>&lt;release&gt;-objectio</code>): each reads its
+   persisted Raft log and state, and the group elects a leader once a
+   majority is up.</li>
 <li>OSDs + gateways keep running throughout.</li>
 </ol>
 <p>If the PVCs are lost (unrecoverable storage-layer failure):</p>
 <ol>
 <li>Restore PVCs from the latest snapshot if you have one.</li>
-<li>Otherwise: <code>kubectl delete statefulset/objectio-meta</code> + PVCs, then
-   <code>helm upgrade</code> — the post-install Job bootstraps a fresh cluster.
-   Pre-Raft cluster state is lost; tenants, users, buckets, etc. need
-   to be recreated.</li>
+<li>Otherwise the cluster's metadata is lost: delete the meta
+   StatefulSet and its PVCs, then <code>helm upgrade</code> — the bootstrap Job
+   forms a fresh Raft group. Tenants, users, buckets and the objects'
+   metadata are gone with it.</li>
 </ol>
 <h3 id="data-recovery-from-raw-disks">Data Recovery from Raw Disks<a class="headerlink" href="#data-recovery-from-raw-disks" title="Permanent link">&para;</a></h3>
 <p>Not available: object metadata lives on the OSDs and meta's Raft log, but

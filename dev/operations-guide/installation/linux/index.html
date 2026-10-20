@@ -2215,10 +2215,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#1-release-binaries" class="md-nav__link">
+  <a href="#1-release-binary" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. Release binaries
+        1. Release binary
       
     </span>
   </a>
@@ -2226,22 +2226,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#2-bootstrapping-a-node-with-objectio-install" class="md-nav__link">
+  <a href="#2-a-cluster-under-systemd" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. Bootstrapping a node with objectio-install
+        2. A cluster under systemd
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="2. Bootstrapping a node with objectio-install">
+    <nav class="md-nav" aria-label="2. A cluster under systemd">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#create-the-service-user" class="md-nav__link">
+  <a href="#service-user-and-directories" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Create the service user
+        Service user and directories
       
     </span>
   </a>
@@ -2249,10 +2249,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#inspect-candidate-disks" class="md-nav__link">
+  <a href="#meta-three-nodes-raft" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Inspect candidate disks
+        Meta (three nodes, Raft)
       
     </span>
   </a>
@@ -2260,10 +2260,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#initialize-the-node" class="md-nav__link">
+  <a href="#osds" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Initialize the node
+        OSDs
       
     </span>
   </a>
@@ -2271,10 +2271,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#joining-an-existing-cluster" class="md-nav__link">
+  <a href="#gateways" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Joining an existing cluster
+        Gateways
       
     </span>
   </a>
@@ -2282,10 +2282,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#what-gets-written" class="md-nav__link">
+  <a href="#objectio-install" class="md-nav__link">
     <span class="md-ellipsis">
       
-        What gets written
+        objectio-install
       
     </span>
   </a>
@@ -2877,10 +2877,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#1-release-binaries" class="md-nav__link">
+  <a href="#1-release-binary" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. Release binaries
+        1. Release binary
       
     </span>
   </a>
@@ -2888,22 +2888,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#2-bootstrapping-a-node-with-objectio-install" class="md-nav__link">
+  <a href="#2-a-cluster-under-systemd" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. Bootstrapping a node with objectio-install
+        2. A cluster under systemd
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="2. Bootstrapping a node with objectio-install">
+    <nav class="md-nav" aria-label="2. A cluster under systemd">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#create-the-service-user" class="md-nav__link">
+  <a href="#service-user-and-directories" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Create the service user
+        Service user and directories
       
     </span>
   </a>
@@ -2911,10 +2911,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#inspect-candidate-disks" class="md-nav__link">
+  <a href="#meta-three-nodes-raft" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Inspect candidate disks
+        Meta (three nodes, Raft)
       
     </span>
   </a>
@@ -2922,10 +2922,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#initialize-the-node" class="md-nav__link">
+  <a href="#osds" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Initialize the node
+        OSDs
       
     </span>
   </a>
@@ -2933,10 +2933,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#joining-an-existing-cluster" class="md-nav__link">
+  <a href="#gateways" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Joining an existing cluster
+        Gateways
       
     </span>
   </a>
@@ -2944,10 +2944,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#what-gets-written" class="md-nav__link">
+  <a href="#objectio-install" class="md-nav__link">
     <span class="md-ellipsis">
       
-        What gets written
+        objectio-install
       
     </span>
   </a>
@@ -3078,17 +3078,16 @@
 first-class, and both erasure-code with ISA-L (AVX2, AVX-512 and GFNI
 on <code>amd64</code>; NEON and SVE on <code>arm64</code>). They write the same stripes, so
 <code>amd64</code> and <code>arm64</code> nodes mix in one cluster.</p>
-<p>This page covers the three installation paths, in increasing order of
-commitment:</p>
+<p>This page covers, in increasing order of commitment:</p>
 <ol>
-<li><strong><a href="#1-release-binaries">Release binaries</a></strong> — drop-in <code>objectio-*</code> binaries</li>
-<li><strong><a href="#2-bootstrapping-a-node-with-objectio-install"><code>objectio-install</code></a></strong> — automated node bootstrap with systemd units</li>
-<li><strong><a href="#3-build-from-source">From source</a></strong> — Rust toolchain, for contributors</li>
+<li><strong><a href="#1-release-binary">Release binary</a></strong> — <code>objectio-aio</code>, one process</li>
+<li><strong><a href="#2-a-cluster-under-systemd">A cluster under systemd</a></strong> — meta, OSDs and gateways as separate services</li>
+<li><strong><a href="#3-build-from-source">From source</a></strong> — Rust toolchain; also how you get the service binaries outside the container image</li>
 </ol>
 <p>If you just want a quick local endpoint, use
-<a href="../quickstart/#1-aio-binary-fastest--no-docker"><code>objectio-aio</code></a> — one
-binary, no daemons. The rest of this page is about real
-multi-process / multi-node deployments.</p>
+<a href="../quickstart/#1-aio-release-binary-fastest"><code>objectio-aio</code></a> — one
+binary, no daemons. The Helm chart (<a href="../kubernetes/">Kubernetes</a>) is the
+tested way to run separate services; this page covers doing it by hand.</p>
 <hr />
 <h2 id="system-requirements">System requirements<a class="headerlink" href="#system-requirements" title="Permanent link">&para;</a></h2>
 <table>
@@ -3141,126 +3140,122 @@ blocks), not ext4/xfs — <code>mkfs</code>-ing first is <em>not</em> required a
   warning in the OSD's log, where the kernel or a seccomp profile denies
   it</li>
 </ul>
-<p><strong>Supported distributions:</strong> any glibc 2.31+ (Ubuntu 22.04+, Debian
-12+, RHEL 9+, Amazon Linux 2023, Rocky/Alma 9+). For older glibc, build
-from source.</p>
 <hr />
-<h2 id="1-release-binaries">1. Release binaries<a class="headerlink" href="#1-release-binaries" title="Permanent link">&para;</a></h2>
-<p>Released binaries are statically linked except for glibc and OpenSSL.
-Pick the right arch:</p>
-<div class="highlight"><pre><span></span><code><span class="nv">ARCH</span><span class="o">=</span><span class="k">$(</span>uname<span class="w"> </span>-m<span class="w"> </span><span class="p">|</span><span class="w"> </span>sed<span class="w"> </span><span class="s1">'s/x86_64/amd64/;s/aarch64/arm64/'</span><span class="k">)</span>
-curl<span class="w"> </span>-L<span class="w"> </span>-o<span class="w"> </span>/tmp/objectio.tar.gz<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>https://github.com/object-io/objectio/releases/latest/download/objectio-linux-<span class="si">${</span><span class="nv">ARCH</span><span class="si">}</span>.tar.gz
-sudo<span class="w"> </span>tar<span class="w"> </span>-xzf<span class="w"> </span>/tmp/objectio.tar.gz<span class="w"> </span>-C<span class="w"> </span>/usr/local/bin<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>objectio-aio<span class="w"> </span>objectio-gateway<span class="w"> </span>objectio-meta<span class="w"> </span>objectio-osd<span class="w"> </span>obioctl<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>objectio-install<span class="w"> </span>objectio-block-gateway
+<h2 id="1-release-binary">1. Release binary<a class="headerlink" href="#1-release-binary" title="Permanent link">&para;</a></h2>
+<p>A release publishes <strong><code>objectio-aio</code> only</strong>, for <code>linux-amd64</code> and
+<code>linux-arm64</code> (and <code>darwin-arm64</code>), named with the tag; there is no
+archive of the service binaries. Those are in the container image
+(<code>ghcr.io/object-io/objectio</code>, see <a href="../docker/">Docker</a>) or
+<a href="#3-build-from-source">built from source</a>.</p>
+<div class="highlight"><pre><span></span><code><span class="nv">TAG</span><span class="o">=</span>v0.1.0-rc.1
+<span class="nv">ARCH</span><span class="o">=</span><span class="k">$(</span>uname<span class="w"> </span>-m<span class="w"> </span><span class="p">|</span><span class="w"> </span>sed<span class="w"> </span><span class="s1">'s/x86_64/amd64/;s/aarch64/arm64/'</span><span class="k">)</span>
+<span class="nv">BASE</span><span class="o">=</span>https://github.com/object-io/objectio/releases/download/<span class="nv">$TAG</span>
+curl<span class="w"> </span>-LO<span class="w"> </span><span class="nv">$BASE</span>/objectio-aio-<span class="nv">$TAG</span>-linux-<span class="nv">$ARCH</span>
+curl<span class="w"> </span>-LO<span class="w"> </span><span class="nv">$BASE</span>/objectio-aio-<span class="nv">$TAG</span>-linux-<span class="nv">$ARCH</span>.sha256
+sha256sum<span class="w"> </span>-c<span class="w"> </span>objectio-aio-<span class="nv">$TAG</span>-linux-<span class="nv">$ARCH</span>.sha256
+sudo<span class="w"> </span>install<span class="w"> </span>-m<span class="w"> </span><span class="m">0755</span><span class="w"> </span>objectio-aio-<span class="nv">$TAG</span>-linux-<span class="nv">$ARCH</span><span class="w"> </span>/usr/local/bin/objectio-aio
+objectio-aio<span class="w"> </span>--version
 </code></pre></div>
-<p>Verify:</p>
-<div class="highlight"><pre><span></span><code>obioctl<span class="w"> </span>--version
-objectio-aio<span class="w"> </span>--help
-</code></pre></div>
-<p>Runtime packages (all installed automatically as dependencies of the
-systemd unit on RPM/DEB-based distros, or install manually for the
-tarball):</p>
+<p><code>releases/latest/download/…</code> doesn't work for a pre-release such as
+<code>v0.1.0-rc.1</code>: name the tag.</p>
+<p>The release binary is built on Ubuntu 24.04 and links glibc
+dynamically, with OpenSSL and PCRE2: it needs <strong>glibc 2.39 or later</strong>
+(Ubuntu 24.04+, Debian 13+, Fedora 40+, RHEL 10) and:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Debian / Ubuntu</span>
-sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>ca-certificates<span class="w"> </span>libssl3
+sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>ca-certificates<span class="w"> </span>libssl3<span class="w"> </span>libpcre2-8-0
 
-<span class="c1"># RHEL / Rocky / Alma 9+</span>
-sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>ca-certificates<span class="w"> </span>openssl-libs
+<span class="c1"># Fedora / RHEL 10</span>
+sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>ca-certificates<span class="w"> </span>openssl-libs<span class="w"> </span>pcre2
 </code></pre></div>
+<p>On an older distribution, build from source or use the container image.</p>
 <hr />
-<h2 id="2-bootstrapping-a-node-with-objectio-install">2. Bootstrapping a node with <code>objectio-install</code><a class="headerlink" href="#2-bootstrapping-a-node-with-objectio-install" title="Permanent link">&para;</a></h2>
-<p><code>objectio-install</code> is the one-shot node bootstrapper. It prepares
-disks, writes config files, and optionally installs and enables
-systemd units. Use it for fresh metal / VMs.</p>
-<h3 id="create-the-service-user">Create the service user<a class="headerlink" href="#create-the-service-user" title="Permanent link">&para;</a></h3>
+<h2 id="2-a-cluster-under-systemd">2. A cluster under systemd<a class="headerlink" href="#2-a-cluster-under-systemd" title="Permanent link">&para;</a></h2>
+<p>Every service is configured with flags; only <code>objectio-osd</code> also reads a
+TOML file (<code>--config</code>, default <code>/etc/objectio/osd.toml</code>), which is where
+an OSD's failure domain (region, datacenter, rack, host) is set. The
+ports below are the cluster convention (<a href="../configuration/#ports--cluster-conventions-vs-code-defaults">ports</a>):
+pass them explicitly, since some binaries' defaults differ.</p>
+<h3 id="service-user-and-directories">Service user and directories<a class="headerlink" href="#service-user-and-directories" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>groupadd<span class="w"> </span>-r<span class="w"> </span>objectio
 sudo<span class="w"> </span>useradd<span class="w"> </span>-r<span class="w"> </span>-g<span class="w"> </span>objectio<span class="w"> </span>-d<span class="w"> </span>/var/lib/objectio<span class="w"> </span>-s<span class="w"> </span>/usr/sbin/nologin<span class="w"> </span>objectio
-sudo<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span>/etc/objectio<span class="w"> </span>/var/lib/objectio<span class="w"> </span>/var/log/objectio
-sudo<span class="w"> </span>chown<span class="w"> </span>objectio:objectio<span class="w"> </span>/var/lib/objectio<span class="w"> </span>/var/log/objectio
+sudo<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span>/etc/objectio<span class="w"> </span>/var/lib/objectio/meta<span class="w"> </span>/var/lib/objectio/osd
+sudo<span class="w"> </span>chown<span class="w"> </span>-R<span class="w"> </span>objectio:objectio<span class="w"> </span>/var/lib/objectio
 </code></pre></div>
-<h3 id="inspect-candidate-disks">Inspect candidate disks<a class="headerlink" href="#inspect-candidate-disks" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>objectio-install<span class="w"> </span>disk<span class="w"> </span>list<span class="w">           </span><span class="c1"># only unused disks</span>
-sudo<span class="w"> </span>objectio-install<span class="w"> </span>disk<span class="w"> </span>list<span class="w"> </span>--all<span class="w">     </span><span class="c1"># everything, including mounted ones</span>
+<h3 id="meta-three-nodes-raft">Meta (three nodes, Raft)<a class="headerlink" href="#meta-three-nodes-raft" title="Permanent link">&para;</a></h3>
+<p>On each meta node, with its own <code>--node-id</code> (1, 2, 3) and the address
+the others reach it at:</p>
+<div class="highlight"><pre><span></span><code>objectio-meta<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--node-id<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--listen<span class="w"> </span><span class="m">0</span>.0.0.0:9100<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--raft-advertise<span class="w"> </span>meta1.internal:9100<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--metrics-port<span class="w"> </span><span class="m">9101</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--admin-port<span class="w"> </span><span class="m">9102</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--data-dir<span class="w"> </span>/var/lib/objectio/meta<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--ec-k<span class="w"> </span><span class="m">4</span><span class="w"> </span>--ec-m<span class="w"> </span><span class="m">2</span>
 </code></pre></div>
-<p>Output shows path, size, model, and whether the disk already contains
-an ObjectIO superblock. <strong><code>objectio-install disk prepare</code> is
-destructive</strong> — it overwrites the device with a fresh superblock.</p>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>objectio-install<span class="w"> </span>disk<span class="w"> </span>prepare<span class="w"> </span>/dev/sdb<span class="w"> </span>--block-size-mb<span class="w"> </span><span class="m">4</span>
-sudo<span class="w"> </span>objectio-install<span class="w"> </span>disk<span class="w"> </span>check<span class="w"> </span>/dev/sdb<span class="w">   </span><span class="c1"># verify</span>
+<p><code>--ec-k</code>/<code>--ec-m</code> set the default pool's erasure code
+(profiles allowed);
+it needs at least k+m OSDs, on as many hosts. Once all three run, form
+the Raft group from node 1, over its admin port (plain HTTP, no
+authentication: keep 9102 to the operators' network):</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://meta1.internal:9102/init
+curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://meta1.internal:9102/add-learner<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">'content-type: application/json'</span><span class="w"> </span>-d<span class="w"> </span><span class="s1">'{"node_id": 2, "addr": "meta2.internal:9100"}'</span>
+curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://meta1.internal:9102/add-learner<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">'content-type: application/json'</span><span class="w"> </span>-d<span class="w"> </span><span class="s1">'{"node_id": 3, "addr": "meta3.internal:9100"}'</span>
+curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://meta1.internal:9102/change-membership<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">'content-type: application/json'</span><span class="w"> </span>-d<span class="w"> </span><span class="s1">'{"voters": [1, 2, 3]}'</span>
+curl<span class="w"> </span>-s<span class="w"> </span>http://meta1.internal:9102/status<span class="w">    </span><span class="c1"># leader, voters, learners</span>
 </code></pre></div>
-<h3 id="initialize-the-node">Initialize the node<a class="headerlink" href="#initialize-the-node" title="Permanent link">&para;</a></h3>
-<p>The <code>init</code> subcommand generates <code>/etc/objectio/{gateway,meta,osd}.toml</code>
-and (with <code>--systemd</code>) installs <code>/etc/systemd/system/objectio-*.service</code>.</p>
-<p><strong>Single-node (all roles on one box, good for edge / appliance):</strong></p>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>objectio-install<span class="w"> </span>init<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--role<span class="w"> </span>all<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--disks<span class="w"> </span>/dev/sdb,/dev/sdc,/dev/sdd,/dev/sde,/dev/sdf,/dev/sdg<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--ec-profile<span class="w"> </span><span class="m">4</span>+2<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--systemd
-sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>--now<span class="w"> </span>objectio-meta<span class="w"> </span>objectio-osd<span class="w"> </span>objectio-gateway
+<p>The first leader creates the admin user once, and every meta node writes
+its credentials to <code>&lt;data-dir&gt;/admin-creds.env</code> (<code>AWS_ACCESS_KEY_ID</code>,
+<code>AWS_SECRET_ACCESS_KEY</code>), readable by the service user only.</p>
+<h3 id="osds">OSDs<a class="headerlink" href="#osds" title="Permanent link">&para;</a></h3>
+<p>One OSD per drive. <code>/etc/objectio/osd.toml</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">[osd]</span>
+<span class="n">listen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"0.0.0.0:9200"</span>
+<span class="n">advertise_addr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"http://osd1.internal:9200"</span>
+<span class="n">meta_endpoint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"http://meta1.internal:9100,http://meta2.internal:9100,http://meta3.internal:9100"</span>
+
+<span class="k">[osd.failure_domain]</span>
+<span class="n">datacenter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"dc1"</span>
+<span class="n">rack</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"rack-a"</span>
+<span class="c1"># host: the machine's hostname when left out</span>
+
+<span class="k">[storage]</span>
+<span class="n">disks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"/dev/disk/by-id/nvme-…"</span><span class="p">]</span>
+<span class="n">data_dir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"/var/lib/objectio/osd"</span>
 </code></pre></div>
-<p><strong>Meta node (Raft):</strong></p>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>objectio-install<span class="w"> </span>init<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--role<span class="w"> </span>meta<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--raft-peers<span class="w"> </span>meta1.internal:9101,meta2.internal:9101,meta3.internal:9101<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--systemd
-sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>--now<span class="w"> </span>objectio-meta
+<div class="highlight"><pre><span></span><code>objectio-osd<span class="w"> </span>--config<span class="w"> </span>/etc/objectio/osd.toml<span class="w"> </span>--metrics-port<span class="w"> </span><span class="m">9201</span>
 </code></pre></div>
-<p><strong>OSD node (storage):</strong></p>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>objectio-install<span class="w"> </span>init<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--role<span class="w"> </span>osd<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--disks<span class="w"> </span>/dev/sdb,/dev/sdc,/dev/sdd,/dev/sde<span class="w"> </span><span class="se">\</span>
+<p>Flags given as well win over the file. A blank disk named in <code>disks</code> is
+formatted on first start; one that is neither blank nor this OSD's stops
+it (<a href="../configuration/#objectio-osd">configuration</a>).</p>
+<h3 id="gateways">Gateways<a class="headerlink" href="#gateways" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>objectio-gateway<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--listen<span class="w"> </span><span class="m">0</span>.0.0.0:9000<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--meta-endpoint<span class="w"> </span>http://meta1.internal:9100,http://meta2.internal:9100,http://meta3.internal:9100<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--systemd
-sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>--now<span class="w"> </span>objectio-osd
+<span class="w">  </span>--external-endpoint<span class="w"> </span>https://s3.example.com<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--region<span class="w"> </span>us-east-1
 </code></pre></div>
-<p><strong>Gateway node (S3 API):</strong></p>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>objectio-install<span class="w"> </span>init<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--role<span class="w"> </span>gateway<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--meta-endpoint<span class="w"> </span>http://meta1.internal:9100,http://meta2.internal:9100,http://meta3.internal:9100<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--systemd
-sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>--now<span class="w"> </span>objectio-gateway
-</code></pre></div>
-<h3 id="joining-an-existing-cluster">Joining an existing cluster<a class="headerlink" href="#joining-an-existing-cluster" title="Permanent link">&para;</a></h3>
-<p>Skip config generation; point at the running meta and attach the
-local disks:</p>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>objectio-install<span class="w"> </span>join<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--meta-endpoint<span class="w"> </span>http://meta1.internal:9100,http://meta2.internal:9100,http://meta3.internal:9100<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--disks<span class="w"> </span>/dev/sdb,/dev/sdc
-</code></pre></div>
-<h3 id="what-gets-written">What gets written<a class="headerlink" href="#what-gets-written" title="Permanent link">&para;</a></h3>
-<table>
-<thead>
-<tr>
-<th>Path</th>
-<th>Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>/etc/objectio/gateway.toml</code> / <code>meta.toml</code> / <code>osd.toml</code></td>
-<td>Per-service config</td>
-</tr>
-<tr>
-<td><code>/etc/systemd/system/objectio-*.service</code></td>
-<td>systemd units (if <code>--systemd</code>)</td>
-</tr>
-<tr>
-<td><code>/var/lib/objectio/{meta,osd}/</code></td>
-<td>Persistent state</td>
-</tr>
-<tr>
-<td><code>/var/log/objectio/</code></td>
-<td>Log output (journald in parallel)</td>
-</tr>
-</tbody>
-</table>
-<p><code>objectio-install status</code> shows the current config + detected roles.</p>
+<p>Set <code>OBJECTIO_MASTER_KEY</code> (base64 of 32 random bytes, the same on every
+gateway) for server-side encryption, and run several gateways behind a
+load balancer that checks <code>/_ready</code>. With more than one gateway, add
+<code>--no-reexport-metrics</code> and scrape meta and the OSDs directly
+(<a href="../../operations/metrics/#where-to-scrape">metrics</a>).</p>
+<h3 id="objectio-install"><code>objectio-install</code><a class="headerlink" href="#objectio-install" title="Permanent link">&para;</a></h3>
+<p><code>objectio-install disk list [--all]</code>, <code>disk prepare &lt;dev&gt;</code> (destructive:
+writes a fresh ObjectIO superblock) and <code>disk check &lt;dev&gt;</code> inspect and
+format drives. Its <code>init</code> and <code>join</code> commands also write
+<code>/etc/objectio/{gateway,meta,osd}.toml</code> and units that start each
+service with only <code>--config</code>; <code>objectio-meta</code> and <code>objectio-gateway</code>
+don't read those files and would run on their built-in defaults, and the
+generated <code>osd.toml</code> has no <code>data_dir</code> or <code>advertise_addr</code>. Write the
+units yourself, as below.</p>
 <hr />
 <h2 id="3-build-from-source">3. Build from source<a class="headerlink" href="#3-build-from-source" title="Permanent link">&para;</a></h2>
-<p>Needed if you want to track <code>main</code>, run a custom branch, or build for
-an older glibc.</p>
+<p>Needed if you want to track <code>main</code>, run a custom branch, run the
+services outside the image, or build for an older glibc.</p>
 <h3 id="toolchain">Toolchain<a class="headerlink" href="#toolchain" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Rust (1.93+)</span>
 curl<span class="w"> </span>--proto<span class="w"> </span><span class="s1">'=https'</span><span class="w"> </span>--tlsv1.2<span class="w"> </span>-sSf<span class="w"> </span>https://sh.rustup.rs<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh<span class="w"> </span>-s<span class="w"> </span>--<span class="w"> </span>-y
@@ -3298,11 +3293,11 @@ sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w
 cargo<span class="w"> </span>build<span class="w"> </span>--workspace<span class="w"> </span>--release
 </code></pre></div>
 <p>Binaries land in <code>target/release/</code>. For a system install:</p>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>install<span class="w"> </span>-m<span class="w"> </span><span class="m">0755</span><span class="w"> </span>target/release/objectio-<span class="o">{</span>aio,gateway,meta,osd,cli,install,block-gateway<span class="o">}</span><span class="w"> </span><span class="se">\</span>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>install<span class="w"> </span>-m<span class="w"> </span><span class="m">0755</span><span class="w"> </span>target/release/<span class="o">{</span>objectio-aio,objectio-gateway,objectio-meta,objectio-osd,obioctl,objectio-install,objectio-block-gateway<span class="o">}</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>/usr/local/bin/
 </code></pre></div>
 <p>Then proceed as in
-<a href="#2-bootstrapping-a-node-with-objectio-install">section 2</a>.</p>
+<a href="#2-a-cluster-under-systemd">section 2</a>.</p>
 <h3 id="run-the-test-suite">Run the test suite<a class="headerlink" href="#run-the-test-suite" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>cargo<span class="w"> </span><span class="nb">test</span><span class="w"> </span>--workspace
 cargo<span class="w"> </span>clippy<span class="w"> </span>--workspace<span class="w"> </span>--all-targets<span class="w"> </span>--<span class="w"> </span>-D<span class="w"> </span>warnings
@@ -3329,10 +3324,8 @@ make<span class="w"> </span>ci
 size for a given durability target.</p>
 <hr />
 <h2 id="systemd-unit-reference">systemd unit reference<a class="headerlink" href="#systemd-unit-reference" title="Permanent link">&para;</a></h2>
-<p><code>objectio-install --systemd</code> installs standard units. If you're
-bootstrapping manually, here's the skeleton for the OSD (the others
-are analogous — replace paths and drop the <code>CAP_SYS_RAWIO</code> bits for
-non-OSD roles):</p>
+<p>The skeleton for the OSD (the others are analogous — replace the
+command line, and drop the <code>CAP_SYS_RAWIO</code> bits for non-OSD roles):</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># /etc/systemd/system/objectio-osd.service</span>
 <span class="k">[Unit]</span>
 <span class="na">Description</span><span class="o">=</span><span class="s">ObjectIO Object Storage Daemon</span>
@@ -3346,24 +3339,26 @@ non-OSD roles):</p>
 <span class="na">Group</span><span class="o">=</span><span class="s">objectio</span>
 <span class="na">AmbientCapabilities</span><span class="o">=</span><span class="s">CAP_SYS_RAWIO</span>
 <span class="na">CapabilityBoundingSet</span><span class="o">=</span><span class="s">CAP_SYS_RAWIO</span>
-<span class="na">ExecStart</span><span class="o">=</span><span class="s">/usr/local/bin/objectio-osd --config /etc/objectio/osd.toml</span>
+<span class="na">ExecStart</span><span class="o">=</span><span class="s">/usr/local/bin/objectio-osd --config /etc/objectio/osd.toml --metrics-port 9201</span>
 <span class="na">Restart</span><span class="o">=</span><span class="s">always</span>
 <span class="na">RestartSec</span><span class="o">=</span><span class="s">5</span>
 <span class="na">LimitNOFILE</span><span class="o">=</span><span class="s">1048576</span>
-<span class="c1"># Durability: kill -9 only after giving the OSD time to checkpoint</span>
+<span class="c1"># Every acknowledged write is already on disk; this is time to finish</span>
+<span class="c1"># the calls in flight.</span>
 <span class="na">TimeoutStopSec</span><span class="o">=</span><span class="s">60</span>
 
 <span class="k">[Install]</span>
 <span class="na">WantedBy</span><span class="o">=</span><span class="s">multi-user.target</span>
 </code></pre></div>
-<p>For the gateway and meta services, drop <code>CAP_SYS_RAWIO</code> and keep the
-same shape.</p>
+<p>For the gateway and meta services, drop <code>CAP_SYS_RAWIO</code>, put their
+flags on <code>ExecStart</code>, and keep the same shape. Every service stops
+cleanly on SIGTERM (<a href="../../operations/upgrades/#how-a-node-stops">how a node stops</a>).</p>
 <hr />
 <h2 id="uninstall">Uninstall<a class="headerlink" href="#uninstall" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>disable<span class="w"> </span>--now<span class="w"> </span>objectio-gateway<span class="w"> </span>objectio-meta<span class="w"> </span>objectio-osd
 sudo<span class="w"> </span>rm<span class="w"> </span>/etc/systemd/system/objectio-<span class="o">{</span>gateway,meta,osd<span class="o">}</span>.service
 sudo<span class="w"> </span>systemctl<span class="w"> </span>daemon-reload
-sudo<span class="w"> </span>rm<span class="w"> </span>/usr/local/bin/objectio-*
+sudo<span class="w"> </span>rm<span class="w"> </span>/usr/local/bin/objectio-*<span class="w"> </span>/usr/local/bin/obioctl
 <span class="c1"># Data + config (destructive):</span>
 sudo<span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>/etc/objectio<span class="w"> </span>/var/lib/objectio<span class="w"> </span>/var/log/objectio
 sudo<span class="w"> </span>userdel<span class="w"> </span>objectio<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>groupdel<span class="w"> </span>objectio

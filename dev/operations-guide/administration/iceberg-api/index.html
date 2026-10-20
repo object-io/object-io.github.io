@@ -1861,6 +1861,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#warehouses" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Warehouses
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#configuration" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2148,6 +2159,17 @@
   
     <nav class="md-nav" aria-label="Client Configuration">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pyiceberg" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PyIceberg
+      
+    </span>
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#apache-spark" class="md-nav__link">
@@ -3066,6 +3088,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#warehouses" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Warehouses
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#configuration" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3355,6 +3388,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#pyiceberg" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PyIceberg
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#apache-spark" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3432,25 +3476,65 @@
 <h1 id="iceberg-rest-catalog-api">Iceberg REST Catalog API<a class="headerlink" href="#iceberg-rest-catalog-api" title="Permanent link">&para;</a></h1>
 <p>ObjectIO includes an Apache Iceberg REST Catalog API, enabling query engines like Spark, Trino, and Flink to discover and manage Iceberg tables.</p>
 <h2 id="base-url">Base URL<a class="headerlink" href="#base-url" title="Permanent link">&para;</a></h2>
-<p>All Iceberg endpoints are served under <code>/iceberg/v1/</code>.</p>
-<div class="highlight"><pre><span></span><code>http://gateway:9000/iceberg/v1/
+<p>All Iceberg endpoints are served under <code>/iceberg/v1/</code>. Clients are given
+the catalog URI <strong>without</strong> <code>/v1</code> and add it themselves:</p>
+<div class="highlight"><pre><span></span><code>http://gateway:9000/iceberg
 </code></pre></div>
+<p>Every catalog lives in a <a href="#warehouses">warehouse</a>, named by the client's
+<code>warehouse</code> setting.</p>
 <h2 id="authentication">Authentication<a class="headerlink" href="#authentication" title="Permanent link">&para;</a></h2>
 <p>Iceberg endpoints use the same SigV4 authentication as S3. When <code>--no-auth</code> is set, all Iceberg endpoints are accessible without credentials.</p>
 <hr />
+<h2 id="warehouses">Warehouses<a class="headerlink" href="#warehouses" title="Permanent link">&para;</a></h2>
+<p>A warehouse is a catalog with its own namespaces and tables, and a
+bucket, <code>iceberg-&lt;name&gt;</code>, made with it for its data. Warehouses are
+managed on the admin API (<code>obioctl warehouse …</code>):</p>
+<table>
+<thead>
+<tr>
+<th>Call</th>
+<th>Who</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET /_admin/warehouses</code></td>
+<td>system admin</td>
+<td><code>{"warehouses": [{"name", "bucket", "location", "tenant", "created_at", "properties"}]}</code></td>
+</tr>
+<tr>
+<td><code>POST /_admin/warehouses</code></td>
+<td>system admin, or the tenant's admin</td>
+<td>Body <code>{"name": "...", "tenant": "...", "properties": {...}}</code>; <code>tenant</code> defaults to the caller's. Answers the new warehouse; <code>400</code> if it or its bucket exists</td>
+</tr>
+<tr>
+<td><code>DELETE /_admin/warehouses/{name}</code></td>
+<td>system admin, or its tenant's admin</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code>obioctl<span class="w"> </span>warehouse<span class="w"> </span>create<span class="w"> </span>analytics<span class="w">      </span><span class="c1"># also creates bucket iceberg-analytics</span>
+obioctl<span class="w"> </span>warehouse<span class="w"> </span>list
+</code></pre></div>
 <h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h2>
 <h3 id="getconfig">GetConfig<a class="headerlink" href="#getconfig" title="Permanent link">&para;</a></h3>
-<p>Get catalog configuration.</p>
-<div class="highlight"><pre><span></span><code>GET /iceberg/v1/config
+<p>Get catalog configuration for a warehouse (the <code>warehouse</code> parameter is
+required).</p>
+<div class="highlight"><pre><span></span><code>GET /iceberg/v1/config?warehouse=analytics
 </code></pre></div>
 <p><strong>Response:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">"defaults"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
+<span class="w">  </span><span class="nt">"defaults"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"warehouse"</span><span class="p">:</span><span class="w"> </span><span class="s2">"s3://iceberg-analytics"</span>
+<span class="w">  </span><span class="p">},</span>
 <span class="w">  </span><span class="nt">"overrides"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">"warehouse"</span><span class="p">:</span><span class="w"> </span><span class="s2">"s3://objectio-warehouse"</span>
+<span class="w">    </span><span class="nt">"prefix"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ws/analytics"</span>
 <span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
+<p>The client then sends every call under <code>/iceberg/v1/ws/analytics/…</code>.</p>
 <hr />
 <h2 id="namespace-operations">Namespace Operations<a class="headerlink" href="#namespace-operations" title="Permanent link">&para;</a></h2>
 <h3 id="listnamespaces">ListNamespaces<a class="headerlink" href="#listnamespaces" title="Permanent link">&para;</a></h3>
@@ -3704,12 +3788,38 @@ GET /iceberg/v1/namespaces?parent=parent_ns
 </ul>
 <hr />
 <h2 id="client-configuration">Client Configuration<a class="headerlink" href="#client-configuration" title="Permanent link">&para;</a></h2>
+<p>The URI is <code>.../iceberg</code>: Iceberg's REST clients add <code>/v1</code> themselves,
+so <code>.../iceberg/v1</code> makes them call <code>/iceberg/v1/v1/…</code>. The warehouse is
+a warehouse's <strong>name</strong>, not an <code>s3://</code> location. The pyiceberg example in
+the code repo (<code>examples/pyiceberg</code>) signs with SigV4
+(<code>rest.sigv4-enabled</code>, <code>rest.signing-name s3</code>) and runs against
+<code>objectio-aio</code>; no query engine is tested against the catalog in CI yet
+(<a href="https://github.com/object-io/objectio/issues/8">objectio#8</a>), so treat
+the Spark and Trino settings below as a starting point.</p>
+<h3 id="pyiceberg">PyIceberg<a class="headerlink" href="#pyiceberg" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">pyiceberg.catalog.rest</span><span class="w"> </span><span class="kn">import</span> <span class="n">RestCatalog</span>
+
+<span class="n">catalog</span> <span class="o">=</span> <span class="n">RestCatalog</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">"objectio"</span><span class="p">,</span>
+    <span class="n">uri</span><span class="o">=</span><span class="s2">"http://gateway:9000/iceberg"</span><span class="p">,</span>
+    <span class="n">warehouse</span><span class="o">=</span><span class="s2">"analytics"</span><span class="p">,</span>
+    <span class="o">**</span><span class="p">{</span>
+        <span class="s2">"rest.sigv4-enabled"</span><span class="p">:</span> <span class="s2">"true"</span><span class="p">,</span>
+        <span class="s2">"rest.signing-name"</span><span class="p">:</span> <span class="s2">"s3"</span><span class="p">,</span>
+        <span class="s2">"rest.signing-region"</span><span class="p">:</span> <span class="s2">"us-east-1"</span><span class="p">,</span>
+        <span class="s2">"s3.endpoint"</span><span class="p">:</span> <span class="s2">"http://gateway:9000"</span><span class="p">,</span>
+        <span class="s2">"s3.path-style-access"</span><span class="p">:</span> <span class="s2">"true"</span><span class="p">,</span>
+        <span class="s2">"s3.access-key-id"</span><span class="p">:</span> <span class="s2">"..."</span><span class="p">,</span>
+        <span class="s2">"s3.secret-access-key"</span><span class="p">:</span> <span class="s2">"..."</span><span class="p">,</span>
+    <span class="p">},</span>
+<span class="p">)</span>
+</code></pre></div>
 <h3 id="apache-spark">Apache Spark<a class="headerlink" href="#apache-spark" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span><span class="o">.</span><span class="n">builder</span> \
     <span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="s2">"spark.sql.catalog.objectio"</span><span class="p">,</span> <span class="s2">"org.apache.iceberg.spark.SparkCatalog"</span><span class="p">)</span> \
     <span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="s2">"spark.sql.catalog.objectio.type"</span><span class="p">,</span> <span class="s2">"rest"</span><span class="p">)</span> \
-    <span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="s2">"spark.sql.catalog.objectio.uri"</span><span class="p">,</span> <span class="s2">"http://gateway:9000/iceberg/v1"</span><span class="p">)</span> \
-    <span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="s2">"spark.sql.catalog.objectio.warehouse"</span><span class="p">,</span> <span class="s2">"s3://objectio-warehouse"</span><span class="p">)</span> \
+    <span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="s2">"spark.sql.catalog.objectio.uri"</span><span class="p">,</span> <span class="s2">"http://gateway:9000/iceberg"</span><span class="p">)</span> \
+    <span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="s2">"spark.sql.catalog.objectio.warehouse"</span><span class="p">,</span> <span class="s2">"analytics"</span><span class="p">)</span> \
     <span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
 
 <span class="c1"># Use the catalog</span>
@@ -3719,8 +3829,8 @@ GET /iceberg/v1/namespaces?parent=parent_ns
 <h3 id="trino">Trino<a class="headerlink" href="#trino" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="na">connector.name</span><span class="o">=</span><span class="s">iceberg</span>
 <span class="na">iceberg.catalog.type</span><span class="o">=</span><span class="s">rest</span>
-<span class="na">iceberg.rest-catalog.uri</span><span class="o">=</span><span class="s">http://gateway:9000/iceberg/v1</span>
-<span class="na">iceberg.rest-catalog.warehouse</span><span class="o">=</span><span class="s">s3://objectio-warehouse</span>
+<span class="na">iceberg.rest-catalog.uri</span><span class="o">=</span><span class="s">http://gateway:9000/iceberg</span>
+<span class="na">iceberg.rest-catalog.warehouse</span><span class="o">=</span><span class="s">analytics</span>
 </code></pre></div>
 <hr />
 <h2 id="error-responses">Error Responses<a class="headerlink" href="#error-responses" title="Permanent link">&para;</a></h2>

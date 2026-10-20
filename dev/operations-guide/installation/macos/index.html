@@ -2293,10 +2293,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#2-docker-desktop-aio-container" class="md-nav__link">
+  <a href="#2-docker-desktop" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. Docker Desktop (AIO container)
+        2. Docker Desktop
       
     </span>
   </a>
@@ -2894,10 +2894,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#2-docker-desktop-aio-container" class="md-nav__link">
+  <a href="#2-docker-desktop" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. Docker Desktop (AIO container)
+        2. Docker Desktop
       
     </span>
   </a>
@@ -3014,23 +3014,27 @@ boto3 at a local S3 endpoint. The split-service OSD binary <em>runs</em> on
 macOS, but Darwin does not expose the same raw-disk semantics as Linux
 (<code>O_DIRECT</code>, <code>ioctl BLKGETSIZE64</code>) and the storage engine has no
 hardened path for APFS-backed OSD disks. Keep macOS deployments to
-AIO mode or a Docker-hosted cluster.</p>
-<p>Both Apple Silicon (arm64) and Intel (x86_64) are supported. Erasure
-coding is ISA-L's on both, as on Linux.</p>
+AIO mode, or run the services in a Linux VM.</p>
+<p>Releases publish an Apple Silicon (arm64) binary; on Intel (x86_64),
+build from source. Erasure coding is ISA-L's on both, as on Linux.</p>
 <hr />
 <h2 id="1-aio-binary-recommended">1. AIO binary (recommended)<a class="headerlink" href="#1-aio-binary-recommended" title="Permanent link">&para;</a></h2>
 <p>This is the fastest path and the one you'll actually want 95% of the
 time on macOS.</p>
 <h3 id="apple-silicon">Apple Silicon<a class="headerlink" href="#apple-silicon" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-L<span class="w"> </span>-o<span class="w"> </span>objectio-aio<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>https://github.com/object-io/objectio/releases/latest/download/objectio-aio-darwin-arm64
-chmod<span class="w"> </span>+x<span class="w"> </span>objectio-aio<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>mv<span class="w"> </span>objectio-aio<span class="w"> </span>/usr/local/bin/
+<div class="highlight"><pre><span></span><code><span class="nv">TAG</span><span class="o">=</span>v0.1.0-rc.1
+<span class="nv">BASE</span><span class="o">=</span>https://github.com/object-io/objectio/releases/download/<span class="nv">$TAG</span>
+curl<span class="w"> </span>-LO<span class="w"> </span><span class="nv">$BASE</span>/objectio-aio-<span class="nv">$TAG</span>-darwin-arm64
+curl<span class="w"> </span>-LO<span class="w"> </span><span class="nv">$BASE</span>/objectio-aio-<span class="nv">$TAG</span>-darwin-arm64.sha256
+shasum<span class="w"> </span>-a<span class="w"> </span><span class="m">256</span><span class="w"> </span>-c<span class="w"> </span>objectio-aio-<span class="nv">$TAG</span>-darwin-arm64.sha256
+chmod<span class="w"> </span>+x<span class="w"> </span>objectio-aio-<span class="nv">$TAG</span>-darwin-arm64
+sudo<span class="w"> </span>mv<span class="w"> </span>objectio-aio-<span class="nv">$TAG</span>-darwin-arm64<span class="w"> </span>/usr/local/bin/objectio-aio
 </code></pre></div>
+<p>The release binary is named with its tag, and a pre-release such as
+<code>v0.1.0-rc.1</code> isn't reachable through <code>releases/latest</code>: name the tag.</p>
 <h3 id="intel">Intel<a class="headerlink" href="#intel" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-L<span class="w"> </span>-o<span class="w"> </span>objectio-aio<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>https://github.com/object-io/objectio/releases/latest/download/objectio-aio-darwin-amd64
-chmod<span class="w"> </span>+x<span class="w"> </span>objectio-aio<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>mv<span class="w"> </span>objectio-aio<span class="w"> </span>/usr/local/bin/
-</code></pre></div>
+<p>There is no release binary for Intel Macs: build it
+(<a href="#3-build-from-source-contributor-path">below</a>).</p>
 <h3 id="gatekeeper">Gatekeeper<a class="headerlink" href="#gatekeeper" title="Permanent link">&para;</a></h3>
 <p>Unsigned release binaries will be quarantined by Gatekeeper on first
 run. Either remove the quarantine attribute:</p>
@@ -3041,20 +3045,17 @@ and click <strong>Allow Anyway</strong> next to the <code>objectio-aio</code> en
 <h3 id="run-it">Run it<a class="headerlink" href="#run-it" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>objectio-aio<span class="w"> </span>--data<span class="w"> </span><span class="s2">"</span><span class="nv">$HOME</span><span class="s2">/.objectio"</span>
 </code></pre></div>
-<p>Banner prints the admin AK/SK. <code>--data</code> is optional but recommended —
-without it, every restart wipes the data tempdir.</p>
+<p>The banner prints the admin AK/SK (also in
+<code>~/.objectio/meta/admin-creds.env</code>). <code>--data</code> is optional but
+recommended — without it, every restart wipes the data tempdir.
+Authentication is off unless you add <code>--auth</code>.</p>
 <hr />
-<h2 id="2-docker-desktop-aio-container">2. Docker Desktop (AIO container)<a class="headerlink" href="#2-docker-desktop-aio-container" title="Permanent link">&para;</a></h2>
-<p>If you already have Docker Desktop and want zero host install:</p>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-p<span class="w"> </span><span class="m">9000</span>:9000<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-v<span class="w"> </span>objectio-data:/var/lib/objectio<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>ghcr.io/object-io/objectio:latest<span class="w"> </span>objectio-aio<span class="w"> </span>--data<span class="w"> </span>/var/lib/objectio
-</code></pre></div>
-<p>On Apple Silicon, Docker Desktop pulls the <code>linux/arm64</code> image
-automatically (no emulation); on Intel, the <code>linux/amd64</code> one. Both
-erasure-code with ISA-L.</p>
-<p>For the full 10-container compose cluster (3 meta + 6 OSD + 1
-gateway), see <a href="../docker/">docker.md</a>.</p>
+<h2 id="2-docker-desktop">2. Docker Desktop<a class="headerlink" href="#2-docker-desktop" title="Permanent link">&para;</a></h2>
+<p>The published image (<code>ghcr.io/object-io/objectio</code>, <code>linux/arm64</code> and
+<code>linux/amd64</code>) carries the service binaries and <code>obioctl</code>, not
+<code>objectio-aio</code>. Use it to run <code>obioctl</code>, or the services in Docker
+Desktop's Linux VM (<a href="../docker/">docker.md</a>); for a local endpoint, the
+AIO binary above is simpler.</p>
 <hr />
 <h2 id="3-build-from-source-contributor-path">3. Build from source (contributor path)<a class="headerlink" href="#3-build-from-source-contributor-path" title="Permanent link">&para;</a></h2>
 <p>Only needed if you're hacking on ObjectIO itself.</p>
@@ -3085,7 +3086,7 @@ cargo<span class="w"> </span>build<span class="w"> </span>--workspace<span class
 <h3 id="console">Console<a class="headerlink" href="#console" title="Permanent link">&para;</a></h3>
 <p>If you want the React <code>/_console/</code> UI baked into <code>objectio-aio</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>console<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>npm<span class="w"> </span>ci<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>npm<span class="w"> </span>run<span class="w"> </span>build
-<span class="nb">cd</span><span class="w"> </span>..<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>cargo<span class="w"> </span>build<span class="w"> </span>--workspace<span class="w"> </span>--release<span class="w">    </span><span class="c1"># rebuild to embed dist</span>
+<span class="nb">cd</span><span class="w"> </span>..<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>cargo<span class="w"> </span>build<span class="w"> </span>--release<span class="w"> </span>--bin<span class="w"> </span>objectio-aio<span class="w">    </span><span class="c1"># rebuild to embed dist</span>
 </code></pre></div>
 <h3 id="run">Run<a class="headerlink" href="#run" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>./target/release/objectio-aio<span class="w"> </span>--data<span class="w"> </span><span class="s2">"</span><span class="nv">$HOME</span><span class="s2">/.objectio"</span>
@@ -3098,9 +3099,9 @@ cargo<span class="w"> </span>build<span class="w"> </span>--workspace<span class
   storage engine uses. The OSD binary builds and runs against file-
   backed "disks" (<code>truncate -s 10G disk0.raw</code>), which is fine for
   unit tests but not for durability-sensitive work.</li>
-<li><strong>NBD / block-gateway targets.</strong> The block gateway terminates
-  iSCSI / NBD from Linux initiators; macOS has no native initiator
-  for either. Use Linux peers for block-storage testing.</li>
+<li><strong>NBD clients.</strong> The block gateway serves volumes over NBD (and
+  gRPC); macOS has no NBD client. Use Linux peers for block-storage
+  testing.</li>
 <li><strong><code>io_uring</code> performance path.</strong> Linux-specific. Not a correctness
   issue, but macOS performance numbers are not representative.</li>
 </ul>
@@ -3112,13 +3113,13 @@ Docker Desktop's Linux VM, or a dedicated machine).</p>
 objectio-aio<span class="w"> </span>--data<span class="w"> </span><span class="s2">"</span><span class="nv">$HOME</span><span class="s2">/.objectio"</span>
 
 <span class="c1"># 2. Point your tool at it</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">AWS_ACCESS_KEY_ID</span><span class="o">=</span>...<span class="w">  </span><span class="c1"># printed in the AIO banner</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">AWS_SECRET_ACCESS_KEY</span><span class="o">=</span>...
+<span class="nb">source</span><span class="w"> </span><span class="s2">"</span><span class="nv">$HOME</span><span class="s2">/.objectio/meta/admin-creds.env"</span><span class="w">   </span><span class="c1"># also printed in the banner</span>
 <span class="nb">export</span><span class="w"> </span><span class="nv">AWS_ENDPOINT_URL</span><span class="o">=</span>http://localhost:9000
 
 <span class="c1"># 3. Work against S3 / Iceberg / Delta Sharing</span>
 aws<span class="w"> </span>s3<span class="w"> </span>ls
-curl<span class="w"> </span>-s<span class="w"> </span>http://localhost:9000/iceberg/v1/config<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>.
+obioctl<span class="w"> </span>--endpoint<span class="w"> </span>http://localhost:9000<span class="w"> </span>warehouse<span class="w"> </span>create<span class="w"> </span>demo
+curl<span class="w"> </span>-s<span class="w"> </span><span class="s1">'http://localhost:9000/iceberg/v1/config?warehouse=demo'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>.
 
 <span class="c1"># 4. Console (browser)</span>
 open<span class="w"> </span>http://localhost:9000/_console/

@@ -2131,77 +2131,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#all-in-one-aio-image" class="md-nav__link">
+  <a href="#the-published-image" class="md-nav__link">
     <span class="md-ellipsis">
       
-        All-in-one (AIO) image
+        The published image
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="All-in-one (AIO) image">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#when-to-use-which" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        When to use which
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#local-cluster-make-cluster-up" class="md-nav__link">
+  <a href="#running-the-services-in-containers" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Local cluster (make cluster-up)
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Local cluster (make cluster-up)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#ports-exposed-on-the-host" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Ports exposed on the host
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#monitoring-side-car" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Monitoring side-car
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#production-compose-raw-disks" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Production compose (raw disks)
+        Running the services in containers
       
     </span>
   </a>
@@ -2280,17 +2224,6 @@
     <span class="md-ellipsis">
       
         Gateway can't reach meta
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#port-already-in-use-on-cluster-up" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        "port already in use" on cluster-up
       
     </span>
   </a>
@@ -2872,77 +2805,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#all-in-one-aio-image" class="md-nav__link">
+  <a href="#the-published-image" class="md-nav__link">
     <span class="md-ellipsis">
       
-        All-in-one (AIO) image
+        The published image
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="All-in-one (AIO) image">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#when-to-use-which" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        When to use which
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#local-cluster-make-cluster-up" class="md-nav__link">
+  <a href="#running-the-services-in-containers" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Local cluster (make cluster-up)
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Local cluster (make cluster-up)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#ports-exposed-on-the-host" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Ports exposed on the host
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#monitoring-side-car" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Monitoring side-car
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#production-compose-raw-disks" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Production compose (raw disks)
+        Running the services in containers
       
     </span>
   </a>
@@ -3027,17 +2904,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#port-already-in-use-on-cluster-up" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        "port already in use" on cluster-up
-      
-    </span>
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -3064,16 +2930,18 @@
 
 
 <h1 id="docker">Docker<a class="headerlink" href="#docker" title="Permanent link">&para;</a></h1>
-<p>ObjectIO ships a single multi-stage Dockerfile that produces six
-targets. You pick one image per role (three for a minimal split-role
-cluster, six if you want the block gateway too), or the all-in-one
-image for quick-test / appliance setups.</p>
+<p>ObjectIO ships one multi-stage Dockerfile. Its <code>all</code> target is the image
+that is published and that the Helm chart runs; per-service targets can
+be built locally.</p>
 <ul>
-<li><strong>Fastest demo:</strong> <a href="#all-in-one-aio-image"><code>objectio-aio</code> container</a></li>
-<li><strong>Real local cluster:</strong> <a href="#local-cluster-make-cluster-up"><code>make cluster-up</code></a> (3 meta + 6 OSD + 1 gateway, 4+2 EC)</li>
-<li><strong>Production-shaped raw disks:</strong> <a href="#production-compose-raw-disks"><code>deploy/prod/</code></a></li>
-<li><strong>Kubernetes:</strong> see <a href="../kubernetes/">kubernetes.md</a></li>
+<li><strong>Fastest demo:</strong> the <a href="../quickstart/"><code>objectio-aio</code> binary</a> (it is not
+  in the image)</li>
+<li><strong>Kubernetes:</strong> see <a href="../kubernetes/">kubernetes.md</a> (<code>make kind-up</code> for
+  a local kind cluster)</li>
 </ul>
+<p>There is no Compose file for running a cluster: the repository's
+<code>docker-compose.yml</code> holds development tools (build, test, lint), and
+<code>deploy/monitoring/</code> a Prometheus and Grafana.</p>
 <hr />
 <h2 id="image-targets">Image targets<a class="headerlink" href="#image-targets" title="Permanent link">&para;</a></h2>
 <table>
@@ -3095,7 +2963,7 @@ image for quick-test / appliance setups.</p>
 <tr>
 <td><code>meta</code></td>
 <td><code>objectio-meta</code></td>
-<td>9100 (gRPC), 9101 (Raft), 9102 (admin)</td>
+<td>9100 (gRPC and Raft), 9101 (metrics), 9102 (admin)</td>
 <td>Raft metadata</td>
 </tr>
 <tr>
@@ -3114,174 +2982,78 @@ image for quick-test / appliance setups.</p>
 <td><code>block-gateway</code></td>
 <td><code>objectio-block-gateway</code></td>
 <td>9300 (gRPC), 10809 (NBD)</td>
-<td>iSCSI / NBD / NVMe-oF target</td>
+<td>Block volumes over NBD and gRPC</td>
 </tr>
 <tr>
 <td><code>all</code></td>
-<td>all of the above</td>
+<td>gateway, meta, osd, <code>obioctl</code>, <code>objectio-install</code>, block-gateway, and the console</td>
 <td>9000 + internal</td>
-<td>One image, any binary (AIO image)</td>
+<td>One image, any service</td>
 </tr>
 </tbody>
 </table>
 <blockquote>
-<p>Port numbers are the cluster convention used by <code>deploy/</code> and the
-Helm chart. The CLI defaults inside each binary are different
-(gateway/meta/osd default to 9000/9001/9002). See
-<a href="../configuration/">configuration.md</a> for the split.</p>
+<p>Port numbers are the cluster convention used by the Helm chart. The
+CLI defaults inside each binary are different (gateway/meta/osd
+default to 9000/9001/9002). See <a href="../configuration/">configuration.md</a>
+for the split.</p>
 </blockquote>
-<p>One multi-arch image is published on GHCR, and it carries every
-service:</p>
+<p>One multi-arch image (<code>linux/amd64</code>, <code>linux/arm64</code>) is published on
+GHCR, and it carries every service:</p>
 <ul>
-<li><code>ghcr.io/object-io/objectio:latest</code> (the <code>all</code> target)</li>
+<li><code>ghcr.io/object-io/objectio:&lt;tag&gt;</code> (for example <code>v0.1.0-rc.1</code>), also
+  tagged <code>latest</code> — the <code>all</code> target</li>
 </ul>
-<p>Each container overrides the entrypoint to pick a service — that is
-what the helm chart does. The per-service Dockerfile targets
-(<code>gateway</code>, <code>meta</code>, <code>osd</code>, <code>cli</code>, <code>block-gateway</code>) are not published;
-build them locally if you want them:</p>
+<p>It has no entrypoint: name the binary to run, as the Helm chart does.
+The per-service targets (<code>gateway</code>, <code>meta</code>, <code>osd</code>, <code>cli</code>,
+<code>block-gateway</code>) are not published; build them locally if you want them.
+Their default commands pass flags the binaries don't have (<code>--bind</code>,
+<code>--raft-bind</code>), so always give the arguments yourself:</p>
 <div class="highlight"><pre><span></span><code>docker<span class="w"> </span>build<span class="w"> </span>--target<span class="w"> </span>gateway<span class="w"> </span>-t<span class="w"> </span>objectio-gateway<span class="w"> </span>.
 </code></pre></div>
 <p>Both <code>linux/amd64</code> and <code>linux/arm64</code> erasure-code with ISA-L and write
 the same stripes, so a cluster may mix them.</p>
 <hr />
-<h2 id="all-in-one-aio-image">All-in-one (AIO) image<a class="headerlink" href="#all-in-one-aio-image" title="Permanent link">&para;</a></h2>
-<p>The <code>all</code> target packages every binary plus the console SPA. You
-choose the entrypoint at <code>docker run</code> time.</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Run AIO — single-process cluster, everything on port 9000</span>
-docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-p<span class="w"> </span><span class="m">9000</span>:9000<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-v<span class="w"> </span>objectio-data:/var/lib/objectio<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>ghcr.io/object-io/objectio:latest<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>objectio-aio<span class="w"> </span>--data<span class="w"> </span>/var/lib/objectio
-
-<span class="c1"># Same image, run the admin CLI against an existing cluster</span>
+<h2 id="the-published-image">The published image<a class="headerlink" href="#the-published-image" title="Permanent link">&para;</a></h2>
+<p>The <code>all</code> target packages the service binaries plus the console SPA. You
+choose the binary at <code>docker run</code> time:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># The admin CLI against an existing cluster</span>
 docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>--network<span class="w"> </span>host<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>ghcr.io/object-io/objectio:latest<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-e<span class="w"> </span>OBJECTIO_ACCESS_KEY<span class="w"> </span>-e<span class="w"> </span>OBJECTIO_SECRET_KEY<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>ghcr.io/object-io/objectio:v0.1.0-rc.1<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>obioctl<span class="w"> </span>--endpoint<span class="w"> </span>http://localhost:9000<span class="w"> </span>user<span class="w"> </span>list
-</code></pre></div>
-<h3 id="when-to-use-which">When to use which<a class="headerlink" href="#when-to-use-which" title="Permanent link">&para;</a></h3>
-<table>
-<thead>
-<tr>
-<th>Use AIO image</th>
-<th>Use split images</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Laptop dev, CI, demos, smoke tests</td>
-<td>Production</td>
-</tr>
-<tr>
-<td>Single-process topology</td>
-<td>Separate pods / nodes per role</td>
-</tr>
-<tr>
-<td>One binary, any subcommand</td>
-<td>Minimal attack surface per container</td>
-</tr>
-</tbody>
-</table>
-<hr />
-<h2 id="local-cluster-make-cluster-up">Local cluster (<code>make cluster-up</code>)<a class="headerlink" href="#local-cluster-make-cluster-up" title="Permanent link">&para;</a></h2>
-<p><code>deploy/local-cluster/docker-compose.yml</code> stands up the shape people
-actually run: 3 meta replicas (real Raft), 6 OSDs (for 4+2 EC), 1
-gateway, 1 block-gateway, all on one Docker host.</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/object-io/objectio
-<span class="nb">cd</span><span class="w"> </span>objectio
 
-make<span class="w"> </span>cluster-up<span class="w">          </span><span class="c1"># builds images, starts the stack</span>
-make<span class="w"> </span>cluster-status<span class="w">      </span><span class="c1"># docker compose ps</span>
-make<span class="w"> </span>cluster-logs<span class="w">        </span><span class="c1"># tail every service</span>
-make<span class="w"> </span>cluster-cli<span class="w"> </span><span class="nv">ARGS</span><span class="o">=</span><span class="s2">"user list"</span><span class="w">    </span><span class="c1"># run obioctl in the cluster network</span>
-make<span class="w"> </span>cluster-down<span class="w">        </span><span class="c1"># stop, keep volumes</span>
-make<span class="w"> </span>cluster-clean<span class="w">       </span><span class="c1"># stop + wipe volumes</span>
+<span class="c1"># A service: the flags are the binary's own (see configuration.md)</span>
+docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>ghcr.io/object-io/objectio:v0.1.0-rc.1<span class="w"> </span>objectio-gateway<span class="w"> </span>--help
 </code></pre></div>
-<p>Direct <code>docker compose</code> also works:</p>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>deploy/local-cluster/docker-compose.yml<span class="w"> </span>up<span class="w"> </span>-d
-docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>deploy/local-cluster/docker-compose.yml<span class="w"> </span>logs<span class="w"> </span>-f<span class="w"> </span>gateway
-</code></pre></div>
-<h3 id="ports-exposed-on-the-host">Ports exposed on the host<a class="headerlink" href="#ports-exposed-on-the-host" title="Permanent link">&para;</a></h3>
-<table>
-<thead>
-<tr>
-<th>Host port</th>
-<th>Container</th>
-<th>Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>9000</td>
-<td><code>gateway:9000</code></td>
-<td>S3 / Iceberg / Delta Sharing / <code>/_console/</code></td>
-</tr>
-<tr>
-<td>9100</td>
-<td><code>meta1:9100</code></td>
-<td>Meta gRPC (leader usually talks here)</td>
-</tr>
-<tr>
-<td>9102 / 9103</td>
-<td><code>meta2:9100</code> / <code>meta3:9100</code></td>
-<td>Meta gRPC (followers)</td>
-</tr>
-<tr>
-<td>9200 + 9202–9206</td>
-<td><code>osd1..osd6:9200</code></td>
-<td>OSD gRPC</td>
-</tr>
-<tr>
-<td>9300</td>
-<td><code>block-gateway:9300</code></td>
-<td>Block gRPC</td>
-</tr>
-<tr>
-<td>10809</td>
-<td><code>block-gateway:10809</code></td>
-<td>NBD target</td>
-</tr>
-</tbody>
-</table>
-<p>Nothing else is exposed — meta's Raft port (9101) and per-OSD
-metrics ports are only reachable inside the <code>objectio-net</code> bridge.</p>
-<h3 id="monitoring-side-car">Monitoring side-car<a class="headerlink" href="#monitoring-side-car" title="Permanent link">&para;</a></h3>
-<p>An optional companion compose file layers on Prometheus + Grafana:</p>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>compose<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-f<span class="w"> </span>deploy/local-cluster/docker-compose.yml<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-f<span class="w"> </span>deploy/local-cluster/docker-compose.monitoring.yml<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>up<span class="w"> </span>-d
-<span class="c1"># Grafana: http://localhost:3000  (admin / objectio)</span>
-</code></pre></div>
+<p>The image runs as the non-root user <code>objectio</code>, declares
+<code>/var/lib/objectio</code> as a volume, and has no <code>curl</code>.</p>
 <hr />
-<h2 id="production-compose-raw-disks">Production compose (raw disks)<a class="headerlink" href="#production-compose-raw-disks" title="Permanent link">&para;</a></h2>
-<p><code>deploy/prod/docker-compose.yml</code> is a reference for running ObjectIO
-on a single host with real block devices rather than volumes. Use it
-as a starting point for appliance builds or when Kubernetes is
-overkill.</p>
-<p>Key differences from the local-cluster compose:</p>
-<ul>
-<li><strong>OSDs run <code>privileged: true</code> with <code>SYS_RAWIO</code> + <code>SYS_ADMIN</code>.</strong> The
-  storage engine needs <code>O_DIRECT</code> and <code>ioctl BLKGETSIZE64</code> against
-  raw disks, which the default Docker cap set denies.</li>
-<li><strong>Disks are passed as <code>devices:</code></strong>, not <code>volumes:</code>.</li>
-<li><strong><code>DISK_MODE=raw|folder</code></strong> toggles between real disks and sparse
-  file "disks" for testing.</li>
-</ul>
-<div class="highlight"><pre><span></span><code><span class="c1"># Edit deploy/prod/docker-compose.yml to list your actual devices</span>
-<span class="c1"># (/dev/nvme0n1, /dev/sdb, etc.) under each osdN's `devices:` block.</span>
-
-<span class="nv">DISK_MODE</span><span class="o">=</span>raw<span class="w"> </span>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>deploy/prod/docker-compose.yml<span class="w"> </span>up<span class="w"> </span>-d
+<h2 id="running-the-services-in-containers">Running the services in containers<a class="headerlink" href="#running-the-services-in-containers" title="Permanent link">&para;</a></h2>
+<p>Without Kubernetes, run each service from the image with the flags in
+<a href="../linux/#2-a-cluster-under-systemd">Linux</a>: meta with <code>--node-id</code>,
+<code>--raft-advertise</code> and its data directory on a volume, then the Raft
+bootstrap calls to its admin port; OSDs with an <code>osd.toml</code> mounted at
+<code>/etc/objectio/osd.toml</code>; gateways with every meta node's address in
+<code>--meta-endpoint</code>.</p>
+<p>An OSD on raw block devices needs them passed as <code>devices:</code> and the
+capability to open them with <code>O_DIRECT</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">services</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">osd1</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ghcr.io/object-io/objectio:v0.1.0-rc.1</span>
+<span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"objectio-osd"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"--config"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"/etc/objectio/osd.toml"</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">cap_add</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">SYS_RAWIO</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">devices</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">/dev/nvme1n1</span><span class="p p-Indicator">:</span><span class="nv">/dev/nvme1n1</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./osd1.toml:/etc/objectio/osd.toml:ro</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">osd1-state:/var/lib/objectio/osd</span>
 </code></pre></div>
-<p><code>deploy/single-node-7disk/</code> is a worked example: a 7-disk single
-box, one disk per OSD container, including <code>setup-disks.sh</code> for
-mkfs/fstab prep and <code>deploy.sh</code> for remote SSH deployment.</p>
 <hr />
 <h2 id="building-images-locally">Building images locally<a class="headerlink" href="#building-images-locally" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="c1"># Single-arch, native platform</span>
-make<span class="w"> </span>docker<span class="w">                 </span><span class="c1"># all targets</span>
+make<span class="w"> </span>docker<span class="w">                 </span><span class="c1"># gateway, meta, osd, cli and all</span>
 make<span class="w"> </span>docker-gateway<span class="w">         </span><span class="c1"># just the gateway</span>
-make<span class="w"> </span>docker-all<span class="w">             </span><span class="c1"># the AIO image</span>
+make<span class="w"> </span>docker-all<span class="w">             </span><span class="c1"># the published image's target</span>
 
 <span class="c1"># Multi-arch (requires docker buildx, pushes to registry)</span>
 <span class="nv">DOCKER_REGISTRY</span><span class="o">=</span>ghcr.io/myorg/<span class="w"> </span><span class="nv">DOCKER_TAG</span><span class="o">=</span>v1.0.0<span class="w"> </span><span class="se">\</span>
@@ -3302,8 +3074,8 @@ make<span class="w"> </span>docker-multiarch-local
 <tbody>
 <tr>
 <td><code>RUST_VERSION</code></td>
-<td><code>1.93</code></td>
-<td>Rust compiler pinned in the <code>builder-base</code> stage</td>
+<td><code>1.94</code></td>
+<td>Rust compiler in the <code>builder-base</code> stage (matches <code>rust-toolchain.toml</code>)</td>
 </tr>
 <tr>
 <td><code>FEATURES</code></td>
@@ -3319,9 +3091,9 @@ make<span class="w"> </span>docker-multiarch-local
 </table>
 <hr />
 <h2 id="environment-variables-containerised-services">Environment variables (containerised services)<a class="headerlink" href="#environment-variables-containerised-services" title="Permanent link">&para;</a></h2>
-<p>Most configuration goes via CLI flags in the container <code>command:</code>
-block — see the compose files in <code>deploy/</code> for worked examples. A
-small set of settings is additionally reachable via env vars:</p>
+<p>Most configuration goes via CLI flags in the container's command. A set
+of settings is also reachable via env vars (the full list is in
+<a href="../configuration/">configuration.md</a>):</p>
 <table>
 <thead>
 <tr>
@@ -3382,38 +3154,33 @@ small set of settings is additionally reachable via env vars:</p>
 <td>Override the <code>/_console/</code> static-asset dir</td>
 </tr>
 <tr>
+<td><code>OBJECTIO_TLS_CERT</code>, <code>OBJECTIO_TLS_KEY</code>, <code>OBJECTIO_TLS_CA</code></td>
+<td>all</td>
+<td><a href="../../administration/mtls/">mTLS</a> between services</td>
+</tr>
+<tr>
 <td><code>RUST_LOG</code></td>
 <td>all</td>
 <td>Overrides <code>--log-level</code>; same syntax as <code>tracing</code></td>
 </tr>
 </tbody>
 </table>
-<p>For everything else — listen address, meta endpoint, EC profile, data
-dir — pass flags in <code>command:</code>. See <a href="../configuration/">configuration.md</a>
-for the full CLI surface.</p>
 <hr />
 <h2 id="health-checks">Health checks<a class="headerlink" href="#health-checks" title="Permanent link">&para;</a></h2>
-<p>Built into every runtime image:</p>
-<div class="highlight"><pre><span></span><code><span class="c"># gateway</span>
-<span class="k">HEALTHCHECK</span><span class="w"> </span><span class="k">CMD</span><span class="w"> </span>curl<span class="w"> </span>-f<span class="w"> </span>http://localhost:9000/health<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
-<span class="c"># meta, osd, block-gateway</span>
-<span class="k">HEALTHCHECK</span><span class="w"> </span><span class="k">CMD</span><span class="w"> </span>/usr/local/bin/healthcheck.sh<span class="w">      </span>#<span class="w"> </span>stub<span class="w"> </span>—<span class="w"> </span>always<span class="w"> </span>exits<span class="w"> </span><span class="m">0</span>
-</code></pre></div>
-<p>The gateway health check is the real one (queries <code>/health</code> which
-checks meta connectivity). Meta / OSD currently rely on their
-supervisor (compose restart policy, or K8s liveness probes in the
-Helm chart) to restart on crash.</p>
+<ul>
+<li><strong>Gateway:</strong> <code>GET /health</code> answers 200 while the process is up;
+  <code>GET /_ready</code> answers 200 once meta and enough OSDs answer
+  (<a href="../../operations/monitoring/#health-endpoints">monitoring</a>).</li>
+<li><strong>Meta and OSDs:</strong> <code>GET /health</code> on their metrics ports (9101, 9201).</li>
+</ul>
+<p>The <code>all</code> image declares no <code>HEALTHCHECK</code>: use these in your
+orchestrator. The per-service targets declare one, but the gateway's
+calls <code>curl</code>, which the image lacks, and the others always succeed.</p>
 <hr />
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
 <h3 id="operation-not-permitted-on-an-osd">"operation not permitted" on an OSD<a class="headerlink" href="#operation-not-permitted-on-an-osd" title="Permanent link">&para;</a></h3>
-<p>OSDs need <code>CAP_SYS_RAWIO</code> to open raw block devices with <code>O_DIRECT</code>.
-In <code>docker-compose.yml</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">services</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">osd1</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">privileged</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w">   </span><span class="c1"># easiest — or scope down to:</span>
-<span class="w">    </span><span class="nt">cap_add</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">SYS_RAWIO</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">SYS_ADMIN</span><span class="p p-Indicator">]</span>
-<span class="w">    </span><span class="nt">devices</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">/dev/sdb</span><span class="p p-Indicator">:</span><span class="nv">/dev/sdb</span><span class="p p-Indicator">]</span>
-</code></pre></div>
+<p>OSDs need <code>CAP_SYS_RAWIO</code> to open raw block devices with <code>O_DIRECT</code>
+(<code>cap_add: [SYS_RAWIO]</code>, or <code>privileged: true</code>).</p>
 <h3 id="falling-back-to-pread-in-an-osds-log">"falling back to pread" in an OSD's log<a class="headerlink" href="#falling-back-to-pread-in-an-osds-log" title="Permanent link">&para;</a></h3>
 <p>The image does its disk I/O through io_uring, and docker's default
 seccomp profile denies the io_uring system calls. The OSD (or aio) then
@@ -3426,14 +3193,9 @@ allows <code>io_uring_setup</code>, <code>io_uring_enter</code> and <code>io_uri
 <p>Gateways and OSDs take every meta node's address in one comma-separated
 <code>--meta-endpoint</code> (for example
 <code>http://meta1:9100,http://meta2:9100,http://meta3:9100</code>); any one that
-answers serves them. Confirm DNS resolves inside the <code>objectio-net</code> bridge:</p>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>deploy/local-cluster/docker-compose.yml<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>gateway<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>getent<span class="w"> </span>hosts<span class="w"> </span>meta1
-</code></pre></div>
-<h3 id="port-already-in-use-on-cluster-up">"port already in use" on <code>cluster-up</code><a class="headerlink" href="#port-already-in-use-on-cluster-up" title="Permanent link">&para;</a></h3>
-<p>Something else is bound to 9000 / 9100 / 9200–9206 / 9300 / 10809.
-Either stop the conflicting service or change host port mappings in
-the compose file.</p>
+answers serves them. Check that the names resolve inside the
+containers' network and that each meta node's <code>--raft-advertise</code> is an
+address the others can reach, not <code>0.0.0.0</code>.</p>
 
 
 

@@ -2646,6 +2646,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#placement-groups-down-incomplete-or-undersized" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Placement groups down, incomplete or undersized
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#objects-unreadable-or-unrecoverable" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3037,6 +3048,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#placement-groups-down-incomplete-or-undersized" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Placement groups down, incomplete or undersized
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#objects-unreadable-or-unrecoverable" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3279,6 +3301,41 @@ short:</p>
 <td><a href="#corrupt-shards">Corrupt shards</a></td>
 </tr>
 <tr>
+<td>ObjectIOPgDown</td>
+<td>critical</td>
+<td><a href="#placement-groups-down-incomplete-or-undersized">Placement groups</a></td>
+</tr>
+<tr>
+<td>ObjectIOPgIncomplete</td>
+<td>critical</td>
+<td><a href="#placement-groups-down-incomplete-or-undersized">Placement groups</a></td>
+</tr>
+<tr>
+<td>ObjectIOObjectsUnfound</td>
+<td>critical</td>
+<td><a href="#objects-unreadable-or-unrecoverable">Objects unreadable</a></td>
+</tr>
+<tr>
+<td>ObjectIOObjectsLost</td>
+<td>critical</td>
+<td><a href="#objects-unreadable-or-unrecoverable">Objects unreadable</a></td>
+</tr>
+<tr>
+<td>ObjectIOPgNotCleanWithOsdsUp</td>
+<td>warning</td>
+<td><a href="#placement-groups-down-incomplete-or-undersized">Placement groups</a></td>
+</tr>
+<tr>
+<td>ObjectIOPgUndersized</td>
+<td>warning</td>
+<td><a href="#placement-groups-down-incomplete-or-undersized">Placement groups</a></td>
+</tr>
+<tr>
+<td>ObjectIOPgScrubStale</td>
+<td>warning</td>
+<td><a href="#repair-not-running">Repair not running</a></td>
+</tr>
+<tr>
 <td>ObjectIOMetaNoLeader</td>
 <td>critical</td>
 <td><a href="#meta-has-no-leader-or-elects-often">Meta</a></td>
@@ -3365,19 +3422,21 @@ and the audit spool's size.</p>
 <p><strong>What happens on its own.</strong>
 - Meta probes every OSD every 15 s. Three missed probes, about 45 s, mark
   it Down.
-- A Down OSD keeps its placement positions: writes go on at k + 1 shards
-  (degraded), and reads decode around it.
-- Nothing is rebuilt while the OSD is merely Down. It may come back, and
-  moving its data would cost more than waiting.</p>
+- For the first 120 s it is down (config <code>pg/down_out_seconds</code>), its
+  placement groups keep it: writes go on at k + 1 shards (degraded), and
+  reads decode around it. A restart or a reboot moves nothing.
+- After that, each of its placement groups gets a stand-in OSD (within
+  the pool's placement rule) and backfills onto it: the PG is rebuilt to
+  full redundancy without the down OSD. A position no OSD can take leaves
+  the PG <code>Undersized</code>.</p>
 <p><strong>What you do.</strong>
 1. <code>obioctl node list</code>: which OSD, and since when.
 2. If the process died: restart it (<code>systemctl restart objectio-osd</code>, or
-   the pod). It rejoins, and repair rebuilds only the shards written while
-   it was gone.
+   the pod). Back within 120 s, it rejoins and recovery brings it up to
+   date with what was written while it was gone.
 3. If the host or drive is gone for good: <code>obioctl osd set-state &lt;node_id&gt;
-   out</code>. Repair then rebuilds its shards elsewhere. Do this within a few
-   hours: until then every stripe it held is one failure from unreadable
-   (<code>ObjectIOObjectsAtRisk</code>).
+   out</code>, so it is no longer counted as in service. Its PGs already have
+   stand-ins; watch them backfill (<code>obioctl pg list --state Degraded</code>).
 4. If it won't start, and its log says its metadata log is damaged
    ("damage, not a torn append", or records missing): what it holds can't
    be trusted. Treat it as a failed drive (step 3, then
@@ -3387,8 +3446,8 @@ and the audit spool's size.</p>
 write until it is reopened" in its log) stays up but refuses every write.
 Restart it: the restart finds where the log really ends. If it happens
 again, the drive is failing; replace it.</p>
-<p><strong>Done when</strong> <code>ObjectIOObjectsAtRisk</code> clears and the repair counters
-(<code>objectio_meta_repair_shards_rebuilt_total</code>) stop rising.</p>
+<p><strong>Done when</strong> <code>ObjectIOObjectsAtRisk</code> clears and every placement group
+is <code>Clean</code> again (<code>objectio_meta_pgs_not_clean</code> 0).</p>
 <h3 id="replacing-a-disk">Replacing a disk<a class="headerlink" href="#replacing-a-disk" title="Permanent link">&para;</a></h3>
 <ol>
 <li>If the disk still reads: <code>obioctl osd set-state &lt;node_id&gt; draining</code>,
@@ -3482,19 +3541,41 @@ runs on the meta leader:
 <p>Scrub stale: an OSD hasn't finished a scrub pass in 8 days. Check that
 OSD's log; a pass on a very full disk at 50 MiB/s
 (<code>--scrub-rate-mib</code>) can take days.</p>
+<p>PG scrub stale: a placement group hasn't been scrubbed in two weeks
+(twice <code>scrub/every_seconds</code>, 7 days). Placement-group scrubs run from the
+meta leader; check that there is one, and its log. <code>obioctl pg scrub
+&lt;pg_id&gt;</code> scrubs one now.</p>
 <h3 id="corrupt-shards">Corrupt shards<a class="headerlink" href="#corrupt-shards" title="Permanent link">&para;</a></h3>
 <p>Scrub or a read found shards that don't match their checksums. The OSD
 reports them, and repair rebuilds them from the rest of the stripe. If the
 count keeps rising on one OSD, its drive is failing: check its SMART
 metrics (<code>objectio_disk_smart_*</code>) and replace it (<a href="#replacing-a-disk">above</a>).</p>
+<h3 id="placement-groups-down-incomplete-or-undersized">Placement groups down, incomplete or undersized<a class="headerlink" href="#placement-groups-down-incomplete-or-undersized" title="Permanent link">&para;</a></h3>
+<p>Peering, on the meta leader, gives each placement group a state.
+<code>obioctl pg list --pool &lt;pool&gt; --state &lt;state&gt;</code> names the PGs, and
+<code>obioctl pg get &lt;pg_id&gt; --pool &lt;pool&gt;</code> says why and which members.
+- <strong>Down:</strong> fewer members answer than a read needs (k). Its objects
+  can't be read or written. Bring the OSDs back.
+- <strong>Incomplete:</strong> fewer than a read quorum of its metadata copies
+  answer, so a newer write may be on those that don't. It serves reads,
+  but nothing is rebuilt. Bring the members back.
+- <strong>Undersized:</strong> a position has no usable OSD and none can stand in
+  within the pool's rule (not enough hosts, racks or free space). Add
+  OSDs in the missing domain, or bring the member back.
+- <strong>Not clean for an hour with every OSD up:</strong> recovery is stuck or slow.
+  <code>obioctl pg get</code> shows its last error; <code>WaitTooFull</code> means a member to
+  fill is past its full ratio (see <a href="#disks-filling-or-full">disks filling</a>).</p>
 <h3 id="objects-unreadable-or-unrecoverable">Objects unreadable or unrecoverable<a class="headerlink" href="#objects-unreadable-or-unrecoverable" title="Permanent link">&para;</a></h3>
 <p>Some stripes have fewer than k good shards: more failures at once than the
-code tolerates.
+code tolerates. Peering counts them per placement group as unfound
+(<code>objectio_meta_pg_objects_unfound</code>) while members may still bring
+them back; objects recorded lost (<code>objectio_meta_lost_objects</code>) have
+fewer than k shards anywhere.
 1. Bring back every OSD that is down but intact (powered off, network).
    Their shards make the stripes readable again.
 2. Don't set OSDs <code>out</code> or wipe disks until this is resolved.
-3. What can't be brought back is lost. <strong>No tool yet lists which objects
-   are affected.</strong></p>
+3. What can't be brought back is lost. <code>obioctl pg get</code> gives the
+   counts per placement group; no tool yet lists the objects.</p>
 <h3 id="a-slow-disk">A slow disk<a class="headerlink" href="#a-slow-disk" title="Permanent link">&para;</a></h3>
 <p>p99 shard fsync over 100 ms. Find the OSD from the per-OSD
 <code>objectio_osd_disk_seconds</code>. A drive getting slower often fails next:
@@ -3509,9 +3590,9 @@ fsync.</p>
 <li>A 500 is a bug: report it with the gateway's log line for the request
   id.</li>
 </ul>
-<p>Space leaking: shard deletes are failing, so freed space stays allocated
-until a later repair pass. It is usually an OSD that is down. A leak is
-never a loss.</p>
+<p>Space leaking: shard deletes are failing, so freed space stays allocated.
+Nothing reclaims it later yet (<a href="https://github.com/object-io/objectio/issues/83">objectio#83</a>).
+It is usually an OSD that is down. A leak is never a loss.</p>
 <h3 id="audit-events-dropped">Audit events dropped<a class="headerlink" href="#audit-events-dropped" title="Permanent link">&para;</a></h3>
 <p>Events are spooled on the gateway's disk until delivered. Drops mean:
 - the spool filled (<code>--audit-spool-max-bytes</code>) because a receiver has been
@@ -3545,14 +3626,16 @@ loses writes not yet flushed (a known gap; see the block design).</p>
 <h3 id="certificates-expiring">Certificates expiring<a class="headerlink" href="#certificates-expiring" title="Permanent link">&para;</a></h3>
 <p>cert-manager renews 30 days before expiry. The services read their
 certificates only at start, so after a renewal restart them (rolling):
-<code>kubectl rollout restart statefulset/&lt;release&gt;-meta statefulset/&lt;release&gt;-osd deployment/&lt;release&gt;-gateway</code>.
+<code>kubectl rollout restart statefulset/&lt;name&gt;-meta statefulset/&lt;name&gt;-osd deployment/&lt;name&gt;-gateway</code>,
+where <code>&lt;name&gt;</code> is the release name if it contains <code>objectio</code> (release
+<code>objectio</code>: <code>objectio-meta</code>), else <code>&lt;release&gt;-objectio</code>.
 An expired certificate stops every internal call. There is no expiry
 metric yet: alert on cert-manager's <code>certmanager_certificate_expiration_timestamp_seconds</code>.</p>
 <h3 id="upgrades">Upgrades<a class="headerlink" href="#upgrades" title="Permanent link">&para;</a></h3>
 <p>Follow <a href="../upgrades/">upgrades</a>: meta first, then OSDs, then gateways, one
 at a time. Then <code>obioctl upgrade status</code>, and <code>obioctl upgrade finalize</code>
-once every node runs the new release. Back up <code>meta.redb</code> from a stopped
-follower first.</p>
+once every node runs the new release. Back up a stopped follower's data
+directory (<code>meta.redb</code>, <code>raft-log</code>) first.</p>
 
 
 

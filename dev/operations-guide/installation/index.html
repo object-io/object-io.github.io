@@ -2867,7 +2867,7 @@ a laptop to a production Kubernetes install.</p>
 <tr>
 <td>🚀 Fastest demo</td>
 <td><a href="quickstart/">quickstart.md</a></td>
-<td>One binary or one container, &lt;60 s to <code>aws s3 ls</code></td>
+<td>One binary, &lt;60 s to <code>aws s3 ls</code></td>
 </tr>
 <tr>
 <td>🐧 Bare-metal Linux</td>
@@ -2880,9 +2880,9 @@ a laptop to a production Kubernetes install.</p>
 <td>Dev laptops (AIO only — not a production target)</td>
 </tr>
 <tr>
-<td>🐳 Docker &amp; Compose</td>
+<td>🐳 Docker</td>
 <td><a href="docker/">docker.md</a></td>
-<td>Local clusters, CI, single-host appliances</td>
+<td>The container image, CI, single-host appliances</td>
 </tr>
 <tr>
 <td>☸ Kubernetes</td>
@@ -2891,9 +2891,10 @@ a laptop to a production Kubernetes install.</p>
 </tr>
 </tbody>
 </table>
-<p>Platform support: <strong>Linux</strong> (amd64, arm64) and <strong>macOS</strong> (amd64,
-arm64) — both natively and in containers. ObjectIO is POSIX-only;
-there is no native Windows build.</p>
+<p>Platform support: <strong>Linux</strong> (amd64, arm64), natively and in containers,
+and <strong>macOS</strong> for development. Releases publish <code>objectio-aio</code> for Linux
+amd64 and arm64 and macOS arm64; Intel Macs build from source. ObjectIO
+is POSIX-only; there is no native Windows build.</p>
 <h2 id="deeper-references">Deeper references<a class="headerlink" href="#deeper-references" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="hardware-sizing/">hardware-sizing.md</a> — from a capacity and throughput requirement to a bill of quantities, with a calculator.</li>
@@ -3046,9 +3047,14 @@ larger / geo-distributed clusters. Always odd.</p>
 <td>internal</td>
 </tr>
 <tr>
+<td>9301</td>
+<td>Block gateway Prometheus <code>/metrics</code></td>
+<td>monitoring</td>
+</tr>
+<tr>
 <td>10809</td>
-<td>Block gateway NBD target</td>
-<td>iSCSI / NBD initiators</td>
+<td>Block gateway NBD</td>
+<td>NBD clients</td>
 </tr>
 </tbody>
 </table>
@@ -3060,8 +3066,9 @@ differ for meta and OSD) and how to override them.</p>
 <li>[ ] Authentication enabled (<code>--no-auth</code> <em>not</em> set).</li>
 <li>[ ] OIDC configured for the console + Iceberg JWTs, if applicable.</li>
 <li>[ ] SSE master key present (<code>gateway.sse.enabled: true</code> in Helm).</li>
-<li>[ ] Firewall / NetworkPolicy restricting 9100/9101/9200 to the
-  internal network only.</li>
+<li>[ ] Firewall / NetworkPolicy restricting 9100/9101/9200/9201 to the
+  internal network, and meta's admin port 9102 (plain HTTP, no
+  authentication: it changes Raft membership) to operators.</li>
 <li>[ ] Non-root <code>objectio</code> service user with <code>CAP_SYS_RAWIO</code> (not
   full root) on OSD nodes.</li>
 <li>[ ] <code>--trusted-proxies</code> set to the ingress / load balancer network if

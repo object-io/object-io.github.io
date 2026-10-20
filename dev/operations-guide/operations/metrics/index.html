@@ -2601,6 +2601,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#placement-groups" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Placement groups
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#osd" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3019,6 +3030,17 @@
     <span class="md-ellipsis">
       
         Repair
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#placement-groups" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Placement groups
       
     </span>
   </a>
@@ -4204,6 +4226,240 @@ once per gateway. With several gateways, aggregate them with <code>max</code>, n
 <td>counter</td>
 <td>—</td>
 <td>Stripes found with fewer than k good shards</td>
+</tr>
+</tbody>
+</table>
+<h3 id="placement-groups">Placement groups<a class="headerlink" href="#placement-groups" title="Permanent link">&para;</a></h3>
+<p>Exported by: meta; the leader counts them, so take the <code>max</code> over meta
+nodes. The states are peering's (<code>Down</code>, <code>Incomplete</code>,
+<code>Undersized</code>, <code>Degraded</code>, <code>Clean</code>) and recovery's while it works a PG
+(<code>Recovering</code>, <code>Backfilling</code>, <code>WaitTooFull</code>); <code>obioctl pg list</code> and
+<code>obioctl pg get</code> show the same per PG.</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Type</th>
+<th>Labels</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>objectio_meta_pgs</code></td>
+<td>gauge</td>
+<td><code>state</code></td>
+<td>Placement groups by the state peering last found</td>
+</tr>
+<tr>
+<td><code>objectio_meta_pgs_not_clean</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Placement groups in any state but <code>Clean</code></td>
+</tr>
+<tr>
+<td><code>objectio_meta_pg_not_clean_oldest_seconds</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>How long the PG longest out of <code>Clean</code> has been</td>
+</tr>
+<tr>
+<td><code>objectio_meta_pgs_undersized</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>PGs with a member no OSD can stand in for within the pool's rule</td>
+</tr>
+<tr>
+<td><code>objectio_meta_osds_down</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>OSDs in service (<code>in</code>) that aren't up</td>
+</tr>
+<tr>
+<td><code>objectio_meta_pg_objects_degraded</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Objects some acting member of their PG lacks something of</td>
+</tr>
+<tr>
+<td><code>objectio_meta_pg_objects_unfound</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Objects with fewer complete copies than a read needs among the members that answered</td>
+</tr>
+<tr>
+<td><code>objectio_meta_pg_copies_missing</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Metadata copies acting members lack</td>
+</tr>
+<tr>
+<td><code>objectio_meta_pg_shards_missing</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Shards acting members should hold at their position and don't</td>
+</tr>
+<tr>
+<td><code>objectio_meta_lost_objects</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Objects recorded lost: fewer than k shards left. Above 0 is data loss</td>
+</tr>
+<tr>
+<td><code>objectio_meta_pg_peered_total</code></td>
+<td>counter</td>
+<td>—</td>
+<td>Placement groups peered</td>
+</tr>
+<tr>
+<td><code>objectio_meta_pg_listed_total</code></td>
+<td>counter</td>
+<td>—</td>
+<td>PGs whose members disagreed by summary, so were listed</td>
+</tr>
+<tr>
+<td><code>objectio_meta_pg_listings_added_total</code></td>
+<td>counter</td>
+<td>—</td>
+<td>Listing entries peering put back</td>
+</tr>
+<tr>
+<td><code>objectio_meta_pg_listings_removed_total</code></td>
+<td>counter</td>
+<td>—</td>
+<td>Listing entries peering removed (their key was deleted)</td>
+</tr>
+<tr>
+<td><code>objectio_meta_pg_recovering</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>PGs being recovered</td>
+</tr>
+<tr>
+<td><code>objectio_meta_pg_recovery_backing_off</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>PGs whose recovery is waiting out a backoff</td>
+</tr>
+<tr>
+<td><code>objectio_meta_pg_recovery_objects_remaining</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Objects recovery has left in the PGs it is working</td>
+</tr>
+<tr>
+<td><code>objectio_meta_pg_recovery_bytes_remaining</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Bytes of those objects</td>
+</tr>
+<tr>
+<td><code>objectio_meta_pg_reservations</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Recovery reservations held, as (OSD, PG) pairs</td>
+</tr>
+<tr>
+<td><code>objectio_meta_pg_reservations_refused_total</code></td>
+<td>counter</td>
+<td>—</td>
+<td>Times a PG couldn't reserve a slot on every OSD it needed</td>
+</tr>
+<tr>
+<td><code>objectio_meta_pg_recovery_retries_total</code></td>
+<td>counter</td>
+<td>—</td>
+<td>Recovery passes that got nowhere (each waits twice as long, to 5 min)</td>
+</tr>
+<tr>
+<td><code>objectio_meta_pg_too_full_total</code></td>
+<td>counter</td>
+<td>—</td>
+<td>Times a PG waited for a member that was too full</td>
+</tr>
+<tr>
+<td><code>objectio_meta_pg_recovered_objects_total</code></td>
+<td>counter</td>
+<td>—</td>
+<td>Objects recovery made whole</td>
+</tr>
+<tr>
+<td><code>objectio_meta_pg_recovered_shards_total</code></td>
+<td>counter</td>
+<td>—</td>
+<td>Shards recovery wrote to the member at their position</td>
+</tr>
+<tr>
+<td><code>objectio_meta_pg_recovered_copies_total</code></td>
+<td>counter</td>
+<td>—</td>
+<td>Metadata copies recovery wrote</td>
+</tr>
+<tr>
+<td><code>objectio_meta_pg_replica_copies_total</code></td>
+<td>counter</td>
+<td>—</td>
+<td>Replicated copies recovery made from an intact one</td>
+</tr>
+<tr>
+<td><code>objectio_meta_pg_remaps_total</code></td>
+<td>counter</td>
+<td>—</td>
+<td>PGs moved to their <code>up</code> set</td>
+</tr>
+<tr>
+<td><code>objectio_meta_pg_lrc_rebuilds_total</code></td>
+<td>counter</td>
+<td><code>kind</code></td>
+<td>LRC shards rebuilt, from their <code>local</code> group or the <code>global</code> stripe</td>
+</tr>
+<tr>
+<td><code>objectio_meta_pg_lrc_shards_read_total</code></td>
+<td>counter</td>
+<td><code>kind</code></td>
+<td>Shards those rebuilds read</td>
+</tr>
+<tr>
+<td><code>objectio_meta_scrub_pgs_completed_total</code></td>
+<td>counter</td>
+<td>—</td>
+<td>Placement-group scrubs completed</td>
+</tr>
+<tr>
+<td><code>objectio_meta_scrub_shards_total</code></td>
+<td>counter</td>
+<td>—</td>
+<td>Shards checked by PG scrubs</td>
+</tr>
+<tr>
+<td><code>objectio_meta_scrub_bytes_total</code></td>
+<td>counter</td>
+<td>—</td>
+<td>Shard bytes read back and checked by PG scrubs</td>
+</tr>
+<tr>
+<td><code>objectio_meta_scrub_shards_bad_total</code></td>
+<td>counter</td>
+<td><code>reason</code></td>
+<td>Shards a scrub found <code>missing</code> or <code>corrupt</code> (recovery rebuilds them)</td>
+</tr>
+<tr>
+<td><code>objectio_meta_scrub_errors_total</code></td>
+<td>counter</td>
+<td>—</td>
+<td>Scrub steps a member couldn't take; retried</td>
+</tr>
+<tr>
+<td><code>objectio_meta_scrub_pgs_never</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>PGs not yet scrubbed</td>
+</tr>
+<tr>
+<td><code>objectio_meta_scrub_oldest_seconds</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Age of the oldest completed PG scrub</td>
 </tr>
 </tbody>
 </table>

@@ -2841,7 +2841,8 @@ Design: core/upgrade-path.md.</p>
   previous release's formats, so you can still go back. The new formats
   start only when you <strong>finalize</strong>.</li>
 <li><strong>No going back after finalize.</strong> Back up meta first (stop a meta
-  follower and copy its <code>meta.redb</code>; an export command is planned).</li>
+  follower and copy its data directory, <code>meta.redb</code> and <code>raft-log</code>; an
+  export command is planned).</li>
 <li><strong>Too-old nodes are refused.</strong> After finalize, meta refuses any node or
   client from an older release, and a node too old for the cluster stops at
   start-up with a message saying so, instead of running and misreading
@@ -2851,8 +2852,10 @@ Design: core/upgrade-path.md.</p>
 <ol>
 <li><strong>Back up meta.</strong></li>
 <li><strong>Meta nodes:</strong> the followers one at a time, then the leader. After
-   each, wait until it has rejoined (<code>GET /status</code> on its admin port shows
-   it with the others' <code>last_applied</code>).</li>
+   each, wait until it has rejoined: <code>GET /status</code> on its admin port shows
+   a <code>leader_id</code>, and its own <code>last_applied</code> within a few entries of the
+   leader's (<code>GET /status</code> on the leader). Each node's <code>/status</code> reports
+   only its own indexes.</li>
 <li><strong>OSDs</strong>, one failure domain at a time. After each, wait until it is
    registered and healthy (<code>obioctl node list</code>). A restart needs no
    drain: reads tolerate up to <em>m</em> missing shards meanwhile.</li>

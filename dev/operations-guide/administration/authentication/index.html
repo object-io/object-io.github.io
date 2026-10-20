@@ -3472,7 +3472,8 @@ is, never the secret:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># A host install</span>
 sudo<span class="w"> </span>cat<span class="w"> </span>/var/lib/objectio/meta/admin-creds.env
 <span class="c1"># Kubernetes</span>
-kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>&lt;release&gt;-meta-0<span class="w"> </span>--<span class="w"> </span>cat<span class="w"> </span>/var/lib/objectio/meta/admin-creds.env
+<span class="c1"># (&lt;name&gt;: the release name if it contains "objectio", else &lt;release&gt;-objectio)</span>
+kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>&lt;name&gt;-meta-0<span class="w"> </span>--<span class="w"> </span>cat<span class="w"> </span>/var/lib/objectio/meta/admin-creds.env
 <span class="c1"># Docker</span>
 docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>objectio-meta<span class="w"> </span>cat<span class="w"> </span>/var/lib/objectio/meta/admin-creds.env
 </code></pre></div>
@@ -3516,6 +3517,11 @@ Signature=fe5f80f77d5fa3beca038a248ff027d0445342fe2855ddc963176630326f1024
 </tr>
 </tbody>
 </table>
+<p>Presigned URLs (query-string SigV4) are accepted too; SigV2, in a header
+or a presigned URL, is refused with <code>400</code>. A streaming upload
+(<code>x-amz-content-sha256: STREAMING-AWS4-HMAC-SHA256-PAYLOAD</code>, <code>aws-chunked</code>)
+is authenticated by its seed signature; the per-chunk signatures are
+not verified.</p>
 <hr />
 <h2 id="user-management">User Management<a class="headerlink" href="#user-management" title="Permanent link">&para;</a></h2>
 <h3 id="using-the-cli">Using the CLI<a class="headerlink" href="#using-the-cli" title="Permanent link">&para;</a></h3>

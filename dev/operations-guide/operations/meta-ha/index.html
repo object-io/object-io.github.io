@@ -2872,7 +2872,7 @@ at it.</p>
 </tr>
 <tr>
 <td>The leader</td>
-<td>The others elect a new leader within a second or two. Writes resume within a few seconds; calls in flight at the moment of loss fail (503) and are retried. No acknowledged write is lost.</td>
+<td>The others stand for election after hearing nothing from it for 2–4 s (<code>--raft-election-ms</code>, 2000; heartbeats every 500 ms), and elect a new one. Writes resume within a few seconds; calls in flight at the moment of loss fail (503) and are retried. No acknowledged write is lost.</td>
 </tr>
 <tr>
 <td>The leader, cut off (frozen, partitioned)</td>
@@ -2908,7 +2908,7 @@ curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </spa
 <span class="c1"># 2. Make the voters the surviving nodes plus the new one.</span>
 curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>meta1:9102/change-membership<span class="w"> </span>-H<span class="w"> </span><span class="s1">'content-type: application/json'</span><span class="w"> </span>-d<span class="w"> </span><span class="s1">'{"voters": [1, 2, 4]}'</span>
 <span class="c1"># 3. Stop the old node and remove its data.</span>
-curl<span class="w"> </span>meta1:9102/status<span class="w">   </span><span class="c1"># voters, leader, last applied index</span>
+curl<span class="w"> </span>meta1:9102/status<span class="w">   </span><span class="c1"># voters, leader, and this node's own last applied index</span>
 </code></pre></div>
 <p>Add the new node's address to clients' <code>--meta-endpoint</code>.</p>
 <h2 id="how-its-tested">How it's tested<a class="headerlink" href="#how-its-tested" title="Permanent link">&para;</a></h2>

@@ -2287,10 +2287,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#single-node-12-disks-ec-42" class="md-nav__link">
+  <a href="#osds" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Single Node (12 disks) - EC 4+2
+        OSDs
       
     </span>
   </a>
@@ -2298,21 +2298,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#three-nodes-ec-63" class="md-nav__link">
+  <a href="#pools" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Three Nodes - EC 6+3
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#six-nodes-lrc-622" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Six+ Nodes - LRC 6+2+2
+        Pools
       
     </span>
   </a>
@@ -3206,10 +3195,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#single-node-12-disks-ec-42" class="md-nav__link">
+  <a href="#osds" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Single Node (12 disks) - EC 4+2
+        OSDs
       
     </span>
   </a>
@@ -3217,21 +3206,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#three-nodes-ec-63" class="md-nav__link">
+  <a href="#pools" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Three Nodes - EC 6+3
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#six-nodes-lrc-622" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Six+ Nodes - LRC 6+2+2
+        Pools
       
     </span>
   </a>
@@ -3424,30 +3402,39 @@ in detail; <a href="../topologies/">topologies.md</a> is the overview.</p>
 </code></pre></div>
 <p>CRUSH spreads shards across the <strong>highest available failure domain</strong> to maximize fault tolerance.</p>
 <h2 id="topology-configuration">Topology Configuration<a class="headerlink" href="#topology-configuration" title="Permanent link">&para;</a></h2>
-<p>Each OSD reports its failure domain on registration. Configure this in <code>/etc/objectio/osd.toml</code>:</p>
+<p>Each OSD reports its failure domain on registration. It is set only in
+the OSD's <code>/etc/objectio/osd.toml</code> (no flag sets it):</p>
 <div class="highlight"><pre><span></span><code><span class="k">[osd]</span>
-<span class="n">node_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"osd-node1"</span>
-<span class="n">listen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"0.0.0.0:9002"</span>
-<span class="n">meta_endpoint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"http://meta.objectio.local:9001"</span>
-<span class="n">weight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span>
+<span class="n">listen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"0.0.0.0:9200"</span>
+<span class="n">advertise_addr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"http://osd1.internal:9200"</span>
+<span class="n">meta_endpoint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"http://meta1.internal:9100,http://meta2.internal:9100,http://meta3.internal:9100"</span>
 
 <span class="c1"># Failure domain - where this OSD sits in the hierarchy</span>
 <span class="k">[osd.failure_domain]</span>
 <span class="n">region</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"us-east"</span><span class="w">        </span><span class="c1"># Geographic region</span>
 <span class="n">datacenter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"dc1"</span><span class="w">        </span><span class="c1"># Data center or AZ</span>
 <span class="n">rack</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"rack-01"</span><span class="w">          </span><span class="c1"># Physical rack</span>
+<span class="c1"># host defaults to the machine's hostname</span>
 
 <span class="k">[storage]</span>
-<span class="n">disks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"/mnt/nvme0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"/mnt/nvme1"</span><span class="p">,</span><span class="w"> </span><span class="err">...]</span>
+<span class="n">disks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"/dev/disk/by-id/nvme-…"</span><span class="p">]</span><span class="w">   </span><span class="c1"># one drive per OSD</span>
+<span class="n">data_dir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"/var/lib/objectio/osd"</span>
 </code></pre></div>
-<p><strong>How CRUSH uses this:</strong></p>
+<p><strong>How placement uses this:</strong></p>
 <ol>
-<li>OSDs register with their failure domain</li>
-<li>Metadata service builds a topology tree</li>
-<li>When placing shards, CRUSH ensures each shard lands in a <strong>different</strong> failure domain at the configured level</li>
-<li>If <code>failure_domain = "rack"</code>, no two shards of the same object share a rack</li>
+<li>OSDs register with their failure domain.</li>
+<li>A pool names a failure-domain level: <code>host</code> (the default), <code>node</code> (each
+   OSD), <code>rack</code>, <code>datacenter</code>, <code>zone</code> or <code>region</code>.</li>
+<li>Each placement group's shards go to distinct domains at that level:
+   one per domain, or, with <code>--spread-domains N --per-domain P</code>, over N
+   domains with at most P in each.</li>
+<li>The default pool is made at <code>host</code> level when there are at least k+m
+   hosts, else at <code>node</code> level.</li>
 </ol>
-<p>See <a href="https://github.com/object-io/objectio/tree/main/examples/config">examples/config/</a> for complete configuration examples.</p>
+<p>The "Configuration" commands below are <code>obioctl pool create</code> calls
+(<a href="../../administration/cli/">CLI</a>); a bucket goes to a pool with
+<code>obioctl bucket create &lt;name&gt; --pool &lt;pool&gt;</code> (or the <code>x-objectio-pool</code>
+header on CreateBucket), fixed for its life.</p>
 <hr />
 <h2 id="scenario-1-single-node-12-disks">Scenario 1: Single Node (12 Disks)<a class="headerlink" href="#scenario-1-single-node-12-disks" title="Permanent link">&para;</a></h2>
 <p><strong>Hardware:</strong> 1 server with 12 disks</p>
@@ -3465,11 +3452,8 @@ in detail; <a href="../topologies/">topologies.md</a> is the overview.</p>
 │  └─────┘ └─────┘ └─────┘ └─────┘ └─────┘ └─────┘                        │
 └─────────────────────────────────────────────────────────────────────────┘
 
-Configuration:
-  ec_k: 4          # Data shards
-  ec_m: 2          # Parity shards
-  ec_type: MDS     # Reed-Solomon
-  failure_domain: disk
+Configuration (one OSD per drive):
+  obioctl pool create p42 --ec-type 0 --ec-k 4 --ec-m 2 --failure-domain node
 </code></pre></div>
 <table>
 <thead>
@@ -3502,11 +3486,8 @@ Configuration:
 </tbody>
 </table>
 <h3 id="option-1b-ec-84-maximum-fault-tolerance">Option 1B: EC 8+4 (Maximum Fault Tolerance)<a class="headerlink" href="#option-1b-ec-84-maximum-fault-tolerance" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>Configuration:
-  ec_k: 8          # Data shards
-  ec_m: 4          # Parity shards
-  ec_type: MDS
-  failure_domain: disk
+<div class="highlight"><pre><span></span><code>Configuration (one OSD per drive):
+  obioctl pool create p84 --ec-type 0 --ec-k 8 --ec-m 4 --failure-domain node
 </code></pre></div>
 <table>
 <thead>
@@ -3539,11 +3520,8 @@ Configuration:
 </tbody>
 </table>
 <h3 id="option-1c-replication-3-way-simple-lower-efficiency">Option 1C: Replication 3-way (Simple, Lower Efficiency)<a class="headerlink" href="#option-1c-replication-3-way-simple-lower-efficiency" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>Configuration:
-  ec_k: 1          # Single data copy
-  ec_m: 2          # Two additional replicas
-  ec_type: MDS     # (Replication is k=1 EC)
-  failure_domain: disk
+<div class="highlight"><pre><span></span><code>Configuration (one OSD per drive):
+  obioctl pool create r3 --ec-type 2 --replication-count 3 --failure-domain node
 </code></pre></div>
 <table>
 <thead>
@@ -3596,11 +3574,9 @@ Configuration:
 │  shards per object     │  shards per object     │  shards per object   │
 └─────────────────────────────────────────────────────────────────────────┘
 
-Configuration:
-  ec_k: 6          # Data shards
-  ec_m: 3          # Parity shards
-  ec_type: MDS
-  failure_domain: node
+Configuration (3 shards on each of 3 hosts):
+  obioctl pool create p63 --ec-type 0 --ec-k 6 --ec-m 3 \
+    --failure-domain host --spread-domains 3 --per-domain 3
 </code></pre></div>
 <table>
 <thead>
@@ -3650,11 +3626,9 @@ Configuration:
 │  2 shards per node     │  2 shards per node     │  2 shards per node   │
 └─────────────────────────────────────────────────────────────────────────┘
 
-Configuration:
-  ec_k: 4
-  ec_m: 2
-  ec_type: MDS
-  failure_domain: node
+Configuration (2 shards on each of 3 hosts):
+  obioctl pool create p42 --ec-type 0 --ec-k 4 --ec-m 2 \
+    --failure-domain host --spread-domains 3 --per-domain 2
 </code></pre></div>
 <table>
 <thead>
@@ -3692,10 +3666,7 @@ Configuration:
 └─────────────────────────────────────────────────────────────────────────┘
 
 Configuration:
-  ec_k: 1
-  ec_m: 2
-  ec_type: MDS
-  failure_domain: node
+  obioctl pool create r3 --ec-type 2 --replication-count 3 --failure-domain host
 </code></pre></div>
 <table>
 <thead>
@@ -3753,13 +3724,11 @@ Configuration:
 │  └──────────────────────────────┘                                       │
 └─────────────────────────────────────────────────────────────────────────┘
 
-Configuration:
-  ec_k: 6              # Data shards
-  ec_type: LRC
-  ec_local_parity: 2   # One per local group
-  ec_global_parity: 2  # Reed-Solomon over all data
-  local_group_size: 3  # Data shards per local group
-  failure_domain: rack
+Configuration (each local group in a rack of its own):
+  obioctl pool create lrc622 --ec-type 1 --ec-k 6 \
+    --ec-local-parity 2 --ec-global-parity 2 \
+    --failure-domain rack --lrc-groups-per-domain
+  # local group size = k / local parity = 3
 </code></pre></div>
 <table>
 <thead>
@@ -3830,12 +3799,9 @@ Configuration:
 </table>
 <h3 id="option-3b-lrc-1022-higher-efficiency">Option 3B: LRC 10+2+2 (Higher Efficiency)<a class="headerlink" href="#option-3b-lrc-1022-higher-efficiency" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>Configuration:
-  ec_k: 10             # Data shards
-  ec_type: LRC
-  ec_local_parity: 2   # One per local group
-  ec_global_parity: 2
-  local_group_size: 5  # 5 data shards per group
-  failure_domain: rack
+  obioctl pool create lrc1022 --ec-type 1 --ec-k 10 \
+    --ec-local-parity 2 --ec-global-parity 2 \
+    --failure-domain rack --lrc-groups-per-domain
 </code></pre></div>
 <table>
 <thead>
@@ -3897,75 +3863,31 @@ Configuration:
 </code></pre></div>
 <hr />
 <h2 id="configuration-examples">Configuration Examples<a class="headerlink" href="#configuration-examples" title="Permanent link">&para;</a></h2>
-<h3 id="single-node-12-disks-ec-42">Single Node (12 disks) - EC 4+2<a class="headerlink" href="#single-node-12-disks-ec-42" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># /etc/objectio/osd.toml</span>
+<h3 id="osds">OSDs<a class="headerlink" href="#osds" title="Permanent link">&para;</a></h3>
+<p>Each OSD's <code>osd.toml</code> names its drive and its failure domain; OSDs on one
+host share a host name (the hostname, by default), and set <code>rack</code> (and
+<code>datacenter</code>) where a pool spreads over those:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># /etc/objectio/osd.toml (one per OSD; one OSD per drive)</span>
 <span class="k">[osd]</span>
-<span class="n">node_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"osd-single"</span>
-<span class="n">listen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"0.0.0.0:9002"</span>
-<span class="n">meta_endpoint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"http://localhost:9001"</span>
+<span class="n">listen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"0.0.0.0:9200"</span>
+<span class="n">advertise_addr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"http://node1.internal:9200"</span>
+<span class="n">meta_endpoint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"http://meta1.internal:9100,http://meta2.internal:9100,http://meta3.internal:9100"</span>
 
-<span class="c1"># Single node: all OSDs share the same failure domain</span>
-<span class="c1"># CRUSH spreads shards across different DISKS</span>
 <span class="k">[osd.failure_domain]</span>
-<span class="n">region</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"default"</span>
 <span class="n">datacenter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"dc1"</span>
-<span class="n">rack</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"rack1"</span>
+<span class="n">rack</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"rack-01"</span><span class="w">        </span><span class="c1"># a different rack per node, for a rack pool</span>
 
 <span class="k">[storage]</span>
-<span class="n">data_dir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"/var/lib/objectio/osd"</span>
-<span class="n">disks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
-<span class="w">  </span><span class="s2">"/mnt/nvme0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"/mnt/nvme1"</span><span class="p">,</span><span class="w"> </span><span class="s2">"/mnt/nvme2"</span><span class="p">,</span><span class="w"> </span><span class="s2">"/mnt/nvme3"</span><span class="p">,</span>
-<span class="w">  </span><span class="s2">"/mnt/nvme4"</span><span class="p">,</span><span class="w"> </span><span class="s2">"/mnt/nvme5"</span><span class="p">,</span><span class="w"> </span><span class="s2">"/mnt/nvme6"</span><span class="p">,</span><span class="w"> </span><span class="s2">"/mnt/nvme7"</span><span class="p">,</span>
-<span class="w">  </span><span class="s2">"/mnt/nvme8"</span><span class="p">,</span><span class="w"> </span><span class="s2">"/mnt/nvme9"</span><span class="p">,</span><span class="w"> </span><span class="s2">"/mnt/nvme10"</span><span class="p">,</span><span class="w"> </span><span class="s2">"/mnt/nvme11"</span>
-<span class="p">]</span>
+<span class="n">disks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"/dev/disk/by-id/nvme-…"</span><span class="p">]</span>
+<span class="n">data_dir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"/var/lib/objectio/osd-0"</span>
 </code></pre></div>
-<p>Gateway config:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># /etc/objectio/gateway.toml - EC 4+2 for single node</span>
-<span class="n">ec_k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span>
-<span class="n">ec_m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span>
-</code></pre></div>
-<h3 id="three-nodes-ec-63">Three Nodes - EC 6+3<a class="headerlink" href="#three-nodes-ec-63" title="Permanent link">&para;</a></h3>
-<p>Each node needs a <strong>different rack</strong> in its failure domain:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Node 1: /etc/objectio/osd.toml</span>
-<span class="k">[osd]</span>
-<span class="n">node_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"osd-node1"</span>
-<span class="n">listen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"0.0.0.0:9002"</span>
-<span class="n">meta_endpoint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"http://meta.objectio.local:9001"</span>
-
-<span class="k">[osd.failure_domain]</span>
-<span class="n">region</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"us-east"</span>
-<span class="n">datacenter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"dc1"</span>
-<span class="n">rack</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"rack-01"</span><span class="w">        </span><span class="c1"># &lt;-- Different rack per node!</span>
-
-<span class="k">[storage]</span>
-<span class="n">disks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"/mnt/nvme0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"/mnt/nvme1"</span><span class="p">,</span><span class="w"> </span><span class="err">..., </span><span class="s2">"/mnt/nvme11"</span><span class="p">]</span>
-</code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="c1"># Node 2: /etc/objectio/osd.toml</span>
-<span class="k">[osd.failure_domain]</span>
-<span class="n">region</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"us-east"</span>
-<span class="n">datacenter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"dc1"</span>
-<span class="n">rack</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"rack-02"</span><span class="w">        </span><span class="c1"># &lt;-- Different rack</span>
-</code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="c1"># Node 3: /etc/objectio/osd.toml</span>
-<span class="k">[osd.failure_domain]</span>
-<span class="n">region</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"us-east"</span>
-<span class="n">datacenter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"dc1"</span>
-<span class="n">rack</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"rack-03"</span><span class="w">        </span><span class="c1"># &lt;-- Different rack</span>
-</code></pre></div>
-<p>Gateway config:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># /etc/objectio/gateway.toml - EC 6+3 for three nodes</span>
-<span class="n">ec_k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">6</span>
-<span class="n">ec_m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span>
-</code></pre></div>
-<h3 id="six-nodes-lrc-622">Six+ Nodes - LRC 6+2+2<a class="headerlink" href="#six-nodes-lrc-622" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># /etc/objectio/gateway.toml</span>
-<span class="n">ec_k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">6</span>
-<span class="n">ec_local_parity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span>
-<span class="n">ec_global_parity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span>
-<span class="n">local_group_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span>
-</code></pre></div>
-<p>See <a href="https://github.com/object-io/objectio/tree/main/examples/config">examples/config/</a> for complete, ready-to-use configuration files.</p>
-<hr />
+<p>Several OSDs on one host each need their own port, <code>data_dir</code> and drive.</p>
+<h3 id="pools">Pools<a class="headerlink" href="#pools" title="Permanent link">&para;</a></h3>
+<p>The default pool's code is meta's <code>--ec-k</code>/<code>--ec-m</code> (or
+<code>--replication</code>), spread over hosts. Any other layout above is a pool of
+its own, made with <code>obioctl pool create</code> as shown in each scenario, and
+buckets are put in it when they are created. The gateway's own
+<code>--ec-k</code>/<code>--ec-m</code> don't choose where a bucket's data goes.</p>
 <h2 id="capacity-planning">Capacity Planning<a class="headerlink" href="#capacity-planning" title="Permanent link">&para;</a></h2>
 <h3 id="usable-capacity-formula">Usable Capacity Formula<a class="headerlink" href="#usable-capacity-formula" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>Usable = Raw × (k / (k + m))        # For MDS
@@ -4054,7 +3976,12 @@ Phase 2: 3 nodes, 12 disks each
 Phase 3: 6+ nodes across racks
   └── LRC 6+2+2 (rack-level)
 </code></pre></div>
-<p><strong>Data migration:</strong> ObjectIO supports online rebalancing when topology changes. Adding nodes triggers gradual data movement via background repair.</p>
+<p><strong>Growing:</strong> a pool's code and its number of placement groups are fixed
+when it is made. OSDs added to a pool's failure domains take a share of
+its placement groups as the balancer and recovery move them. To move to
+a wider code (4+2 to 6+3, or to LRC), make a new pool and put new
+buckets in it; existing buckets stay in their pool. Copy a bucket across
+with any S3 tool if it must move.</p>
 <hr />
 <h2 id="summary-recommendations">Summary Recommendations<a class="headerlink" href="#summary-recommendations" title="Permanent link">&para;</a></h2>
 <table>

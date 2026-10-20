@@ -3499,9 +3499,16 @@ items).</p>
 <td></td>
 </tr>
 <tr>
-<td>SigV4 (header, query, streaming)</td>
+<td>SigV4 (header, query)</td>
 <td>✅</td>
 <td></td>
+<td><a href="../operations-guide/administration/authentication/">authentication</a></td>
+<td></td>
+</tr>
+<tr>
+<td>SigV4 streaming uploads (<code>STREAMING-AWS4-HMAC-SHA256-PAYLOAD</code>)</td>
+<td>🟡</td>
+<td>The request's seed signature is checked; each chunk's signature is parsed and not verified</td>
 <td><a href="../operations-guide/administration/authentication/">authentication</a></td>
 <td></td>
 </tr>

@@ -2868,6 +2868,10 @@ A secret is printed only when it's created.</p>
 <td><code>get</code>, <code>put --file</code>, <code>delete</code></td>
 </tr>
 <tr>
+<td><code>replication</code></td>
+<td><code>target list\|set\|delete</code>, <code>resync start\|status\|cancel</code> (<a href="../replication/">replication</a>)</td>
+</tr>
+<tr>
 <td><code>bucket</code></td>
 <td><code>list</code>, <code>show</code>, <code>create [--pool]</code>, <code>delete</code>, <code>set-owner</code>, <code>set-quota [--bytes] [--objects]</code>, <code>policy …</code>, <code>dedup …</code>, <code>lifecycle …</code>, <code>cors …</code></td>
 </tr>
@@ -2878,6 +2882,10 @@ A secret is printed only when it's created.</p>
 <tr>
 <td><code>cluster</code></td>
 <td><code>info</code>, <code>topology</code>, <code>usage</code>, <code>drain-status</code>, <code>validate-placement</code>, <code>rebalance status\|pause\|resume</code></td>
+</tr>
+<tr>
+<td><code>upgrade</code></td>
+<td><code>status</code>, <code>finalize</code> (<a href="../../operations/upgrades/">upgrades</a>)</td>
 </tr>
 <tr>
 <td><code>node</code></td>
@@ -2892,12 +2900,16 @@ A secret is printed only when it's created.</p>
 <td><code>list</code>, <code>show</code>, <code>create</code>, <code>update</code>, <code>delete</code>, <code>placement-groups</code></td>
 </tr>
 <tr>
+<td><code>pg</code></td>
+<td><code>list [--pool] [--state]</code>, <code>get &lt;pg_id&gt;</code>, <code>scrub &lt;pg_id&gt;</code></td>
+</tr>
+<tr>
 <td><code>kms</code></td>
 <td><code>status</code>, <code>keys list\|create\|show</code></td>
 </tr>
 <tr>
 <td><code>warehouse</code></td>
-<td><code>list</code>, <code>create</code>, <code>delete</code></td>
+<td><code>list</code> (system admin), <code>create</code>, <code>delete</code></td>
 </tr>
 <tr>
 <td><code>config</code></td>
@@ -2905,7 +2917,7 @@ A secret is printed only when it's created.</p>
 </tr>
 <tr>
 <td><code>metrics</code></td>
-<td><code>query</code>, <code>query-range</code></td>
+<td><code>query</code>, <code>query-range</code> (PromQL, through the gateway to the Prometheus named by its <code>--prometheus-url</code>; refused without one)</td>
 </tr>
 <tr>
 <td><code>volume</code></td>
@@ -2914,6 +2926,10 @@ A secret is printed only when it's created.</p>
 <tr>
 <td><code>snapshot</code></td>
 <td><code>list</code>, <code>create</code>, <code>show</code>, <code>delete</code>, <code>clone</code></td>
+</tr>
+<tr>
+<td><code>skills</code></td>
+<td><code>list</code>, <code>install</code> (agent skills for coding agents)</td>
 </tr>
 </tbody>
 </table>

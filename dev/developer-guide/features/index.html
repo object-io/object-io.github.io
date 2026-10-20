@@ -2711,9 +2711,9 @@ its notes (<a href="../../releases/0.1.0/">0.1.0</a>).</p>
 <li><strong>Retention modes</strong>: GOVERNANCE (bypassable with header) and COMPLIANCE (immutable until expiry)</li>
 <li><strong>PUT/GET /{bucket}/{key}?retention</strong> — Per-object retention (mode + retain-until-date)</li>
 <li><strong>PUT/GET /{bucket}/{key}?legal-hold</strong> — Per-object legal hold (ON/OFF)</li>
-<li><strong>Delete enforcement</strong>: Objects under retention or legal hold cannot be deleted (403 Forbidden)</li>
+<li><strong>Delete enforcement</strong>: Objects under retention or legal hold cannot be deleted (403 <code>AccessDenied</code>)</li>
 <li><strong>Governance bypass</strong>: <code>x-amz-bypass-governance-retention: true</code> header allows deletion</li>
-<li><strong>Lock at creation</strong>: <code>x-amz-bucket-object-lock-enabled: true</code> on CreateBucket</li>
+<li><strong>Lock at creation</strong>: <code>x-amz-bucket-object-lock-enabled: true</code> on CreateBucket; or later, <code>PutObjectLockConfiguration</code> on a bucket with versioning enabled (otherwise <code>409 InvalidBucketState</code>), as S3 allows. Versioning can't be suspended afterwards</li>
 </ul>
 <h3 id="cors-and-browser-uploads">CORS and browser uploads<a class="headerlink" href="#cors-and-browser-uploads" title="Permanent link">&para;</a></h3>
 <ul>
@@ -3231,9 +3231,10 @@ and <a href="../../operations-guide/administration/public-access/">Public Access
 </ul>
 <h3 id="client-compatibility">Client Compatibility<a class="headerlink" href="#client-compatibility" title="Permanent link">&para;</a></h3>
 <ul>
-<li><strong>PyIceberg</strong>: Full support with SigV4 signing (<code>rest.sigv4-enabled=true</code>)</li>
-<li><strong>Spark</strong>: REST catalog with SigV4 or OAuth2</li>
-<li><strong>Trino/Presto</strong>: REST catalog connector</li>
+<li><strong>Catalog URI</strong> <code>http://&lt;gateway&gt;/iceberg</code> (clients add <code>/v1</code>), <code>warehouse</code> = a warehouse's name</li>
+<li><strong>PyIceberg</strong>: SigV4 signing (<code>rest.sigv4-enabled=true</code>); the code repo's <code>examples/pyiceberg</code> runs against <code>objectio-aio</code></li>
+<li><strong>Spark, Trino</strong>: the REST catalog clients, with SigV4 or OAuth2</li>
+<li>No query engine is tested against the catalog in CI yet (<a href="https://github.com/object-io/objectio/issues/8">objectio#8</a>)</li>
 </ul>
 <hr />
 <h2 id="3b-unity-catalog-rest-api">3b. Unity Catalog (REST API)<a class="headerlink" href="#3b-unity-catalog-rest-api" title="Permanent link">&para;</a></h2>

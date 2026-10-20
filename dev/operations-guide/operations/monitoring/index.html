@@ -3045,16 +3045,20 @@ Prometheus, since the gateway's <code>/metrics</code> then no longer carries the
 <p><code>deploy/monitoring/</code> also has a docker-compose Prometheus and Grafana that
 load these dashboards.</p>
 <h2 id="alerting">Alerting<a class="headerlink" href="#alerting" title="Permanent link">&para;</a></h2>
-<p>The <a href="../production/#alerts">metrics reference</a> has a rule file
-to start from. It covers:
-- data safety: objects unreadable or at risk, repair not running, scrub
-  stale, corrupt shards;
-- metadata: no Raft leader, repeated elections, a follower falling behind;
+<p>The chart ships a rule file (<code>deploy/helm/objectio/alerts/objectio-rules.yaml</code>
+in the code repo); <a href="../production/#alerts">production</a> lists every alert
+with its runbook. It covers:
+- data safety: objects unreadable, at risk, unfound or lost, repair not
+  running, scrub stale, corrupt shards;
+- placement groups: down, incomplete, undersized, not clean for an hour
+  with every OSD up, not scrubbed in two weeks;
+- metadata: no Raft leader, repeated elections, a follower falling
+  behind, the heal queue failing, a gateway's clock skewed;
 - capacity and OSDs down;
 - durability latency;
-- block flushes failing, block read errors;
-- S3 server errors;
-- space leaking from failed shard deletes.</p>
+- S3 server errors, and space leaking from failed shard deletes;
+- audit events dropped, replication lagging;
+- block journal latency, flushes failing, read errors.</p>
 <p>Data-safety alerts come first. <code>objectio_objects_unreadable</code> above zero, or
 <code>objectio_meta_raft_has_leader</code> at zero, needs someone now.</p>
 <h2 id="health-endpoints">Health endpoints<a class="headerlink" href="#health-endpoints" title="Permanent link">&para;</a></h2>

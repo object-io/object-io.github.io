@@ -2147,17 +2147,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#toml" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        TOML
-      
-    </span>
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -2187,7 +2176,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#toml_1" class="md-nav__link">
+  <a href="#toml" class="md-nav__link">
     <span class="md-ellipsis">
       
         TOML
@@ -2944,17 +2933,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#toml" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        TOML
-      
-    </span>
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -2984,7 +2962,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#toml_1" class="md-nav__link">
+  <a href="#toml" class="md-nav__link">
     <span class="md-ellipsis">
       
         TOML
@@ -3064,20 +3042,20 @@
 
 
 <h1 id="configuration-reference">Configuration Reference<a class="headerlink" href="#configuration-reference" title="Permanent link">&para;</a></h1>
-<p>ObjectIO binaries are configured via CLI flags, a small set of
-environment variables, and an optional TOML file. Flags win over env
-vars, env vars win over the TOML file, the TOML file wins over
-built-in defaults.</p>
+<p>ObjectIO binaries are configured with CLI flags, some of which can also
+be set by an environment variable (shown as <code>[env: …]</code> in each binary's
+<code>--help</code>). Only <code>objectio-osd</code> reads a TOML file (<code>--config</code>); the
+gateway and meta accept <code>--config</code> and ignore it. A flag wins over its
+environment variable, which wins over the OSD's file, which wins over
+the built-in default.</p>
 <p>This page documents the flag surface for each binary against the
-current <code>main</code>. It is <strong>authoritative over the compose files in
-<code>deploy/</code></strong> — some of those files set env vars (<code>OBJECTIO_BIND</code>,
-<code>OBJECTIO_NODE_ID</code>, etc.) that the binaries do not actually read.
-Only the env vars listed below are honoured.</p>
+current <code>main</code>; <code>&lt;binary&gt; --help</code> is the complete list. Only the env
+vars listed here are honoured.</p>
 <hr />
 <h2 id="ports-cluster-conventions-vs-code-defaults">Ports — cluster conventions vs code defaults<a class="headerlink" href="#ports-cluster-conventions-vs-code-defaults" title="Permanent link">&para;</a></h2>
 <p>There are two port conventions in the repo. Most deployments follow
-the <strong>cluster convention</strong> (used by the Helm chart and the compose
-files). The CLI flags' <strong>code defaults</strong> are different:</p>
+the <strong>cluster convention</strong> (used by the Helm chart and these guides).
+The CLI flags' <strong>code defaults</strong> are different:</p>
 <table>
 <thead>
 <tr>
@@ -3115,7 +3093,7 @@ files). The CLI flags' <strong>code defaults</strong> are different:</p>
 <tr>
 <td>OSD gRPC</td>
 <td>9200</td>
-<td>9002 (example config)</td>
+<td>none without a config file; 9002 when <code>osd.toml</code> has no <code>listen</code></td>
 <td>gRPC</td>
 </tr>
 <tr>
@@ -3138,9 +3116,12 @@ files). The CLI flags' <strong>code defaults</strong> are different:</p>
 </tr>
 </tbody>
 </table>
-<p>The chart / compose values are what you should document to end users.
-The code defaults only matter if you run the binaries standalone with
-no <code>--listen</code> override.</p>
+<p>The chart's values are what you should document to end users. The code
+defaults only matter if you run the binaries standalone with no
+<code>--listen</code> override. The clients' defaults follow the code, not the
+convention: the gateway's <code>--meta-endpoint</code> defaults to
+<code>http://localhost:9001</code>, the block gateway's to <code>http://localhost:9100</code>.
+Pass every address explicitly.</p>
 <hr />
 <h2 id="objectio-gateway"><code>objectio-gateway</code><a class="headerlink" href="#objectio-gateway" title="Permanent link">&para;</a></h2>
 <p>S3 / Iceberg / Delta Sharing / admin / console.</p>
@@ -3163,12 +3144,12 @@ no <code>--listen</code> override.</p>
 <tr>
 <td><code>-c, --config &lt;path&gt;</code></td>
 <td><code>/etc/objectio/gateway.toml</code></td>
-<td>TOML config file</td>
+<td>Accepted and not read</td>
 </tr>
 <tr>
 <td><code>-l, --listen &lt;addr&gt;</code></td>
 <td><code>0.0.0.0:9000</code></td>
-<td>Data plane listen — S3 + Iceberg + Delta Sharing. In legacy mode also serves <code>/_admin/*</code> and <code>/_console/*</code>.</td>
+<td>Data plane listen — S3 + Iceberg + Delta Sharing. In single-port mode (no split flags) also serves <code>/_admin/*</code>, <code>/metrics</code> and <code>/_console/*</code>.</td>
 </tr>
 <tr>
 <td><code>--admin-listen &lt;addr&gt;</code></td>
@@ -3231,6 +3212,31 @@ no <code>--listen</code> override.</p>
 <td>Disable SigV4 — <strong>dev only</strong></td>
 </tr>
 <tr>
+<td><code>--prometheus-url &lt;url&gt;</code></td>
+<td>empty</td>
+<td>A Prometheus that scrapes the cluster: the console's long ranges and <code>obioctl metrics query</code> go through it. Without it <code>/_admin/metrics/query</code> answers that none is configured. Env <code>OBJECTIO_PROMETHEUS_URL</code>.</td>
+</tr>
+<tr>
+<td><code>--no-reexport-metrics</code></td>
+<td>off</td>
+<td>Leave the OSDs' and meta's metrics out of this gateway's <code>/metrics</code>; set it with more than one gateway (<a href="../../operations/metrics/#where-to-scrape">where to scrape</a>). Env <code>OBJECTIO_NO_REEXPORT_METRICS</code>.</td>
+</tr>
+<tr>
+<td><code>--no-bucket-metrics</code></td>
+<td>off</td>
+<td>Leave per-bucket <code>objectio_bucket_*</code> series out of <code>/metrics</code>. Env <code>OBJECTIO_NO_BUCKET_METRICS</code>.</td>
+</tr>
+<tr>
+<td><code>--inline-max-size &lt;bytes&gt;</code></td>
+<td><code>4096</code></td>
+<td>Objects up to this size are stored in their metadata record; <code>0</code> turns it off</td>
+</tr>
+<tr>
+<td><code>--small-shard-max &lt;bytes&gt;</code></td>
+<td><code>16384</code></td>
+<td>Shards up to this size travel with the object's metadata copies (at most 16384); <code>0</code> turns it off</td>
+</tr>
+<tr>
 <td><code>--endpoint-name &lt;name&gt;</code></td>
 <td>empty</td>
 <td>Name of the <code>--listen</code> endpoint, seen by policies as <code>aws:SourceVpce</code> (see <a href="../../administration/public-access/#awssourcevpce-which-endpoint-it-arrived-on">Public Access</a>). Env <code>OBJECTIO_ENDPOINT_NAME</code>.</td>
@@ -3244,6 +3250,31 @@ no <code>--listen</code> override.</p>
 <td><code>--audit-log &lt;path&gt;</code></td>
 <td>unset</td>
 <td>Append every request's <a href="../../administration/audit/">audit event</a> as JSON lines to this file (<code>-</code> for stdout). Env <code>OBJECTIO_AUDIT_LOG</code>.</td>
+</tr>
+<tr>
+<td><code>--audit-spool &lt;dir&gt;</code>, <code>--audit-system-bucket &lt;name&gt;</code></td>
+<td>unset</td>
+<td>The audit spool and the system's own audit bucket; the other <code>--audit-*</code> and <code>--bucket-log-*</code> flags are in <a href="../../administration/audit/">audit</a> and <a href="../../administration/bucket-logging/">bucket logging</a></td>
+</tr>
+<tr>
+<td><code>--lifecycle-interval-secs &lt;n&gt;</code></td>
+<td><code>3600</code></td>
+<td>How often the lifecycle worker scans buckets with rules</td>
+</tr>
+<tr>
+<td><code>--pack-interval-secs &lt;n&gt;</code>, <code>--pack-min-age-secs &lt;n&gt;</code></td>
+<td><code>0</code> (off), <code>3600</code></td>
+<td>Small-object packing</td>
+</tr>
+<tr>
+<td><code>--heal-interval-secs &lt;n&gt;</code></td>
+<td><code>10</code></td>
+<td>How often this gateway works its heal queue (<code>0</code> off)</td>
+</tr>
+<tr>
+<td><code>--replication-scan-secs &lt;n&gt;</code></td>
+<td><code>30</code></td>
+<td>How often the <a href="../../administration/replication/">replication</a> scanner looks for unsent versions</td>
 </tr>
 <tr>
 <td><code>--trusted-proxies &lt;cidrs&gt;</code></td>
@@ -3331,9 +3362,14 @@ no <code>--listen</code> override.</p>
 <td>Presign SK for Delta Sharing recipient URLs</td>
 </tr>
 <tr>
+<td><code>--delta-url-ttl-seconds &lt;n&gt;</code></td>
+<td><code>0</code> (3600)</td>
+<td>Lifetime of Delta Sharing presigned file URLs</td>
+</tr>
+<tr>
 <td><code>--host-provider &lt;kind&gt;</code></td>
 <td><code>noop</code></td>
-<td><code>noop</code>, <code>k8s</code>, <code>linux-ssh</code>, <code>appliance</code> — powers <code>/_admin/osds/*/reboot</code></td>
+<td><code>noop</code> (refuses host actions) or <code>k8s</code> — powers <code>/_admin/hosts</code> and <code>/_admin/osds/*/reboot</code></td>
 </tr>
 <tr>
 <td><code>--host-provider-namespace &lt;ns&gt;</code></td>
@@ -3373,12 +3409,18 @@ no <code>--listen</code> override.</p>
 <tr>
 <td><code>--log-level &lt;lvl&gt;</code></td>
 <td><code>info</code></td>
-<td><code>trace</code>, <code>debug</code>, <code>info</code>, <code>warn</code>, <code>error</code></td>
+<td><code>trace</code>, <code>debug</code>, <code>info</code>, <code>warn</code>, <code>error</code>; <code>RUST_LOG</code>, when set, wins</td>
+</tr>
+<tr>
+<td><code>--tls-cert</code>, <code>--tls-key</code>, <code>--tls-ca</code></td>
+<td>unset</td>
+<td><a href="../../administration/mtls/">mTLS</a> to meta and the OSDs (every binary has these). Env <code>OBJECTIO_TLS_CERT</code>, <code>OBJECTIO_TLS_KEY</code>, <code>OBJECTIO_TLS_CA</code>.</td>
 </tr>
 </tbody>
 </table>
 <h3 id="environment-variables">Environment variables<a class="headerlink" href="#environment-variables" title="Permanent link">&para;</a></h3>
-<p>The clap parser reads these directly — no wrapper needed:</p>
+<p>Besides those named in the table above, the clap parser reads these
+directly:</p>
 <table>
 <thead>
 <tr>
@@ -3436,7 +3478,7 @@ no <code>--listen</code> override.</p>
 </tr>
 <tr>
 <td><code>OBJECTIO_CONSOLE_DIR</code></td>
-<td>Path to the legacy single-bundle <code>/_console/</code> SPA (default <code>/usr/share/objectio/console</code>). In split mode used only as the base for the per-bundle defaults below.</td>
+<td>Directory holding both console bundles, <code>ops/</code> and <code>tenant/</code> (default <code>/usr/share/objectio/console</code>): the base for the two below.</td>
 </tr>
 <tr>
 <td><code>OBJECTIO_OPS_CONSOLE_DIR</code></td>
@@ -3465,7 +3507,7 @@ Each binds independently; you can enable one, two, or all three.</p>
 <thead>
 <tr>
 <th>Listener</th>
-<th>Default flag</th>
+<th>Example</th>
 <th>Routes mounted</th>
 <th>Audience</th>
 </tr>
@@ -3527,10 +3569,8 @@ architecture/console-split.</p>
 <span class="w">  </span>--meta-endpoint<span class="w"> </span>http://meta1:9100<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--region<span class="w"> </span>us-east-1
 </code></pre></div>
-<p>Backward compatibility: omit all three split flags and the gateway
-behaves exactly like pre-split deployments — single port, everything
-mounted. Existing Helm values and TOML configs continue to work
-unchanged.</p>
+<p>Omit all three split flags and the gateway serves everything on
+<code>--listen</code>.</p>
 <hr />
 <h2 id="objectio-meta"><code>objectio-meta</code><a class="headerlink" href="#objectio-meta" title="Permanent link">&para;</a></h2>
 <p>Raft metadata cluster.</p>
@@ -3538,9 +3578,16 @@ unchanged.</p>
 <div class="highlight"><pre><span></span><code>objectio-meta<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--node-id<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--listen<span class="w"> </span><span class="m">0</span>.0.0.0:9100<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--peers<span class="w"> </span>meta1:9101,meta2:9101,meta3:9101<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--raft-advertise<span class="w"> </span>meta1:9100<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--data-dir<span class="w"> </span>/var/lib/objectio/meta
 </code></pre></div>
+<p>A meta node starts outside any cluster. The Raft group is formed over
+the admin port: <code>POST /init</code> on the first node, then on the leader
+<code>POST /add-learner</code> for each other node (<code>{"node_id": 2, "addr":
+"meta2:9100"}</code>, the address being the peer's gRPC port, 9100) and
+<code>POST /change-membership</code> with every voter (<code>{"voters": [1, 2, 3]}</code>).
+A single node needs only <code>/init</code>. See <a href="../linux/#meta-three-nodes-raft">Linux</a>
+and <a href="../../operations/meta-ha/">meta HA</a>.</p>
 <table>
 <thead>
 <tr>
@@ -3553,27 +3600,22 @@ unchanged.</p>
 <tr>
 <td><code>-c, --config &lt;path&gt;</code></td>
 <td><code>/etc/objectio/meta.toml</code></td>
-<td>TOML config file</td>
+<td>Accepted and not read</td>
 </tr>
 <tr>
 <td><code>--node-id &lt;n&gt;</code></td>
-<td>unset</td>
-<td>Raft node ID (required for multi-node clusters; auto-assigned for single-voter)</td>
+<td><code>1</code></td>
+<td>Raft node ID; each node of a group needs its own</td>
 </tr>
 <tr>
 <td><code>-l, --listen &lt;addr&gt;</code></td>
 <td><code>0.0.0.0:9001</code></td>
-<td>gRPC listen — MetadataService + RaftRpc</td>
+<td>gRPC listen — MetadataService + Raft RPC (cluster convention <code>:9100</code>)</td>
 </tr>
 <tr>
 <td><code>--peers &lt;list&gt;</code></td>
 <td>empty</td>
-<td>Comma-separated Raft peer list (<code>host:port,...</code>)</td>
-</tr>
-<tr>
-<td><code>--osd &lt;list&gt;</code></td>
-<td>empty</td>
-<td>Pre-register OSDs on startup (<code>host:port</code> repeated)</td>
+<td>Accepted and not used: membership is set over the admin port</td>
 </tr>
 <tr>
 <td><code>--ec-k &lt;n&gt;</code></td>
@@ -3603,12 +3645,12 @@ unchanged.</p>
 <tr>
 <td><code>--metrics-port &lt;n&gt;</code></td>
 <td><code>9101</code></td>
-<td>Prometheus scrape port</td>
+<td>Prometheus scrape port (<code>0</code> none)</td>
 </tr>
 <tr>
 <td><code>--admin-port &lt;n&gt;</code></td>
 <td><code>9102</code></td>
-<td>HTTP admin — Raft bootstrap + membership</td>
+<td>HTTP admin — Raft bootstrap + membership: <code>/init</code>, <code>/add-learner</code>, <code>/change-membership</code>, <code>/status</code>. Bound on all interfaces, no authentication</td>
 </tr>
 <tr>
 <td><code>--raft-advertise &lt;addr&gt;</code></td>
@@ -3616,9 +3658,49 @@ unchanged.</p>
 <td>Address advertised to Raft peers (defaults to <code>--listen</code>)</td>
 </tr>
 <tr>
+<td><code>--repair-interval-secs &lt;n&gt;</code></td>
+<td><code>3600</code></td>
+<td>Seconds between repair passes (leader); <code>0</code> off</td>
+</tr>
+<tr>
+<td><code>--drain-interval-secs &lt;n&gt;</code>, <code>--drain-batch &lt;n&gt;</code></td>
+<td><code>30</code>, <code>64</code></td>
+<td>Drain sweeps, and shards moved per draining OSD per sweep</td>
+</tr>
+<tr>
+<td><code>--raft-snapshot-every &lt;n&gt;</code></td>
+<td><code>500000</code></td>
+<td>Log entries between snapshots; the log is compacted into each</td>
+</tr>
+<tr>
+<td><code>--raft-keep-logs &lt;n&gt;</code></td>
+<td><code>10000</code></td>
+<td>Entries kept behind the last snapshot</td>
+</tr>
+<tr>
+<td><code>--raft-checkpoint-ms &lt;n&gt;</code></td>
+<td><code>200</code></td>
+<td>How often applied state is made durable</td>
+</tr>
+<tr>
+<td><code>--raft-heartbeat-ms &lt;n&gt;</code></td>
+<td><code>500</code></td>
+<td>Raft heartbeat interval</td>
+</tr>
+<tr>
+<td><code>--raft-election-ms &lt;n&gt;</code></td>
+<td><code>2000</code></td>
+<td>A follower that hears no leader for a random time in [this, 2 × this] stands for election</td>
+</tr>
+<tr>
 <td><code>--log-level &lt;lvl&gt;</code></td>
 <td><code>info</code></td>
 <td></td>
+</tr>
+<tr>
+<td><code>--tls-cert</code>, <code>--tls-key</code>, <code>--tls-ca</code></td>
+<td>unset</td>
+<td><a href="../../administration/mtls/">mTLS</a></td>
 </tr>
 </tbody>
 </table>
@@ -3627,20 +3709,11 @@ locally; <code>--raft-advertise</code> is what it tells peers to reach it at. In
 Kubernetes the chart sets advertise to the pod DNS
 (<code>pod-0.meta-svc.ns.svc.cluster.local</code>).</p>
 <p>No <code>--raft-bind</code> flag exists — Raft RPC multiplexes over the same
-gRPC socket as MetadataService.</p>
-<h3 id="toml">TOML<a class="headerlink" href="#toml" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># /etc/objectio/meta.toml</span>
-<span class="k">[meta]</span>
-<span class="n">node_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
-<span class="n">listen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"0.0.0.0:9100"</span>
-<span class="n">peers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"meta1:9101"</span><span class="p">,</span><span class="w"> </span><span class="s2">"meta2:9101"</span><span class="p">,</span><span class="w"> </span><span class="s2">"meta3:9101"</span><span class="p">]</span>
-<span class="n">data_dir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"/var/lib/objectio/meta"</span>
-<span class="n">ec_k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span>
-<span class="n">ec_m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span>
-
-<span class="k">[logging]</span>
-<span class="n">level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"info"</span>
-</code></pre></div>
+gRPC socket as MetadataService, so a Raft peer address is a node's
+gRPC port (9100), not its metrics port (9101).</p>
+<p>Meta has no TOML file: <code>--config</code> is accepted and not read. The first
+Raft leader creates the admin user and every node writes its keys to
+<code>&lt;data-dir&gt;/admin-creds.env</code>.</p>
 <hr />
 <h2 id="objectio-osd"><code>objectio-osd</code><a class="headerlink" href="#objectio-osd" title="Permanent link">&para;</a></h2>
 <p>Object Storage Daemon.</p>
@@ -3662,12 +3735,12 @@ gRPC socket as MetadataService.</p>
 <tr>
 <td><code>-c, --config &lt;path&gt;</code></td>
 <td><code>/etc/objectio/osd.toml</code></td>
-<td>TOML config file</td>
+<td>TOML config file (read if it exists)</td>
 </tr>
 <tr>
 <td><code>-l, --listen &lt;addr&gt;</code></td>
 <td><em>none</em></td>
-<td>gRPC listen — required; cluster convention is <code>:9200</code></td>
+<td>gRPC listen — required, here or in the file; cluster convention is <code>:9200</code></td>
 </tr>
 <tr>
 <td><code>--advertise-addr &lt;addr&gt;</code></td>
@@ -3695,33 +3768,66 @@ gRPC socket as MetadataService.</p>
 <td>Allow discovery to format blank disks (off by default)</td>
 </tr>
 <tr>
-<td><code>--meta-endpoint &lt;url&gt;</code></td>
+<td><code>--meta-endpoint &lt;urls&gt;</code></td>
 <td><em>none</em></td>
-<td>Meta service</td>
+<td>Meta nodes, comma-separated (the file's default: <code>http://localhost:9001</code>)</td>
 </tr>
 <tr>
 <td><code>--data-dir &lt;path&gt;</code></td>
 <td><em>none</em></td>
-<td>OSD metadata (WAL, object index)</td>
+<td>OSD metadata (WAL, object index); the file's <code>[storage] data_dir</code>, default <code>./osd-data</code></td>
 </tr>
 <tr>
 <td><code>--metrics-port &lt;n&gt;</code></td>
 <td><code>9201</code></td>
-<td>Prometheus scrape port</td>
+<td>Prometheus scrape port (<code>0</code> none)</td>
+</tr>
+<tr>
+<td><code>--scrub-interval-secs &lt;n&gt;</code></td>
+<td><code>604800</code></td>
+<td>Seconds between scrub passes; <code>0</code> off</td>
+</tr>
+<tr>
+<td><code>--scrub-rate-mib &lt;n&gt;</code></td>
+<td><code>50</code></td>
+<td>Scrub read rate cap (MiB/s); <code>0</code> unthrottled</td>
+</tr>
+<tr>
+<td><code>--full-ratio &lt;r&gt;</code></td>
+<td><code>0.95</code></td>
+<td>Share of each disk client writes may fill (env <code>OBJECTIO_OSD_FULL_RATIO</code>)</td>
+</tr>
+<tr>
+<td><code>--meta-cache-mib &lt;n&gt;</code></td>
+<td><code>1024</code></td>
+<td>Metadata index page cache (env <code>OBJECTIO_OSD_META_CACHE_MIB</code>)</td>
+</tr>
+<tr>
+<td><code>--meta-engine &lt;e&gt;</code></td>
+<td><code>native</code></td>
+<td>Metadata index engine: <code>native</code>, or <code>rocksdb</code> in a build with that feature (env <code>OBJECTIO_OSD_META_ENGINE</code>)</td>
 </tr>
 <tr>
 <td><code>--log-level &lt;lvl&gt;</code></td>
 <td><code>info</code></td>
 <td></td>
 </tr>
+<tr>
+<td><code>--tls-cert</code>, <code>--tls-key</code>, <code>--tls-ca</code></td>
+<td>unset</td>
+<td><a href="../../administration/mtls/">mTLS</a></td>
+</tr>
 </tbody>
 </table>
-<h3 id="toml_1">TOML<a class="headerlink" href="#toml_1" title="Permanent link">&para;</a></h3>
+<h3 id="toml">TOML<a class="headerlink" href="#toml" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># /etc/objectio/osd.toml</span>
 <span class="k">[osd]</span>
 <span class="n">listen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"0.0.0.0:9200"</span>
-<span class="n">meta_endpoint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"http://meta1:9100"</span>
+<span class="n">advertise_addr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"http://osd1:9200"</span>
+<span class="n">meta_endpoint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"http://meta1:9100,http://meta2:9100,http://meta3:9100"</span>
 
+<span class="c1"># Only here: no flag sets the failure domain. Unset levels are "default";</span>
+<span class="c1"># host defaults to the machine's hostname.</span>
 <span class="k">[osd.failure_domain]</span>
 <span class="n">region</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"eu-west-1"</span>
 <span class="n">datacenter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"dc1"</span>
@@ -3751,7 +3857,7 @@ missing disk
 (<a href="../../operations/production/#an-osd-that-wont-start-for-a-missing-disk">runbook</a>).</p>
 <hr />
 <h2 id="objectio-block-gateway"><code>objectio-block-gateway</code><a class="headerlink" href="#objectio-block-gateway" title="Permanent link">&para;</a></h2>
-<p>iSCSI / NBD / NVMe-oF target built on top of ObjectIO objects.</p>
+<p>Block volumes over NBD and gRPC, stored as ObjectIO chunks.</p>
 <div class="highlight"><pre><span></span><code>objectio-block-gateway<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--listen<span class="w"> </span><span class="m">0</span>.0.0.0:9300<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--nbd-listen<span class="w"> </span><span class="m">0</span>.0.0.0:10809<span class="w"> </span><span class="se">\</span>
@@ -3791,7 +3897,12 @@ missing disk
 <tr>
 <td><code>--data-dir &lt;path&gt;</code></td>
 <td><code>./block-gw-data</code></td>
-<td>Redb store + journal</td>
+<td>The write journal (volumes, snapshots and chunk maps are kept in meta)</td>
+</tr>
+<tr>
+<td><code>--metrics-listen &lt;addr&gt;</code></td>
+<td><code>0.0.0.0:9301</code></td>
+<td>Prometheus <code>/metrics</code>; empty serves none</td>
 </tr>
 <tr>
 <td><code>--cache-bytes &lt;n&gt;</code></td>
@@ -3847,6 +3958,31 @@ missing disk
 <td><code>--osds &lt;n&gt;</code></td>
 <td><code>1</code></td>
 <td>Number of OSDs to spawn in-process</td>
+</tr>
+<tr>
+<td><code>--ec-k &lt;n&gt;</code>, <code>--ec-m &lt;n&gt;</code></td>
+<td><code>0</code></td>
+<td>Erasure-code the pool (needs <code>--osds</code> ≥ k+m); without them it is replication 1, however many OSDs</td>
+</tr>
+<tr>
+<td><code>--disk-size &lt;bytes&gt;</code></td>
+<td><code>0</code> (10 GiB sparse)</td>
+<td>Size of each OSD's disk file when created</td>
+</tr>
+<tr>
+<td><code>--prometheus-url &lt;url&gt;</code></td>
+<td>empty</td>
+<td>Forwarded to the gateway</td>
+</tr>
+<tr>
+<td><code>--external-endpoint &lt;url&gt;</code></td>
+<td>empty</td>
+<td>Forwarded to the gateway</td>
+</tr>
+<tr>
+<td><code>--block-port &lt;n&gt;</code></td>
+<td><code>0</code> (off)</td>
+<td>Run the block gateway too (NBD on <code>--nbd-port</code>, 10809)</td>
 </tr>
 <tr>
 <td><code>--auth</code></td>
@@ -3914,11 +4050,15 @@ checked for conflicts before launch.</p>
 <span class="w">  </span>--auth<span class="w"> </span>--strict-port<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--data<span class="w"> </span>/tmp/objectio-aio
 </code></pre></div>
-<p>Admin AK/SK are written to <code>&lt;data&gt;/admin-creds.env</code> on first start
-(keys <code>AWS_ACCESS_KEY_ID</code> and <code>AWS_SECRET_ACCESS_KEY</code>).</p>
+<p>Admin AK/SK are written to <code>&lt;data&gt;/meta/admin-creds.env</code> on first start
+(<code>export AWS_ACCESS_KEY_ID=…</code> and <code>export AWS_SECRET_ACCESS_KEY=…</code>
+lines), and printed in the startup banner.</p>
 <hr />
 <h2 id="objectio-install"><code>objectio-install</code><a class="headerlink" href="#objectio-install" title="Permanent link">&para;</a></h2>
-<p>Node bootstrapper. See <a href="../linux/">linux.md</a> for a walkthrough.</p>
+<p>Disk preparation, plus config and unit generation. Only its disk
+commands are part of the <a href="../linux/#objectio-install">Linux</a> walkthrough:
+<code>init</code> and <code>join</code> write <code>gateway.toml</code> and <code>meta.toml</code>, which those
+binaries don't read, and units that start them with only <code>--config</code>.</p>
 <div class="highlight"><pre><span></span><code>objectio-install<span class="w"> </span>init<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--role<span class="w"> </span>all<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--disks<span class="w"> </span>/dev/sdb,/dev/sdc,/dev/sdd<span class="w"> </span><span class="se">\</span>
@@ -3947,7 +4087,7 @@ objectio-install<span class="w"> </span>status
 <tbody>
 <tr>
 <td><code>--role &lt;list&gt;</code></td>
-<td>required</td>
+<td>—</td>
 <td><code>all</code>, <code>gateway</code>, <code>meta</code>, <code>osd</code> (comma-separated)</td>
 </tr>
 <tr>
@@ -3963,7 +4103,7 @@ objectio-install<span class="w"> </span>status
 <tr>
 <td><code>--raft-peers &lt;list&gt;</code></td>
 <td>empty</td>
-<td>Meta-role peer list</td>
+<td>Written into <code>meta.toml</code>, which meta doesn't read</td>
 </tr>
 <tr>
 <td><code>--ec-profile &lt;k+m&gt;</code></td>
@@ -3983,7 +4123,7 @@ objectio-install<span class="w"> </span>status
 <tr>
 <td><code>--systemd</code></td>
 <td>off</td>
-<td>Install + enable systemd units (requires root)</td>
+<td>Install systemd units (requires root)</td>
 </tr>
 <tr>
 <td><code>--skip-prepare</code></td>
@@ -4002,18 +4142,14 @@ objectio-install<span class="w"> </span>status
 <p>For every setting:</p>
 <ol>
 <li>CLI flag</li>
-<li>Environment variable (if the setting is in the env table above)</li>
-<li>TOML file value</li>
+<li>Environment variable (if the flag has one)</li>
+<li>The OSD's TOML file (OSD only)</li>
 <li>Built-in default</li>
 </ol>
-<p>So <code>--log-level debug</code> on the command line beats <code>RUST_LOG=info</code>,
-which beats <code>[logging] level = "warn"</code> in the TOML file.</p>
-<p>The meta raft-bootstrap Job and the Helm chart pass settings
-exclusively through CLI flags in the container <code>command:</code> — if you
-find yourself reaching for env vars in a compose file, check the
-list above first; many of the env vars that appear in
-<code>deploy/local-cluster/docker-compose.yml</code> are not actually read by
-the binaries.</p>
+<p>Logging is the exception: <code>RUST_LOG</code>, when set, wins over <code>--log-level</code>
+(and the file's <code>[logging] level</code>).</p>
+<p>The Helm chart passes settings to meta and the gateway as flags in the
+container's command, and renders <code>osd.toml</code> for each OSD.</p>
 
 
 
