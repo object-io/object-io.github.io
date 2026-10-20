@@ -3016,8 +3016,9 @@ macOS, but Darwin does not expose the same raw-disk semantics as Linux
 hardened path for APFS-backed OSD disks. Keep macOS deployments to
 AIO mode or a Docker-hosted cluster.</p>
 <p>Both Apple Silicon (arm64) and Intel (x86_64) are supported. Erasure
-coding uses the pure-Rust SIMD backend on arm64 and ISA-L on x86_64;
-wire format is identical.</p>
+coding uses the pure-Rust SIMD backend on arm64 and ISA-L on x86_64.
+The two compute different parity, so a cluster's nodes all run one of
+them.</p>
 <hr />
 <h2 id="1-aio-binary-recommended">1. AIO binary (recommended)<a class="headerlink" href="#1-aio-binary-recommended" title="Permanent link">&para;</a></h2>
 <p>This is the fastest path and the one you'll actually want 95% of the

@@ -3076,8 +3076,10 @@
 <h1 id="linux">Linux<a class="headerlink" href="#linux" title="Permanent link">&para;</a></h1>
 <p>Linux is the primary production target. Both <code>amd64</code> and <code>arm64</code> are
 first-class — <code>amd64</code> gets hardware-accelerated erasure coding via
-ISA-L, <code>arm64</code> uses a pure-Rust SIMD implementation. Wire format is
-identical; you can mix architectures in a cluster.</p>
+ISA-L, <code>arm64</code> uses a pure-Rust SIMD implementation. The two compute
+different parity, so a cluster runs one architecture's builds: all
+<code>amd64</code>, or all <code>arm64</code>. Don't mix them in one cluster (a node can't
+rebuild data from the other's parity, and fails such reads).</p>
 <p>This page covers the three installation paths, in increasing order of
 commitment:</p>
 <ol>

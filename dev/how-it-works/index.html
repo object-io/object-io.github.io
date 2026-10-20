@@ -2915,8 +2915,8 @@ adding a pool, never by splitting placement groups.</p>
 <li>The gateway authenticates the request and asks meta for the key's
    placement group.</li>
 <li>It splits the object into 4 data shards and computes 2 parity shards
-   (ISA-L on x86, SIMD Rust elsewhere; the shards are bit-identical
-   either way), with a CRC32C of each.</li>
+   (ISA-L on x86, SIMD Rust elsewhere: their parity differs, so a
+   cluster runs one of them on every node), with a CRC32C of each.</li>
 <li>It writes the six shards to the six OSDs in parallel. Each OSD writes
    its shard to raw disk with <code>O_DIRECT</code>, flushes the drive's cache,
    then records and flushes the shard's location. The write needs 5 of
@@ -2943,8 +2943,10 @@ one object at completion.</p>
 <li>It reads 4 shards, preferring the nearest OSDs, and checks each
    against the checksum recorded in the metadata.</li>
 <li>If a shard is missing or doesn't match, it reads another and
-   reconstructs: any 4 of the 6 rebuild the object. The bad shard is
-   reported for repair.</li>
+   reconstructs: any 4 of the 6 rebuild the object. Each data shard it
+   rebuilds is checked against its recorded checksum before it is
+   served; one that doesn't match is rebuilt from other shards, or the
+   read fails. The bad shard is reported for repair.</li>
 </ol>
 <p>So with 4+2, any two OSDs can be down and every object still reads and
 every write still succeeds.</p>

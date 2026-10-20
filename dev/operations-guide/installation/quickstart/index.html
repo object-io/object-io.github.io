@@ -3131,7 +3131,8 @@ docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </
 <blockquote>
 <p>ARM64 (Apple Silicon, Graviton, Raspberry Pi) runs the pure-Rust EC
 backend automatically; x86_64 gets ISA-L hardware acceleration. The
-wire format is identical — mixing arches in a cluster is fine.</p>
+two compute different parity, so every node of a cluster runs the
+same architecture's build; don't mix them.</p>
 </blockquote>
 <hr />
 <h2 id="3-real-local-cluster-3-meta-6-osds-42-ec">3. Real local cluster (3 meta, 6 OSDs, 4+2 EC)<a class="headerlink" href="#3-real-local-cluster-3-meta-6-osds-42-ec" title="Permanent link">&para;</a></h2>

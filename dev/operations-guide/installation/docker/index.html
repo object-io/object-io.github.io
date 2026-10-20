@@ -3120,8 +3120,8 @@ build them locally if you want them:</p>
 <div class="highlight"><pre><span></span><code>docker<span class="w"> </span>build<span class="w"> </span>--target<span class="w"> </span>gateway<span class="w"> </span>-t<span class="w"> </span>objectio-gateway<span class="w"> </span>.
 </code></pre></div>
 <p><code>linux/amd64</code> uses ISA-L for hardware-accelerated erasure coding;
-<code>linux/arm64</code> uses pure-Rust SIMD. Mixing arches in a cluster is
-supported.</p>
+<code>linux/arm64</code> uses pure-Rust SIMD. The two compute different parity:
+run every node of a cluster on one of them, not a mix.</p>
 <hr />
 <h2 id="all-in-one-aio-image">All-in-one (AIO) image<a class="headerlink" href="#all-in-one-aio-image" title="Permanent link">&para;</a></h2>
 <p>The <code>all</code> target packages every binary plus the console SPA. You
