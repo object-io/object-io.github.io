@@ -3701,7 +3701,7 @@ Configuration:
 <hr />
 <h2 id="scenario-3-six-nodes-multi-rack-with-lrc">Scenario 3: Six+ Nodes (Multi-Rack with LRC)<a class="headerlink" href="#scenario-3-six-nodes-multi-rack-with-lrc" title="Permanent link">&para;</a></h2>
 <p><strong>Hardware:</strong> 6+ servers across multiple racks</p>
-<p><strong>Failure Domain:</strong> Rack-level (survive ToR switch or PDU failure)</p>
+<p><strong>Failure Domain:</strong> Rack-level: each local group in a rack of its own, so a lost shard is repaired inside its rack (a whole rack lost is not survived: see below)</p>
 <h3 id="option-3a-lrc-622-recommended-for-6-nodes">Option 3A: LRC 6+2+2 (Recommended for 6+ Nodes)<a class="headerlink" href="#option-3a-lrc-622-recommended-for-6-nodes" title="Permanent link">&para;</a></h3>
 <p>LRC (Locally Repairable Codes) adds <strong>local parity</strong> within groups for faster single-failure repair.</p>
 <div class="highlight"><pre><span></span><code>┌─────────────────────────────────────────────────────────────────────────┐
@@ -3748,7 +3748,7 @@ Configuration (each local group in a rack of its own):
 </tr>
 <tr>
 <td><strong>Fault tolerance</strong></td>
-<td>1 rack + 1 disk, OR 4 disks</td>
+<td>Any 2 disks; most losses of 3 (what LRC survives). Not a rack holding a whole group (below)</td>
 </tr>
 <tr>
 <td><strong>Local repair</strong></td>
@@ -3792,8 +3792,8 @@ Configuration (each local group in a rack of its own):
 </tr>
 <tr>
 <td>Full rack failure</td>
-<td>Reed-Solomon global</td>
-<td>Read 6 (cross-rack)</td>
+<td>Not survived with a group per rack: 3 data shards and the group's local parity lost, more than the 2 global parity rebuild</td>
+<td>—</td>
 </tr>
 </tbody>
 </table>
@@ -3829,6 +3829,13 @@ Configuration (each local group in a rack of its own):
 </tr>
 </tbody>
 </table>
+<p>A pool keeps its losses decodable by the global parity: with each local
+group in a rack of its own, a rack's loss is survived only when a group
+has no more data shards than the global parity (meta warns when a pool's
+rule doesn't survive a whole domain lost). Neither 6+2+2 nor 10+2+2 does;
+for rack loss, spread an MDS profile over the racks. An LRC that keeps a
+rack's loss inside the rack is
+<a href="https://github.com/object-io/objectio/issues/37">objectio#37</a>.</p>
 <hr />
 <h2 id="choosing-between-ec-and-replication">Choosing Between EC and Replication<a class="headerlink" href="#choosing-between-ec-and-replication" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code>                    ┌─────────────────────────────────────────┐

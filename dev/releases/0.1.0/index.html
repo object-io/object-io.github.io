@@ -2998,6 +2998,18 @@ the same core. Apache-2.0, every feature.</p>
   Each shard's checksum is kept with the object and checked on every
   read and repair, and a data shard a read rebuilds is checked before
   it is served.</li>
+<li>A pool's protection scheme is checked when the pool is made or
+  changed, and meta's default scheme when it starts: a profile with no
+  parity (1+0; one unprotected copy is replication of 1, the Helm chart's
+  default), an LRC whose data shards don't split evenly into its groups
+  or that has no local or global parity, a replica count of 0, or more
+  than 255 shards is refused with what is wrong with it
+  (data protection).</li>
+<li>LRC pools take objects of any length, PUT or multipart, coded as LRC
+  stripes (not yet through the full end-to-end suite or a soak). An LRC
+  stripe survives every loss of its global parity count, more by where
+  they fall: LRC 6+2+2 any 2 shards and 88% of the ways of losing 3
+  (what LRC survives).</li>
 <li>Object metadata written at a majority of the object's OSDs and read from
   a quorum: writes, overwrites and deletes go on with one or two OSDs down.</li>
 <li>Placement groups across failure domains (host by default; rack, zone

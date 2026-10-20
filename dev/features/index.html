@@ -3176,7 +3176,7 @@ release notes say when they do.</p>
 <tr>
 <td>Erasure coding: Reed-Solomon with ISA-L, on x86_64 and arm64</td>
 <td>✅</td>
-<td>4+2 by default. One code on every build, its parity checked against the reference code on both architectures, so amd64 and arm64 nodes mix in one cluster (not yet run as one). A pool takes only profiles every loss of m shards decodes</td>
+<td>4+2 by default. One code on every build, its parity checked against the reference code on both architectures, so amd64 and arm64 nodes mix in one cluster (not yet run as one). A pool takes only profiles with parity that every loss of m shards decodes</td>
 <td><a href="../operations-guide/installation/linux/">Linux</a></td>
 <td>data protection</td>
 </tr>
@@ -3190,9 +3190,9 @@ release notes say when they do.</p>
 <tr>
 <td>LRC</td>
 <td>🟡</td>
-<td>Repair built and tested; not yet through the full end-to-end suite or a soak</td>
-<td></td>
-<td>erasure coding</td>
+<td>Objects of any length, PUT or multipart, read back with a drive lost; repair built and tested. Survives every loss of its global parity count (LRC 6+2+2: any 2, 88% of 3); not yet through the full end-to-end suite or a soak</td>
+<td><a href="../operations-guide/administration/cli/">CLI</a></td>
+<td>data protection</td>
 </tr>
 <tr>
 <td>Replica pools (2-way, 3-way)</td>
@@ -3253,9 +3253,9 @@ release notes say when they do.</p>
 <tr>
 <td>Storage pools (expand by adding a pool), balancer</td>
 <td>✅</td>
-<td></td>
+<td>A pool's protection scheme is checked when it is made or changed: one the codecs can't keep (no parity, LRC groups of unequal size, no copies) is refused</td>
 <td><a href="../developer-guide/features/#storage-pools">feature reference</a></td>
-<td></td>
+<td>data protection</td>
 </tr>
 <tr>
 <td>Recovery by placement group</td>

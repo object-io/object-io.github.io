@@ -2950,6 +2950,21 @@ obioctl<span class="w"> </span>public-access-block<span class="w"> </span>put<sp
 obioctl<span class="w"> </span>bucket<span class="w"> </span>create<span class="w"> </span>logs
 obioctl<span class="w"> </span>bucket<span class="w"> </span>lifecycle<span class="w"> </span>put<span class="w"> </span>logs<span class="w"> </span>--file<span class="w"> </span>lifecycle.xml
 </code></pre></div>
+<p>Make pools, one per protection scheme (<code>--ec-type</code> 0 is Reed-Solomon, 1
+LRC, 2 replication):</p>
+<div class="highlight"><pre><span></span><code>obioctl<span class="w"> </span>pool<span class="w"> </span>create<span class="w"> </span>standard<span class="w"> </span>--ec-type<span class="w"> </span><span class="m">0</span><span class="w"> </span>--ec-k<span class="w"> </span><span class="m">4</span><span class="w"> </span>--ec-m<span class="w"> </span><span class="m">2</span><span class="w"> </span>--failure-domain<span class="w"> </span>host
+obioctl<span class="w"> </span>pool<span class="w"> </span>create<span class="w"> </span>wide<span class="w"> </span>--ec-type<span class="w"> </span><span class="m">1</span><span class="w"> </span>--ec-k<span class="w"> </span><span class="m">6</span><span class="w"> </span>--ec-local-parity<span class="w"> </span><span class="m">2</span><span class="w"> </span>--ec-global-parity<span class="w"> </span><span class="m">2</span>
+obioctl<span class="w"> </span>pool<span class="w"> </span>create<span class="w"> </span>copies<span class="w"> </span>--ec-type<span class="w"> </span><span class="m">2</span><span class="w"> </span>--replication-count<span class="w"> </span><span class="m">3</span>
+</code></pre></div>
+<p>A scheme the codecs can't keep is refused, with what is wrong with it,
+and no pool is made: Reed-Solomon with no parity (<code>--ec-m 0</code>; one
+unprotected copy is <code>--ec-type 2 --replication-count 1</code>) or a profile
+some loss of m shards wouldn't decode; LRC whose data shards don't split
+into its local groups evenly, or with no local or global parity;
+replication of 0 copies; more than 255 shards. An LRC pool survives
+every loss of its global parity count, more by where they fall. The
+rules are in
+data protection.</p>
 <p>Take an OSD out of service:</p>
 <div class="highlight"><pre><span></span><code>obioctl<span class="w"> </span>osd<span class="w"> </span>set-state<span class="w"> </span>&lt;osd-id&gt;<span class="w"> </span>draining
 obioctl<span class="w"> </span>cluster<span class="w"> </span>drain-status

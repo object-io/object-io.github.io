@@ -3268,9 +3268,11 @@ named <code>objectio-admin-creds</code> (keys: <code>AWS_ACCESS_KEY_ID</code>,
 touch; the full default is in <code>deploy/helm/objectio/values.yaml</code> in
 the source repo.</p>
 <h3 id="scale-and-durability">Scale and durability<a class="headerlink" href="#scale-and-durability" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="nt">ec</span><span class="p">:</span>
+<div class="highlight"><pre><span></span><code><span class="nt">replication</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w">    </span><span class="c1"># 0: erasure-code k+m. n: n copies of each object</span>
+<span class="w">                  </span><span class="c1"># (the default, 1, keeps one: no redundancy)</span>
+<span class="nt">ec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">k</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span><span class="w">            </span><span class="c1"># data shards</span>
-<span class="w">  </span><span class="nt">m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span><span class="w">            </span><span class="c1"># parity shards</span>
+<span class="w">  </span><span class="nt">m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span><span class="w">            </span><span class="c1"># parity shards, at least 1</span>
 
 <span class="nt">meta</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span><span class="w">     </span><span class="c1"># 1 = single-voter (dev); 3+ = real Raft (prod)</span>
@@ -3299,7 +3301,7 @@ the source repo.</p>
 <td>14</td>
 </tr>
 <tr>
-<td>10+4 (LRC)</td>
+<td>LRC 10+2+2</td>
 <td>14</td>
 <td>15</td>
 </tr>
