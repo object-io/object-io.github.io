@@ -3016,9 +3016,7 @@ macOS, but Darwin does not expose the same raw-disk semantics as Linux
 hardened path for APFS-backed OSD disks. Keep macOS deployments to
 AIO mode or a Docker-hosted cluster.</p>
 <p>Both Apple Silicon (arm64) and Intel (x86_64) are supported. Erasure
-coding uses the pure-Rust SIMD backend on arm64 and ISA-L on x86_64.
-The two compute different parity, so a cluster's nodes all run one of
-them.</p>
+coding is ISA-L's on both, as on Linux.</p>
 <hr />
 <h2 id="1-aio-binary-recommended">1. AIO binary (recommended)<a class="headerlink" href="#1-aio-binary-recommended" title="Permanent link">&para;</a></h2>
 <p>This is the fastest path and the one you'll actually want 95% of the
@@ -3053,8 +3051,8 @@ without it, every restart wipes the data tempdir.</p>
 <span class="w">  </span>ghcr.io/object-io/objectio:latest<span class="w"> </span>objectio-aio<span class="w"> </span>--data<span class="w"> </span>/var/lib/objectio
 </code></pre></div>
 <p>On Apple Silicon, Docker Desktop pulls the <code>linux/arm64</code> image
-automatically — EC falls back to pure Rust (no emulation). On Intel,
-you get the ISA-L path.</p>
+automatically (no emulation); on Intel, the <code>linux/amd64</code> one. Both
+erasure-code with ISA-L.</p>
 <p>For the full 10-container compose cluster (3 meta + 6 OSD + 1
 gateway), see <a href="../docker/">docker.md</a>.</p>
 <hr />
@@ -3068,21 +3066,21 @@ rustup<span class="w"> </span>toolchain<span class="w"> </span>install<span clas
 
 <span class="c1"># Build deps via Homebrew</span>
 brew<span class="w"> </span>install<span class="w"> </span>nasm<span class="w"> </span>autoconf<span class="w"> </span>automake<span class="w"> </span>libtool<span class="w"> </span>llvm<span class="w"> </span>protobuf<span class="w"> </span>cmake
+<span class="c1"># ISA-L's build runs autoreconf, which wants `libtoolize`; Homebrew</span>
+<span class="c1"># names it glibtoolize and keeps the plain name here</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">"</span><span class="k">$(</span>brew<span class="w"> </span>--prefix<span class="w"> </span>libtool<span class="k">)</span><span class="s2">/libexec/gnubin:</span><span class="nv">$PATH</span><span class="s2">"</span>
 
 <span class="c1"># Node 22+ for the console SPA (only if you need /_console/)</span>
 brew<span class="w"> </span>install<span class="w"> </span>node@22
 </code></pre></div>
-<p><code>nasm</code> is Intel-only (drives ISA-L assembly). On Apple Silicon,
-Homebrew still installs it and the build script ignores it.</p>
+<p>Every build erasure-codes with ISA-L, built from source with
+autotools. <code>nasm</code> is Intel-only (ISA-L's x86 assembly); on Apple
+Silicon it is installed and not used.</p>
 <h3 id="build">Build<a class="headerlink" href="#build" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/object-io/objectio
 <span class="nb">cd</span><span class="w"> </span>objectio
 
-<span class="c1"># Apple Silicon — pure-Rust EC (ISA-L is x86-only)</span>
 cargo<span class="w"> </span>build<span class="w"> </span>--workspace<span class="w"> </span>--release
-
-<span class="c1"># Intel — ISA-L</span>
-cargo<span class="w"> </span>build<span class="w"> </span>--workspace<span class="w"> </span>--release<span class="w"> </span>--features<span class="w"> </span>isal
 </code></pre></div>
 <h3 id="console">Console<a class="headerlink" href="#console" title="Permanent link">&para;</a></h3>
 <p>If you want the React <code>/_console/</code> UI baked into <code>objectio-aio</code>:</p>

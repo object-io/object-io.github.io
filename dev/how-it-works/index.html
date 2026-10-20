@@ -2915,8 +2915,7 @@ adding a pool, never by splitting placement groups.</p>
 <li>The gateway authenticates the request and asks meta for the key's
    placement group.</li>
 <li>It splits the object into 4 data shards and computes 2 parity shards
-   (ISA-L on x86, SIMD Rust elsewhere: their parity differs, so a
-   cluster runs one of them on every node), with a CRC32C of each.</li>
+   (with ISA-L, on x86_64 and arm64 alike), with a CRC32C of each.</li>
 <li>It writes the six shards to the six OSDs in parallel. Each OSD writes
    its shard to raw disk with <code>O_DIRECT</code>, flushes the drive's cache,
    then records and flushes the shard's location. The write needs 5 of

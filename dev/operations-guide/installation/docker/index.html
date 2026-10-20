@@ -3119,9 +3119,8 @@ what the helm chart does. The per-service Dockerfile targets
 build them locally if you want them:</p>
 <div class="highlight"><pre><span></span><code>docker<span class="w"> </span>build<span class="w"> </span>--target<span class="w"> </span>gateway<span class="w"> </span>-t<span class="w"> </span>objectio-gateway<span class="w"> </span>.
 </code></pre></div>
-<p><code>linux/amd64</code> uses ISA-L for hardware-accelerated erasure coding;
-<code>linux/arm64</code> uses pure-Rust SIMD. The two compute different parity:
-run every node of a cluster on one of them, not a mix.</p>
+<p>Both <code>linux/amd64</code> and <code>linux/arm64</code> erasure-code with ISA-L and write
+the same stripes, so a cluster may mix them.</p>
 <hr />
 <h2 id="all-in-one-aio-image">All-in-one (AIO) image<a class="headerlink" href="#all-in-one-aio-image" title="Permanent link">&para;</a></h2>
 <p>The <code>all</code> target packages every binary plus the console SPA. You
@@ -3286,8 +3285,8 @@ make<span class="w"> </span>docker-multiarch-local
 </tr>
 <tr>
 <td><code>FEATURES</code></td>
-<td>auto</td>
-<td><code>isal</code> on x86_64, empty on arm64. Override to force either.</td>
+<td><code>io-uring</code></td>
+<td>Cargo features to build with. ISA-L erasure coding is not one: every build has it.</td>
 </tr>
 <tr>
 <td><code>TARGETPLATFORM</code> / <code>TARGETARCH</code></td>
@@ -3296,10 +3295,6 @@ make<span class="w"> </span>docker-multiarch-local
 </tr>
 </tbody>
 </table>
-<p>Example — build a pure-Rust amd64 image (useful for platforms that
-lack the ISA-L <code>nasm</code> prereq):</p>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>build<span class="w"> </span>--target<span class="w"> </span>all<span class="w"> </span>--build-arg<span class="w"> </span><span class="nv">FEATURES</span><span class="o">=</span><span class="s2">""</span><span class="w"> </span>-t<span class="w"> </span>objectio:no-isal<span class="w"> </span>.
-</code></pre></div>
 <hr />
 <h2 id="environment-variables-containerised-services">Environment variables (containerised services)<a class="headerlink" href="#environment-variables-containerised-services" title="Permanent link">&para;</a></h2>
 <p>Most configuration goes via CLI flags in the container <code>command:</code>

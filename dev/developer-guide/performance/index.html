@@ -2988,7 +2988,7 @@ soak.</p>
 <p>The ± is half the range of the five runs. A wide range on either side
 means that cell was noisy on this runner. The artifact <code>performance</code> has
 every run's numbers (<code>perf.json</code>) and each aio's log. To run it locally:</p>
-<div class="highlight"><pre><span></span><code>cargo<span class="w"> </span>build<span class="w"> </span>--release<span class="w"> </span>--features<span class="w"> </span>objectio-aio/isal,objectio-aio/io-uring<span class="w"> </span><span class="se">\</span>
+<div class="highlight"><pre><span></span><code>cargo<span class="w"> </span>build<span class="w"> </span>--release<span class="w"> </span>--features<span class="w"> </span>objectio-aio/io-uring<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--bin<span class="w"> </span>objectio-aio<span class="w"> </span>--bin<span class="w"> </span>objectio-s3-bench<span class="w">          </span><span class="c1"># on each tree, into two directories</span>
 scripts/bench/regression.py<span class="w"> </span>--base<span class="w"> </span>&lt;dir&gt;<span class="w"> </span>--head<span class="w"> </span>&lt;dir&gt;<span class="w"> </span>--workdir<span class="w"> </span>&lt;a<span class="w"> </span>tmpfs&gt;
 </code></pre></div>

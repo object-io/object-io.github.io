@@ -3583,7 +3583,7 @@ unchanged.</p>
 <tr>
 <td><code>--ec-m &lt;n&gt;</code></td>
 <td><code>2</code></td>
-<td>Default EC parity shards</td>
+<td>Default EC parity shards. With <code>--ec-k</code>, a profile every loss of m shards decodes (which); meta refuses to start with another</td>
 </tr>
 <tr>
 <td><code>--replication &lt;n&gt;</code></td>
@@ -3806,7 +3806,7 @@ missing disk
 <tr>
 <td><code>--ec-k &lt;n&gt;</code> / <code>--ec-m &lt;n&gt;</code></td>
 <td><code>4</code> / <code>2</code></td>
-<td>EC profile for chunk objects</td>
+<td>EC profile for chunk objects: one every loss of m shards decodes (which), or the block gateway refuses to start</td>
 </tr>
 <tr>
 <td><code>--log-level &lt;lvl&gt;</code></td>

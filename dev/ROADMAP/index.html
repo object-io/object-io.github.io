@@ -3009,13 +3009,6 @@ have the evidence). These close it out before 0.1.0 is final.</p>
 <td><a href="https://github.com/object-io/objectio/issues/60">#60</a></td>
 </tr>
 <tr>
-<td>Reads never return wrong data across codec builds: every reconstructed data shard is checked against its recorded checksum before it is served, one codec (or a recorded one) for every build, and a cross-backend test</td>
-<td>Core</td>
-<td>data protection</td>
-<td><a href="../operations-guide/installation/linux/">Linux</a></td>
-<td><a href="https://github.com/object-io/objectio/issues/70">#70</a></td>
-</tr>
-<tr>
 <td>A replicated multipart part is acknowledged at the same replica quorum as a PUT; one stripe writer serves PUT, multipart, packs and block</td>
 <td>S3</td>
 <td>data protection</td>
@@ -3149,7 +3142,7 @@ have the evidence). These close it out before 0.1.0 is final.</p>
 <td><a href="https://github.com/object-io/objectio/issues/16">#16</a></td>
 </tr>
 <tr>
-<td>Test what we ship: the end-to-end suite and the soak run on the release build's features (io_uring, ISA-L)</td>
+<td>Test what we ship: the end-to-end suite and the soak run on the release build's features (io_uring; ISA-L is in every build)</td>
 <td>Core</td>
 <td>I/O levels</td>
 <td>—</td>

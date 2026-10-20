@@ -2824,8 +2824,8 @@ level, and open a pull request. Security problems are reported privately
   workflows (see the repo <code>Makefile</code>).</li>
 <li><code>docker compose run --rm build</code> — sandboxed builds without a local
   Rust toolchain.</li>
-<li><code>cargo test --package objectio-erasure --features isal</code> — run a
-  single crate's tests against the x86-only ISA-L backend.</li>
+<li><code>cargo test --package objectio-erasure</code> — run a single crate's
+  tests (erasure coding is ISA-L's on every build).</li>
 </ul>
 <p><code>CONTRIBUTING.md</code> covers the conventions (formatting, clippy, errors,
 commits, which tests a change needs). For coding agents working in a

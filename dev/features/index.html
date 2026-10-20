@@ -3174,11 +3174,18 @@ release notes say when they do.</p>
 <td>I/O levels</td>
 </tr>
 <tr>
-<td>Erasure coding: Reed-Solomon (rust-simd; ISA-L on x86_64)</td>
+<td>Erasure coding: Reed-Solomon with ISA-L, on x86_64 and arm64</td>
 <td>✅</td>
-<td>4+2 by default</td>
+<td>4+2 by default. One code on every build, its parity checked against the reference code on both architectures, so amd64 and arm64 nodes mix in one cluster (not yet run as one). A pool takes only profiles every loss of m shards decodes</td>
+<td><a href="../operations-guide/installation/linux/">Linux</a></td>
+<td>data protection</td>
+</tr>
+<tr>
+<td>Reads never serve a data shard rebuilt wrong</td>
+<td>✅</td>
+<td>Each data shard a read rebuilds is checked against its recorded checksum (or a spare parity shard) before it is served; a decode that doesn't check out is tried another way, then fails and reports the stripe for repair</td>
 <td></td>
-<td>erasure coding</td>
+<td>data protection</td>
 </tr>
 <tr>
 <td>LRC</td>

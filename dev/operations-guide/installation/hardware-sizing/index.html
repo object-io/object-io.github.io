@@ -3172,10 +3172,6 @@ object rates as something to measure on your hardware.</p>
 <td>8.8 / 9.3</td>
 </tr>
 <tr>
-<td>Erasure coding, pure Rust (arm64, or x86 without ISA-L), 4+2</td>
-<td>5.5 / 2.2</td>
-</tr>
-<tr>
 <td>MD5 (every PUT's ETag)</td>
 <td>0.80</td>
 </tr>
@@ -3189,6 +3185,10 @@ object rates as something to measure on your hardware.</p>
 </tr>
 </tbody>
 </table>
+<p>On arm64 erasure coding is ISA-L's too. One Apple M-series core, in a
+Linux VM, 4 MiB shards: 4+2 encodes at 23.8 GB/s and decodes with 2
+shards lost at 15.6 GB/s; 8+3 at 16.2 and 4.4. A server arm64 core
+(Graviton, Ampere) is not yet measured.</p>
 <p>What a gateway spends per GB/s:</p>
 <table>
 <thead>

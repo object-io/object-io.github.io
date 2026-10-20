@@ -2934,6 +2934,16 @@ running when the grace period ends is killed, and an audit spool on an
 above. A cluster on a development build from before 0.1.0 can't be
 upgraded: install 0.1.0 fresh and copy the data across (with bucket
 replication, or any S3 tool).</p>
+<p><strong>An rc.1 cluster on arm64, or built from source without the <code>isal</code>
+feature, is not upgraded in place.</strong> From 0.1.0 every build erasure-codes
+with ISA-L; those builds coded MDS stripes with another code
+(reed-solomon-simd), whose parity 0.1.0 can't decode. A stripe that loses
+a data shard can't be rebuilt, and while old and new nodes mix, repair
+of a shard a write never stored rebuilds it in the other code, which
+reads then serve as data: the rolling-upgrade test, run that way, read
+objects back wrong. Install 0.1.0 fresh and copy the data across, as
+above. A cluster on the amd64 rc.1 release binaries or image coded
+with ISA-L already, and upgrades in place.</p>
 
 
 

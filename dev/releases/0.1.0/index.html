@@ -2990,9 +2990,13 @@ the same core. Apache-2.0, every feature.</p>
   paths or order: an OSD missing one of its disks, or given a disk not its
   own, doesn't start, and a blank disk replaces a missing one. Every read
   and scrub checks that the block is the shard its location names.</li>
-<li>Erasure coding (Reed-Solomon 4+2 by default; ISA-L on x86_64), with
-  each shard's checksum kept with the object and checked on every read
-  and repair.</li>
+<li>Erasure coding (Reed-Solomon 4+2 by default) with ISA-L on x86_64 and
+  arm64 alike: one code on every build, so amd64 and arm64 nodes mix in
+  one cluster, and a pool takes only the profiles every loss of m shards
+  decodes (data protection).
+  Each shard's checksum is kept with the object and checked on every
+  read and repair, and a data shard a read rebuilds is checked before
+  it is served.</li>
 <li>Object metadata written at a majority of the object's OSDs and read from
   a quorum: writes, overwrites and deletes go on with one or two OSDs down.</li>
 <li>Placement groups across failure domains (host by default; rack, zone

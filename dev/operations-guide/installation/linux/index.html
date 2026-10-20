@@ -3075,11 +3075,9 @@
 
 <h1 id="linux">Linux<a class="headerlink" href="#linux" title="Permanent link">&para;</a></h1>
 <p>Linux is the primary production target. Both <code>amd64</code> and <code>arm64</code> are
-first-class — <code>amd64</code> gets hardware-accelerated erasure coding via
-ISA-L, <code>arm64</code> uses a pure-Rust SIMD implementation. The two compute
-different parity, so a cluster runs one architecture's builds: all
-<code>amd64</code>, or all <code>arm64</code>. Don't mix them in one cluster (a node can't
-rebuild data from the other's parity, and fails such reads).</p>
+first-class, and both erasure-code with ISA-L (AVX2, AVX-512 and GFNI
+on <code>amd64</code>; NEON and SVE on <code>arm64</code>). They write the same stripes, so
+<code>amd64</code> and <code>arm64</code> nodes mix in one cluster.</p>
 <p>This page covers the three installation paths, in increasing order of
 commitment:</p>
 <ol>
@@ -3276,8 +3274,10 @@ sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w
 sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>gcc-c++<span class="w"> </span>make<span class="w"> </span>nasm<span class="w"> </span>autoconf<span class="w"> </span>automake<span class="w"> </span>libtool<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>clang-devel<span class="w"> </span>pkgconf<span class="w"> </span>protobuf-compiler<span class="w"> </span>protobuf-devel<span class="w"> </span>cmake
 </code></pre></div>
-<p><strong>NASM is only required on x86_64</strong> — it drives ISA-L's assembly. On
-ARM64 omit it and drop <code>--features isal</code>.</p>
+<p>Every build erasure-codes with ISA-L, which is built from source with
+autotools (<code>autoconf</code>, <code>automake</code>, <code>libtool</code>) and bound with libclang.
+<strong>NASM is only required on x86_64</strong>, for ISA-L's x86 assembly; on ARM64
+leave it out.</p>
 <h3 id="console-spa-prerequisites">Console (SPA) prerequisites<a class="headerlink" href="#console-spa-prerequisites" title="Permanent link">&para;</a></h3>
 <p><code>objectio-aio</code> and the gateway's <code>/_console/</code> surface embed a
 pre-built React bundle. If you're only building server binaries and
@@ -3293,10 +3293,6 @@ sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w
 <div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/object-io/objectio
 <span class="nb">cd</span><span class="w"> </span>objectio
 
-<span class="c1"># amd64 — ISA-L on</span>
-cargo<span class="w"> </span>build<span class="w"> </span>--workspace<span class="w"> </span>--release<span class="w"> </span>--features<span class="w"> </span>isal
-
-<span class="c1"># arm64 — pure-Rust EC</span>
 cargo<span class="w"> </span>build<span class="w"> </span>--workspace<span class="w"> </span>--release
 </code></pre></div>
 <p>Binaries land in <code>target/release/</code>. For a system install:</p>
@@ -3306,8 +3302,8 @@ cargo<span class="w"> </span>build<span class="w"> </span>--workspace<span class
 <p>Then proceed as in
 <a href="#2-bootstrapping-a-node-with-objectio-install">section 2</a>.</p>
 <h3 id="run-the-test-suite">Run the test suite<a class="headerlink" href="#run-the-test-suite" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>cargo<span class="w"> </span><span class="nb">test</span><span class="w"> </span>--workspace<span class="w"> </span>--features<span class="w"> </span>isal
-cargo<span class="w"> </span>clippy<span class="w"> </span>--workspace<span class="w"> </span>--all-targets<span class="w"> </span>--features<span class="w"> </span>isal<span class="w"> </span>--<span class="w"> </span>-D<span class="w"> </span>warnings
+<div class="highlight"><pre><span></span><code>cargo<span class="w"> </span><span class="nb">test</span><span class="w"> </span>--workspace
+cargo<span class="w"> </span>clippy<span class="w"> </span>--workspace<span class="w"> </span>--all-targets<span class="w"> </span>--<span class="w"> </span>-D<span class="w"> </span>warnings
 cargo<span class="w"> </span>fmt<span class="w"> </span>--all<span class="w"> </span>--<span class="w"> </span>--check
 <span class="c1"># Or the one-shot:</span>
 make<span class="w"> </span>ci

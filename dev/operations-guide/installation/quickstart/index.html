@@ -2294,10 +2294,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#linux-x86_64-with-isa-l-acceleration" class="md-nav__link">
+  <a href="#linux-x86_64" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Linux (x86_64, with ISA-L acceleration)
+        Linux (x86_64)
       
     </span>
   </a>
@@ -2305,10 +2305,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#linux-aarch64-raspberry-pi-5-pure-rust-ec" class="md-nav__link">
+  <a href="#linux-aarch64-raspberry-pi-5" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Linux (aarch64 / Raspberry Pi 5, pure-Rust EC)
+        Linux (aarch64 / Raspberry Pi 5)
       
     </span>
   </a>
@@ -2856,10 +2856,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#linux-x86_64-with-isa-l-acceleration" class="md-nav__link">
+  <a href="#linux-x86_64" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Linux (x86_64, with ISA-L acceleration)
+        Linux (x86_64)
       
     </span>
   </a>
@@ -2867,10 +2867,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#linux-aarch64-raspberry-pi-5-pure-rust-ec" class="md-nav__link">
+  <a href="#linux-aarch64-raspberry-pi-5" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Linux (aarch64 / Raspberry Pi 5, pure-Rust EC)
+        Linux (aarch64 / Raspberry Pi 5)
       
     </span>
   </a>
@@ -3041,13 +3041,13 @@ objectio-aio
 chmod<span class="w"> </span>+x<span class="w"> </span>objectio-aio<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>mv<span class="w"> </span>objectio-aio<span class="w"> </span>/usr/local/bin/
 objectio-aio
 </code></pre></div>
-<h3 id="linux-x86_64-with-isa-l-acceleration">Linux (x86_64, with ISA-L acceleration)<a class="headerlink" href="#linux-x86_64-with-isa-l-acceleration" title="Permanent link">&para;</a></h3>
+<h3 id="linux-x86_64">Linux (x86_64)<a class="headerlink" href="#linux-x86_64" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-L<span class="w"> </span>-o<span class="w"> </span>objectio-aio<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>https://github.com/object-io/objectio/releases/latest/download/objectio-aio-linux-amd64
 chmod<span class="w"> </span>+x<span class="w"> </span>objectio-aio<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>mv<span class="w"> </span>objectio-aio<span class="w"> </span>/usr/local/bin/
 objectio-aio
 </code></pre></div>
-<h3 id="linux-aarch64-raspberry-pi-5-pure-rust-ec">Linux (aarch64 / Raspberry Pi 5, pure-Rust EC)<a class="headerlink" href="#linux-aarch64-raspberry-pi-5-pure-rust-ec" title="Permanent link">&para;</a></h3>
+<h3 id="linux-aarch64-raspberry-pi-5">Linux (aarch64 / Raspberry Pi 5)<a class="headerlink" href="#linux-aarch64-raspberry-pi-5" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-L<span class="w"> </span>-o<span class="w"> </span>objectio-aio<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>https://github.com/object-io/objectio/releases/latest/download/objectio-aio-linux-arm64
 chmod<span class="w"> </span>+x<span class="w"> </span>objectio-aio<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>mv<span class="w"> </span>objectio-aio<span class="w"> </span>/usr/local/bin/
@@ -3129,10 +3129,9 @@ docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </
 <code>objectio-osd</code>, <code>obioctl</code>, <code>objectio-install</code>, and
 <code>objectio-block-gateway</code> — you pick the entrypoint per run.</p>
 <blockquote>
-<p>ARM64 (Apple Silicon, Graviton, Raspberry Pi) runs the pure-Rust EC
-backend automatically; x86_64 gets ISA-L hardware acceleration. The
-two compute different parity, so every node of a cluster runs the
-same architecture's build; don't mix them.</p>
+<p>ARM64 (Apple Silicon, Graviton, Raspberry Pi) and x86_64 both
+erasure-code with ISA-L and write the same stripes: a cluster may mix
+them.</p>
 </blockquote>
 <hr />
 <h2 id="3-real-local-cluster-3-meta-6-osds-42-ec">3. Real local cluster (3 meta, 6 OSDs, 4+2 EC)<a class="headerlink" href="#3-real-local-cluster-3-meta-6-osds-42-ec" title="Permanent link">&para;</a></h2>
