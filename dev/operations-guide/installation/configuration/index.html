@@ -3251,6 +3251,16 @@ no <code>--listen</code> override.</p>
 <td>Proxies whose <code>X-Forwarded-For</code> / <code>X-Forwarded-Proto</code> are believed for <code>aws:SourceIp</code> / <code>aws:SecureTransport</code>. Env <code>OBJECTIO_TRUSTED_PROXIES</code>. Set it when TLS ends at an ingress.</td>
 </tr>
 <tr>
+<td><code>--shutdown-delay-secs &lt;n&gt;</code></td>
+<td><code>5</code></td>
+<td>On SIGTERM, how long <code>/_ready</code> answers 503 while the gateway still serves, before it stops taking connections. Env <code>OBJECTIO_SHUTDOWN_DELAY_SECS</code>. See <a href="../../operations/upgrades/#how-a-node-stops">how a node stops</a>.</td>
+</tr>
+<tr>
+<td><code>--shutdown-drain-secs &lt;n&gt;</code></td>
+<td><code>20</code></td>
+<td>On shutdown, how long requests in flight are given to finish once the gateway stops taking connections. Env <code>OBJECTIO_SHUTDOWN_DRAIN_SECS</code>.</td>
+</tr>
+<tr>
 <td><code>--region &lt;name&gt;</code></td>
 <td><code>us-east-1</code></td>
 <td>SigV4 verification region</td>

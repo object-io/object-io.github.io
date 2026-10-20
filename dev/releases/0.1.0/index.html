@@ -3048,6 +3048,10 @@ the same core. Apache-2.0, every feature.</p>
   Helm chart with HA defaults (2 gateways, 3 metas, PDBs)
   (<a href="../../operations-guide/installation/quickstart/">quickstart</a>,
   <a href="../../operations-guide/installation/kubernetes/">Kubernetes</a>).</li>
+<li>Every service stops cleanly on SIGTERM: it finishes its work in
+  flight and exits 0, and the gateway leaves the load balancer, drains,
+  and delivers its audit spool first, so a rollout loses no request or
+  audit event (<a href="../../operations-guide/operations/upgrades/#how-a-node-stops">upgrades</a>).</li>
 <li>The web console (operator and tenant), <code>obioctl</code>, and Go and Python
   SDKs for the whole admin API (<a href="../../developer-guide/sdk/">SDKs</a>).</li>
 <li>Prometheus metrics; a production guide with sizing, alerts and

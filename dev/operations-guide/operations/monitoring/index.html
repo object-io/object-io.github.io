@@ -3066,7 +3066,10 @@ to start from. It covers:
   after a grace period, it becomes ready as long as enough OSDs for a write
   quorum are reachable. It is a startup gate for load balancers and
   readiness probes. It does not drop when OSDs fail later; that is what
-  <code>objectio_cluster_osds_up</code> and the data-safety metrics are for.</li>
+  <code>objectio_cluster_osds_up</code> and the data-safety metrics are for. It
+  answers 503 again (<code>"status": "stopping"</code>) once the gateway is shutting
+  down, while it still serves (see
+  <a href="../upgrades/#how-a-node-stops">how a node stops</a>).</li>
 <li><strong><code>GET /health</code></strong> on meta's and the OSDs' metrics ports answers 200
   while the process is up.</li>
 </ul>

@@ -3602,6 +3602,13 @@ the <a href="../ROADMAP/">roadmap</a>.</p>
 <td></td>
 </tr>
 <tr>
+<td>Clean shutdown on SIGTERM</td>
+<td>✅</td>
+<td>Every service finishes its work in flight and exits 0; the gateway leaves the load balancer first, and delivers its audit spool before it exits</td>
+<td><a href="../operations-guide/operations/upgrades/#how-a-node-stops">upgrades</a></td>
+<td></td>
+</tr>
+<tr>
 <td>Linux binaries (x86_64, arm64), macOS for development</td>
 <td>🟡</td>
 <td>The systemd units <code>objectio-install</code> writes don't configure meta or the gateway yet: run them with flags</td>

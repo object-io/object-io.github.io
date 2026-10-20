@@ -3073,8 +3073,10 @@ before it is delivered:</p>
   being killed.</li>
 <li><strong>A segment every target has passed is deleted.</strong> A new target gets
   events from the moment it's added.</li>
-<li><strong>On a normal shutdown</strong> the gateway delivers what's left before it exits,
-  for up to <code>--audit-drain-secs</code> (default 20).</li>
+<li><strong>On shutdown</strong> (SIGTERM, as Kubernetes and systemd send, or Ctrl-C)
+  the gateway delivers what's left before it exits, for up to
+  <code>--audit-drain-secs</code> (default 20). On Kubernetes the pod's grace period
+  must cover it (see <a href="../../operations/upgrades/#how-a-node-stops">how a node stops</a>).</li>
 <li><strong>The spool is capped</strong> by <code>--audit-spool-max-bytes</code> (default 10 GiB).
   Past that, new events are dropped and counted under <code>target="spool"</code>.</li>
 </ul>

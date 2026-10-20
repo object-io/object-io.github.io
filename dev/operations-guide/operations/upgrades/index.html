@@ -2563,6 +2563,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-a-node-stops" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How a node stops
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#kubernetes" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2755,6 +2766,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-a-node-stops" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How a node stops
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#kubernetes" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2856,10 +2878,37 @@ Design: core/upgrade-path.md.</p>
    its own is refused with a 503 that S3 clients retry.</p>
 <p>To go back before step 6, run the same steps in reverse order with the
 previous release's binaries.</p>
+<h2 id="how-a-node-stops">How a node stops<a class="headerlink" href="#how-a-node-stops" title="Permanent link">&para;</a></h2>
+<p>Every service stops cleanly on SIGTERM, which Kubernetes, systemd and
+<code>docker stop</code> send, or on SIGINT (Ctrl-C), and exits 0:</p>
+<ul>
+<li><strong>Gateway:</strong> <code>/_ready</code> answers 503 at once, while the gateway goes on
+  serving for <code>--shutdown-delay-secs</code> (default 5), so that load balancers
+  and Kubernetes endpoints stop sending it requests first. Then it stops
+  taking connections, gives the requests in flight up to
+  <code>--shutdown-drain-secs</code> (default 20) to finish, and delivers what its
+  <a href="../../administration/audit/">audit</a> and bucket-log spools hold, for up
+  to <code>--audit-drain-secs</code> (default 20).</li>
+<li><strong>Meta:</strong> answers the calls in flight, stops Raft, and makes its state
+  durable.</li>
+<li><strong>OSD:</strong> finishes the calls in flight. Every write it acknowledged is
+  already on disk.</li>
+<li><strong>Block gateway:</strong> lets a flush under way finish (up to 10 s) and syncs
+  its journal. Every write it acknowledged is already in the journal.</li>
+</ul>
+<p>A second signal exits at once, without waiting for the rest (status 143
+for SIGTERM, 130 for SIGINT). <code>objectio-aio</code> stops the same way, its
+gateway without the delay, and exits after 5 s at most.</p>
 <h2 id="kubernetes">Kubernetes<a class="headerlink" href="#kubernetes" title="Permanent link">&para;</a></h2>
 <p>Roll the meta and OSD StatefulSets one pod at a time (<code>partition</code>), each
 gated on readiness, in the order above, then run <code>obioctl upgrade
 finalize</code>.</p>
+<p>A gateway pod's <code>terminationGracePeriodSeconds</code> must cover its shutdown:
+the delay, the request drain and the audit drain. The chart sets it to the
+audit drain plus 30 s when the audit spool is on; otherwise Kubernetes'
+default of 30 s covers the delay and the request drain. A pod still
+running when the grace period ends is killed, and an audit spool on an
+<code>emptyDir</code> goes with it.</p>
 <h2 id="api">API<a class="headerlink" href="#api" title="Permanent link">&para;</a></h2>
 <p>Both calls are system admin only.</p>
 <table>
