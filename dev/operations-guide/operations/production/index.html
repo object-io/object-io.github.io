@@ -3423,7 +3423,9 @@ and the audit spool's size.</p>
 - Meta probes every OSD every 15 s. Three missed probes, about 45 s, mark
   it Down.
 - For the first 120 s it is down (config <code>pg/down_out_seconds</code>), its
-  placement groups keep it: writes go on at k + 1 shards (degraded), and
+  placement groups keep it: writes go on degraded while each stripe
+  still reaches its write quorum on distinct OSDs (k + 1 shards, two
+  copies, or all but g − 1 shards of an LRC stripe; 503 short of it), and
   reads decode around it. A restart or a reboot moves nothing.
 - After that, each of its placement groups gets a stand-in OSD (within
   the pool's placement rule) and backfills onto it: the PG is rebuilt to

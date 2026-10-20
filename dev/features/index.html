@@ -3125,6 +3125,13 @@ release notes say when they do.</p>
 <td>storage engine</td>
 </tr>
 <tr>
+<td>One write quorum for every stripe</td>
+<td>✅</td>
+<td>PUTs, multipart parts, packs and block chunks alike: k + 1 shards (MDS), two copies, or all but g − 1 (LRC), counted on distinct OSDs; 503 short of it (507 when the OSDs are full). Every shard carries its placement group's epoch, and a write placed under an old one is placed again</td>
+<td><a href="../operations-guide/administration/s3-api/">S3 API</a></td>
+<td>data protection</td>
+</tr>
+<tr>
 <td>Crash consistency of the OSD</td>
 <td>✅</td>
 <td>The shard device's and state filesystem's writes recorded and replayed up to random power-cut points: every acknowledged write survives. Run in CI on every merge</td>

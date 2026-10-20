@@ -3009,6 +3009,17 @@ the same core. Apache-2.0, every feature.</p>
   stripe survives every loss of its global parity count, more by where
   they fall: LRC 6+2+2 any 2 shards and 88% of the ways of losing 3
   (what LRC survives).</li>
+<li>Every stripe is written with the same rules, whatever writes it: a
+  PUT, a multipart upload's part, a pack of small objects, a block
+  volume's chunk. It is acknowledged once k + 1 shards are on disk (two
+  copies in a replicated pool, all but g − 1 shards in an LRC one),
+  counted on distinct OSDs, and answered 503 short of that (507 when the
+  OSDs are full); every shard carries its placement group's epoch, and
+  one placed under an old epoch is placed again. A multipart part in a
+  replicated pool was acknowledged with one copy, an LRC stripe with
+  k + 1 shards it might not decode from, and a block chunk could count two
+  shards on one OSD twice
+  (writing a stripe).</li>
 <li>Object metadata written at a majority of the object's OSDs and read from
   a quorum: writes, overwrites and deletes go on with one or two OSDs down.</li>
 <li>Placement groups across failure domains (host by default; rack, zone
