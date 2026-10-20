@@ -3088,6 +3088,14 @@ the same core. Apache-2.0, every feature.</p>
   22.04, Debian 12, Rocky Linux 9 and Amazon Linux 2023 before the
   release is published
   (<a href="../../operations-guide/installation/linux/#1-release-binary">Linux</a>).</li>
+<li><code>objectio-install</code> sets a Linux host up under systemd: units that
+  start meta and the gateway with the flags the Helm chart passes, an
+  OSD per disk with its own config file and ports, and <code>cluster init</code>,
+  which forms meta's Raft group over the admin ports. Every binary's
+  default ports are the cluster's (meta 9100, OSD 9200); meta and the
+  gateway take flags only. Tested end to end: one host, then three, run
+  from the units the installer wrote, serve S3
+  (<a href="../../operations-guide/installation/linux/#with-objectio-install">Linux</a>).</li>
 <li>Every service stops cleanly on SIGTERM: it finishes its work in
   flight and exits 0, and the gateway leaves the load balancer, drains,
   and delivers its audit spool first, so a rollout loses no request or

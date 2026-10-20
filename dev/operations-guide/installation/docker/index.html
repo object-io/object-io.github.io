@@ -2993,10 +2993,8 @@ be built locally.</p>
 </tbody>
 </table>
 <blockquote>
-<p>Port numbers are the cluster convention used by the Helm chart. The
-CLI defaults inside each binary are different (gateway/meta/osd
-default to 9000/9001/9002). See <a href="../configuration/">configuration.md</a>
-for the split.</p>
+<p>Port numbers are the cluster's, used by the Helm chart and every
+binary's defaults (<a href="../configuration/#ports">ports</a>).</p>
 </blockquote>
 <p>One multi-arch image (<code>linux/amd64</code>, <code>linux/arm64</code>) is published on
 GHCR, and it carries every service:</p>

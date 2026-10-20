@@ -3646,7 +3646,7 @@ the <a href="../ROADMAP/">roadmap</a>.</p>
 <tr>
 <td>Linux binaries (x86_64, arm64), macOS for development</td>
 <td>🟡</td>
-<td>The Linux binaries need glibc 2.28 or later and no other library; each release's are run on Ubuntu 22.04, Debian 12, Rocky Linux 9 and Amazon Linux 2023 before it is published. The systemd units <code>objectio-install</code> writes don't configure meta or the gateway yet: run them with flags</td>
+<td>The Linux binaries need glibc 2.28 or later and no other library; each release's are run on Ubuntu 22.04, Debian 12, Rocky Linux 9 and Amazon Linux 2023 before it is published. <code>objectio-install</code> sets a host up under systemd (meta and the gateway by the chart's flags, an OSD per disk) and forms meta's Raft group, tested end to end on one host and on three</td>
 <td><a href="../operations-guide/installation/linux/">Linux</a></td>
 <td></td>
 </tr>

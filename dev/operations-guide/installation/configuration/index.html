@@ -2064,10 +2064,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#ports-cluster-conventions-vs-code-defaults" class="md-nav__link">
+  <a href="#ports" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Ports — cluster conventions vs code defaults
+        Ports
       
     </span>
   </a>
@@ -2850,10 +2850,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#ports-cluster-conventions-vs-code-defaults" class="md-nav__link">
+  <a href="#ports" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Ports — cluster conventions vs code defaults
+        Ports
       
     </span>
   </a>
@@ -3044,24 +3044,21 @@
 <h1 id="configuration-reference">Configuration Reference<a class="headerlink" href="#configuration-reference" title="Permanent link">&para;</a></h1>
 <p>ObjectIO binaries are configured with CLI flags, some of which can also
 be set by an environment variable (shown as <code>[env: …]</code> in each binary's
-<code>--help</code>). Only <code>objectio-osd</code> reads a TOML file (<code>--config</code>); the
-gateway and meta accept <code>--config</code> and ignore it. A flag wins over its
-environment variable, which wins over the OSD's file, which wins over
-the built-in default.</p>
+<code>--help</code>). Only <code>objectio-osd</code> reads a TOML file (<code>--config</code>); meta and
+the gateway take flags only. A flag wins over its environment variable,
+which wins over the OSD's file, which wins over the built-in default.</p>
 <p>This page documents the flag surface for each binary against the
 current <code>main</code>; <code>&lt;binary&gt; --help</code> is the complete list. Only the env
 vars listed here are honoured.</p>
 <hr />
-<h2 id="ports-cluster-conventions-vs-code-defaults">Ports — cluster conventions vs code defaults<a class="headerlink" href="#ports-cluster-conventions-vs-code-defaults" title="Permanent link">&para;</a></h2>
-<p>There are two port conventions in the repo. Most deployments follow
-the <strong>cluster convention</strong> (used by the Helm chart and these guides).
-The CLI flags' <strong>code defaults</strong> are different:</p>
+<h2 id="ports">Ports<a class="headerlink" href="#ports" title="Permanent link">&para;</a></h2>
+<p>Every binary's defaults are the cluster's ports, the ones the Helm chart
+and these guides use:</p>
 <table>
 <thead>
 <tr>
 <th>Role</th>
-<th>Cluster port</th>
-<th>Code default</th>
+<th>Port</th>
 <th>Protocol</th>
 </tr>
 </thead>
@@ -3069,53 +3066,59 @@ The CLI flags' <strong>code defaults</strong> are different:</p>
 <tr>
 <td>gateway S3</td>
 <td>9000</td>
-<td>9000</td>
 <td>HTTP</td>
 </tr>
 <tr>
-<td>meta gRPC</td>
+<td>meta gRPC (and Raft)</td>
 <td>9100</td>
-<td>9001</td>
 <td>gRPC</td>
 </tr>
 <tr>
 <td>meta metrics</td>
-<td>9101</td>
 <td>9101</td>
 <td>HTTP</td>
 </tr>
 <tr>
 <td>meta admin (Raft bootstrap / membership)</td>
 <td>9102</td>
-<td>9102</td>
 <td>HTTP</td>
 </tr>
 <tr>
 <td>OSD gRPC</td>
 <td>9200</td>
-<td>none without a config file; 9002 when <code>osd.toml</code> has no <code>listen</code></td>
 <td>gRPC</td>
 </tr>
 <tr>
 <td>OSD metrics</td>
-<td>9201</td>
 <td>9201</td>
 <td>HTTP</td>
 </tr>
 <tr>
 <td>block-gateway gRPC</td>
 <td>9300</td>
-<td>9300</td>
 <td>gRPC</td>
 </tr>
 <tr>
 <td>block-gateway NBD</td>
 <td>10809</td>
-<td>10809</td>
 <td>TCP (NBD)</td>
 </tr>
 </tbody>
 </table>
+<p>The clients' defaults follow: the gateway's, the OSD's and the block
+gateway's <code>--meta-endpoint</code> default to <code>http://localhost:9100</code>. Beyond one
+host, pass every address. A host running several OSDs gives each its own
+ports: <a href="#objectio-install"><code>objectio-install</code></a> puts OSD <em>i</em> on 9200 + 2<em>i</em>
+and its metrics on 9201 + 2<em>i</em>.</p>
+<p>---|---|---|---|
+| gateway S3 | 9000 | 9000 | HTTP |
+| meta gRPC | 9100 | 9001 | gRPC |
+| meta metrics | 9101 | 9101 | HTTP |
+| meta admin (Raft bootstrap / membership) | 9102 | 9102 | HTTP |
+| OSD gRPC | 9200 | none without a config file; 9002 when <code>osd.toml</code> has no <code>listen</code> | gRPC |
+| OSD metrics | 9201 | 9201 | HTTP |
+| block-gateway gRPC | 9300 | 9300 | gRPC |
+| block-gateway NBD | 10809 | 10809 | TCP (NBD) |</p>
 <p>The chart's values are what you should document to end users. The code
 defaults only matter if you run the binaries standalone with no
 <code>--listen</code> override. The clients' defaults follow the code, not the
@@ -3142,11 +3145,6 @@ Pass every address explicitly.</p>
 </thead>
 <tbody>
 <tr>
-<td><code>-c, --config &lt;path&gt;</code></td>
-<td><code>/etc/objectio/gateway.toml</code></td>
-<td>Accepted and not read</td>
-</tr>
-<tr>
 <td><code>-l, --listen &lt;addr&gt;</code></td>
 <td><code>0.0.0.0:9000</code></td>
 <td>Data plane listen — S3 + Iceberg + Delta Sharing. In single-port mode (no split flags) also serves <code>/_admin/*</code>, <code>/metrics</code> and <code>/_console/*</code>.</td>
@@ -3168,12 +3166,12 @@ Pass every address explicitly.</p>
 </tr>
 <tr>
 <td><code>--meta-endpoint &lt;urls&gt;</code></td>
-<td><code>http://localhost:9001</code></td>
+<td><code>http://localhost:9100</code></td>
 <td>Meta nodes: one address, or every meta node's, comma-separated. Any node serves any call (a follower forwards it to the Raft leader), and one that stops answering is skipped. See <a href="../../operations/meta-ha/">Meta high availability</a>.</td>
 </tr>
 <tr>
 <td><code>--osd-endpoint &lt;url&gt;</code></td>
-<td><code>http://localhost:9002</code></td>
+<td><code>http://localhost:9200</code></td>
 <td>Initial OSD peer</td>
 </tr>
 <tr>
@@ -3598,19 +3596,14 @@ and <a href="../../operations/meta-ha/">meta HA</a>.</p>
 </thead>
 <tbody>
 <tr>
-<td><code>-c, --config &lt;path&gt;</code></td>
-<td><code>/etc/objectio/meta.toml</code></td>
-<td>Accepted and not read</td>
-</tr>
-<tr>
 <td><code>--node-id &lt;n&gt;</code></td>
 <td><code>1</code></td>
 <td>Raft node ID; each node of a group needs its own</td>
 </tr>
 <tr>
 <td><code>-l, --listen &lt;addr&gt;</code></td>
-<td><code>0.0.0.0:9001</code></td>
-<td>gRPC listen — MetadataService + Raft RPC (cluster convention <code>:9100</code>)</td>
+<td><code>0.0.0.0:9100</code></td>
+<td>gRPC listen — MetadataService + Raft RPC</td>
 </tr>
 <tr>
 <td><code>--peers &lt;list&gt;</code></td>
@@ -3711,9 +3704,8 @@ Kubernetes the chart sets advertise to the pod DNS
 <p>No <code>--raft-bind</code> flag exists — Raft RPC multiplexes over the same
 gRPC socket as MetadataService, so a Raft peer address is a node's
 gRPC port (9100), not its metrics port (9101).</p>
-<p>Meta has no TOML file: <code>--config</code> is accepted and not read. The first
-Raft leader creates the admin user and every node writes its keys to
-<code>&lt;data-dir&gt;/admin-creds.env</code>.</p>
+<p>The first Raft leader creates the admin user and every node writes its
+keys to <code>&lt;data-dir&gt;/admin-creds.env</code>.</p>
 <hr />
 <h2 id="objectio-osd"><code>objectio-osd</code><a class="headerlink" href="#objectio-osd" title="Permanent link">&para;</a></h2>
 <p>Object Storage Daemon.</p>
@@ -3739,8 +3731,8 @@ Raft leader creates the admin user and every node writes its keys to
 </tr>
 <tr>
 <td><code>-l, --listen &lt;addr&gt;</code></td>
-<td><em>none</em></td>
-<td>gRPC listen — required, here or in the file; cluster convention is <code>:9200</code></td>
+<td><code>0.0.0.0:9200</code></td>
+<td>gRPC listen (the file's <code>listen</code>)</td>
 </tr>
 <tr>
 <td><code>--advertise-addr &lt;addr&gt;</code></td>
@@ -3769,8 +3761,8 @@ Raft leader creates the admin user and every node writes its keys to
 </tr>
 <tr>
 <td><code>--meta-endpoint &lt;urls&gt;</code></td>
-<td><em>none</em></td>
-<td>Meta nodes, comma-separated (the file's default: <code>http://localhost:9001</code>)</td>
+<td><code>http://localhost:9100</code></td>
+<td>Meta nodes, comma-separated (the file's <code>meta_endpoint</code>)</td>
 </tr>
 <tr>
 <td><code>--data-dir &lt;path&gt;</code></td>
@@ -4055,26 +4047,39 @@ checked for conflicts before launch.</p>
 lines), and printed in the startup banner.</p>
 <hr />
 <h2 id="objectio-install"><code>objectio-install</code><a class="headerlink" href="#objectio-install" title="Permanent link">&para;</a></h2>
-<p>Disk preparation, plus config and unit generation. Only its disk
-commands are part of the <a href="../linux/#objectio-install">Linux</a> walkthrough:
-<code>init</code> and <code>join</code> write <code>gateway.toml</code> and <code>meta.toml</code>, which those
-binaries don't read, and units that start them with only <code>--config</code>.</p>
-<div class="highlight"><pre><span></span><code>objectio-install<span class="w"> </span>init<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--role<span class="w"> </span>all<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--disks<span class="w"> </span>/dev/sdb,/dev/sdc,/dev/sdd<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--ec-profile<span class="w"> </span><span class="m">4</span>+2<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--systemd
+<p>Sets a host up to run the services under systemd, and forms meta's Raft
+group. The <a href="../linux/#with-objectio-install">Linux</a> guide walks through
+it.</p>
+<div class="highlight"><pre><span></span><code>objectio-install<span class="w"> </span>init<span class="w"> </span>--role<span class="w"> </span>all<span class="w"> </span>--node-id<span class="w"> </span><span class="m">1</span><span class="w"> </span>--advertise<span class="w"> </span>node1.internal<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--meta-endpoint<span class="w"> </span>http://node1.internal:9100,http://node2.internal:9100,http://node3.internal:9100<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--disks<span class="w"> </span>/dev/disk/by-id/nvme-a,/dev/disk/by-id/nvme-b<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--ec-profile<span class="w"> </span><span class="m">4</span>+2<span class="w"> </span>--systemd
 
-objectio-install<span class="w"> </span>disk<span class="w"> </span>list
-objectio-install<span class="w"> </span>disk<span class="w"> </span>prepare<span class="w"> </span>/dev/sdb
+objectio-install<span class="w"> </span>cluster<span class="w"> </span>init<span class="w"> </span>node1.internal<span class="w"> </span>node2.internal<span class="w"> </span>node3.internal
+
+objectio-install<span class="w"> </span>disk<span class="w"> </span>list<span class="w"> </span><span class="o">[</span>--all<span class="o">]</span>
 objectio-install<span class="w"> </span>disk<span class="w"> </span>check<span class="w"> </span>/dev/sdb
-
-objectio-install<span class="w"> </span>join<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--meta-endpoint<span class="w"> </span>http://meta1.internal:9100<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--disks<span class="w"> </span>/dev/sdb,/dev/sdc
+objectio-install<span class="w"> </span>disk<span class="w"> </span>prepare<span class="w"> </span>/dev/sdb<span class="w"> </span><span class="o">[</span>--force<span class="o">]</span><span class="w"> </span><span class="o">[</span>--block-size<span class="w"> </span>&lt;bytes&gt;<span class="o">]</span>
 
 objectio-install<span class="w"> </span>status
 </code></pre></div>
+<p><code>init</code> writes, for the roles it is given:</p>
+<ul>
+<li>meta: the unit <code>objectio-meta</code>, its data directory <code>/var/lib/objectio/meta</code>;</li>
+<li>OSD: for each disk <em>i</em> (in the order given), <code>/etc/objectio/osd-&lt;i&gt;.toml</code>,
+  the unit <code>objectio-osd-&lt;i&gt;</code> and the data directory
+  <code>/var/lib/objectio/osd-&lt;i&gt;</code>. One OSD per disk: an OSD holds at most one
+  shard of a stripe;</li>
+<li>gateway: the unit <code>objectio-gateway</code>, which also reads
+  <code>/etc/objectio/gateway.env</code> when it exists (<code>OBJECTIO_MASTER_KEY=…</code> for
+  SSE, the same on every gateway).</li>
+</ul>
+<p>The units start meta and the gateway with the flags the Helm chart passes,
+and each OSD with its file. Meta and the gateway run as the system user
+<code>objectio</code>, which <code>init</code> creates if it is missing; the OSDs run as root, to
+open raw devices. <code>init</code> formats no disk: each must be blank, which its OSD
+formats when it first starts, or an ObjectIO disk; anything else is
+refused. Run again, it rewrites the files it writes and keeps the data.</p>
 <p><code>init</code> flags:</p>
 <table>
 <thead>
@@ -4088,55 +4093,97 @@ objectio-install<span class="w"> </span>status
 <tr>
 <td><code>--role &lt;list&gt;</code></td>
 <td>—</td>
-<td><code>all</code>, <code>gateway</code>, <code>meta</code>, <code>osd</code> (comma-separated)</td>
+<td><code>all</code>, <code>meta</code>, <code>osd</code>, <code>gateway</code> (comma-separated)</td>
 </tr>
 <tr>
 <td><code>--disks &lt;list&gt;</code></td>
-<td>empty</td>
-<td>Disk devices for OSD roles</td>
+<td>—</td>
+<td>The OSDs' disks, one OSD each (<code>osd</code> role)</td>
 </tr>
 <tr>
-<td><code>--meta-endpoint &lt;url&gt;</code></td>
-<td><code>http://localhost:9001</code></td>
-<td>Used by gateway + OSD roles</td>
+<td><code>--node-id &lt;n&gt;</code></td>
+<td><code>1</code></td>
+<td>This host's meta node id; each meta node its own (1, 2, 3 …)</td>
 </tr>
 <tr>
-<td><code>--raft-peers &lt;list&gt;</code></td>
-<td>empty</td>
-<td>Written into <code>meta.toml</code>, which meta doesn't read</td>
+<td><code>--advertise &lt;host&gt;</code></td>
+<td>the hostname</td>
+<td>The name or address the other nodes reach this host at: meta's <code>--raft-advertise</code>, each OSD's <code>advertise_addr</code></td>
+</tr>
+<tr>
+<td><code>--meta-endpoint &lt;urls&gt;</code></td>
+<td>this host's meta</td>
+<td>Every meta node's gRPC address, comma-separated; required on a host without meta</td>
 </tr>
 <tr>
 <td><code>--ec-profile &lt;k+m&gt;</code></td>
 <td><code>4+2</code></td>
-<td>Common profiles: <code>2+1</code>, <code>4+2</code>, <code>8+4</code>, <code>1+2</code> (3× replication)</td>
+<td>The default pool's erasure code (<code>--ec-k</code>/<code>--ec-m</code> of meta and the gateway)</td>
+</tr>
+<tr>
+<td><code>--replication &lt;n&gt;</code></td>
+<td>unset</td>
+<td>n copies instead of an erasure code (<code>--replication</code> of meta, <code>--protection replication --replicas</code> of the gateway)</td>
 </tr>
 <tr>
 <td><code>--no-auth</code></td>
 <td>off</td>
-<td>Bake no-auth into the generated gateway config</td>
+<td>The gateway without authentication (development only)</td>
 </tr>
 <tr>
-<td><code>--config-dir &lt;dir&gt;</code></td>
-<td><code>/etc/objectio</code></td>
-<td>Where config files land</td>
+<td><code>--region &lt;name&gt;</code></td>
+<td><code>us-east-1</code></td>
+<td>The gateway's <code>--region</code></td>
+</tr>
+<tr>
+<td><code>--external-endpoint &lt;url&gt;</code></td>
+<td>unset</td>
+<td>The gateway's <code>--external-endpoint</code></td>
+</tr>
+<tr>
+<td><code>--meta-port</code>, <code>--meta-admin-port</code>, <code>--meta-metrics-port</code></td>
+<td><code>9100</code>, <code>9102</code>, <code>9101</code></td>
+<td>Meta's ports (metrics <code>0</code>: none)</td>
+</tr>
+<tr>
+<td><code>--osd-port</code>, <code>--osd-metrics-port</code></td>
+<td><code>9200</code>, <code>9201</code></td>
+<td>OSD <em>i</em>'s ports are these + 2<em>i</em> (metrics <code>0</code>: none)</td>
+</tr>
+<tr>
+<td><code>--gateway-port &lt;n&gt;</code></td>
+<td><code>9000</code></td>
+<td>The gateway's S3 port</td>
 </tr>
 <tr>
 <td><code>--systemd</code></td>
 <td>off</td>
-<td>Install systemd units (requires root)</td>
+<td>Install the units in <code>/etc/systemd/system</code> (and <code>systemctl daemon-reload</code>); without it, print the services' command lines</td>
 </tr>
 <tr>
-<td><code>--skip-prepare</code></td>
-<td>off</td>
-<td>Don't touch disks — just render config files</td>
+<td><code>--bin-dir &lt;dir&gt;</code></td>
+<td><code>/usr/local/bin</code></td>
+<td>Where the ObjectIO binaries are</td>
 </tr>
 <tr>
-<td><code>--block-size-mb &lt;n&gt;</code></td>
-<td><code>4</code></td>
-<td>On-disk block size at format time</td>
+<td><code>--root &lt;dir&gt;</code></td>
+<td><code>/</code></td>
+<td>Write everything under this directory instead, naming paths under it: a host's files, staged or tested elsewhere. No user is created and systemd is not reloaded</td>
 </tr>
 </tbody>
 </table>
+<p><code>cluster init &lt;node&gt;…</code> forms the Raft group from meta nodes' admin
+addresses (<code>host</code>, <code>host:port</code>, port <code>9102</code> by default, or a URL), the
+first being the one the group starts from: <code>/init</code> on it unless a group
+exists, then, on the leader, <code>/add-learner</code> for every node not yet a
+voter and <code>/change-membership</code> with all of them. Each node's id and Raft
+address come from its own <code>/status</code>. Run again, it changes nothing; a
+voter not named stops it, since dropping one is done by hand
+(<a href="../../operations/meta-ha/">meta HA</a>). It waits up to <code>--wait-secs</code>
+(120) for every node to answer.</p>
+<p><code>disk prepare</code> formats a disk ahead of its OSD, with the OSD's block size
+unless <code>--block-size</code> is given; it refuses a disk that isn't blank without
+<code>--force</code>, which destroys what the disk holds.</p>
 <hr />
 <h2 id="configuration-precedence">Configuration precedence<a class="headerlink" href="#configuration-precedence" title="Permanent link">&para;</a></h2>
 <p>For every setting:</p>
