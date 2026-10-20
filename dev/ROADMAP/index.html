@@ -3058,6 +3058,20 @@ have the evidence). These close it out before 0.1.0 is final.</p>
 <td><a href="https://github.com/object-io/objectio/issues/13">#13</a></td>
 </tr>
 <tr>
+<td>A node that installs a Raft snapshot takes the leader's config version with it</td>
+<td>Core</td>
+<td>meta</td>
+<td>—</td>
+<td><a href="https://github.com/object-io/objectio/issues/98">#98</a></td>
+</tr>
+<tr>
+<td>An OSD looks up a placement group's epoch on a live meta, not on a channel to one that died</td>
+<td>Core</td>
+<td>meta</td>
+<td>—</td>
+<td><a href="https://github.com/object-io/objectio/issues/99">#99</a></td>
+</tr>
+<tr>
 <td>Release notes reviewed; the 0.1 version of the site and the release's binaries, image and chart published</td>
 <td>Platform</td>
 <td>—</td>
@@ -3224,6 +3238,13 @@ have the evidence). These close it out before 0.1.0 is final.</p>
 <td>block storage</td>
 <td>—</td>
 <td><a href="https://github.com/object-io/objectio/issues/86">#86</a></td>
+</tr>
+<tr>
+<td>A meta restore rebuilds pack records and the shared-stripe registry from the OSDs, so packed objects read after it</td>
+<td>Core</td>
+<td>meta</td>
+<td><a href="../operations-guide/operations/failure-recovery/">failure recovery</a></td>
+<td><a href="https://github.com/object-io/objectio/issues/100">#100</a></td>
 </tr>
 </tbody>
 </table>
