@@ -3479,7 +3479,8 @@ obioctl<span class="w"> </span>cluster<span class="w"> </span>drain-status<span 
 </code></pre></div>
 <p>When a drain finishes, the OSD is marked <code>out</code> and wiped (its space is
 reclaimed, and nothing stale can come back with it). Replace the hardware,
-start the OSD on the new disk, and set it back in:</p>
+start the OSD on the new disk (a blank disk takes the place of the one
+missing), and set it back in:</p>
 <div class="highlight"><pre><span></span><code>obioctl<span class="w"> </span>osd<span class="w"> </span>set-state<span class="w"> </span>&lt;osd-id&gt;<span class="w"> </span><span class="k">in</span>
 </code></pre></div>
 <p>For a disk or host that is gone for good, set its OSD <code>out</code> straight
@@ -3494,6 +3495,12 @@ the OSD that takes its place. When nothing refers to it any more it is
 purged. A drive that comes back, or its replacement, joins as a new OSD,
 or is set back <code>in</code> once the purge is done; don't put a directly-<code>out</code>
 OSD back in with old data on it.</p>
+<p>An OSD with several disks doesn't start with one of them missing: its log
+names the disk, and it never runs on the rest, which would look for
+shards on the wrong disks. Name the disk again (any path, any order), or
+replace it with a blank one; with no replacement, set the OSD out and,
+once evacuated, start it afresh on the disks it has left
+(<a href="../production/#an-osd-that-wont-start-for-a-missing-disk">production runbook</a>).</p>
 <hr />
 <h2 id="full-disks">Full disks<a class="headerlink" href="#full-disks" title="Permanent link">&para;</a></h2>
 <p>Client writes may fill each OSD disk up to its <strong>full ratio</strong>

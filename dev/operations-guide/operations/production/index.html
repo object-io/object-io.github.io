@@ -2580,6 +2580,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#an-osd-that-wont-start-for-a-missing-disk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        An OSD that won't start for a missing disk
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#disks-filling-or-full" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2953,6 +2964,17 @@
     <span class="md-ellipsis">
       
         Replacing a disk
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#an-osd-that-wont-start-for-a-missing-disk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        An OSD that won't start for a missing disk
       
     </span>
   </a>
@@ -3375,9 +3397,38 @@ again, the drive is failing; replace it.</p>
 <li>If it doesn't read: <code>obioctl osd set-state &lt;node_id&gt; out</code>.</li>
 <li>Swap the drive and start the OSD on it with the same state directory:
    it keeps its identity, finds the disk blank, and forgets the shards it
-   held there.</li>
+   held there. On an OSD with several disks, the blank disk takes the
+   place of the one that is missing, whatever its path. A file-backed
+   disk (<code>disk.raw</code> on a volume) is replaced by a blank file the size of
+   the old one, made before the OSD starts
+   (<code>truncate -s &lt;size&gt; /data/disk0/disk.raw</code>): an OSD makes a disk file
+   itself only on its first start.</li>
 <li><code>obioctl osd set-state &lt;node_id&gt; in</code>. Repair rebuilds what it held.</li>
 </ol>
+<h3 id="an-osd-that-wont-start-for-a-missing-disk">An OSD that won't start for a missing disk<a class="headerlink" href="#an-osd-that-wont-start-for-a-missing-disk" title="Permanent link">&para;</a></h3>
+<p>An OSD knows its disks by the ids in their superblocks, not by their
+paths or order. Started without one of them, it doesn't start, and its
+log says which (<code>this OSD's disk 1 (id …, last at /dev/…) is missing</code>).
+Running on the rest would look for shards on the wrong disks.</p>
+<ul>
+<li><strong>The disk is there under another name</strong> (a renamed device, a glob
+  that missed it): name it again, at any path, in any order.</li>
+<li><strong>A disk file does not exist</strong> (<code>disk … does not exist, and this OSD
+  has run on its disks</code>): its volume isn't mounted. Mount it; if the
+  disk is lost, put a blank file there as <a href="#replacing-a-disk">above</a>.</li>
+<li><strong>The disk is dead:</strong> replace it with a blank one, as
+  <a href="#replacing-a-disk">above</a>.</li>
+<li><strong>No replacement, and the OSD should run on the disks it has left:</strong>
+  that is a new OSD. Set the old one <code>out</code>, wait until
+  <code>obioctl cluster drain-status</code> shows it evacuated, then wipe its state
+  directory and its remaining disks and start it on them: it joins as a
+  new OSD.</li>
+</ul>
+<p>It also refuses a disk that is not blank and not one of its own (another
+OSD's, or one replaced earlier and put back): remove it from the OSD's
+disks, or wipe it to add it as a new disk. A disk named with <code>--disks</code>
+that can't be read as an ObjectIO disk stops the OSD, rather than being
+skipped.</p>
 <h3 id="disks-filling-or-full">Disks filling or full<a class="headerlink" href="#disks-filling-or-full" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Near full (85%).</strong> Plan capacity: add OSDs or hosts (the balancer

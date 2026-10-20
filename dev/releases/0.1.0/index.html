@@ -2986,6 +2986,10 @@ the same core. Apache-2.0, every feature.</p>
 <li>Raw-disk OSDs: <code>O_DIRECT</code>, a write-ahead log, io_uring in Linux release
   builds. Each shard is fsynced, then its location record, before a PUT
   is acknowledged.</li>
+<li>An OSD's disks are known by the ids in their superblocks, not by their
+  paths or order: an OSD missing one of its disks, or given a disk not its
+  own, doesn't start, and a blank disk replaces a missing one. Every read
+  and scrub checks that the block is the shard its location names.</li>
 <li>Erasure coding (Reed-Solomon 4+2 by default; ISA-L on x86_64), with
   each shard's checksum kept with the object and checked on every read
   and repair.</li>

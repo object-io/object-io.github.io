@@ -3741,7 +3741,14 @@ gRPC socket as MetadataService.</p>
 path — list the devices this OSD owns. <code>--disk-filter</code> is for fleets
 where device names aren't stable (use <code>by-id</code> paths). Without
 <code>--init-blank-disks</code>, unformatted disks are <em>skipped</em> rather than
-claimed, as a guard against accidental data loss.</p>
+claimed, as a guard against accidental data loss. A disk named with
+<code>--disks</code> that can't be claimed (neither blank nor an ObjectIO disk)
+stops the OSD. The OSD records its disks by the ids in their
+superblocks: they may be named in any order and under other paths, but
+an OSD missing one of its disks doesn't start. A disk file that doesn't
+exist is created only on the OSD's first start; after that, it is a
+missing disk
+(<a href="../../operations/production/#an-osd-that-wont-start-for-a-missing-disk">runbook</a>).</p>
 <hr />
 <h2 id="objectio-block-gateway"><code>objectio-block-gateway</code><a class="headerlink" href="#objectio-block-gateway" title="Permanent link">&para;</a></h2>
 <p>iSCSI / NBD / NVMe-oF target built on top of ObjectIO objects.</p>

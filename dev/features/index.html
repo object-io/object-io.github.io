@@ -3146,6 +3146,13 @@ release notes say when they do.</p>
 <td>disk layout</td>
 </tr>
 <tr>
+<td>An OSD's disks known by their ids</td>
+<td>✅</td>
+<td>Each disk's index recorded by the id in its superblock: disks found in any order or at other paths; an OSD missing one, or given one not its own, doesn't start; a blank disk replaces a missing one. Reads and scrub check each block is the shard its location names (object, stripe, length, CRC32C)</td>
+<td><a href="../operations-guide/operations/production/#an-osd-that-wont-start-for-a-missing-disk">production</a></td>
+<td>storage engine</td>
+</tr>
+<tr>
 <td>OSD metadata store (WAL, on-disk index, bounded cache)</td>
 <td>✅</td>
 <td>Memory flat with the object count; snapshots streamed, not cloned</td>

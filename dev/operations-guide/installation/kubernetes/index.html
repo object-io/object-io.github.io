@@ -3355,7 +3355,11 @@ without keys from inside the cluster only. See
 <p>Each OSD pod gets two PVCs: a <code>data</code> PVC (holds the <code>disk.raw</code>
 backing file, or gets mounted over by a <code>hostPath</code> device) and a
 small <code>state</code> PVC (WAL + superblock copy). Sizing the <code>data</code> PVC
-drives cluster capacity.</p>
+drives cluster capacity. The OSD creates <code>disk.raw</code> on the empty <code>data</code>
+PVC on its first start only: a pod whose <code>state</code> PVC has run before and
+whose <code>data</code> PVC is empty doesn't start (a disk gone). To replace a
+<code>data</code> PVC, put a blank <code>disk.raw</code> on the new one first
+(<a href="../../operations/production/#replacing-a-disk">replacing a disk</a>).</p>
 <div class="highlight"><pre><span></span><code><span class="nt">osd</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">6</span>
 <span class="w">  </span><span class="nt">failureDomain</span><span class="p">:</span>
