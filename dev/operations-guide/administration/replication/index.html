@@ -2899,6 +2899,12 @@ admin sets them with <code>?tenant=</code>, unrestricted:</p>
 <span class="w">  </span>-H<span class="w"> </span><span class="s1">'content-type: application/json'</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-d<span class="w"> </span><span class="s1">'{"allowed_tenant_hosts": ["dr.example.com", "*.dr.example.com"]}'</span>
 </code></pre></div>
+<p>Or with <code>obioctl</code> (<code>settings set</code> replaces the list; with no host, tenant
+admins can't set targets):</p>
+<div class="highlight"><pre><span></span><code>obioctl<span class="w"> </span>replication<span class="w"> </span>settings<span class="w"> </span><span class="nb">set</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--allowed-tenant-host<span class="w"> </span>dr.example.com<span class="w"> </span>--allowed-tenant-host<span class="w"> </span><span class="s1">'*.dr.example.com'</span>
+obioctl<span class="w"> </span>replication<span class="w"> </span>settings<span class="w"> </span>get
+</code></pre></div>
 <p>The list is checked again at every send, so removing a host stops tenants'
 targets on it.</p>
 <p><strong>3. On the source bucket:</strong> versioning, then the rules (S3's

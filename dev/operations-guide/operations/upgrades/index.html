@@ -2869,7 +2869,11 @@ Design: core/upgrade-path.md.</p>
    or an OSD that hasn't reported (down, or still on a release from
    before format levels), or a node still on the old release. Gateways
    are stateless and can't be listed in advance, so check that every
-   gateway you run appears.</p>
+   gateway you run appears. Each node reports every 30 seconds, and
+   again within a few seconds when a report isn't taken (during an
+   election); the meta leader answering counts itself as reported. A
+   healthy cluster, a fresh one included, has no blockers, and
+   <code>can_finalize</code> is false when there is nothing to raise.</p>
 <ol>
 <li><strong>Finalize:</strong></li>
 </ol>

@@ -3102,6 +3102,17 @@ the same core. Apache-2.0, every feature.</p>
   audit event (<a href="../../operations-guide/operations/upgrades/#how-a-node-stops">upgrades</a>).</li>
 <li>The web console (operator and tenant), <code>obioctl</code>, and Go and Python
   SDKs for the whole admin API (<a href="../../developer-guide/sdk/">SDKs</a>).</li>
+<li>The admin API keeps its references whole and says why it refuses: an
+  OIDC provider a tenant names can't be deleted (409, naming the
+  tenants), and a tenant can't name one that doesn't exist; a tenant's
+  audit target other than a webhook is refused saying what a tenant can
+  use; a tenant admin lists its own tenant's Iceberg warehouses. A fresh
+  cluster's <code>obioctl upgrade status</code> has every node reported, its meta
+  included, from the start. <code>obioctl replication settings</code> sets the hosts
+  tenants' replication targets may be on, and <code>pool create --pg-count</code>
+  says how meta sizes a count left out
+  (<a href="../../operations-guide/administration/cli/">CLI</a>,
+  <a href="../../operations-guide/administration/iam/#identity-providers-oidc">IAM</a>).</li>
 <li>Prometheus metrics; a production guide with sizing, alerts and
   runbooks; a hardware sizing guide with a calculator
   (<a href="../../operations-guide/operations/production/">production</a>,

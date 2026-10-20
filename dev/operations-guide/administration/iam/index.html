@@ -3378,6 +3378,14 @@ Keycloak realm roles.</p>
 <p>Only the system admin can set <code>system_admin</code>, or edit or delete a provider
 that has it. Otherwise a tenant admin could point the operator's sign-in at
 their own IdP.</p>
+<p>A tenant names its provider in its <code>oidc_provider</code> field. The system admin
+can set it to any stored provider when creating or updating the tenant
+(<code>obioctl tenant create|update --oidc-provider</code>); a name that isn't stored
+under <code>identity/openid/</code> is refused with 400. A provider that a tenant
+names can't be deleted: the delete answers 409, naming the tenants. Point
+them at another provider, or clear the field (<code>"oidc_provider": ""</code>),
+first. When a tenant admin deletes their own <code>t-&lt;tenant&gt;</code> provider, the
+tenant's binding to it is cleared with it.</p>
 <h2 id="temporary-credentials-from-an-oidc-token-sts">Temporary credentials from an OIDC token (STS)<a class="headerlink" href="#temporary-credentials-from-an-oidc-token-sts" title="Permanent link">&para;</a></h2>
 <p><code>AssumeRoleWithWebIdentity</code> trades an OIDC token for a role's temporary S3
 keys. It's the AWS STS call, so AWS SDKs and tools speak it as is. Point

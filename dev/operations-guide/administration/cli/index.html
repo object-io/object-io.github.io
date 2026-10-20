@@ -2869,7 +2869,7 @@ A secret is printed only when it's created.</p>
 </tr>
 <tr>
 <td><code>replication</code></td>
-<td><code>target list\|set\|delete</code>, <code>resync start\|status\|cancel</code> (<a href="../replication/">replication</a>)</td>
+<td><code>target list\|set\|delete</code>, <code>resync start\|status\|cancel</code>, <code>settings get\|set</code> (<a href="../replication/">replication</a>)</td>
 </tr>
 <tr>
 <td><code>bucket</code></td>
@@ -2909,7 +2909,7 @@ A secret is printed only when it's created.</p>
 </tr>
 <tr>
 <td><code>warehouse</code></td>
-<td><code>list</code> (system admin), <code>create</code>, <code>delete</code></td>
+<td><code>list</code> (a tenant admin its tenant's, the system admin every tenant's), <code>create</code>, <code>delete</code></td>
 </tr>
 <tr>
 <td><code>config</code></td>
@@ -2956,6 +2956,10 @@ LRC, 2 replication):</p>
 obioctl<span class="w"> </span>pool<span class="w"> </span>create<span class="w"> </span>wide<span class="w"> </span>--ec-type<span class="w"> </span><span class="m">1</span><span class="w"> </span>--ec-k<span class="w"> </span><span class="m">6</span><span class="w"> </span>--ec-local-parity<span class="w"> </span><span class="m">2</span><span class="w"> </span>--ec-global-parity<span class="w"> </span><span class="m">2</span>
 obioctl<span class="w"> </span>pool<span class="w"> </span>create<span class="w"> </span>copies<span class="w"> </span>--ec-type<span class="w"> </span><span class="m">2</span><span class="w"> </span>--replication-count<span class="w"> </span><span class="m">3</span>
 </code></pre></div>
+<p>A pool's placement-group count is fixed for its life. Leave <code>--pg-count</code>
+out (or give 0) and meta sizes it from the OSDs in service: about 100 PG
+members an OSD (config <code>pg/members_per_osd</code>) over the copies a PG holds,
+rounded up to a power of two, from 256 to 4096. Six OSDs at 4+2 get 256.</p>
 <p>A scheme the codecs can't keep is refused, with what is wrong with it,
 and no pool is made: Reed-Solomon with no parity (<code>--ec-m 0</code>; one
 unprotected copy is <code>--ec-type 2 --replication-count 1</code>) or a profile

@@ -3500,7 +3500,7 @@ managed on the admin API (<code>obioctl warehouse …</code>):</p>
 <tbody>
 <tr>
 <td><code>GET /_admin/warehouses</code></td>
-<td>system admin</td>
+<td>system admin (every tenant's), or a tenant's admin (its tenant's)</td>
 <td><code>{"warehouses": [{"name", "bucket", "location", "tenant", "created_at", "properties"}]}</code></td>
 </tr>
 <tr>

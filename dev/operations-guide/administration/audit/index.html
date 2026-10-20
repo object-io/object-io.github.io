@@ -3047,7 +3047,10 @@ tokens as <code>********</code>. Writing that placeholder back keeps the stored 
 <p>A tenant receives the events <strong>on its buckets</strong>, including the operator's
 own requests on them, and <strong>by its principals</strong>. It never sees another
 tenant's.</p>
-<p>A tenant's webhooks must be <strong>https</strong> and on a host the operator lists in
+<p>A tenant's targets are <strong>webhooks only</strong>: a <code>stdout</code> target writes to the
+gateway's own output, so only the system admin sets one, in the cluster's
+configuration. A tenant configuration with any other type is refused with
+400, saying so. A tenant's webhooks must be <strong>https</strong> and on a host the operator lists in
 <code>allowed_tenant_hosts</code>. Without that rule, a tenant could point the gateway
 at addresses inside the cluster, such as meta's port or a cloud metadata
 endpoint. Redirects are never followed, for the same reason. If the operator
