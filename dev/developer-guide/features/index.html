@@ -3174,7 +3174,7 @@ and <a href="../../operations-guide/administration/public-access/">Public Access
 <li><strong>Anonymous requests</strong>: served only what a bucket policy grants to everyone, with public access blocked by default</li>
 <li><strong>OIDC</strong>: the operator's provider and <strong>each tenant's own</strong> (Keycloak, Entra ID, Okta, Google, any compliant issuer); groups from any claim, dotted paths included</li>
 <li><strong>STS <code>AssumeRoleWithWebIdentity</code></strong>: an OIDC token for a role's temporary keys, AWS-wire-compatible; a tenant's roles trust only that tenant's provider, system roles only the operator's</li>
-<li><strong>Vended credentials</strong> for Iceberg / Unity clients, confined to a table's location</li>
+<li><strong>Vended credentials</strong> for Iceberg / Unity clients, confined to a table's location and held to its warehouse's or catalog's tenant</li>
 <li><strong>Console session cookies</strong> with 24-hour TTL</li>
 <li>Sessions, temporary credentials and listing tokens are signed with keys derived from a <strong>cluster secret</strong> held in meta's Raft log</li>
 </ul>
@@ -3199,10 +3199,10 @@ and <a href="../../operations-guide/administration/public-access/">Public Access
 <h2 id="3a-iceberg-tables-rest-catalog">3a. Iceberg Tables (REST Catalog)<a class="headerlink" href="#3a-iceberg-tables-rest-catalog" title="Permanent link">&para;</a></h2>
 <h3 id="warehouse-management">Warehouse Management<a class="headerlink" href="#warehouse-management" title="Permanent link">&para;</a></h3>
 <ul>
-<li><strong>POST/GET/DELETE /_admin/warehouses</strong> — Create, list, delete warehouses</li>
-<li><strong>Backing bucket</strong>: Each warehouse automatically creates an S3 bucket (<code>iceberg-{name}</code>)</li>
-<li><strong>Tenant-scoped</strong>: Warehouses isolated per tenant</li>
-<li><strong>Warehouse-scoped namespaces</strong>: Each warehouse has its own namespace/table hierarchy</li>
+<li><strong>POST/GET/DELETE /_admin/warehouses</strong> — Create, list, delete warehouses (the system admin, or an admin of the warehouse's tenant)</li>
+<li><strong>Backing bucket</strong>: Each warehouse automatically creates an S3 bucket (<code>iceberg-{name}</code>); a warehouse is deleted only once it is empty</li>
+<li><strong>Tenant-scoped</strong>: A caller sees and uses only its own tenant's warehouses</li>
+<li><strong>Warehouse-scoped namespaces</strong>: Each warehouse has its own namespace/table hierarchy, policies included</li>
 </ul>
 <h3 id="iceberg-rest-catalog-api">Iceberg REST Catalog API<a class="headerlink" href="#iceberg-rest-catalog-api" title="Permanent link">&para;</a></h3>
 <ul>
@@ -3212,6 +3212,8 @@ and <a href="../../operations-guide/administration/public-access/">Public Access
 <li><strong>Multi-level namespaces</strong>: Dot-separated hierarchy (e.g., <code>db.schema</code>)</li>
 <li><strong>Namespace policies</strong>: IAM-style access control per namespace</li>
 <li><strong>Table policies</strong>: Per-table access control</li>
+<li><strong>Evaluation</strong>: as for a bucket policy: explicit Deny wins, then any Allow, then the warehouse's administrators; else deny. No policy means admins only.</li>
+<li><strong>Table locations</strong>: confined to the warehouse's bucket</li>
 <li><strong>Data filters</strong>: Column/row-level security per principal</li>
 </ul>
 <h3 id="authentication_1">Authentication<a class="headerlink" href="#authentication_1" title="Permanent link">&para;</a></h3>
@@ -3219,11 +3221,11 @@ and <a href="../../operations-guide/administration/public-access/">Public Access
 <li><strong>SigV4</strong>: Same access key / secret key as S3 (industry standard)</li>
 <li><strong>OIDC/OAuth2</strong>: Bearer token authentication via external provider</li>
 <li><strong>Console session cookie</strong>: For web console access</li>
-<li><strong>Unified auth middleware</strong>: Tries SigV4 → OIDC → session cookie → unauthenticated</li>
+<li><strong>Unified auth middleware</strong>: Tries SigV4 → OIDC → session cookie; a missing or failing credential is refused with 401 (open only under <code>--no-auth</code>)</li>
 </ul>
 <h3 id="vended-credentials-sts">Vended Credentials (STS)<a class="headerlink" href="#vended-credentials-sts" title="Permanent link">&para;</a></h3>
 <ul>
-<li><strong>LoadTable response</strong>: Includes temporary S3 credentials in <code>config</code> field</li>
+<li><strong>LoadTable response</strong>: Includes temporary S3 credentials in <code>config</code> field, read-write for a caller allowed <code>iceberg:UpdateTable</code> and read-only otherwise; a caller not allowed <code>iceberg:LoadTable</code> gets 403 and none</li>
 <li><strong>Credential format</strong>: <code>ASIA*</code> access key + secret + HMAC-signed session token</li>
 <li><strong>1-hour TTL</strong>: Fresh credentials generated per LoadTable call</li>
 <li><strong>Path-style access</strong>: <code>s3.path-style-access=true</code> for ObjectIO compatibility</li>
@@ -3245,15 +3247,15 @@ they share the same auth bridge, the same <code>BucketPolicy</code>/<code>Policy
 backbone, and the same admin gate.</p>
 <h3 id="three-level-entity-model">Three-level entity model<a class="headerlink" href="#three-level-entity-model" title="Permanent link">&para;</a></h3>
 <ul>
-<li><strong>Catalog</strong> — top of the namespace; auto-provisions an <code>unity-{name}</code> backing bucket</li>
+<li><strong>Catalog</strong> — top of the namespace; auto-provisions an <code>unity-{name}</code> backing bucket; belongs to its creator's tenant (created by a catalog admin or a tenant admin), and only that tenant's callers see it</li>
 <li><strong>Schema</strong> — addressed as <code>{catalog}.{schema}</code></li>
-<li><strong>Table / Function / Volume / Model</strong> — addressed as <code>{catalog}.{schema}.{name}</code></li>
+<li><strong>Table / Function / Volume / Model</strong> — addressed as <code>{catalog}.{schema}.{name}</code>; an EXTERNAL table's or volume's <code>storage_location</code> must lie inside the catalog's bucket (<code>s3://unity-{catalog}/...</code>), where its vended credentials are scoped</li>
 <li><strong>Model version</strong> — addressed as <code>{catalog}.{schema}.{model}/versions/{n}</code></li>
 </ul>
 <h3 id="policy-model">Policy model<a class="headerlink" href="#policy-model" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>IAM-style JSON</strong> — same <code>BucketPolicy</code> shape as S3 / Iceberg; <code>unity:</code> action prefix and <code>arn:obio:unity:::{catalog}[/{schema}[/{table}]]</code> resource ARNs</li>
-<li><strong>Three-level walk</strong> — catalog → schema → table; deny at any level wins</li>
+<li><strong>Three-level walk</strong> — catalog → schema → table, with the caller's attached IAM policies; deny at any level wins, then any Allow, then the catalog's administrators (catalog admins and its tenant's admins); else deny</li>
 <li><strong>Grantable actions</strong> — <code>unity:Get*</code>, <code>unity:Create*</code>, <code>unity:Delete*</code> for every entity, plus <code>unity:SetTableSecurity</code> for row-filter / column-mask binding (grantable to non-admin via Unity policy — does not require admin)</li>
 <li><strong>Per-entity policy editor</strong> — <code>PUT /api/2.1/unity-catalog/{catalogs|schemas|tables}/{name}/policy</code>, <code>GET</code> to read, empty body clears</li>
 </ul>
@@ -3299,7 +3301,7 @@ backbone, and the same admin gate.</p>
 <ul>
 <li><strong><code>POST /…/temporary-table-credentials</code></strong> — mint scoped 1-hour STS session for table data access</li>
 <li><strong><code>POST /…/temporary-volume-credentials</code></strong> — same for governed volumes</li>
-<li><strong>Admin-gated</strong> — recipients of the vended creds appear to the gateway as <code>obio:CredentialType: STS</code> and pass the default-deny policy</li>
+<li><strong>Policy-gated</strong> (<code>unity:GenerateTemporaryCredentials</code>) — recipients of the vended creds appear to the gateway as <code>obio:CredentialType: STS</code> and pass the default-deny policy; the session is held to the catalog's tenant</li>
 </ul>
 <h3 id="oidc-group-bridging">OIDC group bridging<a class="headerlink" href="#oidc-group-bridging" title="Permanent link">&para;</a></h3>
 <ul>
@@ -3323,8 +3325,9 @@ backbone, and the same admin gate.</p>
 <h2 id="3c-table-sharing-delta-sharing-protocol">3c. Table Sharing (Delta Sharing Protocol)<a class="headerlink" href="#3c-table-sharing-delta-sharing-protocol" title="Permanent link">&para;</a></h2>
 <h3 id="share-management">Share Management<a class="headerlink" href="#share-management" title="Permanent link">&para;</a></h3>
 <ul>
-<li><strong>Create/List/Delete shares</strong> via admin API and console</li>
-<li><strong>Tenant-scoped shares</strong>: Filtered by authenticated user's tenant</li>
+<li><strong>Create/List/Delete shares</strong> via admin API and console: <code>GET/POST /_admin/shares</code>, <code>DELETE /_admin/shares/{share}</code>, <code>GET/POST /_admin/shares/{share}/tables</code>, <code>DELETE /_admin/shares/{share}/schemas/{schema}/tables/{table}</code></li>
+<li><strong>Tenant-scoped shares</strong>: Filtered by authenticated user's tenant; managed by the system admin or the share tenant's admins</li>
+<li><strong>A share exposes its own tenant's data</strong>: a table in another tenant's bucket or warehouse is added only by the system admin</li>
 </ul>
 <h3 id="table-types">Table Types<a class="headerlink" href="#table-types" title="Permanent link">&para;</a></h3>
 <ul>
@@ -3334,7 +3337,7 @@ backbone, and the same admin gate.</p>
 </ul>
 <h3 id="recipient-token-management">Recipient &amp; Token Management<a class="headerlink" href="#recipient-token-management" title="Permanent link">&para;</a></h3>
 <ul>
-<li><strong>Create recipients</strong>: Name + list of accessible shares</li>
+<li><strong>Create recipients</strong>: Name + list of accessible shares (<code>POST /_admin/recipients</code>, <code>DELETE /_admin/recipients/{name}</code>), by an admin of every share listed</li>
 <li><strong>Bearer tokens</strong>: One-time display, SHA-256 hashed for storage</li>
 <li><strong>profile.share</strong>: Standard Delta Sharing credential file format</li>
 <li><strong>Token authentication</strong>: Recipients authenticate via <code>Authorization: Bearer &lt;token&gt;</code></li>

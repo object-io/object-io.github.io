@@ -1872,6 +1872,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#warehouses_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Warehouses
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#configuration" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3099,6 +3110,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#warehouses_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Warehouses
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#configuration" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3483,9 +3505,28 @@ the catalog URI <strong>without</strong> <code>/v1</code> and add it themselves:
 <p>Every catalog lives in a <a href="#warehouses">warehouse</a>, named by the client's
 <code>warehouse</code> setting.</p>
 <h2 id="authentication">Authentication<a class="headerlink" href="#authentication" title="Permanent link">&para;</a></h2>
-<p>Iceberg endpoints use the same SigV4 authentication as S3. When <code>--no-auth</code> is set, all Iceberg endpoints are accessible without credentials.</p>
-<hr />
+<p>Every request carries a credential, as on S3: a SigV4 signature with an
+access key (the same keys as S3), an OIDC bearer token from the
+configured identity provider (<code>--oidc-issuer-url</code>), or a console session.
+A request with none, or with one that doesn't check out (a bad
+signature, an unknown key, a token the provider doesn't accept), is
+refused with <code>401</code>. A key scoped to a bucket or prefix is refused with
+<code>403</code>: it is for that data, not for the catalog. Only under <code>--no-auth</code>
+are the endpoints open, and then nothing is checked.</p>
 <h2 id="warehouses">Warehouses<a class="headerlink" href="#warehouses" title="Permanent link">&para;</a></h2>
+<p>Every request names a warehouse: <code>?warehouse=&lt;name&gt;</code> on
+<code>/v1/config</code>, and from then on the <code>ws/&lt;name&gt;</code> prefix the configuration
+returns (<code>/iceberg/v1/ws/&lt;name&gt;/namespaces/...</code>). A warehouse belongs to
+a tenant; a caller sees only its own tenant's warehouses (a catalog
+admin sees all), and one of another tenant is answered as unknown.</p>
+<p>Warehouses are managed on the admin API, not here:
+<code>POST /_admin/warehouses</code> (<code>{"name": "..."}</code>, created in the caller's
+tenant), <code>GET /_admin/warehouses</code> and <code>DELETE /_admin/warehouses/{name}</code>,
+by the system admin or an admin of the warehouse's tenant. Each has a
+backing bucket <code>iceberg-&lt;name&gt;</code>; a warehouse is deleted only once that
+bucket is empty (<code>409</code> otherwise), since its bucket goes with it.</p>
+<hr />
+<h2 id="warehouses_1">Warehouses<a class="headerlink" href="#warehouses_1" title="Permanent link">&para;</a></h2>
 <p>A warehouse is a catalog with its own namespaces and tables, and a
 bucket, <code>iceberg-&lt;name&gt;</code>, made with it for its data. Warehouses are
 managed on the admin API (<code>obioctl warehouse …</code>):</p>
@@ -3657,18 +3698,30 @@ GET /iceberg/v1/namespaces?parent=parent_ns
 <span class="w">  </span><span class="nt">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="nt">"format-version"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">"table-uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">"location"</span><span class="p">:</span><span class="w"> </span><span class="s2">"s3://objectio-warehouse/analytics/events"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"location"</span><span class="p">:</span><span class="w"> </span><span class="s2">"s3://iceberg-analytics/analytics/events"</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">"schema"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">}</span>
 <span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nt">"metadata-location"</span><span class="p">:</span><span class="w"> </span><span class="s2">"s3://objectio-warehouse/analytics/events/metadata/v1.metadata.json"</span>
+<span class="w">  </span><span class="nt">"metadata-location"</span><span class="p">:</span><span class="w"> </span><span class="s2">"s3://iceberg-analytics/analytics/events/metadata/00000-....metadata.json"</span>
 <span class="p">}</span>
 </code></pre></div>
+<p>A table lives inside its warehouse: a <code>location</code> in the request, or one
+set later by a commit (<code>set-location</code>), must be the warehouse's location
+or a path under it, or the request is refused with <code>400</code>. The table's
+vended credentials are scoped to its location.</p>
 <hr />
 <h3 id="loadtable">LoadTable<a class="headerlink" href="#loadtable" title="Permanent link">&para;</a></h3>
 <p>Get table metadata.</p>
 <div class="highlight"><pre><span></span><code>GET /iceberg/v1/namespaces/{namespace}/tables/{table}
 </code></pre></div>
-<p><strong>Response:</strong> Same format as CreateTable response.</p>
+<p><strong>Response:</strong> Same format as CreateTable response, with vended
+credentials for the table's data in <code>config</code> (<code>s3.access-key-id</code>,
+<code>s3.secret-access-key</code>, <code>s3.session-token</code>, <code>s3.endpoint</code>). They are
+scoped to the table's location, last an hour, and are read-write only for
+a caller who may also commit to the table (<code>iceberg:UpdateTable</code>);
+anyone else gets read-only ones. They stay inside the warehouse's
+tenant: they reach nothing in another tenant's buckets.</p>
+<p>A caller that <code>iceberg:LoadTable</code> isn't granted to gets <code>403</code> and no
+credentials.</p>
 <hr />
 <h3 id="tableexists">TableExists<a class="headerlink" href="#tableexists" title="Permanent link">&para;</a></h3>
 <p>Check if a table exists.</p>
@@ -3706,6 +3759,13 @@ GET /iceberg/v1/namespaces?parent=parent_ns
 <p><strong>Response:</strong> 204 No Content</p>
 <hr />
 <h2 id="access-control">Access Control<a class="headerlink" href="#access-control" title="Permanent link">&para;</a></h2>
+<p>Policies, tags, quotas, encryption requirements and role bindings are
+set by the warehouse's administrators: the system admin, the principals
+named by <code>--oidc-admin-roles</code>, and the admins of the warehouse's tenant.
+The namespace properties that hold them (names starting <code>__</code>) can be
+changed only by them, through these endpoints or through
+UpdateNamespaceProperties. Data filters are managed by the system admin
+and the <code>--oidc-admin-roles</code> principals only.</p>
 <h3 id="namespace-policy">Namespace Policy<a class="headerlink" href="#namespace-policy" title="Permanent link">&para;</a></h3>
 <p>Set a policy on a namespace (admin only).</p>
 <div class="highlight"><pre><span></span><code>PUT /iceberg/v1/namespaces/{namespace}/policy
@@ -3721,11 +3781,22 @@ GET /iceberg/v1/namespaces?parent=parent_ns
 </code></pre></div>
 <p><strong>Request Body:</strong> Same format as namespace policy.</p>
 <h3 id="policy-evaluation">Policy Evaluation<a class="headerlink" href="#policy-evaluation" title="Permanent link">&para;</a></h3>
-<p>Policies follow the same semantics as S3 bucket policies:
-- <strong>Explicit Deny</strong> always wins
-- <strong>Explicit Allow</strong> grants access
-- <strong>Implicit Deny</strong> (no matching statement) allows access (owner has implicit access)
-- <strong>No policy</strong> allows access</p>
+<p>A request is decided by the warehouse's catalog policy (<code>PUT
+/v1/catalog/policy</code>), the policy of each level of the namespace and, for
+a table, the table's policy, the way S3 decides on a bucket policy:</p>
+<ul>
+<li><strong>Explicit Deny</strong> anywhere refuses the request (<code>403</code>).</li>
+<li><strong>Explicit Allow</strong> anywhere grants it.</li>
+<li>With neither (no policy, or none naming the caller), only the
+  warehouse's administrators go ahead, as only a bucket's owner does on
+  S3. Anyone else is refused: a tenant's users need a policy that allows
+  them.</li>
+<li>A stored policy that can't be read refuses the request rather than
+  being skipped, and so does a policy meta can't be asked for (<code>503</code>,
+  retry).</li>
+<li>The system admin is not subject to policies, so no policy can lock the
+  operator out.</li>
+</ul>
 <h3 id="iceberg-actions">Iceberg Actions<a class="headerlink" href="#iceberg-actions" title="Permanent link">&para;</a></h3>
 <table>
 <thead>

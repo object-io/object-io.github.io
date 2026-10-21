@@ -2726,6 +2726,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#changes-since-010-rc1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changes since 0.1.0-rc.1
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#how-it-was-tested" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2880,6 +2891,17 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#changes-since-010-rc1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changes since 0.1.0-rc.1
+      
+    </span>
+  </a>
   
 </li>
       
@@ -3132,6 +3154,36 @@ the same core. Apache-2.0, every feature.</p>
   runbooks; a hardware sizing guide with a calculator
   (<a href="../../operations-guide/operations/production/">production</a>,
   <a href="../../operations-guide/installation/hardware-sizing/">hardware sizing</a>).</li>
+</ul>
+<h2 id="changes-since-010-rc1">Changes since 0.1.0-rc.1<a class="headerlink" href="#changes-since-010-rc1" title="Permanent link">&para;</a></h2>
+<p>The data lake APIs now authorize as S3 does:</p>
+<ul>
+<li><strong>A credential is required.</strong> The Iceberg REST catalog and the Unity
+  Catalog API refuse a request with no credential, or one that doesn't
+  check out, with <code>401</code>; they are open only under <code>--no-auth</code>.</li>
+<li><strong>No policy means administrators only.</strong> A request is granted by an
+  Allow in a policy (and, on Unity, the caller's IAM policies), or goes
+  ahead for the warehouse's or catalog's administrators: before, any
+  authenticated caller was let through when no policy said otherwise.
+  Tenants see only their own warehouses and catalogs.
+  (<a href="../../operations-guide/administration/iceberg-api/#policy-evaluation">Iceberg API</a>)</li>
+<li><strong>Vended credentials</strong> are read-only unless the caller may commit to
+  the table, are confined to the warehouse's bucket, and stay inside the
+  warehouse's (or catalog's) tenant. Unity's external tables and
+  volumes, like Iceberg tables, must lie inside their catalog's bucket. Session tokens now carry their
+  tenant, so temporary credentials issued by an 0.1.0-rc.1 gateway (STS
+  sessions, vended credentials) are not accepted once a gateway is
+  upgraded: clients get new ones.</li>
+<li><strong>Admin API</strong>: the Delta Sharing management routes moved from
+  <code>/_admin/delta-sharing/*</code> to <code>/_admin/shares/{share}</code>,
+  <code>/_admin/shares/{share}/tables</code> and <code>/_admin/recipients</code>, behind the
+  admin API's authentication; a share takes tables of its own tenant only,
+  unless the system admin adds them. The warehouse routes on the Iceberg
+  API (<code>/iceberg/v1/warehouses</code>) are gone: <code>/_admin/warehouses</code> manages
+  warehouses, and refuses to delete one whose bucket holds objects.</li>
+<li><strong>S3</strong>: a request whose bucket, policies or attached policies meta
+  can't read is refused with <code>503</code> (retry), rather than decided without
+  them.</li>
 </ul>
 <h2 id="how-it-was-tested">How it was tested<a class="headerlink" href="#how-it-was-tested" title="Permanent link">&para;</a></h2>
 <p>All on the release candidate's code.</p>
