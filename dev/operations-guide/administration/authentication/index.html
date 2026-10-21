@@ -1771,6 +1771,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#the-signed-body" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The signed body
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -3116,6 +3127,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#the-signed-body" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The signed body
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -3518,10 +3540,48 @@ Signature=fe5f80f77d5fa3beca038a248ff027d0445342fe2855ddc963176630326f1024
 </tbody>
 </table>
 <p>Presigned URLs (query-string SigV4) are accepted too; SigV2, in a header
-or a presigned URL, is refused with <code>400</code>. A streaming upload
-(<code>x-amz-content-sha256: STREAMING-AWS4-HMAC-SHA256-PAYLOAD</code>, <code>aws-chunked</code>)
-is authenticated by its seed signature; the per-chunk signatures are
-not verified.</p>
+or a presigned URL, is refused with <code>400</code>.</p>
+<h3 id="the-signed-body">The signed body<a class="headerlink" href="#the-signed-body" title="Permanent link">&para;</a></h3>
+<p>The signature covers the body through <code>x-amz-content-sha256</code>, and the
+gateway holds the body to it. What each value means:</p>
+<table>
+<thead>
+<tr>
+<th><code>x-amz-content-sha256</code></th>
+<th>What is checked</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A SHA-256, hex</td>
+<td>The body's hash, as it arrives. A body that doesn't match is refused with <code>400 XAmzContentSHA256Mismatch</code>, and nothing is stored</td>
+</tr>
+<tr>
+<td><code>UNSIGNED-PAYLOAD</code></td>
+<td>Nothing: the client signed no body (presigned URLs send this, and SDKs over HTTPS often do)</td>
+</tr>
+<tr>
+<td><code>STREAMING-AWS4-HMAC-SHA256-PAYLOAD</code></td>
+<td>Each chunk's signature, chained from the request's. A chunk whose signature doesn't match is refused with <code>403 SignatureDoesNotMatch</code>, and nothing is stored</td>
+</tr>
+<tr>
+<td><code>STREAMING-AWS4-HMAC-SHA256-PAYLOAD-TRAILER</code></td>
+<td>As above, and the signature over the trailing checksum</td>
+</tr>
+<tr>
+<td><code>STREAMING-UNSIGNED-PAYLOAD-TRAILER</code></td>
+<td>The trailing checksum (<code>400 BadDigest</code> when it doesn't match)</td>
+</tr>
+</tbody>
+</table>
+<p>A trailer the request names in <code>x-amz-trailer</code> must come at the end of
+the body: one left off is refused with <code>400 MalformedTrailerError</code>. Each
+streaming form is what some SDK sends by default for uploads (aws-cli,
+boto3, the Go and Java SDKs, minio-go); none needs setting up.</p>
+<p>A refused signature is logged at <code>debug</code> only, with the canonical request
+the gateway computed, to tell a proxy that rewrites requests from a
+client that signs them wrong. Credentials, session tokens, cookies and
+SSE-C keys are left out of that log.</p>
 <hr />
 <h2 id="user-management">User Management<a class="headerlink" href="#user-management" title="Permanent link">&para;</a></h2>
 <h3 id="using-the-cli">Using the CLI<a class="headerlink" href="#using-the-cli" title="Permanent link">&para;</a></h3>

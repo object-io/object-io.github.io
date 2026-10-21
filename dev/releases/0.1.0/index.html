@@ -3051,6 +3051,10 @@ the same core. Apache-2.0, every feature.</p>
   cluster level, new buckets blocked; named endpoints and client
   addresses (<code>aws:SourceVpce</code>, <code>aws:SourceIp</code>, trusted proxies) in
   policies (<a href="../../operations-guide/administration/public-access/">public access</a>).</li>
+<li>SigV4 in the header, in a presigned URL and on streaming uploads: the
+  body is held to the hash it was signed with, and each streaming chunk
+  and signed trailer to its signature
+  (<a href="../../operations-guide/administration/authentication/#the-signed-body">authentication</a>).</li>
 <li>SSE-S3, SSE-KMS with the built-in KMS, SSE-C.</li>
 <li>mTLS on every gRPC hop between services
   (<a href="../../operations-guide/administration/mtls/">mTLS</a>).</li>

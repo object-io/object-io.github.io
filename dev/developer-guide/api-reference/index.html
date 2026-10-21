@@ -3382,7 +3382,17 @@ every call.</p>
 <tr>
 <td><code>SignatureDoesNotMatch</code></td>
 <td>403</td>
-<td>Signature mismatch</td>
+<td>Signature mismatch, of the request or of a streaming upload's chunk</td>
+</tr>
+<tr>
+<td><code>XAmzContentSHA256Mismatch</code></td>
+<td>400</td>
+<td>The body is not the one whose SHA-256 was signed</td>
+</tr>
+<tr>
+<td><code>MalformedTrailerError</code></td>
+<td>400</td>
+<td>A trailer named in <code>x-amz-trailer</code> is missing from the body</td>
 </tr>
 </tbody>
 </table>
