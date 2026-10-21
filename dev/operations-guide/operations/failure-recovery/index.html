@@ -3655,8 +3655,13 @@ chart:</p>
 groups, configuration, …) goes through the Raft log, so a new leader has
 it (<a href="../meta-ha/#what-is-replicated">what is replicated</a>).</p>
 <h3 id="admin-api">Admin API<a class="headerlink" href="#admin-api" title="Permanent link">&para;</a></h3>
-<p>All endpoints are plain HTTP on the meta admin port (default 9102).
-They're meta-local and not exposed via the gateway.</p>
+<p>All endpoints are on the meta admin port (default 9102), meta-local and
+not exposed via the gateway. Without mTLS they are plain HTTP and
+unauthenticated: keep the port to the network only ObjectIO and its
+operators reach. With <a href="../../administration/mtls/">mTLS</a> the port is
+HTTPS, and every call below but <code>/status</code> takes a client certificate of
+role <code>admin</code>: add <code>--cacert ca.pem --cert admin.pem --key admin.key</code> and
+use <code>https://</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Cluster state (leader id, term, voters, learners, last_log_index)</span>
 curl<span class="w"> </span>http://meta-0:9102/status<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq
 

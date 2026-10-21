@@ -3417,7 +3417,9 @@ cert-manager's own), meta data-dir free space (watch with node_exporter),
 and the audit spool's size.</p>
 <h2 id="runbooks">Runbooks<a class="headerlink" href="#runbooks" title="Permanent link">&para;</a></h2>
 <p>Commands are <code>obioctl</code> (a SigV4 client of the gateway's admin API,
-<code>bin/cli/README.md</code> in the code repo) and meta's admin port (9102).</p>
+<code>bin/cli/README.md</code> in the code repo) and meta's admin port (9102;
+under <a href="../../administration/mtls/#metas-admin-port">mTLS</a> HTTPS, and
+membership changes take a certificate of role <code>admin</code>).</p>
 <h3 id="an-osd-is-down">An OSD is down<a class="headerlink" href="#an-osd-is-down" title="Permanent link">&para;</a></h3>
 <p><strong>What happens on its own.</strong>
 - Meta probes every OSD every 15 s. Three missed probes, about 45 s, mark

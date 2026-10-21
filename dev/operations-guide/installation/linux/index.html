@@ -3284,10 +3284,21 @@ then start the rest:</p>
 objectio-install<span class="w"> </span>cluster<span class="w"> </span>init<span class="w"> </span>node1.internal<span class="w"> </span>node2.internal<span class="w"> </span>node3.internal
 sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>--now<span class="w"> </span>objectio-osd-0<span class="w"> </span>objectio-osd-1<span class="w"> </span>objectio-gateway
 </code></pre></div>
-<p><code>cluster init</code> calls each meta node's admin port (9102; plain HTTP, no
-authentication: keep it to the operators' network), as the
+<p><code>cluster init</code> calls each meta node's admin port (9102), as the
 <a href="#meta-three-nodes-raft">by-hand</a> steps do, and is safe to run again. The
-admin's keys are then in <code>/var/lib/objectio/meta/admin-creds.env</code> on
+units bind it on every interface (<code>--admin-host 0.0.0.0</code>), so it can run
+from any host. Without mTLS the port is plain HTTP with no
+authentication: keep it to the operators' network. With
+<a href="../../administration/mtls/">mTLS</a> it is HTTPS, and changes membership
+only for a certificate of role <code>admin</code>; give <code>cluster init</code> one:</p>
+<div class="highlight"><pre><span></span><code>objectio-install<span class="w"> </span>cluster<span class="w"> </span>init<span class="w"> </span>--tls-cert<span class="w"> </span>admin.pem<span class="w"> </span>--tls-key<span class="w"> </span>admin.key<span class="w"> </span>--tls-ca<span class="w"> </span>ca.pem<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>node1.internal<span class="w"> </span>node2.internal<span class="w"> </span>node3.internal
+</code></pre></div>
+<p>The units carry no TLS flags of their own: under mTLS, give each service
+its certificate with a drop-in (<code>systemctl edit objectio-meta</code>, and so on)
+setting <code>Environment=OBJECTIO_TLS_CERT=… OBJECTIO_TLS_KEY=…
+OBJECTIO_TLS_CA=…</code>, each its own role's (<a href="../../administration/mtls/#roles">mTLS</a>).
+The admin's keys are then in <code>/var/lib/objectio/meta/admin-creds.env</code> on
 every meta host.</p>
 <p>One host is the same with one meta node: <code>--role all</code>, no
 <code>--meta-endpoint</code> (this host's meta), and an erasure code its disks can
@@ -3324,7 +3335,11 @@ the others reach it at:</p>
 (profiles allowed);
 it needs at least k+m OSDs, on as many hosts. Once all three run, form
 the Raft group from node 1, over its admin port (plain HTTP, no
-authentication: keep 9102 to the operators' network):</p>
+authentication: keep 9102 to the operators' network; under
+<a href="../../administration/mtls/#metas-admin-port">mTLS</a> HTTPS, with
+<code>--cacert ca.pem --cert admin.pem --key admin.key</code>). The admin port binds
+the host <code>--listen</code> names (<code>--admin-host</code> to change it): with
+<code>--listen 0.0.0.0:9100</code>, every interface.</p>
 <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://meta1.internal:9102/init
 curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://meta1.internal:9102/add-learner<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-H<span class="w"> </span><span class="s1">'content-type: application/json'</span><span class="w"> </span>-d<span class="w"> </span><span class="s1">'{"node_id": 2, "addr": "meta2.internal:9100"}'</span>

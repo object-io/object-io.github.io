@@ -3088,8 +3088,14 @@ the same core. Apache-2.0, every feature.</p>
   and signed trailer to its signature
   (<a href="../../operations-guide/administration/authentication/#the-signed-body">authentication</a>).</li>
 <li>SSE-S3, SSE-KMS with the built-in KMS, SSE-C.</li>
-<li>mTLS on every gRPC hop between services
-  (<a href="../../operations-guide/administration/mtls/">mTLS</a>).</li>
+<li>mTLS on every gRPC hop between services, with a certificate per role
+  and each call checked against its caller's role; meta's admin port
+  over the same certificates, changing Raft membership for role <code>admin</code>
+  only, while <code>/status</code> and the probes' <code>/health</code> and <code>/ready</code> answer
+  without a client certificate; <code>objectio-install cluster init</code> takes an
+  <code>admin</code> certificate (<a href="../../operations-guide/administration/mtls/">mTLS</a>).
+  NetworkPolicies, on by default in the chart, keep the internal ports to
+  ObjectIO's own pods; the all-in-one keeps them on loopback.</li>
 </ul>
 <h3 id="data-lake-preview">Data lake (preview)<a class="headerlink" href="#data-lake-preview" title="Permanent link">&para;</a></h3>
 <ul>

@@ -1867,6 +1867,28 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#without-mtls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Without mTLS
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#roles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Roles
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#turning-it-on" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1875,6 +1897,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Turning it on">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#issuing-the-certificates-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Issuing the certificates yourself
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metas-admin-port" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Meta's admin port
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1882,6 +1932,17 @@
     <span class="md-ellipsis">
       
         Kubernetes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#upgrading-from-a-release-whose-certificates-name-no-role" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Upgrading from a release whose certificates name no role
       
     </span>
   </a>
@@ -2722,6 +2783,28 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#without-mtls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Without mTLS
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#roles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Roles
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#turning-it-on" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2730,6 +2813,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Turning it on">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#issuing-the-certificates-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Issuing the certificates yourself
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metas-admin-port" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Meta's admin port
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2737,6 +2848,17 @@
     <span class="md-ellipsis">
       
         Kubernetes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#upgrading-from-a-release-whose-certificates-name-no-role" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Upgrading from a release whose certificates name no role
       
     </span>
   </a>
@@ -2800,8 +2922,69 @@ cluster's CA:</p>
 <p>A peer without such a certificate is refused when it connects: a plaintext
 client, a TLS client with no certificate, or one with a certificate from
 another CA.</p>
+<p>Each certificate also names its <strong>role</strong>, and each call is checked
+against it: an OSD's certificate can't read a user's secret key from meta,
+a gateway's can't purge an OSD. Meta's admin port (Raft bootstrap and
+membership) is HTTPS with the same certificates, and changes membership
+only for the <code>admin</code> role.</p>
 <p>TLS for clients (S3, the console, Iceberg) is a separate matter: it's
 terminated at the ingress or load balancer.</p>
+<h2 id="without-mtls">Without mTLS<a class="headerlink" href="#without-mtls" title="Permanent link">&para;</a></h2>
+<p>Without mTLS nothing between the services is authenticated. Anyone who
+can reach meta's gRPC port (9100) can read every user's secret key and
+the key STS and console sessions are signed with; anyone who reaches an
+OSD (9200) can write, overwrite and delete shards; anyone who reaches
+meta's admin port (9102) can add a Raft member and be sent all the
+metadata. Each node says so in its log when it starts.</p>
+<p>That is fine for development and for the all-in-one on a laptop, which
+keeps its internal ports on loopback. Anywhere else, turn mTLS on, or run
+on a network that only ObjectIO's own nodes can reach (on Kubernetes the
+chart's <a href="../../installation/kubernetes/#networkpolicy">network policies</a>,
+on by default; elsewhere a firewall) and keep it that way. The ports are
+in the <a href="../../installation/#default-ports-cluster-convention">installation guide</a>.</p>
+<h2 id="roles">Roles<a class="headerlink" href="#roles" title="Permanent link">&para;</a></h2>
+<p>A certificate names its role in a SAN URI, <code>spiffe://objectio/&lt;role&gt;</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Presented by</th>
+<th>May call</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>meta</code></td>
+<td>meta nodes</td>
+<td>everything on meta (a follower forwards each call to the leader under its own certificate, after checking the caller's); Raft; everything on the OSDs: repair, recovery, drain, placement groups, scrub, purge</td>
+</tr>
+<tr>
+<td><code>osd</code></td>
+<td>OSDs</td>
+<td>on meta: registering, its placement groups, reporting its version, the liveness probe</td>
+</tr>
+<tr>
+<td><code>gateway</code></td>
+<td>S3 gateways</td>
+<td>on meta: everything but registering OSDs and the block gateway's volumes, users' secret keys and the STS signing key included; on the OSDs: reading and writing shards and object metadata, deleting shards, listings, status</td>
+</tr>
+<tr>
+<td><code>block-gateway</code></td>
+<td>block gateways</td>
+<td>on meta: its volumes and chunk maps, where to place them, reporting its version; on the OSDs: writing, reading and deleting shards</td>
+</tr>
+<tr>
+<td><code>admin</code></td>
+<td>operators: <code>obioctl</code>'s block commands, the Helm Raft bootstrap Job, <code>objectio-install cluster init</code></td>
+<td>the block gateway's gRPC (volumes, snapshots); changing Raft membership on meta's admin port</td>
+</tr>
+</tbody>
+</table>
+<p>A call no role of the caller's is allowed, or one the server doesn't
+know, is refused with <code>PERMISSION_DENIED</code>. A process that is several
+components presents one certificate naming several roles: the
+all-in-one's names all five. A certificate naming no role is refused
+everything (but see <a href="#upgrading-from-a-release-whose-certificates-name-no-role">upgrading</a>).</p>
 <h2 id="turning-it-on">Turning it on<a class="headerlink" href="#turning-it-on" title="Permanent link">&para;</a></h2>
 <p>Every component takes the same three settings, as flags or environment
 variables:</p>
@@ -2817,7 +3000,7 @@ variables:</p>
 <tr>
 <td><code>--tls-cert</code></td>
 <td><code>OBJECTIO_TLS_CERT</code></td>
-<td>This node's certificate (PEM). It is presented both as a server and as a client.</td>
+<td>This node's certificate (PEM), naming its role. It is presented both as a server and as a client.</td>
 </tr>
 <tr>
 <td><code>--tls-key</code></td>
@@ -2831,29 +3014,81 @@ variables:</p>
 </tr>
 </tbody>
 </table>
-<p>The three go together. Without them, gRPC is plain, which is fine for
-development and the all-in-one on a laptop. <code>objectio-aio</code> takes them too:
-its own internal hops then use mTLS.</p>
-<p>The certificate must name every address peers dial the node by: the
+<p>The three go together. <code>objectio-aio</code> takes them too: its own internal
+hops then use mTLS, and meta's admin port inside it is HTTPS.</p>
+<p>A server's certificate must name every address peers dial it by: the
 addresses registered as <code>--advertise-addr</code> (OSDs), <code>--raft-advertise</code>
-(meta) and the <code>--meta-endpoint</code> targets. Names and IPs both work. One
-certificate for the whole cluster is simplest, with a wildcard for each
-headless service.</p>
+(meta) and the <code>--meta-endpoint</code> targets. Names and IPs both work. Give
+each role its own certificate, naming only that role's addresses, so one
+role's certificate can't stand in for another's, as a client or as a
+server.</p>
 <p><strong>Enable it at install time.</strong> A cluster can't run half on TLS and half
 off, so turning it on, or off, later means restarting every component at
 once.</p>
+<h3 id="issuing-the-certificates-yourself">Issuing the certificates yourself<a class="headerlink" href="#issuing-the-certificates-yourself" title="Permanent link">&para;</a></h3>
+<p>With a CA of your own (<code>ca.pem</code>, <code>ca.key</code>), one certificate per role; the
+OSDs', for example:</p>
+<div class="highlight"><pre><span></span><code>openssl<span class="w"> </span>req<span class="w"> </span>-new<span class="w"> </span>-newkey<span class="w"> </span>ec<span class="w"> </span>-pkeyopt<span class="w"> </span>ec_paramgen_curve:P-256<span class="w"> </span>-nodes<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-keyout<span class="w"> </span>osd.key<span class="w"> </span>-subj<span class="w"> </span><span class="s2">"/CN=objectio-osd"</span><span class="w"> </span>-out<span class="w"> </span>osd.csr
+openssl<span class="w"> </span>x509<span class="w"> </span>-req<span class="w"> </span>-in<span class="w"> </span>osd.csr<span class="w"> </span>-CA<span class="w"> </span>ca.pem<span class="w"> </span>-CAkey<span class="w"> </span>ca.key<span class="w"> </span>-CAcreateserial<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-days<span class="w"> </span><span class="m">365</span><span class="w"> </span>-out<span class="w"> </span>osd.pem<span class="w"> </span>-extfile<span class="w"> </span>&lt;<span class="o">(</span><span class="nb">printf</span><span class="w"> </span><span class="s1">'%s\n'</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="s2">"subjectAltName=URI:spiffe://objectio/osd,DNS:osd1.example.internal,DNS:osd2.example.internal,IP:127.0.0.1"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="s2">"extendedKeyUsage=serverAuth,clientAuth"</span><span class="o">)</span>
+</code></pre></div>
+<p>The <code>admin</code> certificate needs only its URI: it is only ever a client's.</p>
+<h3 id="metas-admin-port">Meta's admin port<a class="headerlink" href="#metas-admin-port" title="Permanent link">&para;</a></h3>
+<p>Under mTLS meta's admin port serves HTTPS with the meta node's
+certificate. A client certificate is optional when connecting, and
+checked for each call:</p>
+<table>
+<thead>
+<tr>
+<th>Call</th>
+<th>Takes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET /status</code>, <code>/health</code>, <code>/ready</code></td>
+<td>any client, with a certificate or none: they only read the node's state, and kubelet's probes present no certificate</td>
+</tr>
+<tr>
+<td><code>POST /init</code>, <code>/add-learner</code>, <code>/change-membership</code>, and any other call</td>
+<td>only a client certificate of role <code>admin</code>; anything else is answered 403</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>--cacert<span class="w"> </span>ca.pem<span class="w"> </span>--cert<span class="w"> </span>admin.pem<span class="w"> </span>--key<span class="w"> </span>admin.key<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-X<span class="w"> </span>POST<span class="w"> </span>https://meta1:9102/add-learner<span class="w"> </span>-H<span class="w"> </span><span class="s1">'content-type: application/json'</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">'{"node_id": 2, "addr": "meta2:9100"}'</span>
+</code></pre></div>
+<p><code>/status</code> stays open because it holds nothing a peer can't learn
+otherwise (node ids, their Raft addresses, the term and log index), and
+operators and their scripts read it without an admin certificate.</p>
+<p>The port binds the host meta's gRPC listens on (<code>--listen</code>), or
+<code>--admin-host</code>. <code>objectio-install cluster init</code> forms the group over it
+with <code>--tls-cert</code>, <code>--tls-key</code> and <code>--tls-ca</code>, an <code>admin</code> certificate
+(<a href="../../installation/linux/">Linux</a>); the chart's bootstrap Job with the
+<code>admin</code> Secret, and meta's probes ask over HTTPS (<code>scheme: HTTPS</code>).</p>
 <h2 id="kubernetes">Kubernetes<a class="headerlink" href="#kubernetes" title="Permanent link">&para;</a></h2>
-<p>The chart mounts a Secret holding <code>tls.crt</code>, <code>tls.key</code> and <code>ca.crt</code>
-(cert-manager's format) into meta, the OSDs, the gateways and the block
-gateway, and sets the variables above:</p>
+<p>The chart requests a certificate per role from cert-manager, each with its
+role's URI and the names of that role's pods and services, mounts each
+component's own, and sets the variables above. The Raft bootstrap Job
+gets the <code>admin</code> one.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">tls</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">  </span><span class="c1"># Either name a cert-manager CA issuer, and the chart requests the</span>
-<span class="w">  </span><span class="c1"># certificate, with every service and pod name in it:</span>
+<span class="w">  </span><span class="c1"># certificates (Secrets &lt;release&gt;-objectio-tls-&lt;role&gt;):</span>
 <span class="w">  </span><span class="nt">certManager</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">issuerRef</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="nv">objectio-ca</span><span class="p p-Indicator">,</span><span class="nt"> kind</span><span class="p">:</span><span class="w"> </span><span class="nv">Issuer</span><span class="p p-Indicator">}</span>
-<span class="w">  </span><span class="c1"># or create the Secret yourself:</span>
-<span class="w">  </span><span class="c1"># secretName: my-objectio-tls</span>
+<span class="w">  </span><span class="c1"># or create the Secrets yourself (tls.crt, tls.key and ca.crt each),</span>
+<span class="w">  </span><span class="c1"># one per role, and name them:</span>
+<span class="w">  </span><span class="c1"># secrets:</span>
+<span class="w">  </span><span class="c1">#   meta: my-meta-tls</span>
+<span class="w">  </span><span class="c1">#   osd: my-osd-tls</span>
+<span class="w">  </span><span class="c1">#   gateway: my-gateway-tls</span>
+<span class="w">  </span><span class="c1">#   block-gateway: my-block-tls</span>
+<span class="w">  </span><span class="c1">#   admin: my-admin-tls</span>
 </code></pre></div>
 <p>A CA issuer is what you want here: <code>ca.crt</code> is then the CA that signs
 each certificate. A minimal one, with cert-manager installed:</p>
@@ -2876,23 +3111,48 @@ each certificate. A minimal one, with cert-manager installed:</p>
 <span class="nt">metadata</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="nv">objectio-ca</span><span class="p p-Indicator">}</span>
 <span class="nt">spec</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">ca</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">secretName</span><span class="p">:</span><span class="w"> </span><span class="nv">objectio-ca</span><span class="p p-Indicator">}}</span>
 </code></pre></div>
+<h2 id="upgrading-from-a-release-whose-certificates-name-no-role">Upgrading from a release whose certificates name no role<a class="headerlink" href="#upgrading-from-a-release-whose-certificates-name-no-role" title="Permanent link">&para;</a></h2>
+<p>A release before roles used one certificate, naming none, for every
+component. During the rolling upgrade, while the cluster's format level
+is still the previous release's, a certificate naming no role is taken
+for any role, so the nodes not yet upgraded keep working. Once the
+upgrade is finalized (<code>obioctl upgrade finalize</code>), such a certificate is
+refused everything. The chart's upgrade issues the per-role certificates
+and rolls each component onto its own; with certificates of your own,
+reissue them with roles before finalizing. Then delete the old shared
+certificate and its Secret.</p>
 <h2 id="renewal">Renewal<a class="headerlink" href="#renewal" title="Permanent link">&para;</a></h2>
 <p>Components read their certificate when they start. cert-manager renews the
-Secret 30 days before the certificate expires, and the chart's default
+Secrets 30 days before the certificates expire, and the chart's default
 lifetime is one year. After a renewal, restart the components one at a
-time so they pick up the new certificate:</p>
+time so they pick up the new certificates:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>rollout<span class="w"> </span>restart<span class="w"> </span>statefulset/&lt;release&gt;-objectio-meta<span class="w"> </span>statefulset/&lt;release&gt;-objectio-osd<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>deployment/&lt;release&gt;-objectio-gateway
 </code></pre></div>
 <p>Picking up a renewed certificate without a restart is planned.</p>
 <h2 id="how-its-tested">How it's tested<a class="headerlink" href="#how-its-tested" title="Permanent link">&para;</a></h2>
 <p>The end-to-end suite runs with mTLS on: every node of every test cluster
-gets a test CA's certificate. One test checks that a node refuses a
-plaintext client, a client with no certificate and one with another CA's
-certificate, and serves the cluster's own. The rolling-upgrade test starts
-from the previous release, before TLS existed, so it runs plain.
-<code>OBJECTIO_E2E_PLAIN=1</code> runs the whole suite plain; the mTLS test then
-fails, since it has nothing to test.</p>
+gets a test CA's certificate for its role. Tests check that:</p>
+<ul>
+<li>a node refuses a plaintext client, a client with no certificate and one
+  with another CA's certificate, and serves the cluster's own;</li>
+<li>meta refuses the STS signing key and a user's secret key to every role
+  but a gateway's, and to a certificate naming none, and an OSD refuses
+  placement-group calls and purges from anyone but meta;</li>
+<li>meta's admin port refuses plain HTTP, and <code>/init</code> and membership
+  changes from a client with no certificate or another role's, while
+  <code>/status</code>, <code>/health</code> and <code>/ready</code> answer a client with no certificate;</li>
+<li><code>objectio-install cluster init</code> forms nothing without a certificate or
+  with another role's, and forms the group with an <code>admin</code> one;</li>
+<li>the all-in-one, serving S3 on every interface, keeps every other port
+  on loopback.</li>
+</ul>
+<p>Unit tests check that every method of every service has a rule, that a
+certificate naming no role is any role only before the upgrade is
+finalized, and that on the admin port only reading the node's state is
+open to a client without an <code>admin</code> certificate. The rolling-upgrade test
+runs plain. <code>OBJECTIO_E2E_PLAIN=1</code> runs the whole suite plain; the mTLS
+tests then fail, since they have nothing to test.</p>
 
 
 

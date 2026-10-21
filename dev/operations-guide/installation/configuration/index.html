@@ -3081,7 +3081,7 @@ and these guides use:</p>
 <tr>
 <td>meta admin (Raft bootstrap / membership)</td>
 <td>9102</td>
-<td>HTTP</td>
+<td>HTTP; HTTPS under mTLS</td>
 </tr>
 <tr>
 <td>OSD gRPC</td>
@@ -3114,11 +3114,14 @@ and its metrics on 9201 + 2<em>i</em>.</p>
 | gateway S3 | 9000 | 9000 | HTTP |
 | meta gRPC | 9100 | 9001 | gRPC |
 | meta metrics | 9101 | 9101 | HTTP |
-| meta admin (Raft bootstrap / membership) | 9102 | 9102 | HTTP |
+| meta admin (Raft bootstrap / membership) | 9102 | 9102 | HTTP; HTTPS under mTLS |
 | OSD gRPC | 9200 | none without a config file; 9002 when <code>osd.toml</code> has no <code>listen</code> | gRPC |
 | OSD metrics | 9201 | 9201 | HTTP |
 | block-gateway gRPC | 9300 | 9300 | gRPC |
-| block-gateway NBD | 10809 | 10809 | TCP (NBD) |</p>
+| block-gateway NBD | 10809 | 10809 | TCP (NBD) |
+| block-gateway metrics | 9301 | 9301 | HTTP |</p>
+<p>Every port but the gateway's is internal: who may reach each is in the
+<a href="../#default-ports-cluster-convention">port table</a>.</p>
 <p>The chart's values are what you should document to end users. The code
 defaults only matter if you run the binaries standalone with no
 <code>--listen</code> override. The clients' defaults follow the code, not the
@@ -3643,7 +3646,12 @@ and <a href="../../operations/meta-ha/">meta HA</a>.</p>
 <tr>
 <td><code>--admin-port &lt;n&gt;</code></td>
 <td><code>9102</code></td>
-<td>HTTP admin — Raft bootstrap + membership: <code>/init</code>, <code>/add-learner</code>, <code>/change-membership</code>, <code>/status</code>. Bound on all interfaces, no authentication</td>
+<td>Admin port — Raft bootstrap + membership (<code>/init</code>, <code>/add-learner</code>, <code>/change-membership</code>) and the node's state (<code>/status</code>, and <code>/health</code> and <code>/ready</code> for probes). HTTPS under mTLS, where every call but reading the state takes a client certificate of role <code>admin</code>, and reading it takes any client, with a certificate or none; plain and unauthenticated without</td>
+</tr>
+<tr>
+<td><code>--admin-host &lt;ip&gt;</code></td>
+<td>the host of <code>--listen</code></td>
+<td>Address the admin port binds: with <code>--listen 0.0.0.0:…</code> every interface, with loopback this host only</td>
 </tr>
 <tr>
 <td><code>--raft-advertise &lt;addr&gt;</code></td>
@@ -3869,12 +3877,12 @@ missing disk
 <tr>
 <td><code>--listen &lt;addr&gt;</code></td>
 <td><code>0.0.0.0:9300</code></td>
-<td>BlockService gRPC listen</td>
+<td>BlockService gRPC listen. Under mTLS only a certificate of role <code>admin</code> (obioctl's block commands) may call it</td>
 </tr>
 <tr>
 <td><code>--nbd-listen &lt;addr&gt;</code></td>
 <td><code>0.0.0.0:10809</code></td>
-<td>NBD TCP listen</td>
+<td>NBD TCP listen. NBD has no authentication: anyone who reaches the port and knows a volume's name can attach it, so it must be reachable from the machines that attach volumes and nothing else. Listing the exports is refused</td>
 </tr>
 <tr>
 <td><code>--advertise-host &lt;host&gt;</code></td>
@@ -4026,8 +4034,27 @@ missing disk
 <td>off</td>
 <td>Fail on <code>--port</code> conflict instead of picking ephemeral</td>
 </tr>
+<tr>
+<td><code>--block-port &lt;n&gt;</code> / <code>--nbd-port &lt;n&gt;</code></td>
+<td><code>0</code> (off) / <code>10809</code></td>
+<td>Run the block gateway too, its gRPC and NBD on these ports</td>
+</tr>
+<tr>
+<td><code>--block-listen-addr &lt;ip&gt;</code></td>
+<td><code>127.0.0.1</code></td>
+<td>Where the block gateway's two ports bind, whatever <code>--listen-addr</code> says</td>
+</tr>
+<tr>
+<td><code>--tls-cert</code>, <code>--tls-key</code>, <code>--tls-ca</code></td>
+<td>unset</td>
+<td>mTLS for aio's own internal hops; its certificate names every role (<a href="../../administration/mtls/">mTLS</a>)</td>
+</tr>
 </tbody>
 </table>
+<p>Only the gateway's ports follow <code>--listen-addr</code>. Meta's gRPC and admin
+ports and the OSDs' bind loopback, and so does the block gateway unless
+<code>--block-listen-addr</code> says otherwise: NBD has no authentication, and
+without mTLS neither has the block gateway's gRPC.</p>
 <p>Pass any of <code>--admin-port</code> / <code>--ops-console-port</code> / <code>--tenant-console-port</code>
 to test split-mode flows locally. The aio binary embeds both SPA
 bundles (ops + tenant) at compile time, so no separate console build
@@ -4180,7 +4207,12 @@ voter and <code>/change-membership</code> with all of them. Each node's id and R
 address come from its own <code>/status</code>. Run again, it changes nothing; a
 voter not named stops it, since dropping one is done by hand
 (<a href="../../operations/meta-ha/">meta HA</a>). It waits up to <code>--wait-secs</code>
-(120) for every node to answer.</p>
+(120) for every node to answer. Under <a href="../../administration/mtls/">mTLS</a>
+give it <code>--tls-cert</code>, <code>--tls-key</code> (a certificate of role <code>admin</code>) and
+<code>--tls-ca</code> (the CA that signed the meta nodes'): it then speaks HTTPS to
+a node named without a scheme, and presents the certificate. The meta
+units <code>init</code> writes bind the admin port on every interface
+(<code>--admin-host 0.0.0.0</code>), so <code>cluster init</code> runs from any host.</p>
 <p><code>disk prepare</code> formats a disk ahead of its OSD, with the OSD's block size
 unless <code>--block-size</code> is given; it refuses a disk that isn't blank without
 <code>--force</code>, which destroys what the disk holds.</p>

@@ -3638,6 +3638,11 @@ a port is open:</p>
 </tr>
 </tbody>
 </table>
+<p>Under <code>tls.enabled</code> meta's admin port is HTTPS, and meta's probes ask
+over HTTPS (<code>scheme: HTTPS</code>). Kubelet presents no client certificate, and
+needs none: <code>/health</code>, <code>/ready</code> and <code>/status</code> answer any client, while
+the calls that change Raft membership take a certificate of role <code>admin</code>
+(<a href="../../administration/mtls/#metas-admin-port">mTLS</a>).</p>
 <p>A failed disk takes its OSD out of readiness without restarting it. Each
 probe is a value (<code>meta.readinessProbe</code> and so on) that can be replaced
 whole.</p>
@@ -3674,24 +3679,51 @@ each waiting for readiness.</p>
 </tbody>
 </table>
 <h3 id="networkpolicy">NetworkPolicy<a class="headerlink" href="#networkpolicy" title="Permanent link">&para;</a></h3>
-<p><code>networkPolicy.enabled: true</code> renders an ingress policy for meta, the
-OSDs, the gateway and the block gateway. Pods of the release (the
-bootstrap Job and the chart's Prometheus included) always reach each
-other; from outside, only the peers listed:</p>
+<p>On by default (<code>networkPolicy.enabled</code>): an ingress policy for meta, the
+OSDs, the gateway and the block gateway. Each component's pods take
+connections only on their own ports, and only from:</p>
+<table>
+<thead>
+<tr>
+<th>Ports</th>
+<th>From</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>meta's gRPC (9100) and admin port (9102); the OSDs' gRPC (9200); the block gateway's gRPC (9300) and NBD (10809)</td>
+<td>ObjectIO's own pods (meta, OSDs, gateways, block gateway) and the Raft bootstrap Job; <code>adminFrom</code> for meta's admin port, <code>blockGatewayFrom</code> for the block gateway's two</td>
+</tr>
+<tr>
+<td>metrics: meta 9101, OSD 9201, block gateway 9301</td>
+<td>every pod of the release (the chart's Prometheus included), and <code>metricsFrom</code></td>
+</tr>
+<tr>
+<td>the gateway's S3 port (9000, and <code>gateway.endpoints.external.port</code>)</td>
+<td>every pod of the release; anyone, or with <code>gatewayFrom</code> set, those peers</td>
+</tr>
+</tbody>
+</table>
+<p>Each <code>...From</code> value is a list of NetworkPolicy peers:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">networkPolicy</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">  </span><span class="nt">gatewayFrom</span><span class="p">:</span><span class="w">            </span><span class="c1"># the S3 port; empty: anyone</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">namespaceSelector</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">matchLabels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> kubernetes.io/metadata.name</span><span class="p">:</span><span class="w"> </span><span class="nv">ingress-nginx</span><span class="w"> </span><span class="p p-Indicator">}</span>
-<span class="w">  </span><span class="nt">blockGatewayFrom</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span><span class="w">    </span><span class="c1"># gRPC and NBD; empty: anyone</span>
-<span class="w">  </span><span class="nt">metricsFrom</span><span class="p">:</span><span class="w">            </span><span class="c1"># meta's and the OSDs' /metrics</span>
+<span class="w">  </span><span class="nt">blockGatewayFrom</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span><span class="w">    </span><span class="c1"># gRPC and NBD; empty: ObjectIO's pods only</span>
+<span class="w">  </span><span class="nt">metricsFrom</span><span class="p">:</span><span class="w">            </span><span class="c1"># /metrics of meta, the OSDs, the block gateway</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">namespaceSelector</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">matchLabels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> kubernetes.io/metadata.name</span><span class="p">:</span><span class="w"> </span><span class="nv">monitoring</span><span class="w"> </span><span class="p p-Indicator">}</span>
-<span class="w">  </span><span class="nt">adminFrom</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span><span class="w">           </span><span class="c1"># meta's admin port; empty: the release only</span>
+<span class="w">  </span><span class="nt">adminFrom</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span><span class="w">           </span><span class="c1"># meta's admin port, e.g. a debugging pod reading /status</span>
 </code></pre></div>
 <p>Egress isn't restricted (the OSDs' node-label lookup reaches the API
-server, the gateway an OIDC issuer or Vault). Kubelet probes aren't
-affected on common CNIs.</p>
+server, the gateway an OIDC issuer or Vault). Kubelet's probes come from
+the pod's own node, which a NetworkPolicy doesn't filter.</p>
+<p>The policies take effect only where the network plugin enforces
+NetworkPolicies (Calico, Cilium and most others; not every default
+plugin does). Without <a href="../../administration/mtls/">mTLS</a> they are all
+that keeps the unauthenticated internal ports to ObjectIO: check that
+they are enforced, or turn mTLS on.</p>
 <h3 id="secrets">Secrets<a class="headerlink" href="#secrets" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -3728,8 +3760,8 @@ affected on common CNIs.</p>
 <td></td>
 </tr>
 <tr>
-<td>mTLS certificate</td>
-<td><code>tls.secretName</code>, or made by cert-manager</td>
+<td>mTLS certificates, one per role</td>
+<td><code>tls.secrets.&lt;role&gt;</code>, or made by cert-manager</td>
 <td><a href="../../administration/mtls/">mTLS</a></td>
 </tr>
 </tbody>
@@ -3761,12 +3793,21 @@ render: with those, use <code>existingSecret</code>.</p>
 <span class="w">  </span><span class="nt">service</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">LoadBalancer</span><span class="w">               </span><span class="c1"># NBD is TCP: it must be reachable</span>
 <span class="w">    </span><span class="nt">nbdPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10809</span>
+<span class="nt">networkPolicy</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">blockGatewayFrom</span><span class="p">:</span><span class="w">                  </span><span class="c1"># the machines that attach volumes</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">ipBlock</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">cidr</span><span class="p">:</span><span class="w"> </span><span class="nv">10.20.0.0/24</span><span class="p p-Indicator">}</span>
 </code></pre></div>
 <p>It runs as a StatefulSet of one pod: its write journal holds every
 acknowledged write until it reaches the OSDs, and is used by one process
 at a time. A StatefulSet starts a replacement only once the old pod is
 gone, and an update stops the old pod first. The journal's volume is
 kept on <code>helm uninstall</code>.</p>
+<p>NBD has no authentication: whoever reaches port 10809 and knows a
+volume's name can attach it (listing the names is refused). Keep it to
+the machines that attach volumes, with <code>networkPolicy.blockGatewayFrom</code>
+and, for a LoadBalancer, the load balancer's source ranges. Under mTLS
+the block gateway's gRPC (9300) takes only a certificate of role
+<code>admin</code> (<code>obioctl</code>'s block commands).</p>
 <h3 id="monitoring">Monitoring<a class="headerlink" href="#monitoring" title="Permanent link">&para;</a></h3>
 <p>The chart's own Prometheus and Grafana (<code>monitoring.enabled: true</code>) are
 for a quick look. In a cluster with a prometheus-operator, turn on the
@@ -3909,7 +3950,7 @@ ServiceMonitor. See <a href="../../operations/monitoring/">monitoring</a>.</p>
 </tr>
 <tr>
 <td><code>networkPolicy.*</code></td>
-<td>off</td>
+<td>on</td>
 <td><a href="#networkpolicy">NetworkPolicy</a></td>
 </tr>
 <tr>
@@ -3982,7 +4023,9 @@ makes the cluster; on an upgrade it adds, through the leader, the pods
 that aren't voters yet (1 → 3, 3 → 5); with every pod a voter it changes
 nothing. It doesn't scale meta <strong>down</strong>: call <code>/change-membership</code> with
 the smaller voter set first, then lower <code>meta.replicas</code>
-(<a href="../../operations/meta-ha/">meta HA</a>).</p>
+(<a href="../../operations/meta-ha/">meta HA</a>). With <code>tls.enabled</code> the Job calls
+meta's admin port over HTTPS with the <code>admin</code> role's certificate, the
+only one that port takes membership changes from.</p>
 <h3 id="losing-a-meta-pod">Losing a meta pod<a class="headerlink" href="#losing-a-meta-pod" title="Permanent link">&para;</a></h3>
 <p>With three metas, any one pod can go (killed, evicted, rescheduled, or
 rolled by <code>kubectl rollout restart</code>) without losing anything the
@@ -4091,6 +4134,11 @@ known. Its <code>/ready</code> says what is missing:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>objectio<span class="w"> </span>port-forward<span class="w"> </span>pod/objectio-meta-0<span class="w"> </span><span class="m">9102</span>:9102<span class="w"> </span><span class="p">&amp;</span>
 curl<span class="w"> </span>-s<span class="w"> </span>localhost:9102/ready<span class="p">;</span><span class="w"> </span><span class="nb">echo</span>
 curl<span class="w"> </span>-s<span class="w"> </span>localhost:9102/status
+</code></pre></div>
+<p>With <code>tls.enabled</code> it is HTTPS, and reading needs no client certificate,
+only the CA (the meta certificate names <code>localhost</code>):</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>objectio<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>objectio-tls-meta<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.data.ca\.crt}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d<span class="w"> </span>&gt;<span class="w"> </span>ca.crt
+curl<span class="w"> </span>-s<span class="w"> </span>--cacert<span class="w"> </span>ca.crt<span class="w"> </span>https://localhost:9102/ready<span class="p">;</span><span class="w"> </span><span class="nb">echo</span>
 </code></pre></div>
 <p>"not a member of a raft cluster" means the bootstrap Job hasn't added
 it. Check the Job:</p>

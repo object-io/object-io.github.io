@@ -2902,7 +2902,10 @@ through <code>&lt;data-dir&gt;/raft-snapshots/</code>, so leave free space there
 the size of <code>meta.redb</code>. <code>/status</code> on the admin port shows how far the
 last snapshot (<code>snapshot</code>) and the purge (<code>purged</code>) reach.</p>
 <h2 id="replacing-a-meta-node">Replacing a meta node<a class="headerlink" href="#replacing-a-meta-node" title="Permanent link">&para;</a></h2>
-<p>Use the Raft admin API on the leader (port 9102 by default):</p>
+<p>Use the Raft admin API on the leader (port 9102 by default; with
+<a href="../../administration/mtls/">mTLS</a>, HTTPS and a certificate of role
+<code>admin</code>: <code>curl --cacert ca.pem --cert admin.pem --key admin.key
+https://meta1:9102/...</code>):</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># 1. Start the new node (empty data dir, a new --node-id), then add it.</span>
 curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>meta1:9102/add-learner<span class="w"> </span>-H<span class="w"> </span><span class="s1">'content-type: application/json'</span><span class="w"> </span>-d<span class="w"> </span><span class="s1">'{"node_id": 4, "addr": "meta4:9100"}'</span>
 <span class="c1"># 2. Make the voters the surviving nodes plus the new one.</span>

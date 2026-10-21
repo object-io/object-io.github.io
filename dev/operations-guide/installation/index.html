@@ -3019,32 +3019,32 @@ larger / geo-distributed clusters. Always odd.</p>
 <tr>
 <td>9100</td>
 <td>Meta gRPC + Raft RPC</td>
-<td>internal</td>
+<td>meta, OSDs, gateways, block gateways</td>
 </tr>
 <tr>
 <td>9101</td>
 <td>Meta Prometheus <code>/metrics</code></td>
-<td>monitoring</td>
+<td>ObjectIO's nodes, monitoring</td>
 </tr>
 <tr>
 <td>9102</td>
-<td>Meta admin HTTP (Raft bootstrap / membership)</td>
-<td>operators</td>
+<td>Meta admin (Raft bootstrap / membership, <code>/status</code>, the probes <code>/health</code> and <code>/ready</code>; HTTPS under mTLS)</td>
+<td>the Raft bootstrap (Helm Job, <code>objectio-install cluster init</code>), operators, kubelet</td>
 </tr>
 <tr>
 <td>9200</td>
 <td>OSD gRPC</td>
-<td>internal</td>
+<td>meta, gateways, block gateways</td>
 </tr>
 <tr>
 <td>9201</td>
 <td>OSD Prometheus <code>/metrics</code></td>
-<td>monitoring</td>
+<td>ObjectIO's nodes, monitoring</td>
 </tr>
 <tr>
 <td>9300</td>
-<td>Block gateway gRPC</td>
-<td>internal</td>
+<td>Block gateway gRPC (volume admin)</td>
+<td>operators (<code>obioctl volume</code>, <code>snapshot</code>)</td>
 </tr>
 <tr>
 <td>9301</td>
@@ -3053,11 +3053,19 @@ larger / geo-distributed clusters. Always odd.</p>
 </tr>
 <tr>
 <td>10809</td>
-<td>Block gateway NBD</td>
-<td>NBD clients</td>
+<td>Block gateway NBD target</td>
+<td>the machines that attach volumes, nothing else</td>
 </tr>
 </tbody>
 </table>
+<p>Every port but 9000 is internal. <strong>Without <a href="../administration/mtls/">mTLS</a>
+nothing on them is authenticated</strong>: anyone who reaches meta's gRPC port
+can read every user's secret key, anyone who reaches an OSD's can
+overwrite or delete shards, and anyone who reaches 9102 can add a Raft
+member and be sent the whole metadata log. Run without mTLS only on a
+network that ObjectIO's own nodes alone can reach. NBD (10809) has no
+authentication even with mTLS: it must be reachable only from the
+machines that attach volumes.</p>
 <p>See <a href="configuration/">configuration.md</a> for the code defaults (which
 differ for meta and OSD) and how to override them.</p>
 <h2 id="security-checklist-production">Security checklist (production)<a class="headerlink" href="#security-checklist-production" title="Permanent link">&para;</a></h2>
@@ -3066,9 +3074,18 @@ differ for meta and OSD) and how to override them.</p>
 <li>[ ] Authentication enabled (<code>--no-auth</code> <em>not</em> set).</li>
 <li>[ ] OIDC configured for the console + Iceberg JWTs, if applicable.</li>
 <li>[ ] SSE master key present (<code>gateway.sse.enabled: true</code> in Helm).</li>
-<li>[ ] Firewall / NetworkPolicy restricting 9100/9101/9200/9201 to the
-  internal network, and meta's admin port 9102 (plain HTTP, no
-  authentication: it changes Raft membership) to operators.</li>
+<li>[ ] <a href="../administration/mtls/">mTLS</a> between the services
+  (<code>tls.enabled</code> in Helm), with a certificate per role.</li>
+<li>[ ] Firewall / NetworkPolicy keeping every internal port to the peers
+  in the table above: 9100, 9101, 9102, 9200, 9201, 9300, 9301 and</li>
+<li>On Kubernetes the chart's NetworkPolicies do it
+  (<code>networkPolicy.enabled</code>, on by default; your network plugin must
+  enforce NetworkPolicies): the internal ports take only ObjectIO's own
+  pods and its bootstrap Job, the metrics ports every pod of the release
+  (its Prometheus), and <code>networkPolicy.adminFrom</code>, <code>metricsFrom</code>,
+  <code>gatewayFrom</code> and <code>blockGatewayFrom</code> add peers
+  (<a href="kubernetes/#networkpolicy">Kubernetes</a>). Elsewhere, a host
+  firewall.</li>
 <li>[ ] Non-root <code>objectio</code> service user with <code>CAP_SYS_RAWIO</code> (not
   full root) on OSD nodes.</li>
 <li>[ ] <code>--trusted-proxies</code> set to the ingress / load balancer network if

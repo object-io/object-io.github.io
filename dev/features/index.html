@@ -3550,8 +3550,15 @@ items).</p>
 <tr>
 <td>TLS between services (gateway, meta, OSD, block)</td>
 <td>✅</td>
-<td>mTLS on every gRPC hop; client-facing TLS is at the ingress</td>
+<td>mTLS on every gRPC hop, each call checked against the role its caller's certificate names; meta's admin port over it, membership changes for role admin only, its probes and status answered without a client certificate; client-facing TLS is at the ingress. Off by default: without it the internal ports are unauthenticated, and the chart's NetworkPolicies keep them to ObjectIO</td>
 <td><a href="../operations-guide/administration/mtls/">mTLS</a></td>
+<td>meta</td>
+</tr>
+<tr>
+<td>NBD access control</td>
+<td>✖</td>
+<td>NBD has no authentication; exports are not listed, and the port must be reachable only from the machines that attach volumes</td>
+<td><a href="../operations-guide/installation/configuration/#objectio-block-gateway">configuration</a></td>
 <td></td>
 </tr>
 </tbody>
