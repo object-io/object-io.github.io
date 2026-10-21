@@ -1819,6 +1819,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Scopes: the system and tenants">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#disabling-a-tenant" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Disabling a tenant
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2896,6 +2913,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Scopes: the system and tenants">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#disabling-a-tenant" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Disabling a tenant
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -3147,6 +3181,45 @@ POST<span class="w"> </span>/_admin/users/&lt;user_id&gt;/access-keys<span class
 <p>From then on the tenant admin works with its own key. Each call below acts in
 the caller's own tenant. The system admin can name a tenant with <code>?tenant=</code>
 (or <code>"tenant"</code> in a body); a tenant admin can't name another tenant.</p>
+<h3 id="disabling-a-tenant">Disabling a tenant<a class="headerlink" href="#disabling-a-tenant" title="Permanent link">&para;</a></h3>
+<p>Disable a tenant to cut off everyone in it at once, without deleting
+anything:</p>
+<div class="highlight"><pre><span></span><code>obioctl<span class="w"> </span>tenant<span class="w"> </span>update<span class="w"> </span>acme<span class="w"> </span>--enabled<span class="w"> </span><span class="nb">false</span><span class="w">   </span><span class="c1"># PUT /_admin/tenants/acme {"enabled": false}</span>
+obioctl<span class="w"> </span>tenant<span class="w"> </span>update<span class="w"> </span>acme<span class="w"> </span>--enabled<span class="w"> </span><span class="nb">true</span><span class="w">    </span><span class="c1"># and back</span>
+obioctl<span class="w"> </span>tenant<span class="w"> </span>create<span class="w"> </span>acme<span class="w"> </span>--disabled<span class="w">        </span><span class="c1"># set it up first, open it later</span>
+</code></pre></div>
+<p>While a tenant is disabled, every identity that belongs to it is refused
+with <strong>403 <code>AccessDenied</code></strong>, the answer a suspended user's key gets, and
+the gateway logs which identity it refused and why. That covers:</p>
+<ul>
+<li>its users' access keys, on every API: S3 (signed requests, presigned
+  URLs and browser form uploads), the IAM and STS APIs, the admin API,
+  and the Iceberg and Unity catalogs;</li>
+<li>temporary credentials that act in the tenant: users' own sessions
+  (<code>GetSessionToken</code>) and sessions of its roles, including a role assumed
+  from outside the tenant;</li>
+<li>console sessions: one already open is refused on its next request, and
+  a new sign-in, with a key or through an identity provider, is refused;</li>
+<li>new sessions for its roles: <code>AssumeRole</code> and <code>AssumeRoleWithWebIdentity</code>
+  are refused;</li>
+<li>Delta Sharing: a recipient's token reads none of the tenant's shares,
+  and they are no longer listed to it. Links to data files that a
+  recipient got from a query earlier stay valid until they expire (an hour
+  by default).</li>
+</ul>
+<p>The users of a tenant that has been deleted are refused the same way.</p>
+<p><strong>How fast:</strong> at once on the gateway that made the change, and within 15
+seconds on every other gateway, the time a gateway keeps a credential.</p>
+<p><strong>Enabling the tenant restores everything.</strong> Keys, sessions and presigned
+URLs still within their lifetime work again; nothing has to be issued
+anew.</p>
+<p>Disabling refuses identities, not the tenant's data. Its buckets and
+objects stay as they are, the system admin can still manage the tenant
+(create its users, keys and buckets while it is disabled), and access that
+names no identity of the tenant goes on: a bucket policy that grants
+anonymous access still does, where public access isn't blocked. Block
+public access for the tenant too (<a href="../public-access/">public access</a>) if
+its buckets must go dark.</p>
 <h2 id="quotas">Quotas<a class="headerlink" href="#quotas" title="Permanent link">&para;</a></h2>
 <p>A tenant can have quotas on bytes, objects and buckets, and a bucket can
 have quotas on bytes and objects. 0 means unlimited. Bytes and objects

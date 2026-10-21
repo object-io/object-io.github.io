@@ -3067,6 +3067,10 @@ the same core. Apache-2.0, every feature.</p>
   API and the <strong>AWS IAM and STS APIs</strong> (<code>aws iam</code>, <code>aws sts</code>, boto3,
   Terraform); a tenant is an account, its admins its root
   (<a href="../../operations-guide/administration/iam/">IAM</a>).</li>
+<li>Disabling a tenant refuses every identity of it within 15 s: its
+  users' keys and presigned URLs, its STS and console sessions, and Delta
+  Sharing reads of its shares
+  (<a href="../../operations-guide/administration/iam/#disabling-a-tenant">disabling a tenant</a>).</li>
 <li>STS from an OIDC token, with an identity provider per scope: the
   operator's for system roles, each tenant's for its own.</li>
 <li>Console sign-in through the same providers: a sign-in is the user
