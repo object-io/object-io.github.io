@@ -2579,6 +2579,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#a-meta-node-whose-raft-stopped" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A meta node whose Raft stopped
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#complete-metadata-cluster-failure" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3217,6 +3228,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#a-meta-node-whose-raft-stopped" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A meta node whose Raft stopped
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#complete-metadata-cluster-failure" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3671,6 +3693,19 @@ end-to-end tests that cover this are listed in <a href="../meta-ha/#how-its-test
 <code>--raft-advertise</code> address (the chart sets it to the pod's DNS name on
 the gRPC port, 9100). A node that advertises <code>0.0.0.0</code> is unreachable
 to its peers.</p>
+<h3 id="a-meta-node-whose-raft-stopped">A meta node whose Raft stopped<a class="headerlink" href="#a-meta-node-whose-raft-stopped" title="Permanent link">&para;</a></h3>
+<p>A storage error while a meta node applies the log (a failing disk, a full
+volume) stops its Raft for good. The node logs <code>Raft stopped: …; exiting
+so this node is restarted</code> and exits with status 1; Kubernetes (the
+chart's liveness probe is meta's <code>/health</code>, which answers 503 meanwhile),
+systemd or aio restarts it, and it applies the log again from its last
+checkpoint. If it stops again at the same place, the cause is the node's
+storage: check its disk and its log.</p>
+<p>A request that can never apply, such as a compare-and-set of more than
+256 operations, is refused before it reaches the log
+(<code>InvalidArgument</code>; 400 through the gateway's APIs) and stops nothing. One
+that reached the log anyway (written by an earlier release) is applied as
+refused, writing nothing, on every node.</p>
 <h3 id="complete-metadata-cluster-failure">Complete metadata cluster failure<a class="headerlink" href="#complete-metadata-cluster-failure" title="Permanent link">&para;</a></h3>
 <p><strong>Scenario:</strong> all meta pods lose their PVCs simultaneously (rare —
 typically requires a storage-layer incident).</p>

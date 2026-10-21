@@ -3074,8 +3074,15 @@ with its runbook. It covers:
   answers 503 again (<code>"status": "stopping"</code>) once the gateway is shutting
   down, while it still serves (see
   <a href="../upgrades/#how-a-node-stops">how a node stops</a>).</li>
-<li><strong><code>GET /health</code></strong> on meta's and the OSDs' metrics ports answers 200
-  while the process is up.</li>
+<li><strong><code>GET /health</code></strong> on the OSDs' metrics port answers 200 while the
+  process is up.</li>
+<li><strong><code>GET /health</code></strong> on meta's metrics port and on its admin port (9102)
+  answers 200 while the process is up and its Raft runs, and 503 (with
+  the reason) once its Raft has stopped for good, after a storage error.
+  Meta also exits then, so its supervisor restarts it. <code>GET /ready</code> on
+  the admin port answers 200 once the node is a member and knows a
+  leader. The Helm chart's probes use the admin port's two. <code>GET /status</code>
+  on the admin port shows the reason as <code>fatal</code>.</li>
 </ul>
 <h2 id="logs">Logs<a class="headerlink" href="#logs" title="Permanent link">&para;</a></h2>
 <p>Every process logs to stderr in plain text. Set the level with
