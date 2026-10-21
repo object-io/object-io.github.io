@@ -1428,6 +1428,148 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_8_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_8_6" id="__nav_5_8_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026 10 21
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_8_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_8_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2026 10 21
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_8_6_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_8_6_1" id="__nav_5_8_6_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux amd64
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_5_8_6_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_8_6_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Linux amd64
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developer-guide/s3-compatibility/2026-10-21/linux-amd64/summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ceph s3-tests results
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -4036,7 +4178,7 @@ The pod comes back on its volume, catches up, and is ready again once
 it knows the leader. Losing two of three at once stops writes until one
 returns: keep the PodDisruptionBudget (<code>meta.podDisruptionBudget</code>) on.</p>
 <h3 id="upgrading-from-010-rc1">Upgrading from 0.1.0-rc.1<a class="headerlink" href="#upgrading-from-010-rc1" title="Permanent link">&para;</a></h3>
-<p>The 0.1.0 chart changes three things an upgrade has to handle:</p>
+<p>The 0.1.0 chart changes five things an upgrade has to handle:</p>
 <ul>
 <li>Meta and the OSDs start their pods in parallel, a StatefulSet field an
   upgrade can't change. Delete the two StatefulSets, leaving their pods
@@ -4054,6 +4196,16 @@ returns: keep the PodDisruptionBudget (<code>meta.podDisruptionBudget</code>) on
   <code>replication: 1</code>, its <code>osd.replicas</code> and, until its clients sign their
   requests, <code>gateway.noAuth: true</code> when it upgrades
   (<a href="../../operations/upgrades/">upgrades</a>).</li>
+<li>NetworkPolicies are on by default: the internal ports take only
+  ObjectIO's own pods. Clients that attach block volumes from outside the
+  release are listed in <code>networkPolicy.blockGatewayFrom</code> before the
+  upgrade, or they lose their NBD connections
+  (<a href="#networkpolicy">NetworkPolicy</a>).</li>
+<li>With <code>tls.enabled</code>, the chart issues a certificate per role and rolls
+  each component onto its own. Finalize the upgrade only once every pod
+  runs on its role's certificate: after <code>obioctl upgrade finalize</code>, a
+  certificate that names no role is refused everything
+  (<a href="../../administration/mtls/#upgrading-from-a-release-whose-certificates-name-no-role">mTLS</a>).</li>
 </ul>
 <hr />
 <h2 id="uninstalling">Uninstalling<a class="headerlink" href="#uninstalling" title="Permanent link">&para;</a></h2>
