@@ -2820,7 +2820,7 @@ its notes (<a href="../../releases/0.1.0/">0.1.0</a>).</p>
 </tbody>
 </table>
 <ul>
-<li><strong>Policy gating</strong>: every endpoint evaluates the caller's attached named IAM policies against <code>(action, resource)</code>. The built-in admin user and console sessions bypass policy evaluation.</li>
+<li><strong>Policy gating</strong>: every endpoint evaluates the caller's attached named IAM policies against <code>(action, resource)</code>. The built-in admin user and system administrators' console sessions bypass policy evaluation; other console sessions are refused.</li>
 <li><strong>Dual auth on admin endpoints</strong>: SigV4 (for API clients) <em>or</em> console session cookie (for web UI). Cookie requests pass through a pre-router layer that validates SigV4 only when an <code>Authorization</code> header is present.</li>
 </ul>
 <h4 id="kms-backend-selection">KMS Backend Selection<a class="headerlink" href="#kms-backend-selection" title="Permanent link">&para;</a></h4>
@@ -3142,16 +3142,16 @@ tab both consume this.</p>
 <h3 id="tenant-isolation">Tenant Isolation<a class="headerlink" href="#tenant-isolation" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Auth middleware</strong>: <code>AuthResult</code> carries tenant from access key → user → tenant chain</li>
-<li><strong>Console session</strong>: Session token includes tenant, admin pages hidden for tenant users</li>
+<li><strong>Console session</strong>: Session token includes the user's tenant and ARN, and whether the sign-in made it a system administrator's; admin pages hidden for tenant users</li>
 <li><strong>API filtering</strong>: All list operations filter by authenticated user's tenant</li>
-<li><strong>System admin</strong>: Users with empty tenant see all resources across tenants</li>
+<li><strong>System admin</strong>: the built-in admin user, and console sign-ins through the operator's identity provider, see all resources across tenants. Other system-scope users are not administrators</li>
 </ul>
 <h3 id="tenant-admin-role">Tenant Admin Role<a class="headerlink" href="#tenant-admin-role" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong><code>TenantConfig.admin_users</code></strong>: List of user IDs (or ARNs) who can admin the tenant without being system admins</li>
 <li><strong><code>POST /_admin/tenants/{name}/admins</code></strong> — grant tenant-admin</li>
 <li><strong><code>DELETE /_admin/tenants/{name}/admins/{user}</code></strong> — revoke</li>
-<li><strong>Three-tier access model</strong>: System admin (tenant=""), tenant admin (in <code>admin_users</code> for their tenant), regular user</li>
+<li><strong>Three-tier access model</strong>: System admin (the built-in admin, or a sign-in through the operator's provider), tenant admin (in <code>admin_users</code> for their tenant), regular user</li>
 <li><strong>Scope</strong>: tenant admins can create/delete users + access keys + buckets + warehouses + shares <strong>within their own tenant</strong>; they cannot touch pools, tenants, nodes, system config, KMS backend, or other tenants</li>
 <li><strong>Console</strong>: dedicated "Manage admins" panel on each tenant row; picker lists that tenant's users + free-form user-id/ARN input</li>
 <li><strong>CLI</strong>: <code>obioctl tenant admin add|remove|list &lt;tenant&gt; &lt;user&gt;</code> — see <a href="../../operations-guide/administration/cli/">CLI</a></li>
@@ -3172,7 +3172,7 @@ and <a href="../../operations-guide/administration/public-access/">Public Access
 <ul>
 <li><strong>AWS SigV4</strong> for requests and presigned URLs. SigV2 is refused with <code>400 InvalidRequest</code>, as S3 refuses it on buckets created since June 2020; with boto3 use <code>botocore.config.Config(signature_version="s3v4")</code>.</li>
 <li><strong>Anonymous requests</strong>: served only what a bucket policy grants to everyone, with public access blocked by default</li>
-<li><strong>OIDC</strong>: the operator's provider and <strong>each tenant's own</strong> (Keycloak, Entra ID, Okta, Google, any compliant issuer); groups from any claim, dotted paths included</li>
+<li><strong>OIDC</strong>: the operator's provider and <strong>each tenant's own</strong> (Keycloak, Entra ID, Okta, Google, any compliant issuer); groups from any claim, dotted paths included; a console sign-in is the user bound to the token's issuer and subject, in the tenant its provider serves</li>
 <li><strong>STS <code>AssumeRoleWithWebIdentity</code></strong>: an OIDC token for a role's temporary keys, AWS-wire-compatible; a tenant's roles trust only that tenant's provider, system roles only the operator's</li>
 <li><strong>Vended credentials</strong> for Iceberg / Unity clients, confined to a table's location and held to its warehouse's or catalog's tenant</li>
 <li><strong>Console session cookies</strong> with 24-hour TTL</li>
@@ -3189,7 +3189,7 @@ and <a href="../../operations-guide/administration/public-access/">Public Access
 <li><strong>Block Public Access</strong> at bucket, tenant and cluster level; new buckets start blocked</li>
 <li><strong>ACLs</strong>: bucket owner enforced — they grant nothing</li>
 <li><strong>Action namespaces</strong>: <code>s3:*</code>, <code>iceberg:*</code>, <code>kms:*</code>, <code>sts:AssumeRoleWithWebIdentity</code></li>
-<li><strong>Admin access</strong>: the built-in admin user bypasses policy evaluation; console sessions are treated as admin for admin endpoints.</li>
+<li><strong>Admin access</strong>: the built-in admin user bypasses policy evaluation; a console session is an administrator's only when it was opened with the built-in admin's key or through the operator's identity provider.</li>
 </ul>
 <h3 id="management-sdks">Management SDKs<a class="headerlink" href="#management-sdks" title="Permanent link">&para;</a></h3>
 <ul>

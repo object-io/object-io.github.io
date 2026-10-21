@@ -1885,6 +1885,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Identity providers (OIDC)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#signing-in-to-the-console" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Signing in to the console
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2945,6 +2962,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Identity providers (OIDC)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#signing-in-to-the-console" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Signing in to the console
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -3386,6 +3420,41 @@ names can't be deleted: the delete answers 409, naming the tenants. Point
 them at another provider, or clear the field (<code>"oidc_provider": ""</code>),
 first. When a tenant admin deletes their own <code>t-&lt;tenant&gt;</code> provider, the
 tenant's binding to it is cleared with it.</p>
+<p>A tenant admin can change, disable or delete only its own tenant's
+provider, and only while no other tenant uses it: a provider that another
+tenant names in its <code>oidc_provider</code>, or whose <code>t-&lt;tenant&gt;</code> name is another
+tenant's, signs users in to that tenant too, so only the system admin can
+change it. A tenant's users who aren't its admins can't change it at all.</p>
+<p>A provider stored with <code>"enabled": false</code> signs no one in, and no one signs
+in to the console of a disabled tenant, through a provider or with a key.</p>
+<h3 id="signing-in-to-the-console">Signing in to the console<a class="headerlink" href="#signing-in-to-the-console" title="Permanent link">&para;</a></h3>
+<p><strong>Who a sign-in is.</strong> The first sign-in of an identity creates a user for
+it, bound to the token's issuer (<code>iss</code>) and subject (<code>sub</code>). Every later
+sign-in with that issuer and subject is that user, whatever name the token
+carries by then. The user is named after the token's <code>preferred_username</code>,
+else its <code>email</code>, else its <code>sub</code>; the name is only a label, and a sign-in
+is never matched to an existing user by name. If another user already has
+the name, the sign-in is refused: rename or delete that user, or have the
+provider send another name. A token must carry <code>iss</code>, <code>aud</code> and <code>sub</code>, and
+its issuer must be the provider's.</p>
+<p><strong>Which tenant.</strong> A tenant's provider signs in to its tenant only: the
+tenant <code>t-&lt;tenant&gt;</code> names, or a tenant whose <code>oidc_provider</code> names the
+provider. A provider that several tenants name signs in to the one whose
+sign-in page the user started from, and to no other. An identity stays in
+the tenant it was first created in.</p>
+<p><strong>Who administers.</strong> A sign-in through the operator's provider is a system
+administrator on the console and the admin API. That holds for the session
+only: an access key the user creates for themselves is their own user's,
+not the system admin's. A user the system admin creates in the system
+scope is not an administrator either; only the system admin's own
+credentials and the operator's provider are. A tenant's users administer
+their tenant when they are in its <code>admin_users</code>, which a provider fills on
+sign-in from a role claim when it sets <code>tenant_admin_role</code>.</p>
+<p>The bindings are format level 9: on a cluster upgraded from an earlier
+level, console sign-in through a provider is refused until <code>obioctl upgrade
+finalize</code>. Access-key sign-in works throughout. A console session opened by
+a gateway of the earlier release isn't accepted by an upgraded one: sign in
+again.</p>
 <h2 id="temporary-credentials-from-an-oidc-token-sts">Temporary credentials from an OIDC token (STS)<a class="headerlink" href="#temporary-credentials-from-an-oidc-token-sts" title="Permanent link">&para;</a></h2>
 <p><code>AssumeRoleWithWebIdentity</code> trades an OIDC token for a role's temporary S3
 keys. It's the AWS STS call, so AWS SDKs and tools speak it as is. Point

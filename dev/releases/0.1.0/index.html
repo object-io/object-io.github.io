@@ -3069,6 +3069,12 @@ the same core. Apache-2.0, every feature.</p>
   (<a href="../../operations-guide/administration/iam/">IAM</a>).</li>
 <li>STS from an OIDC token, with an identity provider per scope: the
   operator's for system roles, each tenant's for its own.</li>
+<li>Console sign-in through the same providers: a sign-in is the user
+  created for the token's issuer and subject, a tenant's provider signs in
+  to that tenant only, and only the operator's provider and the system
+  admin's own keys give an administrator's session
+  (<a href="../../operations-guide/administration/iam/#signing-in-to-the-console">signing in to the console</a>).
+  Format level 9.</li>
 <li>Anonymous access and <strong>Block Public Access</strong> at bucket, tenant and
   cluster level, new buckets blocked; named endpoints and client
   addresses (<code>aws:SourceVpce</code>, <code>aws:SourceIp</code>, trusted proxies) in
