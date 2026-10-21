@@ -2853,9 +2853,11 @@ at it.</p>
   it stops answering within about 3 seconds (calls fail, 503 to S3
   clients) rather than serve state the others may have changed since: a
   key revoked on the majority's side is not accepted on its side.</li>
-<li><strong>No call waits forever.</strong> A call to meta gives up after 5 seconds. The
-  gateway answers S3 clients 503 when meta can't be reached, which they
-  retry.</li>
+<li><strong>No call waits forever.</strong> A call to meta gives up after 5 seconds
+  without an answer, and a connection to a meta node that stops answering
+  part way through one is closed within about 5 seconds, failing the call.
+  The gateway answers S3 clients 503 when meta can't be reached, which
+  they retry.</li>
 </ul>
 <h2 id="what-happens-when-a-meta-node-is-lost">What happens when a meta node is lost<a class="headerlink" href="#what-happens-when-a-meta-node-is-lost" title="Permanent link">&para;</a></h2>
 <table>
