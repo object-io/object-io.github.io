@@ -3094,6 +3094,13 @@ judged: on a shared runner it moves too much from run to run.</p>
   more than most regressions, so no absolute number can gate anything.
   Both builds run on the same runner in the same job, and alternating
   them means a runner that slows down part way through slows both.</li>
+<li><strong>A dedicated runner in the merge queue.</strong> The merge queue's run goes to
+  a self-hosted runner kept for this job, which moves less from run to run
+  than GitHub's shared ones. Each job gets a fresh container that is
+  thrown away afterwards, with no reach into its host's network, and the
+  runner takes only the merge queue's runs, never a pull request's. A
+  pull request labelled <code>perf</code> runs on GitHub's runners, so its numbers
+  are noisier.</li>
 <li><strong>Medians of five.</strong> One run in five can be off by a quarter (a cold
   first run, a noisy neighbour); the median ignores it.</li>
 <li><strong>Data in memory.</strong> The aio keeps its data on a tmpfs. On a runner's
