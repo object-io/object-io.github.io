@@ -2868,6 +2868,45 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#changes-since-010-rc2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changes since 0.1.0-rc.2
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Changes since 0.1.0-rc.2">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#upgrading-a-010-rc2-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Upgrading a 0.1.0-rc.2 cluster
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#changes-since-010-rc1" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2902,7 +2941,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#fixes" class="md-nav__link">
+  <a href="#fixes_1" class="md-nav__link">
     <span class="md-ellipsis">
       
         Fixes
@@ -3076,6 +3115,45 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#changes-since-010-rc2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changes since 0.1.0-rc.2
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Changes since 0.1.0-rc.2">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#upgrading-a-010-rc2-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Upgrading a 0.1.0-rc.2 cluster
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#changes-since-010-rc1" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3110,7 +3188,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#fixes" class="md-nav__link">
+  <a href="#fixes_1" class="md-nav__link">
     <span class="md-ellipsis">
       
         Fixes
@@ -3392,6 +3470,21 @@ the same core. Apache-2.0, every feature.</p>
   (<a href="../../operations-guide/operations/production/">production</a>,
   <a href="../../operations-guide/installation/hardware-sizing/">hardware sizing</a>).</li>
 </ul>
+<h2 id="changes-since-010-rc2">Changes since 0.1.0-rc.2<a class="headerlink" href="#changes-since-010-rc2" title="Permanent link">&para;</a></h2>
+<h3 id="upgrading-a-010-rc2-cluster">Upgrading a 0.1.0-rc.2 cluster<a class="headerlink" href="#upgrading-a-010-rc2-cluster" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Flags that did nothing are gone</strong>, and a binary refuses to start
+  with a flag it doesn't have: meta's <code>--peers</code> (the Raft group is formed
+  over meta's admin port) and the gateway's <code>--osd-endpoint</code> (the gateway
+  finds the OSDs through meta). Take them out of your units and scripts
+  before upgrading; the chart no longer passes <code>--peers</code>
+  (<a href="../../operations-guide/installation/configuration/">configuration</a>).</li>
+</ul>
+<h3 id="fixes">Fixes<a class="headerlink" href="#fixes" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>The container images' default commands start their service</strong>: the
+  meta, OSD and gateway images passed <code>--bind</code>, which none of them has.</li>
+</ul>
 <h2 id="changes-since-010-rc1">Changes since 0.1.0-rc.1<a class="headerlink" href="#changes-since-010-rc1" title="Permanent link">&para;</a></h2>
 <h3 id="upgrading-a-010-rc1-cluster">Upgrading a 0.1.0-rc.1 cluster<a class="headerlink" href="#upgrading-a-010-rc1-cluster" title="Permanent link">&para;</a></h3>
 <p>One node at a time, as any upgrade, then <code>obioctl upgrade finalize</code>
@@ -3466,7 +3559,7 @@ format level 10; 0.1.0-rc.1 is 8. Before finalizing:</p>
   can't read is refused with <code>503</code> (retry), rather than decided without
   them.</li>
 </ul>
-<h3 id="fixes">Fixes<a class="headerlink" href="#fixes" title="Permanent link">&para;</a></h3>
+<h3 id="fixes_1">Fixes<a class="headerlink" href="#fixes_1" title="Permanent link">&para;</a></h3>
 <p>Data read and written correctly:</p>
 <ul>
 <li><strong>An encrypted object larger than one stripe</strong> (16 MiB at 4+2), stored

@@ -3315,11 +3315,6 @@ Pass every address explicitly.</p>
 <td>Meta nodes: one address, or every meta node's, comma-separated. Any node serves any call (a follower forwards it to the Raft leader), and one that stops answering is skipped. See <a href="../../operations/meta-ha/">Meta high availability</a>.</td>
 </tr>
 <tr>
-<td><code>--osd-endpoint &lt;url&gt;</code></td>
-<td><code>http://localhost:9200</code></td>
-<td>Initial OSD peer</td>
-</tr>
-<tr>
 <td><code>--ec-k &lt;n&gt;</code></td>
 <td><code>4</code></td>
 <td>EC data shards</td>
@@ -3749,11 +3744,6 @@ and <a href="../../operations/meta-ha/">meta HA</a>.</p>
 <td><code>-l, --listen &lt;addr&gt;</code></td>
 <td><code>0.0.0.0:9100</code></td>
 <td>gRPC listen — MetadataService + Raft RPC</td>
-</tr>
-<tr>
-<td><code>--peers &lt;list&gt;</code></td>
-<td>empty</td>
-<td>Accepted and not used: membership is set over the admin port</td>
 </tr>
 <tr>
 <td><code>--ec-k &lt;n&gt;</code></td>
