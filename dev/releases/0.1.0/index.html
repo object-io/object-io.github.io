@@ -3502,6 +3502,15 @@ the same core. Apache-2.0, every feature.</p>
   majority is lost for good and one node survives, <code>objectio-meta
   force-single-voter --others-lost-for-good</code> makes it the only voter, the
   last resort (<a href="../../operations-guide/operations/failure-recovery/#losing-a-meta-majority">failure recovery</a>).</li>
+<li><strong>The gateway's memory is bounded under any load.</strong> A GET streams the
+  object stripe by stripe instead of building it whole in memory; request
+  bodies and GET read-ahead come from a memory budget (<code>--memory-budget</code>,
+  by default half the container's memory limit); a request that doesn't
+  fit, or one over the in-flight limit (<code>--max-requests</code>), gets <code>503
+  SlowDown</code>; a client that stops sending or reading is cut off. A body
+  over 100 MiB is now <code>400 EntityTooLarge</code>, as S3 answers, not <code>413</code>, and
+  a copy that changes the encryption takes a source of at most 100 MiB
+  (<a href="../../operations-guide/operations/production/#gateway-memory-and-overload">production</a>).</li>
 </ul>
 <h3 id="upgrading-a-010-rc2-cluster">Upgrading a 0.1.0-rc.2 cluster<a class="headerlink" href="#upgrading-a-010-rc2-cluster" title="Permanent link">&para;</a></h3>
 <ul>

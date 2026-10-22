@@ -3777,6 +3777,10 @@
   SigV2 presigned URLs: set
   <code>Config(signature_version="s3v4")</code> in boto3, and
   <code>aws configure set default.s3.signature_version s3v4</code> for the CLI.</li>
+<li><strong>Overload answers <code>503 SlowDown</code></strong> (with <code>Retry-After</code>), when a gateway
+  is at its memory budget or its limit of requests in flight; SDKs retry
+  it with backoff. A request body that sends nothing for 30 s gets <code>400
+  RequestTimeout</code> (<a href="../../operations/production/#gateway-memory-and-overload">gateway memory</a>).</li>
 </ul>
 <h2 id="bucket-operations">Bucket Operations<a class="headerlink" href="#bucket-operations" title="Permanent link">&para;</a></h2>
 <h3 id="listbuckets">ListBuckets<a class="headerlink" href="#listbuckets" title="Permanent link">&para;</a></h3>
@@ -3885,6 +3889,11 @@ ETag: "d41d8cd98f00b204e9800998ecf8427e"
 <p><strong>Range Request:</strong></p>
 <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">"Range: bytes=0-99"</span><span class="w"> </span>http://localhost:9000/my-bucket/file.txt
 </code></pre></div>
+<p>The object is streamed stripe by stripe, never held whole in the
+gateway. A failure reading the first stripe is an error status; one after
+the headers have gone out closes the connection short of
+<code>Content-Length</code> (never with wrong bytes), which clients see as a short
+read and retry.</p>
 <hr />
 <h3 id="headobject">HeadObject<a class="headerlink" href="#headobject" title="Permanent link">&para;</a></h3>
 <p>Get object metadata without body.</p>
@@ -3914,6 +3923,11 @@ x-amz-copy-source: /source-bucket/source-key
 <span class="w">    </span><span class="nt">&lt;ETag&gt;</span>"d41d8cd98f00b204e9800998ecf8427e"<span class="nt">&lt;/ETag&gt;</span>
 <span class="nt">&lt;/CopyObjectResult&gt;</span>
 </code></pre></div>
+<p>A copy whose source and destination are encrypted alike shares the
+source's stripes, at any size. A copy that changes the encryption reads
+the source and writes it again, so its source (or, for UploadPartCopy, its
+range) may be at most 100 MiB, as a PUT; a larger one gets <code>400
+InvalidRequest</code>, as S3 answers a source over its 5 GiB.</p>
 <hr />
 <h3 id="listobjectsv2">ListObjectsV2<a class="headerlink" href="#listobjectsv2" title="Permanent link">&para;</a></h3>
 <p>List objects in a bucket.</p>
@@ -3946,7 +3960,8 @@ x-amz-copy-source: /source-bucket/source-key
 <p>Multipart upload allows uploading large objects in parts. It is
 required for objects over 100 MiB: the gateway takes a request body of
 at most 100 MiB, so a larger single PUT, or a larger part, is refused
-with <code>413</code> (<a href="https://github.com/object-io/objectio/issues/64">objectio#64</a>).</p>
+with <code>400 EntityTooLarge</code> before its body is read
+(<a href="https://github.com/object-io/objectio/issues/64">objectio#64</a>).</p>
 <h3 id="limits-and-behavior">Limits and Behavior<a class="headerlink" href="#limits-and-behavior" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -3965,7 +3980,7 @@ with <code>413</code> (<a href="https://github.com/object-io/objectio/issues/64"
 <tr>
 <td>Maximum part size</td>
 <td>100 MiB</td>
-<td>S3's is 5 GiB; a larger part gets <code>413</code></td>
+<td>S3's is 5 GiB; a larger part gets <code>400 EntityTooLarge</code></td>
 </tr>
 <tr>
 <td>Maximum single PUT</td>

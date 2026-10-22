@@ -2987,7 +2987,7 @@ its notes (<a href="../../releases/0.1.0/">0.1.0</a>).</p>
 <li><strong>Slow path (decrypt → re-encrypt)</strong>: when SSE settings differ (plaintext → SSE-S3, SSE-S3 → SSE-KMS, SSE-KMS → plaintext, SSE-KMS with different key, or explicit override via request headers), the gateway reads the source through its normal decrypt path, then re-PUTs through the normal encrypt path so the destination bucket's default — or the copy request's <code>x-amz-server-side-encryption*</code> headers — controls the new encryption.</li>
 <li><strong>SSE-C on copy</strong>: not yet supported; returns <code>NotImplemented 501</code> when either side is SSE-C (needs the AWS-specific <code>x-amz-copy-source-server-side-encryption-customer-*</code> header set).</li>
 </ul>
-<p>A re-encrypting CopyObject buffers the object in memory, as a single-part PUT does.</p>
+<p>A re-encrypting CopyObject holds the source in memory, as a single-part PUT holds its body: it takes a source of at most 100 MiB (<code>400 InvalidRequest</code> over it), and reserves it from the gateway's memory budget (<code>503 SlowDown</code> when there is no room).</p>
 <hr />
 <h1 id="2-data-protection-erasure-coding">2. Data Protection (Erasure Coding)<a class="headerlink" href="#2-data-protection-erasure-coding" title="Permanent link">&para;</a></h1>
 <h3 id="reed-solomon-mds">Reed-Solomon (MDS)<a class="headerlink" href="#reed-solomon-mds" title="Permanent link">&para;</a></h3>

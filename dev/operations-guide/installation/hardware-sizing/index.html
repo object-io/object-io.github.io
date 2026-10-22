@@ -3390,7 +3390,7 @@ estimate).</p>
 </tr>
 <tr>
 <td>Gateway</td>
-<td>4 GB, plus 2 GB per GB/s it carries (buffers for objects in flight)</td>
+<td>4 GB, plus 2 GB per GB/s it carries (buffers for objects in flight). Set it as the gateway's memory limit: half of it becomes its <a href="../../operations/production/#gateway-memory-and-overload">memory budget</a>, and load beyond that gets <code>503 SlowDown</code></td>
 </tr>
 <tr>
 <td>Meta</td>

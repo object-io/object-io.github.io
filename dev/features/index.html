@@ -3101,8 +3101,15 @@ release notes say when they do.</p>
 <tr>
 <td>CopyObject, UploadPartCopy, copy by reference</td>
 <td>✅</td>
+<td>A copy that changes the encryption rewrites the bytes, and takes a source of at most 100 MiB</td>
+<td><a href="../operations-guide/administration/s3-api/#copyobject">S3 API</a></td>
 <td></td>
-<td><a href="../operations-guide/administration/s3-api/">S3 API</a></td>
+</tr>
+<tr>
+<td>Gateway memory bounded under any load</td>
+<td>✅</td>
+<td>A GET streams stripe by stripe; request bodies and read-ahead come from a memory budget; requests over the budget or the in-flight limit get <code>503 SlowDown</code>; slow clients are cut off by timeouts</td>
+<td><a href="../operations-guide/operations/production/#gateway-memory-and-overload">production</a></td>
 <td></td>
 </tr>
 <tr>

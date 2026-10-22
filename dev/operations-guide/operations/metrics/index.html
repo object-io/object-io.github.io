@@ -3496,6 +3496,12 @@ once per gateway. With several gateways, aggregate them with <code>max</code>, n
 <td>CopyObject requests completed, by mode: reference (shares the source's stripes) or bytes (rewritten)</td>
 </tr>
 <tr>
+<td><code>objectio_gateway_get_aborted_total</code></td>
+<td>counter</td>
+<td><code>reason</code></td>
+<td>GETs cut off after their headers were sent: <code>read</code> (a stripe could not be read), <code>length</code> (a stripe read back other than its recorded size), <code>memory</code> (no room in the budget for the next stripe in time)</td>
+</tr>
+<tr>
 <td><code>objectio_gateway_inline_bytes_total</code></td>
 <td>counter</td>
 <td>—</td>
@@ -3506,6 +3512,18 @@ once per gateway. With several gateways, aggregate them with <code>max</code>, n
 <td>counter</td>
 <td>—</td>
 <td>Objects small enough to be stored in their metadata, with no shards</td>
+</tr>
+<tr>
+<td><code>objectio_gateway_memory_budget_bytes</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>The memory budget for request bodies and GET read-ahead (<code>--memory-budget</code>)</td>
+</tr>
+<tr>
+<td><code>objectio_gateway_memory_budget_in_use_bytes</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Bytes of the memory budget held by requests now</td>
 </tr>
 <tr>
 <td><code>objectio_gateway_osd_request_errors_total</code></td>
@@ -3562,6 +3580,24 @@ once per gateway. With several gateways, aggregate them with <code>max</code>, n
 <td>Time spent in each phase of a request, by operation and phase</td>
 </tr>
 <tr>
+<td><code>objectio_gateway_requests_admitted</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Requests admitted and not yet finished, response bodies included</td>
+</tr>
+<tr>
+<td><code>objectio_gateway_requests_limit</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Requests the gateway serves at once (<code>--max-requests</code>)</td>
+</tr>
+<tr>
+<td><code>objectio_gateway_requests_rejected_total</code></td>
+<td>counter</td>
+<td><code>reason</code></td>
+<td>Requests refused with <code>503 SlowDown</code>, by the limit they hit (<code>requests</code> or <code>memory</code>)</td>
+</tr>
+<tr>
 <td><code>objectio_gateway_shard_checksum_mismatches_total</code></td>
 <td>counter</td>
 <td><code>direction</code></td>
@@ -3590,6 +3626,12 @@ once per gateway. With several gateways, aggregate them with <code>max</code>, n
 <td>counter</td>
 <td><code>reason</code></td>
 <td>Shards deleted because nothing references them any more</td>
+</tr>
+<tr>
+<td><code>objectio_gateway_timeouts_total</code></td>
+<td>counter</td>
+<td><code>kind</code></td>
+<td>Requests or connections cut off by a timeout: <code>body</code> (a request body stopped arriving), <code>send</code> (a client stopped reading)</td>
 </tr>
 <tr>
 <td><code>objectio_gateway_uptime_seconds</code></td>

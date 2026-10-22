@@ -3420,6 +3420,26 @@ Pass every address explicitly.</p>
 <td>Proxies whose <code>X-Forwarded-For</code> / <code>X-Forwarded-Proto</code> are believed for <code>aws:SourceIp</code> / <code>aws:SecureTransport</code>. Env <code>OBJECTIO_TRUSTED_PROXIES</code>. Set it when TLS ends at an ingress.</td>
 </tr>
 <tr>
+<td><code>--memory-budget &lt;size&gt;</code></td>
+<td>half the memory limit, else <code>512MiB</code></td>
+<td>Memory for request bodies and GET read-ahead (<code>512MiB</code>, <code>2GiB</code>); a request that doesn't fit gets <code>503 SlowDown</code>. Unset: half the process's cgroup memory limit when it has one. Env <code>OBJECTIO_MEMORY_BUDGET</code>. See <a href="../../operations/production/#gateway-memory-and-overload">gateway memory</a>.</td>
+</tr>
+<tr>
+<td><code>--max-requests &lt;n&gt;</code></td>
+<td><code>1024</code></td>
+<td>Requests served at once, each until its response is sent; more get <code>503 SlowDown</code>. <code>/health</code>, <code>/_ready</code> and <code>/metrics</code> aren't counted. Env <code>OBJECTIO_MAX_REQUESTS</code>.</td>
+</tr>
+<tr>
+<td><code>--header-timeout-secs &lt;n&gt;</code></td>
+<td><code>30</code></td>
+<td>How long a request's headers may take to arrive, and an idle keep-alive connection waits for its next request. Env <code>OBJECTIO_HEADER_TIMEOUT_SECS</code>.</td>
+</tr>
+<tr>
+<td><code>--body-timeout-secs &lt;n&gt;</code></td>
+<td><code>30</code></td>
+<td>How long a request body may send no byte (<code>400 RequestTimeout</code>), and a client may read no byte of a response (disconnected). Env <code>OBJECTIO_BODY_TIMEOUT_SECS</code>.</td>
+</tr>
+<tr>
 <td><code>--shutdown-delay-secs &lt;n&gt;</code></td>
 <td><code>5</code></td>
 <td>On SIGTERM, how long <code>/_ready</code> answers 503 while the gateway still serves, before it stops taking connections. Env <code>OBJECTIO_SHUTDOWN_DELAY_SECS</code>. See <a href="../../operations/upgrades/#how-a-node-stops">how a node stops</a>.</td>
@@ -4155,6 +4175,11 @@ missing disk
 <td><code>--audit-log &lt;path&gt;</code></td>
 <td>unset</td>
 <td>Mirror of the gateway's <code>--audit-log</code>.</td>
+</tr>
+<tr>
+<td><code>--memory-budget &lt;size&gt;</code>, <code>--max-requests &lt;n&gt;</code>, <code>--header-timeout-secs &lt;n&gt;</code>, <code>--body-timeout-secs &lt;n&gt;</code></td>
+<td>the gateway's</td>
+<td>Forwarded to the gateway</td>
 </tr>
 <tr>
 <td><code>--log-level &lt;lvl&gt;</code></td>
