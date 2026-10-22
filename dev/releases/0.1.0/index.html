@@ -3543,6 +3543,19 @@ the same core. Apache-2.0, every feature.</p>
   can be elected inside. A cluster mixing upgraded and older nodes is safe
   (<a href="../../operations-guide/operations/meta-ha/">meta HA</a>,
   <a href="../../operations-guide/installation/configuration/">configuration</a>).</li>
+<li><strong>No OSD holds two shards of one stripe.</strong> The repairer rebuilt a
+  missing shard on the OSD its position is placed on now even when that
+  OSD held another shard of the stripe (a block chunk or a pack written
+  before its placement group changed), so one lost disk cost the stripe
+  two shards; such a shard now stays missing, the object degraded, until
+  its position has an OSD of its own. A placement group's stand-ins and
+  moves back to its <code>up</code> set never put two of its positions on one OSD: a
+  member back from down could become the stand-in for another position,
+  leaving <code>up</code> naming it at two, and recovery then moved both onto it. And
+  a key placed without a placement group (one written before format
+  level 7) whose shards had too few OSDs was placed with the least-loaded
+  OSD named twice; it is now refused, <code>503 ServiceUnavailable</code>, to retry
+  (topology).</li>
 <li><strong>A delete that meets a placement change is placed again</strong>, as a PUT
   already was: when an OSD was set out between placing a delete and
   sending it, every copy refused it as stale and the delete answered 503.</li>
