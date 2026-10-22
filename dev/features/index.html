@@ -3064,9 +3064,9 @@ release notes say when they do.</p>
 </thead>
 <tbody>
 <tr>
-<td>Buckets: create, delete, head, list</td>
+<td>Buckets: create, delete, head, list, location</td>
 <td>✅</td>
-<td></td>
+<td>GetBucketLocation answers the gateway's <code>--region</code> (us-east-1 as the empty constraint, as S3 does)</td>
 <td><a href="../operations-guide/administration/s3-api/">S3 API</a></td>
 <td></td>
 </tr>
@@ -3248,8 +3248,8 @@ release notes say when they do.</p>
 <tr>
 <td>Static website hosting, inventory, analytics, transfer acceleration, torrent</td>
 <td>✖</td>
-<td>Refused with 501, never misread</td>
-<td></td>
+<td>Refused with 501, never misread; so is a bucket GET naming any sub-resource the gateway doesn't answer</td>
+<td><a href="../operations-guide/administration/s3-api/#not-yet-implemented">S3 API</a></td>
 <td></td>
 </tr>
 </tbody>

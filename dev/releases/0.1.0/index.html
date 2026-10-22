@@ -3605,6 +3605,16 @@ the same core. Apache-2.0, every feature.</p>
   unreachable ones could still make its quorum, and 507 only when the
   full ones keep it short
   (<a href="../../operations-guide/operations/failure-recovery/#full-disks">full disks</a>).</li>
+<li><strong>GetBucketLocation answers the bucket's region</strong>, the gateway's
+  <code>--region</code> (us-east-1 as the empty constraint, as S3 answers it), in
+  path-style and virtual-hosted addressing alike. <code>GET /bucket?location</code>
+  answered with the bucket's listing. It is authorized as
+  <code>s3:GetBucketLocation</code>, no longer as <code>s3:ListBucket</code>: a policy that
+  allows only the listing no longer allows it, as in S3. A <code>GET</code> on a
+  bucket that names a sub-resource the gateway doesn't implement
+  (<code>?session</code>, <code>?metadataTable</code>, or any other without a value, besides
+  those already refused) is <code>501 NotImplemented</code>, not a listing
+  (<a href="../../operations-guide/administration/s3-api/#getbucketlocation">S3 API</a>).</li>
 </ul>
 <h2 id="changes-since-010-rc1">Changes since 0.1.0-rc.1<a class="headerlink" href="#changes-since-010-rc1" title="Permanent link">&para;</a></h2>
 <h3 id="upgrading-a-010-rc1-cluster">Upgrading a 0.1.0-rc.1 cluster<a class="headerlink" href="#upgrading-a-010-rc1-cluster" title="Permanent link">&para;</a></h3>

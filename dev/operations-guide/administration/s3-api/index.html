@@ -3981,13 +3981,21 @@ encryption and public access settings, in the same commit.</p>
 <p><strong>Response:</strong> 200 OK (bucket exists) or 404 Not Found</p>
 <hr />
 <h3 id="getbucketlocation">GetBucketLocation<a class="headerlink" href="#getbucketlocation" title="Permanent link">&para;</a></h3>
-<p>Get the region of a bucket.</p>
+<p>Get the region of a bucket: the gateway's <code>--region</code>
+(<a href="../../installation/configuration/">configuration</a>), which every bucket
+is in. Authorized as <code>s3:GetBucketLocation</code>.</p>
 <div class="highlight"><pre><span></span><code>GET /{bucket}?location
 </code></pre></div>
-<p><strong>Response:</strong></p>
+<p><strong>Response</strong> (a gateway started with <code>--region eu-west-1</code>):</p>
 <div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
-<span class="nt">&lt;LocationConstraint&gt;</span>us-east-1<span class="nt">&lt;/LocationConstraint&gt;</span>
+<span class="nt">&lt;LocationConstraint</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">"http://s3.amazonaws.com/doc/2006-03-01/"</span><span class="nt">&gt;</span>eu-west-1<span class="nt">&lt;/LocationConstraint&gt;</span>
 </code></pre></div>
+<p>In <code>us-east-1</code>, the default, the constraint is empty, as S3 answers it;
+SDKs read an empty constraint as <code>us-east-1</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;LocationConstraint</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">"http://s3.amazonaws.com/doc/2006-03-01/"</span><span class="nt">/&gt;</span>
+</code></pre></div>
+<p>A bucket that doesn't exist is <code>404 NoSuchBucket</code>.</p>
 <hr />
 <h2 id="object-operations">Object Operations<a class="headerlink" href="#object-operations" title="Permanent link">&para;</a></h2>
 <h3 id="putobject">PutObject<a class="headerlink" href="#putobject" title="Permanent link">&para;</a></h3>
@@ -4589,12 +4597,62 @@ back only what it selects.</p>
 <hr />
 <h2 id="not-yet-implemented">Not Yet Implemented<a class="headerlink" href="#not-yet-implemented" title="Permanent link">&para;</a></h2>
 <p>A request naming one of these sub-resources is refused with <code>501
-NotImplemented</code> (rather than, say, <code>GET /b?website</code> listing the bucket).
-Bucket logging (<code>?logging</code>) is supported: see <a href="../bucket-logging/">Bucket Logging</a>.</p>
+NotImplemented</code> rather than handled as something else (<code>GET /b?website</code>
+used to list the bucket):</p>
+<table>
+<thead>
+<tr>
+<th>Sub-resource</th>
+<th>S3 calls</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>?website</code></td>
+<td>Get/Put/DeleteBucketWebsite</td>
+</tr>
+<tr>
+<td><code>?notification</code></td>
+<td>Get/PutBucketNotificationConfiguration</td>
+</tr>
+<tr>
+<td><code>?inventory</code>, <code>?analytics</code>, <code>?metrics</code>, <code>?intelligent-tiering</code></td>
+<td>the bucket's inventory, analytics, metrics and Intelligent-Tiering configurations</td>
+</tr>
+<tr>
+<td><code>?accelerate</code></td>
+<td>Get/PutBucketAccelerateConfiguration</td>
+</tr>
+<tr>
+<td><code>?requestPayment</code></td>
+<td>Get/PutBucketRequestPayment</td>
+</tr>
+<tr>
+<td><code>?session</code></td>
+<td>CreateSession (S3 Express directory buckets)</td>
+</tr>
+<tr>
+<td><code>?metadataTable</code>, <code>?metadataConfiguration</code></td>
+<td>S3 Metadata configurations</td>
+</tr>
+<tr>
+<td><code>?abac</code></td>
+<td>Get/PutBucketAbac</td>
+</tr>
+<tr>
+<td><code>?restore</code>, <code>?torrent</code></td>
+<td>RestoreObject, GetObjectTorrent</td>
+</tr>
+</tbody>
+</table>
+<p>A <code>GET</code> on a bucket is also <code>501</code> when it names, without a value, any
+other parameter that is neither a sub-resource the gateway answers nor a
+listing parameter (<code>GET /b?made-up</code>): S3 names sub-resources that way, and
+answering one with the bucket's listing would report a success that
+wasn't one. Parameters with a value, such as an SDK's <code>x-id=ListObjects</code>,
+are left to the listing, as S3 does. Bucket logging (<code>?logging</code>) is
+supported: see <a href="../bucket-logging/">Bucket Logging</a>.</p>
 <ul>
-<li>Inventory, Analytics, Metrics configuration</li>
-<li>Website configuration</li>
-<li>Accelerate configuration, Request Payment</li>
 <li>SigV2 — refused with <code>400</code>; use SigV4</li>
 </ul>
 
