@@ -2732,10 +2732,43 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#complete-metadata-cluster-failure" class="md-nav__link">
+  <a href="#losing-a-meta-majority" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Complete metadata cluster failure
+        Losing a meta majority
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backing-up-meta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Backing up meta
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#restoring-meta-from-a-backup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Restoring meta from a backup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-last-resort-one-survivor-leads-alone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The last resort: one survivor leads alone
       
     </span>
   </a>
@@ -3381,10 +3414,43 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#complete-metadata-cluster-failure" class="md-nav__link">
+  <a href="#losing-a-meta-majority" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Complete metadata cluster failure
+        Losing a meta majority
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backing-up-meta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Backing up meta
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#restoring-meta-from-a-backup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Restoring meta from a backup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-last-resort-one-survivor-leads-alone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The last resort: one survivor leads alone
       
     </span>
   </a>
@@ -3853,20 +3919,133 @@ storage: check its disk and its log.</p>
 (<code>InvalidArgument</code>; 400 through the gateway's APIs) and stops nothing. One
 that reached the log anyway (written by an earlier release) is applied as
 refused, writing nothing, on every node.</p>
-<h3 id="complete-metadata-cluster-failure">Complete metadata cluster failure<a class="headerlink" href="#complete-metadata-cluster-failure" title="Permanent link">&para;</a></h3>
-<p><strong>Scenario:</strong> all meta pods lose their PVCs simultaneously (rare —
-typically requires a storage-layer incident).</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># If all pods still have their PVCs, just wait — each pod's redb log</span>
-<span class="c1"># is durable, so restarting the StatefulSet recovers the cluster.</span>
-kubectl<span class="w"> </span>rollout<span class="w"> </span>restart<span class="w"> </span>statefulset/&lt;name&gt;-meta<span class="w"> </span>-n<span class="w"> </span>objectio
-
-<span class="c1"># If PVCs are lost, the cluster is lost — there's no quorum to recover</span>
-<span class="c1"># from. Treat it like a fresh install:</span>
-kubectl<span class="w"> </span>delete<span class="w"> </span>statefulset/&lt;name&gt;-meta<span class="w"> </span>pvc<span class="w"> </span>-l<span class="w"> </span>app.kubernetes.io/component<span class="o">=</span>meta
-helm<span class="w"> </span>upgrade<span class="w"> </span>objectio<span class="w"> </span>./deploy/helm/objectio<span class="w"> </span>-f<span class="w"> </span>values.yaml
-<span class="c1"># Helm's post-install Job re-runs /init + /add-learner + /change-membership</span>
-<span class="c1"># against the new meta-0.</span>
+<h3 id="losing-a-meta-majority">Losing a meta majority<a class="headerlink" href="#losing-a-meta-majority" title="Permanent link">&para;</a></h3>
+<p>Meta survives the loss of a minority of its nodes. A <strong>majority</strong> lost
+leaves the group without a leader: nothing is written until it is back.</p>
+<ul>
+<li><strong>The nodes are down but their data is intact</strong> (pods rescheduling,
+  hosts rebooting, a partition): start them. Each reads its Raft log and
+  the group elects a leader; nothing else is needed.</li>
+</ul>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>rollout<span class="w"> </span>restart<span class="w"> </span>statefulset/&lt;name&gt;-meta<span class="w"> </span>-n<span class="w"> </span>objectio
 </code></pre></div>
+<ul>
+<li><strong>A majority's data is gone for good, and one node's is intact:</strong>
+  make that node the only voter (<a href="#the-last-resort-one-survivor-leads-alone">below</a>).</li>
+<li><strong>Every node's data is gone:</strong> restore the last backup
+  (<a href="#restoring-meta-from-a-backup">below</a>). Without a backup the objects'
+  bytes are still on the OSDs, but nothing names them: the cluster can't
+  be recovered.</li>
+</ul>
+<p>The OSDs keep the objects' bytes in either case. What a restore or a
+forced membership can't give back is meta's own record of what changed
+after the point it restores to.</p>
+<h3 id="backing-up-meta">Backing up meta<a class="headerlink" href="#backing-up-meta" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>obioctl<span class="w"> </span>meta<span class="w"> </span><span class="nb">export</span><span class="w"> </span>--file<span class="w"> </span>meta-<span class="k">$(</span>date<span class="w"> </span>+%F<span class="k">)</span>.backup
+</code></pre></div>
+<p>The system admin takes a backup of a live cluster, as it serves: the
+leader, once a majority confirms it leads, writes every table of meta's
+state from one consistent read (buckets, object listings, users, keys,
+policies, tenants, pools and placement groups, packs, catalogs, block
+volumes, config). It holds every write acknowledged before it. <code>obioctl</code>
+checks the file as it downloads (a SHA-256 over the whole of it), writes
+it to <code>FILE.part</code> and gives it its name only once it is whole: a transfer
+cut short fails and leaves nothing. Without <code>--file</code> it goes to standard
+output.</p>
+<ul>
+<li><strong>Take one on a schedule, and before every upgrade.</strong> A restore loses
+  everything written to meta since its backup.</li>
+<li><strong>Keep it off the cluster, and private.</strong> It holds every secret meta
+  keeps: users' secret keys, the cluster's signing secret, the KMS keys
+  (wrapped by the SSE master key). <code>obioctl</code> writes it readable by its
+  owner only. The SSE master key isn't in it: keep that apart, as you
+  already must.</li>
+<li>A backup is about as large as meta's database: one listing entry per
+  object version.</li>
+</ul>
+<h3 id="restoring-meta-from-a-backup">Restoring meta from a backup<a class="headerlink" href="#restoring-meta-from-a-backup" title="Permanent link">&para;</a></h3>
+<p>When every meta node's data is lost. The OSDs must be the cluster's own,
+with their disks.</p>
+<ol>
+<li><strong>Stop every meta node, and empty its data directory.</strong> A node that
+   starts on its old data would lead a group of its own beside the
+   restored one. On Kubernetes, scale the meta StatefulSet to 0 and delete
+   its volumes' contents (or the PVCs).</li>
+<li><strong>Restore into one node's empty data directory</strong>, with meta stopped,
+   as the id and address that node starts with:</li>
+</ol>
+<div class="highlight"><pre><span></span><code>objectio-meta<span class="w"> </span>restore<span class="w"> </span>--from<span class="w"> </span>meta-2026-10-20.backup<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--data-dir<span class="w"> </span>/var/lib/objectio/meta<span class="w"> </span>--node-id<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--raft-advertise<span class="w"> </span>meta-0.meta-headless:9100
+</code></pre></div>
+<p>It refuses a data directory that holds a meta node's data, a file that
+   isn't a whole backup (checked end to end before anything is
+   installed), and a backup of a cluster at a format level this binary
+   can't run at (a newer release's, or one older than the oldest it
+   upgrades from). It prints what the backup is (cluster, release, level,
+   Raft index) and what to check after. A restore that stops part way
+   leaves <code>restore-incomplete</code> in the directory, and meta refuses to start
+   on it: empty the directory and restore again.
+3. <strong>Start meta on it.</strong> It is a group of one voter, and elects itself.
+4. <strong>Add the other nodes, empty</strong>, as when the group was formed:
+   <code>/add-learner</code> for each, then <code>/change-membership</code> with every voter
+   (the <a href="#admin-api">admin API</a>).</p>
+<p>What the restored cluster holds, and what it doesn't:</p>
+<ul>
+<li><strong>Objects written after the backup are listed again.</strong> Meta lists every
+  placement group once, from the OSDs, and adds the objects it finds; ones
+  deleted after the backup are unlisted. Until it has listed them all
+  (<code>objectio_meta_pgs_to_relist</code> falls to 0), a listing may miss them; a
+  GET of one by name reads it.</li>
+<li><strong>Everything else meta keeps is as it was at the backup:</strong> buckets,
+  users, keys, policies, tenants, pools and config made after it are gone,
+  and ones deleted after it are back. Block volumes' writes after it are
+  lost.</li>
+<li><strong>Objects packed after the backup can't be read</strong>: where a pack keeps
+  each object is recorded only in meta.</li>
+<li><strong>Space is held, never lost:</strong> a stripe made before the restore is not
+  freed when its object is deleted, since a copy or pack made after the
+  backup may still use it (<code>objectio_meta_restore_frees_held_total</code>).</li>
+<li><strong>OSDs the backup held as draining or out are left alone</strong>: one may have
+  been put back in since, with data on it. Nothing drains or purges it
+  until you set its state as it really is, <code>obioctl osd set-state ID
+  in|out|draining</code> (<code>objectio_meta_restore_osds_unconfirmed</code>; the restore
+  names them).</li>
+<li>Every placement group moves to a new epoch, above any the lost group
+  gave the OSDs, so the OSDs take the restored meta's placements and
+  refuse the old ones.</li>
+</ul>
+<h3 id="the-last-resort-one-survivor-leads-alone">The last resort: one survivor leads alone<a class="headerlink" href="#the-last-resort-one-survivor-leads-alone" title="Permanent link">&para;</a></h3>
+<p>When a majority of meta's voters is lost <strong>for good</strong> (disks destroyed,
+volumes deleted) and one node's data is intact, that node can be made the
+only voter of its group, without a backup.</p>
+<p>This is dangerous. A lost node that comes back with its data still
+belongs to the old group, and two of them would elect a leader of their
+own beside the survivor: two groups giving the OSDs different answers.
+Use it only when a majority can't be started again:</p>
+<ol>
+<li><strong>Make sure no other voter can ever start on its data</strong>: wipe its data
+   directory or delete its volume. On Kubernetes, scale the StatefulSet to
+   0 and delete the lost pods' PVCs.</li>
+<li><strong>With the survivor stopped</strong>, make it the only voter, saying the
+   others are gone:</li>
+</ol>
+<div class="highlight"><pre><span></span><code>objectio-meta<span class="w"> </span>force-single-voter<span class="w"> </span>--data-dir<span class="w"> </span>/var/lib/objectio/meta<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--node-id<span class="w"> </span><span class="m">2</span><span class="w"> </span>--others-lost-for-good
+</code></pre></div>
+<p>Without <code>--others-lost-for-good</code> it refuses and changes nothing.
+   <code>--raft-advertise</code> gives its address if it changed; by default it keeps
+   the one its group knew.
+3. <strong>Start it</strong>, then add new nodes with empty data directories, as after
+   a restore.</p>
+<p>The survivor applies every entry in its log, including ones past the
+commit point it knew, which may never have been acknowledged. Entries the
+lost majority committed that never reached it are gone; it prints how far
+it had applied, how far its log went and the last commit point it knew.
+It then behaves as a restored cluster does (above): placement groups
+listed again and moved to a new epoch, frees of older stripes held,
+draining or out OSDs left for you to confirm. It loses less than a
+restore from a backup, which loses everything since the backup.</p>
 <h3 id="network-partitions">Network partitions<a class="headerlink" href="#network-partitions" title="Permanent link">&para;</a></h3>
 <p>Raft's quorum requirement prevents split-brain. In a 3-node cluster
 partitioned 1 + 2:</p>
@@ -3932,11 +4111,14 @@ recovery rebuilds the bad shard. There is no manual step. Watch
 <hr />
 <h2 id="disaster-recovery">Disaster Recovery<a class="headerlink" href="#disaster-recovery" title="Permanent link">&para;</a></h2>
 <h3 id="backups">Backups<a class="headerlink" href="#backups" title="Permanent link">&para;</a></h3>
-<p>Meta is a Raft group (3+ nodes) and survives the loss of a minority. To
-protect against losing the whole cluster, replicate buckets to another
-ObjectIO cluster with <a href="../../administration/replication/">bucket replication</a>
-(asynchronous, per bucket), or copy them with an S3 tool (<code>rclone sync</code>,
-<code>aws s3 sync</code>) on a schedule.</p>
+<p>Meta is a Raft group (3+ nodes) and survives the loss of a minority.
+Against losing every meta node's data, <a href="#backing-up-meta">back meta up</a>
+with <code>obioctl meta export</code> on a schedule and before every upgrade, and
+keep the file off the cluster. To protect against losing the whole
+cluster, replicate buckets to another ObjectIO cluster with
+<a href="../../administration/replication/">bucket replication</a> (asynchronous, per
+bucket), or copy them with an S3 tool (<code>rclone sync</code>, <code>aws s3 sync</code>) on a
+schedule.</p>
 <h3 id="recovery-time-objectives">Recovery Time Objectives<a class="headerlink" href="#recovery-time-objectives" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -3963,9 +4145,19 @@ ObjectIO cluster with <a href="../../administration/replication/">bucket replica
 <td>0</td>
 </tr>
 <tr>
-<td>Loss of a meta majority</td>
+<td>Loss of a meta majority, data intact</td>
 <td>Until a majority is back</td>
 <td>0 (Raft log)</td>
+</tr>
+<tr>
+<td>Loss of a meta majority's data, one survivor</td>
+<td><a href="#the-last-resort-one-survivor-leads-alone">Forced membership</a>, then an election</td>
+<td>What the survivor hadn't received</td>
+</tr>
+<tr>
+<td>Loss of every meta node's data</td>
+<td><a href="#restoring-meta-from-a-backup">Restore</a>, then the PGs listed again</td>
+<td>Meta's changes since the last backup (objects are listed again)</td>
 </tr>
 <tr>
 <td>Complete cluster loss</td>

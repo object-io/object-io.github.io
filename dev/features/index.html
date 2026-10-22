@@ -3828,6 +3828,13 @@ the <a href="../ROADMAP/">roadmap</a>.</p>
 <td></td>
 </tr>
 <tr>
+<td>Meta backup and restore</td>
+<td>✅</td>
+<td><code>obioctl meta export</code> backs up every table of meta's state from a live cluster, checked as it downloads; <code>objectio-meta restore</code> makes a new group from it, which lists again the objects written after it. A survivor of a meta majority lost for good can lead alone (<code>objectio-meta force-single-voter</code>), the last resort. Meta's own changes after the backup, and objects packed after it, are not recovered</td>
+<td><a href="../operations-guide/operations/failure-recovery/#losing-a-meta-majority">failure recovery</a></td>
+<td>meta</td>
+</tr>
+<tr>
 <td>Management SDKs (Go, Python) for the whole admin API</td>
 <td>✅</td>
 <td></td>

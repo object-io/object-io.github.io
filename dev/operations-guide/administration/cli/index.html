@@ -3030,6 +3030,10 @@ A secret is printed only when it's created.</p>
 <td><code>status</code>, <code>finalize</code> (<a href="../../operations/upgrades/">upgrades</a>)</td>
 </tr>
 <tr>
+<td><code>meta</code></td>
+<td><code>export [--file F]</code>: a backup of meta's whole state, system admin (<a href="../../operations/failure-recovery/#backing-up-meta">failure recovery</a>)</td>
+</tr>
+<tr>
 <td><code>node</code></td>
 <td><code>list</code>, <code>show</code></td>
 </tr>
@@ -3092,6 +3096,14 @@ obioctl<span class="w"> </span>public-access-block<span class="w"> </span>put<sp
 obioctl<span class="w"> </span>bucket<span class="w"> </span>create<span class="w"> </span>logs
 obioctl<span class="w"> </span>bucket<span class="w"> </span>lifecycle<span class="w"> </span>put<span class="w"> </span>logs<span class="w"> </span>--file<span class="w"> </span>lifecycle.xml
 </code></pre></div>
+<p>Back meta up, as the system admin (on a schedule, and before every
+upgrade):</p>
+<div class="highlight"><pre><span></span><code>obioctl<span class="w"> </span>meta<span class="w"> </span><span class="nb">export</span><span class="w"> </span>--file<span class="w"> </span>meta-<span class="k">$(</span>date<span class="w"> </span>+%F<span class="k">)</span>.backup
+</code></pre></div>
+<p>The file is checked as it downloads and gets its name only once whole; it
+holds every secret meta keeps, so it is written readable by its owner
+only. It is restored with <code>objectio-meta restore</code>, with meta stopped
+(<a href="../../operations/failure-recovery/#restoring-meta-from-a-backup">failure recovery</a>).</p>
 <p>Make pools, one per protection scheme (<code>--ec-type</code> 0 is Reed-Solomon, 1
 LRC, 2 replication):</p>
 <div class="highlight"><pre><span></span><code>obioctl<span class="w"> </span>pool<span class="w"> </span>create<span class="w"> </span>standard<span class="w"> </span>--ec-type<span class="w"> </span><span class="m">0</span><span class="w"> </span>--ec-k<span class="w"> </span><span class="m">4</span><span class="w"> </span>--ec-m<span class="w"> </span><span class="m">2</span><span class="w"> </span>--failure-domain<span class="w"> </span>host
