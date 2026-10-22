@@ -3082,7 +3082,7 @@ setting on it are in the <a href="../metrics/">metrics reference</a>.</p>
 <tr>
 <td>Block gateway</td>
 <td><code>:9301/metrics</code> (<code>--metrics-listen</code>, empty = off)</td>
-<td>—</td>
+<td><code>:9301/health</code></td>
 </tr>
 </tbody>
 </table>
@@ -3216,8 +3216,12 @@ with its runbook. It covers:
   answers 503 again (<code>"status": "stopping"</code>) once the gateway is shutting
   down, while it still serves (see
   <a href="../upgrades/#how-a-node-stops">how a node stops</a>).</li>
-<li><strong><code>GET /health</code></strong> on the OSDs' metrics port answers 200 while the
-  process is up.</li>
+<li><strong><code>GET /health</code></strong> on an OSD's metrics port answers 200 while every one
+  of its disks is healthy, and 503 (<code>UNHEALTHY</code>) once one has had a
+  failed read, write or flush, or a checksum mismatch, since the OSD
+  started (<code>objectio_disk_errors_total</code>, <code>objectio_disk_healthy</code>).</li>
+<li><strong><code>GET /health</code></strong> on the block gateway's metrics port answers 200
+  while the process is up.</li>
 <li><strong><code>GET /health</code></strong> on meta's metrics port and on its admin port (9102)
   answers 200 while the process is up and its Raft runs, and 503 (with
   the reason) once its Raft has stopped for good, after a storage error.

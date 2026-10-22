@@ -3123,7 +3123,7 @@ be built locally.</p>
 <tr>
 <td><code>block-gateway</code></td>
 <td><code>objectio-block-gateway</code></td>
-<td>9300 (gRPC), 10809 (NBD)</td>
+<td>9300 (gRPC), 9301 (metrics), 10809 (NBD)</td>
 <td>Block volumes over NBD and gRPC</td>
 </tr>
 <tr>
@@ -3147,8 +3147,8 @@ GHCR, and it carries every service:</p>
 <p>It has no entrypoint: name the binary to run, as the Helm chart does.
 The per-service targets (<code>gateway</code>, <code>meta</code>, <code>osd</code>, <code>cli</code>,
 <code>block-gateway</code>) are not published; build them locally if you want them.
-Their default commands pass flags the binaries don't have (<code>--bind</code>,
-<code>--raft-bind</code>), so always give the arguments yourself:</p>
+Each runs its binary with the cluster's ports by default and checks its
+own health (<a href="#health-checks">health checks</a>):</p>
 <div class="highlight"><pre><span></span><code>docker<span class="w"> </span>build<span class="w"> </span>--target<span class="w"> </span>gateway<span class="w"> </span>-t<span class="w"> </span>objectio-gateway<span class="w"> </span>.
 </code></pre></div>
 <p>Both <code>linux/amd64</code> and <code>linux/arm64</code> erasure-code with ISA-L and write
@@ -3307,15 +3307,46 @@ of settings is also reachable via env vars (the full list is in
 </table>
 <hr />
 <h2 id="health-checks">Health checks<a class="headerlink" href="#health-checks" title="Permanent link">&para;</a></h2>
-<ul>
-<li><strong>Gateway:</strong> <code>GET /health</code> answers 200 while the process is up;
-  <code>GET /_ready</code> answers 200 once meta and enough OSDs answer
-  (<a href="../../operations/monitoring/#health-endpoints">monitoring</a>).</li>
-<li><strong>Meta and OSDs:</strong> <code>GET /health</code> on their metrics ports (9101, 9201).</li>
-</ul>
-<p>The <code>all</code> image declares no <code>HEALTHCHECK</code>: use these in your
-orchestrator. The per-service targets declare one, but the gateway's
-calls <code>curl</code>, which the image lacks, and the others always succeed.</p>
+<p>Each service image checks its own <code>/health</code> (see
+<a href="../../operations/monitoring/#health-endpoints">health endpoints</a>) with
+<code>healthcheck.sh PORT</code>, a GET over bash's <code>/dev/tcp</code> (the images carry no
+HTTP client):</p>
+<table>
+<thead>
+<tr>
+<th>Image</th>
+<th>Checks</th>
+<th>Default command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>gateway</code></td>
+<td><code>:9000/health</code> (<code>/_ready</code> is the readiness check)</td>
+<td><code>--listen 0.0.0.0:9000</code></td>
+</tr>
+<tr>
+<td><code>meta</code></td>
+<td><code>:9101/health</code></td>
+<td><code>--listen 0.0.0.0:9100 --data-dir /var/lib/objectio/meta</code></td>
+</tr>
+<tr>
+<td><code>osd</code></td>
+<td><code>:9201/health</code> (503 once a disk has had an I/O or checksum error)</td>
+<td><code>--listen 0.0.0.0:9200 --data-dir /var/lib/objectio/osd</code></td>
+</tr>
+<tr>
+<td><code>block-gateway</code></td>
+<td><code>:9301/health</code></td>
+<td><code>--listen 0.0.0.0:9300 --nbd-listen 0.0.0.0:10809 --data-dir /var/lib/objectio/block-gw</code></td>
+</tr>
+</tbody>
+</table>
+<p>A command that moves a port (<code>--listen</code>, <code>--metrics-port</code>,
+<code>--metrics-listen</code>) moves what the check must ask: override the
+HEALTHCHECK with it. The <code>all</code> image (the published one) declares no
+<code>HEALTHCHECK</code>: it runs any service, so use these endpoints in your
+orchestrator; the Helm chart has its own probes.</p>
 <hr />
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
 <h3 id="operation-not-permitted-on-an-osd">"operation not permitted" on an OSD<a class="headerlink" href="#operation-not-permitted-on-an-osd" title="Permanent link">&para;</a></h3>

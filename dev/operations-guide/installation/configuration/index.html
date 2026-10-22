@@ -3887,7 +3887,7 @@ keys to <code>&lt;data-dir&gt;/admin-creds.env</code>.</p>
 <tr>
 <td><code>-c, --config &lt;path&gt;</code></td>
 <td><code>/etc/objectio/osd.toml</code></td>
-<td>TOML config file, read if it exists; one that doesn't parse stops the OSD</td>
+<td>TOML config file, read if it exists; one that doesn't parse, or names a key the OSD doesn't know, stops the OSD</td>
 </tr>
 <tr>
 <td><code>-l, --listen &lt;addr&gt;</code></td>
@@ -3995,6 +3995,10 @@ keys to <code>&lt;data-dir&gt;/admin-creds.env</code>.</p>
 <span class="k">[logging]</span>
 <span class="n">level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"info"</span>
 </code></pre></div>
+<p>A config file that doesn't parse, or names a key the OSD doesn't know
+(a misspelt <code>[osd.failure_domain]</code>, say), stops the OSD with the file's
+name and the error; with no file at the <code>--config</code> path, every setting
+is its default.</p>
 <p><strong>Disk discovery vs explicit disks.</strong> <code>--disks</code> is the production
 path — list the devices this OSD owns. <code>--disk-filter</code> is for fleets
 where device names aren't stable (use <code>by-id</code> paths). Without

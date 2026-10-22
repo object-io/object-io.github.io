@@ -3469,13 +3469,16 @@ backbone, and the same admin gate.</p>
 <ul>
 <li><strong>Create/List/Delete shares</strong> via admin API and console: <code>GET/POST /_admin/shares</code>, <code>DELETE /_admin/shares/{share}</code>, <code>GET/POST /_admin/shares/{share}/tables</code>, <code>DELETE /_admin/shares/{share}/schemas/{schema}/tables/{table}</code></li>
 <li><strong>Tenant-scoped shares</strong>: Filtered by authenticated user's tenant; managed by the system admin or the share tenant's admins</li>
-<li><strong>A share exposes its own tenant's data</strong>: a table in another tenant's bucket or warehouse is added only by the system admin</li>
+<li><strong>A share exposes its own tenant's data</strong>: a table in another tenant's bucket is added only by the system admin</li>
 </ul>
 <h3 id="table-types">Table Types<a class="headerlink" href="#table-types" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Delta Lake</strong>: Share Delta tables by S3 bucket + path (<code>table_type: "delta"</code>)</li>
-<li><strong>Iceberg UniForm</strong>: Share Iceberg tables via Delta Sharing protocol (<code>table_type: "uniform"</code>)</li>
-<li><strong>Mixed sharing</strong>: Both Delta and Iceberg tables in the same share</li>
+<li><strong>Iceberg tables are refused</strong> (<code>table_type</code> <code>iceberg</code>, <code>uniform</code> or none):
+  adding one answers 400, and the version, metadata and query calls refuse
+  one already in a share. A share serves the files of a Delta log, which an
+  Iceberg table doesn't have. Read Iceberg tables through the Iceberg REST
+  catalog.</li>
 </ul>
 <h3 id="recipient-token-management">Recipient &amp; Token Management<a class="headerlink" href="#recipient-token-management" title="Permanent link">&para;</a></h3>
 <ul>
@@ -3524,9 +3527,10 @@ What exists today is file-like access through S3:</p>
 </ul>
 <h3 id="qos-quality-of-service">QoS (Quality of Service)<a class="headerlink" href="#qos-quality-of-service" title="Permanent link">&para;</a></h3>
 <ul>
-<li>A volume carries QoS settings (IOPS and bandwidth limits, priority), and the
-  <code>objectio-block</code> crate has a token-bucket limiter, but the block gateway
-  does not enforce them yet.</li>
+<li>Not built. <code>UpdateVolumeQos</code>, and a <code>CreateVolume</code> that carries QoS
+  settings, answer <code>UNIMPLEMENTED</code> rather than accept limits nothing
+  enforces; so do <code>GetVolumeStats</code> and the OSD, cluster and I/O-trace
+  calls (the block gateway's <code>/metrics</code> has its I/O).</li>
 </ul>
 <h3 id="protocol-support">Protocol Support<a class="headerlink" href="#protocol-support" title="Permanent link">&para;</a></h3>
 <ul>
@@ -3615,7 +3619,7 @@ What exists today is file-like access through S3:</p>
 </tr>
 <tr>
 <td><strong>Table Sharing</strong></td>
-<td>Share/table/recipient CRUD, UniForm type support, token + profile.share generation</td>
+<td>Share/table/recipient CRUD (Delta tables), token + profile.share generation</td>
 </tr>
 <tr>
 <td><strong>Monitoring</strong></td>

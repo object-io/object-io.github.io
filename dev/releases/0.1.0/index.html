@@ -3520,6 +3520,11 @@ the same core. Apache-2.0, every feature.</p>
   finds the OSDs through meta). Take them out of your units and scripts
   before upgrading; the chart no longer passes <code>--peers</code>
   (<a href="../../operations-guide/installation/configuration/">configuration</a>).</li>
+<li><strong>An OSD config with a key the OSD doesn't know stops the OSD</strong>, as one
+  that doesn't parse already did. Before upgrading an OSD, remove from its
+  file any key it never read: <code>node_id</code> and a <code>[cache]</code> table, which
+  0.1.0-rc.1's <code>objectio-install</code> wrote
+  (<a href="../../operations-guide/installation/configuration/">OSD configuration</a>).</li>
 </ul>
 <h3 id="fixes">Fixes<a class="headerlink" href="#fixes" title="Permanent link">&para;</a></h3>
 <ul>
@@ -3538,6 +3543,22 @@ the same core. Apache-2.0, every feature.</p>
   can be elected inside. A cluster mixing upgraded and older nodes is safe
   (<a href="../../operations-guide/operations/meta-ha/">meta HA</a>,
   <a href="../../operations-guide/installation/configuration/">configuration</a>).</li>
+<li><strong>A delete that meets a placement change is placed again</strong>, as a PUT
+  already was: when an OSD was set out between placing a delete and
+  sending it, every copy refused it as stale and the delete answered 503.</li>
+<li><strong>A disk's failed reads, writes and flushes are counted</strong>
+  (<code>objectio_disk_errors_total</code>); one that has failed makes the OSD's
+  <code>/health</code> answer 503
+  (<a href="../../operations-guide/operations/monitoring/#health-endpoints">monitoring</a>).</li>
+<li><strong>Every service image checks its own health</strong>
+  (<a href="../../operations-guide/installation/docker/#health-checks">Docker</a>). The
+  block gateway serves <code>/health</code> on its metrics port.</li>
+<li><strong>Block calls that aren't built answer <code>UNIMPLEMENTED</code></strong>: QoS settings,
+  volume stats, and the OSD, cluster and I/O-trace metrics calls. They
+  answered OK, or zeros, and did nothing.</li>
+<li><strong>A Delta share refuses an Iceberg table</strong>, which it served as files no
+  client could read
+  (<a href="../../developer-guide/features/#3c-table-sharing-delta-sharing-protocol">Delta Sharing</a>).</li>
 </ul>
 <h2 id="changes-since-010-rc1">Changes since 0.1.0-rc.1<a class="headerlink" href="#changes-since-010-rc1" title="Permanent link">&para;</a></h2>
 <h3 id="upgrading-a-010-rc1-cluster">Upgrading a 0.1.0-rc.1 cluster<a class="headerlink" href="#upgrading-a-010-rc1-cluster" title="Permanent link">&para;</a></h3>
