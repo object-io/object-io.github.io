@@ -3605,6 +3605,17 @@ the same core. Apache-2.0, every feature.</p>
 <li><strong>A delete that meets a placement change is placed again</strong>, as a PUT
   already was: when an OSD was set out between placing a delete and
   sending it, every copy refused it as stale and the delete answered 503.</li>
+<li><strong>A TLS handshake never waits forever, on either side.</strong> Under mTLS,
+  meta, the OSDs and the block gateway disconnect a peer that hasn't
+  completed its handshake 10 s after connecting, as meta's admin port
+  already did, where a peer that connected and said nothing held its
+  connection, and a task, for as long as it liked; a refused peer is
+  logged. A node connecting to another gives up when its connect timeout
+  is out (5 s by default), the handshake included, where only the TCP
+  connection was bounded: a peer that took the connection and then
+  answered nothing, a frozen process for one, held the call forever. And
+  a gRPC port goes on accepting whatever a peer does
+  (<a href="../../operations-guide/administration/mtls/">mTLS</a>).</li>
 <li><strong>A disk's failed reads, writes and flushes are counted</strong>
   (<code>objectio_disk_errors_total</code>); one that has failed makes the OSD's
   <code>/health</code> answer 503
