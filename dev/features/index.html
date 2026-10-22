@@ -3092,10 +3092,10 @@ release notes say when they do.</p>
 <td></td>
 </tr>
 <tr>
-<td>Addressing</td>
-<td>🟡</td>
-<td>Path-style (<code>/bucket/key</code>) only; a virtual-hosted request is not yet refused, and is misread</td>
-<td><a href="../operations-guide/administration/s3-api/">S3 API</a></td>
+<td>Addressing: path-style, and virtual-hosted under the gateway's S3 domains</td>
+<td>✅</td>
+<td>Virtual-hosted needs <code>--s3-domain</code>, wildcard DNS and a wildcard certificate. A request whose bucket can't be told for certain is refused, not misread; without a domain, a bare <code>GET /</code> is still ListBuckets</td>
+<td><a href="../operations-guide/administration/s3-api/#virtual-hosted-addressing">S3 API</a></td>
 <td></td>
 </tr>
 <tr>

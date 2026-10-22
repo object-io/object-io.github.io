@@ -2101,6 +2101,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Addressing and signing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#virtual-hosted-addressing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Virtual-hosted addressing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -3287,6 +3304,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Addressing and signing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#virtual-hosted-addressing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Virtual-hosted addressing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -3761,15 +3795,16 @@
 <p>Supported S3 API operations in ObjectIO.</p>
 <h2 id="addressing-and-signing">Addressing and signing<a class="headerlink" href="#addressing-and-signing" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Path-style only.</strong> Requests name the bucket in the path
-  (<code>https://s3.example.com/bucket/key</code>). A virtual-hosted-style request
-  (<code>https://bucket.s3.example.com/key</code>) is not recognised: the bucket in
-  the host is ignored and the path is read as bucket and key
-  (<a href="https://github.com/object-io/objectio/issues/65">objectio#65</a>). Set
-  path style in clients: boto3
-  <code>Config(s3={"addressing_style": "path"})</code>, the AWS CLI
-  <code>aws configure set default.s3.addressing_style path</code>, the Java and Go
-  SDKs <code>forcePathStyle</code> / <code>UsePathStyle</code>, Iceberg and Spark
+<li><strong>Path-style always; virtual-hosted where the gateway has an S3
+  domain.</strong> A request names its bucket in the path
+  (<code>https://s3.example.com/bucket/key</code>), or, once the operator has set
+  the gateway's S3 domain, in the host
+  (<code>https://bucket.s3.example.com/key</code>): see
+  <a href="#virtual-hosted-addressing">Virtual-hosted addressing</a> below. Path
+  style works with any setup, so it is the safe choice for a client that
+  doesn't know: boto3 <code>Config(s3={"addressing_style": "path"})</code>, the AWS
+  CLI <code>aws configure set default.s3.addressing_style path</code>, the Java and
+  Go SDKs <code>forcePathStyle</code> / <code>UsePathStyle</code>, Iceberg and Spark
   <code>s3.path-style-access=true</code>.</li>
 <li><strong>SigV4 only</strong>, for requests and presigned URLs; SigV2 is refused with
   <code>400</code>. Against a custom endpoint, boto3 without
@@ -3782,6 +3817,88 @@
   it with backoff. A request body that sends nothing for 30 s gets <code>400
   RequestTimeout</code> (<a href="../../operations/production/#gateway-memory-and-overload">gateway memory</a>).</li>
 </ul>
+<h3 id="virtual-hosted-addressing">Virtual-hosted addressing<a class="headerlink" href="#virtual-hosted-addressing" title="Permanent link">&para;</a></h3>
+<p>The gateway reads a bucket from the host name once it is told the
+domains buckets are named under: <code>--s3-domain</code> on the gateway (repeat
+it, or separate domains with commas; env <code>OBJECTIO_S3_DOMAIN</code>),
+<code>--s3-domain</code> on <code>objectio-aio</code> and <code>objectio-install</code>, and
+<code>gateway.s3Domains</code> in the Helm chart
+(<a href="../../installation/configuration/">configuration</a>). With
+<code>--s3-domain s3.example.com</code>, a request's <code>Host</code> is read as S3 reads it:</p>
+<table>
+<thead>
+<tr>
+<th><code>Host</code></th>
+<th>Addressing</th>
+<th>Bucket</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>photos.s3.example.com</code></td>
+<td>virtual-hosted; the path is the key</td>
+<td><code>photos</code></td>
+</tr>
+<tr>
+<td><code>my.photos.s3.example.com</code></td>
+<td>virtual-hosted; a bucket name may hold dots</td>
+<td><code>my.photos</code></td>
+</tr>
+<tr>
+<td><code>s3.example.com</code></td>
+<td>path-style</td>
+<td>the path's first segment</td>
+</tr>
+<tr>
+<td>an address, <code>localhost</code>, any name not under a domain</td>
+<td>path-style</td>
+<td>the path's first segment</td>
+</tr>
+</tbody>
+</table>
+<p>The port is ignored and case doesn't matter. With several domains, the
+longest one a host is under is used (<code>s3.example.com</code> before
+<code>example.com</code>). Everything after works on the bucket from the host:
+signatures (the path and host signed are the ones sent), presigned URLs,
+bucket policies and IAM policies, CORS, metrics, the audit log. Bucket
+operations go to the bucket's own host: <code>PUT /</code> creates the bucket,
+<code>GET /?list-type=2</code> lists it, <code>POST /?delete</code> is DeleteObjects,
+<code>DELETE /</code> deletes it. The domain itself stays path-style, so the admin
+API, the console, the Iceberg catalog and Delta Sharing are reached on it
+as before.</p>
+<p>Two things the gateway doesn't provide, for each domain:</p>
+<ul>
+<li><strong>Wildcard DNS</strong>: <code>*.s3.example.com</code> resolving to the gateway (its load
+  balancer or ingress), and, behind an ingress, a host rule for the
+  wildcard (<code>gateway.ingress.hosts</code>, <code>host: "*.s3.example.com"</code>).</li>
+<li><strong>A TLS certificate covering <code>*.s3.example.com</code></strong> where TLS ends. A
+  wildcard covers one label only, so a bucket name with dots
+  (<code>my.photos.s3.example.com</code>) fails certificate checks over HTTPS, as on
+  AWS: address such buckets path-style.</li>
+</ul>
+<p>The domains are not taken from <code>--external-endpoint</code>: that would make
+every name under the endpoint's host a bucket, and a gateway reached at a
+name under it (<code>gw1.s3.example.com</code>) would stop working.</p>
+<p><strong>What's refused rather than guessed.</strong> A request whose bucket can't be
+told for certain gets an S3 error, never another request's answer:</p>
+<ul>
+<li><code>400 InvalidBucketName</code>: a host under a domain whose bucket part isn't
+  a valid bucket name (<code>Bad_Name.s3.example.com</code>).</li>
+<li><code>400 InvalidRequest</code>: on a path-style host, a bucket operation on <code>/</code> —
+  <code>PUT /</code>, <code>DELETE /</code>, <code>HEAD /</code>, <code>POST /?delete</code>, a form upload to <code>/</code>,
+  or <code>GET /</code> with a listing's parameters (<code>list-type</code>, <code>encoding-type</code>,
+  <code>location</code>, …). Only a client that put the bucket in the host sends
+  these; read path-style they would name no bucket, and a listing would
+  have come back as the caller's buckets. The message says to set
+  <code>--s3-domain</code> (or names the domains the host isn't under), or to use
+  path style. ListBuckets (<code>GET /</code>, with <code>max-buckets</code>, <code>prefix</code>,
+  <code>continuation-token</code>, <code>bucket-region</code>), the IAM and STS query API
+  (<code>Action=</code>) and CORS preflights on <code>/</code> are unchanged.</li>
+</ul>
+<p>Without a domain the gateway can't tell <code>bucket.s3.example.com</code> from
+<code>s3.example.com</code>, so a request that is also valid path-style is read
+path-style: a bare <code>GET /</code> is ListBuckets, and <code>/key</code> is bucket <code>key</code>.
+If any client addresses buckets by host name, set <code>--s3-domain</code>.</p>
 <h2 id="bucket-operations">Bucket Operations<a class="headerlink" href="#bucket-operations" title="Permanent link">&para;</a></h2>
 <h3 id="listbuckets">ListBuckets<a class="headerlink" href="#listbuckets" title="Permanent link">&para;</a></h3>
 <p>List all buckets owned by the authenticated user.</p>

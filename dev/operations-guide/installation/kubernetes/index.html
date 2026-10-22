@@ -4036,6 +4036,11 @@ ServiceMonitor. See <a href="../../operations/monitoring/">monitoring</a>.</p>
 <td>The public URL (Iceberg vended credentials, Delta Sharing, the console's OIDC callback)</td>
 </tr>
 <tr>
+<td><code>gateway.s3Domains</code></td>
+<td><code>[]</code></td>
+<td>Domains buckets are addressed under by host name (<code>--s3-domain</code>); each needs wildcard DNS, an ingress host <code>*.&lt;domain&gt;</code> and a certificate covering it (<a href="../../administration/s3-api/#virtual-hosted-addressing">virtual-hosted addressing</a>)</td>
+</tr>
+<tr>
 <td><code>gateway.ingress</code></td>
 <td>off</td>
 <td><code>className</code>, <code>hosts</code>, <code>tls</code>, <code>annotations</code></td>

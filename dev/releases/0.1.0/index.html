@@ -3511,6 +3511,18 @@ the same core. Apache-2.0, every feature.</p>
   over 100 MiB is now <code>400 EntityTooLarge</code>, as S3 answers, not <code>413</code>, and
   a copy that changes the encryption takes a source of at most 100 MiB
   (<a href="../../operations-guide/operations/production/#gateway-memory-and-overload">production</a>).</li>
+<li><strong>Virtual-hosted addressing.</strong> With the gateway's S3 domain set
+  (<code>--s3-domain s3.example.com</code>; <code>gateway.s3Domains</code> in the chart), a
+  request to <code>photos.s3.example.com/key</code> addresses bucket <code>photos</code>, as on
+  AWS: objects, bucket operations on <code>/</code>, presigned URLs and policies all
+  see the bucket from the host, and path-style keeps working beside it.
+  A request whose bucket can't be told for certain is refused instead of
+  misread: a bucket operation on <code>/</code> from a host that names no bucket
+  (<code>GET /?list-type=2</code> used to come back as the caller's bucket list) is
+  <code>400 InvalidRequest</code>, and a host under the domain that isn't a bucket
+  name is <code>400 InvalidBucketName</code>. Wildcard DNS and a wildcard certificate
+  for the domain are the operator's
+  (<a href="../../operations-guide/administration/s3-api/#virtual-hosted-addressing">virtual-hosted addressing</a>).</li>
 </ul>
 <h3 id="upgrading-a-010-rc2-cluster">Upgrading a 0.1.0-rc.2 cluster<a class="headerlink" href="#upgrading-a-010-rc2-cluster" title="Permanent link">&para;</a></h3>
 <ul>

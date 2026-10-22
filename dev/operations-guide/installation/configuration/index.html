@@ -3460,6 +3460,11 @@ Pass every address explicitly.</p>
 <td>Public URL (Iceberg vended creds, Delta Sharing presign, OIDC callback)</td>
 </tr>
 <tr>
+<td><code>--s3-domain &lt;domain&gt;</code></td>
+<td>none</td>
+<td>A domain clients address buckets under by host name, e.g. <code>s3.example.com</code>: <code>photos.s3.example.com</code> is bucket <code>photos</code>. Repeatable, or comma-separated. Env <code>OBJECTIO_S3_DOMAIN</code>. Needs wildcard DNS and a wildcard certificate for the domain; see <a href="../../administration/s3-api/#virtual-hosted-addressing">virtual-hosted addressing</a>.</td>
+</tr>
+<tr>
 <td><code>--master-key-env &lt;name&gt;</code></td>
 <td><code>OBJECTIO_MASTER_KEY</code></td>
 <td>Env var name holding the base64 SSE master key</td>
@@ -4136,6 +4141,11 @@ missing disk
 <td>Forwarded to the gateway</td>
 </tr>
 <tr>
+<td><code>--s3-domain &lt;domain&gt;</code></td>
+<td>none</td>
+<td>Forwarded to the gateway. Env <code>OBJECTIO_S3_DOMAIN</code>.</td>
+</tr>
+<tr>
 <td><code>--block-port &lt;n&gt;</code></td>
 <td><code>0</code> (off)</td>
 <td>Run the block gateway too (NBD on <code>--nbd-port</code>, 10809)</td>
@@ -4327,6 +4337,11 @@ refused. Run again, it rewrites the files it writes and keeps the data.</p>
 <td><code>--external-endpoint &lt;url&gt;</code></td>
 <td>unset</td>
 <td>The gateway's <code>--external-endpoint</code></td>
+</tr>
+<tr>
+<td><code>--s3-domain &lt;domain&gt;</code></td>
+<td>none</td>
+<td>The gateway's <code>--s3-domain</code> (repeatable, or comma-separated)</td>
 </tr>
 <tr>
 <td><code>--meta-port</code>, <code>--meta-admin-port</code>, <code>--meta-metrics-port</code></td>
