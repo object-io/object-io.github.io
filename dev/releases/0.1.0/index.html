@@ -3286,8 +3286,9 @@ the same core. Apache-2.0, every feature.</p>
   their own, but not yet with real engines (Spark, Trino, pyiceberg) or
   under a filesystem and a database. File access is not built.</li>
 <li><strong>The promise that holds from 0.1.0 on:</strong> adjacent releases upgrade one
-  node at a time, under traffic, with every object readable after; a
-  0.1.0-rc.1 cluster upgrades to 0.1.0 the same way
+  node at a time, under traffic, with every object readable after; the
+  release candidates do too, each to the next (0.1.0-rc.1 to rc.2, rc.2
+  to rc.3, and the last one to 0.1.0)
   (<a href="../../operations-guide/operations/upgrades/">upgrades</a>). An
   acknowledgement means the data is on stable storage, in every release.</li>
 <li><strong>What may change between 0.x releases:</strong> the admin API, the CLI and
@@ -3537,6 +3538,28 @@ the same core. Apache-2.0, every feature.</p>
 </ul>
 <h3 id="upgrading-a-010-rc2-cluster">Upgrading a 0.1.0-rc.2 cluster<a class="headerlink" href="#upgrading-a-010-rc2-cluster" title="Permanent link">&para;</a></h3>
 <ul>
+<li><strong>Format level 8, 0.1.0-rc.1's, is the lowest a release runs at</strong>, and
+  the code for the levels below it, which only development builds ran,
+  is gone. Upgrades go one release at a time, each release candidate to
+  the next: an rc.1 cluster goes to rc.2 first, and is finalized, before
+  this release. A node of this release refuses to start in a cluster
+  below level 8, saying it is a development build's
+  (<a href="../../operations-guide/operations/upgrades/#clusters-from-before-010">upgrades</a>).</li>
+<li><strong>Upgrade once an OSD has registered.</strong> A meta node of 0.1.0-rc.2
+  keeps its Raft log in its database until the cluster's first OSD
+  registers; one upgraded before that stops at start-up, saying so,
+  rather than start with an empty log.</li>
+<li><strong>The gateway's <code>--heal-interval-secs</code> is gone</strong>, with the heal queue
+  it set the pace of: a write or delete that left a metadata copy behind
+  marks its key's placement group, whose peering and recovery bring the
+  copies in line, as they already did for every key placed through one.
+  Take the flag out of your units and scripts before upgrading a
+  gateway: a binary refuses a flag it doesn't have. The metrics
+  <code>objectio_gateway_heal_total</code>, <code>objectio_meta_repair_listings_restored_total</code>
+  and <code>objectio_meta_repair_shards_moved_total</code> went with what they
+  counted; the repair walk now covers block chunks and packs, which no
+  placement group holds
+  (<a href="../../operations-guide/installation/configuration/">configuration</a>).</li>
 <li><strong>Flags that did nothing are gone</strong>, and a binary refuses to start
   with a flag it doesn't have: meta's <code>--peers</code> (the Raft group is formed
   over meta's admin port) and the gateway's <code>--osd-endpoint</code> (the gateway

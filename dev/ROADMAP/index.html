@@ -3102,7 +3102,7 @@ have the evidence). These close it out before 0.1.0 is final.</p>
 <td><a href="https://github.com/object-io/objectio/issues/5">#5</a></td>
 </tr>
 <tr>
-<td>Format level 8 is the first release's baseline: the lowest level a binary runs at is 8, and the code paths for the levels below it (development builds) are removed; verified by the end-to-end suite and a chaos run. A 0.1.0-rc.1 cluster upgrades to 0.1.0 one node at a time</td>
+<td>Format level 8 is the first release's baseline: the lowest level a binary runs at is 8, and the code paths for the levels below it (development builds) are removed; verified by the end-to-end suite and a chaos run (built; the chaos run is with the rc.3 soak). Each release candidate upgrades to the next one node at a time (0.1.0-rc.2 to rc.3, and the last rc to 0.1.0): adjacent releases only, as for every release</td>
 <td>Core</td>
 <td>upgrade path</td>
 <td><a href="../operations-guide/operations/upgrades/">upgrades</a></td>

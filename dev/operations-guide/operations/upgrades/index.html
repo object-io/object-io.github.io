@@ -2977,7 +2977,9 @@ Design: core/upgrade-path.md.</p>
 <h2 id="what-to-know-first">What to know first<a class="headerlink" href="#what-to-know-first" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>One release at a time.</strong> Go from each release to the next; to skip
-  releases, upgrade through each in turn.</li>
+  releases, upgrade through each in turn. Release candidates count as
+  releases: 0.1.0-rc.1 goes to rc.2, rc.2 to rc.3, and the last
+  candidate to 0.1.0. Finalize each upgrade before starting the next.</li>
 <li><strong>Format levels.</strong> Each release has a format level. During an upgrade,
   nodes on the new release read what it introduces but keep writing the
   previous release's formats, so you can still go back. The new formats
@@ -3021,10 +3023,7 @@ Design: core/upgrade-path.md.</p>
 </ol>
 <div class="highlight"><pre><span></span><code>obioctl<span class="w"> </span>upgrade<span class="w"> </span>finalize
 </code></pre></div>
-<p>It is refused while anything blocks it. It answers once the default
-   pool's placement groups are made, which can take up to 40 s if an OSD
-   is still coming up. Until then, a write to a bucket without a pool of
-   its own is refused with a 503 that S3 clients retry.</p>
+<p>It is refused while anything blocks it.</p>
 <p>To go back before step 6, run the same steps in reverse order with the
 previous release's binaries.</p>
 <h2 id="how-a-node-stops">How a node stops<a class="headerlink" href="#how-a-node-stops" title="Permanent link">&para;</a></h2>
@@ -3079,28 +3078,38 @@ running when the grace period ends is killed, and an audit spool on an
 </tbody>
 </table>
 <h2 id="clusters-from-before-010">Clusters from before 0.1.0<a class="headerlink" href="#clusters-from-before-010" title="Permanent link">&para;</a></h2>
-<p>0.1.0 is the first release: a 0.1.0-rc.1 cluster upgrades to 0.1.0 as
-above. A cluster on a development build from before 0.1.0 can't be
-upgraded: install 0.1.0 fresh and copy the data across (with bucket
-replication, or any S3 tool).</p>
+<p>0.1.0-rc.1 was the first release, at format level 8: no release runs
+in a cluster below it. Each release candidate upgrades to the next, as
+above, and the last one to 0.1.0.</p>
+<p>A cluster on a development build from before 0.1.0-rc.1 (a format level
+below 8) can't be upgraded: a node of this release stops at start-up
+saying that the cluster "is at N: a development build from before 0.1.0,
+which can't be upgraded". Install the release fresh and copy the data
+across (with bucket replication, or any S3 tool).</p>
+<p>A meta node of 0.1.0-rc.2 keeps its Raft log in its database until the
+cluster has its format level, which it gets when its first OSD
+registers, and moves it then. Upgrade a cluster once an OSD has
+registered: a meta node whose log is still in its database stops at
+start-up, saying so; run it on 0.1.0-rc.2 again until an OSD has
+registered, then upgrade it.</p>
 <p><strong>An rc.1 cluster on arm64, or built from source without the <code>isal</code>
-feature, is not upgraded in place.</strong> From 0.1.0 every build erasure-codes
-with ISA-L; those builds coded MDS stripes with another code
-(reed-solomon-simd), whose parity 0.1.0 can't decode. A stripe that loses
+feature, is not upgraded in place.</strong> From 0.1.0-rc.2 every build
+erasure-codes with ISA-L; those builds coded MDS stripes with another code
+(reed-solomon-simd), whose parity later releases can't decode. A stripe that loses
 a data shard can't be rebuilt, and while old and new nodes mix, repair
 of a shard a write never stored rebuilds it in the other code, which
 reads then serve as data: the rolling-upgrade test, run that way, read
-objects back wrong. Install 0.1.0 fresh and copy the data across, as
-above. A cluster on the amd64 rc.1 release binaries or image coded
+objects back wrong. Install the latest release fresh and copy the data
+across, as above. A cluster on the amd64 rc.1 release binaries or image coded
 with ISA-L already, and upgrades in place.</p>
 <p><strong>An rc.1 cluster installed with the Helm chart's default protection
-(<code>ec.k: 1, ec.m: 0</code>) sets <code>replication: 1</code> when it upgrades.</strong> 0.1.0's
-meta refuses to start with a default profile of no parity, and the
+(<code>ec.k: 1, ec.m: 0</code>) sets <code>replication: 1</code> when it upgrades.</strong> From
+0.1.0-rc.2, meta refuses to start with a default profile of no parity, and the
 chart's default is now 4+2 erasure coding over 6 OSDs, which such a
 cluster's default pool isn't; pass <code>--set replication=1</code> (one copy) and
 its <code>osd.replicas</code> (<a href="../../installation/kubernetes/#upgrading-from-010-rc1">Kubernetes</a>). Its default pool, made 1+0, never took an object
-over the inline limit (4 KiB) and stays as it was made: install 0.1.0
-fresh and copy the objects across, as above.</p>
+over the inline limit (4 KiB) and stays as it was made: install the
+latest release fresh and copy the objects across, as above.</p>
 
 
 

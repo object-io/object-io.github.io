@@ -3930,11 +3930,10 @@ or 10240 (role) characters, managed ones 6144, whitespace aside.</p>
   refuses it.</li>
 </ul>
 <h3 id="upgrading">Upgrading<a class="headerlink" href="#upgrading" title="Permanent link">&para;</a></h3>
-<p>Paths, descriptions of policies, group renames and inline policies are
-format level 3 (roles and policies created before it get ids derived from
-their ARN and creation time). On a cluster upgraded from level 2 they are
-refused (400 <code>InvalidInput</code>, "finalize the upgrade first") until <code>obioctl
-upgrade finalize</code>; the rest of the IAM API works before that.</p>
+<p>Paths, descriptions of policies, group renames and inline policies work
+on every release. A role or policy created without an id (on 0.1.0-rc.1
+or rc.2, before the cluster's first OSD registered) gets one derived
+from its ARN and creation time.</p>
 <h2 id="session-and-token-signing">Session and token signing<a class="headerlink" href="#session-and-token-signing" title="Permanent link">&para;</a></h2>
 <p>Temporary credentials, console sessions and listing continuation tokens are
 signed with keys derived from a <strong>cluster secret</strong>. Meta creates the secret
