@@ -3433,11 +3433,19 @@ without end or running out of memory.</p>
   of <code>Content-Length</code>, never with wrong bytes, and is counted in
   <code>objectio_gateway_get_aborted_total</code>. A client sees a short read, which
   SDKs retry.</li>
+<li><strong>Large uploads stream.</strong> A PUT or an UploadPart over 16 MiB (up to
+  S3's 5 GiB) is never held whole: its body is erasure-coded and written
+  stripe by stripe as it arrives, two stripes in flight while the next is
+  read, so an upload of any size holds about three stripes (48 MiB with
+  4+2). It is committed only once all of it has arrived and passed its
+  checks (<a href="../../administration/s3-api/#large-uploads">large uploads</a>).</li>
 <li><strong>A memory budget</strong> (<code>--memory-budget</code>) holds request bodies and GET
-  read-ahead. A request body (at most 100 MiB) reserves its whole declared
-  length before a byte of it is read, after the request is authenticated;
-  a GET reserves each stripe before reading it and frees it once the client
-  has been sent it. A new request that doesn't fit gets <code>503 SlowDown</code>; a
+  read-ahead. A body read whole (an upload up to 16 MiB; any other request,
+  at most 100 MiB) reserves its whole declared length before a byte of it
+  is read, after the request is authenticated; a streamed upload reserves
+  the stripes it holds at once (or its length, if less); a GET reserves
+  each stripe before reading it and frees it once the client has been sent
+  it. A new request that doesn't fit gets <code>503 SlowDown</code>; a
   GET already sending waits for room for its next stripe, up to the body
   timeout. The default is half the process's memory limit (its cgroup's:
   a container's <code>resources.limits.memory</code>), or 512 MiB without one. The

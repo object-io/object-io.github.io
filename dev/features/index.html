@@ -3086,9 +3086,16 @@ release notes say when they do.</p>
 </tr>
 <tr>
 <td>Multipart upload (every call, 10,000 parts)</td>
-<td>🟡</td>
-<td>Completion is two-phase in meta. A single PUT or a part is at most 100 MiB today (S3 allows 5 GiB), so an object at most about 976 GiB</td>
-<td><a href="../operations-guide/administration/s3-api/">S3 API</a></td>
+<td>✅</td>
+<td>Completion is two-phase in meta. Parts up to 5 GiB, objects up to 5 TiB, as S3</td>
+<td><a href="../operations-guide/administration/s3-api/#limits-and-behavior">S3 API</a></td>
+<td></td>
+</tr>
+<tr>
+<td>A single PUT and an upload part up to S3's 5 GiB</td>
+<td>✅</td>
+<td>A body over 16 MiB is streamed to the shards stripe by stripe, never held whole: the gateway holds a few stripes of it whatever its size. Committed only once all of it has arrived and passed its payload hash, chunk signatures and checksums; a larger body gets <code>400 EntityTooLarge</code> before it is read. A gateway that stops mid-upload leaves its shards until the orphan scan (roadmap)</td>
+<td><a href="../operations-guide/administration/s3-api/#large-uploads">S3 API</a></td>
 <td></td>
 </tr>
 <tr>
@@ -3101,14 +3108,14 @@ release notes say when they do.</p>
 <tr>
 <td>CopyObject, UploadPartCopy, copy by reference</td>
 <td>✅</td>
-<td>A copy that changes the encryption rewrites the bytes, and takes a source of at most 100 MiB</td>
+<td>A copy that changes the encryption rewrites the bytes, streamed as a large PUT is, from a source of up to 5 GiB</td>
 <td><a href="../operations-guide/administration/s3-api/#copyobject">S3 API</a></td>
 <td></td>
 </tr>
 <tr>
 <td>Gateway memory bounded under any load</td>
 <td>✅</td>
-<td>A GET streams stripe by stripe; request bodies and read-ahead come from a memory budget; requests over the budget or the in-flight limit get <code>503 SlowDown</code>; slow clients are cut off by timeouts</td>
+<td>A GET streams stripe by stripe, and so does a large PUT or upload part; request bodies and read-ahead come from a memory budget; requests over the budget or the in-flight limit get <code>503 SlowDown</code>; slow clients are cut off by timeouts</td>
 <td><a href="../operations-guide/operations/production/#gateway-memory-and-overload">production</a></td>
 <td></td>
 </tr>

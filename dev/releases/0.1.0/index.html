@@ -3508,9 +3508,20 @@ the same core. Apache-2.0, every feature.</p>
   by default half the container's memory limit); a request that doesn't
   fit, or one over the in-flight limit (<code>--max-requests</code>), gets <code>503
   SlowDown</code>; a client that stops sending or reading is cut off. A body
-  over 100 MiB is now <code>400 EntityTooLarge</code>, as S3 answers, not <code>413</code>, and
-  a copy that changes the encryption takes a source of at most 100 MiB
+  over the limit is now <code>400 EntityTooLarge</code>, as S3 answers, not <code>413</code>
   (<a href="../../operations-guide/operations/production/#gateway-memory-and-overload">production</a>).</li>
+<li><strong>A single PUT and an upload part go up to S3's 5 GiB</strong>, and an object
+  to 5 TiB; both were 100 MiB at most, so an object was about 976 GiB at
+  most. A body over 16 MiB is streamed to the shards stripe by stripe as it
+  arrives, never held whole in the gateway, which holds a few stripes of
+  it (about 48 MiB with 4+2) from its memory budget whatever its size. It
+  is committed only once all of it has arrived and passed its signed
+  payload hash, chunk signatures, <code>Content-MD5</code> and checksum; one that
+  fails, or a client that goes away mid-body, stores nothing and has its
+  shards freed. A copy that changes the encryption streams too, from a
+  source of up to 5 GiB. Larger bodies get <code>400 EntityTooLarge</code> before
+  they are read; a completion over 5 TiB gets it too
+  (<a href="../../operations-guide/administration/s3-api/#large-uploads">large uploads</a>).</li>
 <li><strong>Virtual-hosted addressing.</strong> With the gateway's S3 domain set
   (<code>--s3-domain s3.example.com</code>; <code>gateway.s3Domains</code> in the chart), a
   request to <code>photos.s3.example.com/key</code> addresses bucket <code>photos</code>, as on
