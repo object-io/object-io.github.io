@@ -3888,12 +3888,12 @@ curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </spa
 <p>The cluster continues with 2 of 3 nodes. A follower forwards every call
 to the leader, so clients see no difference while a follower is down.
 When the leader is lost, the followers stand for election after hearing
-nothing from it for a random 2–4 s (<code>--raft-election-ms</code>, 2000, with
-heartbeats every <code>--raft-heartbeat-ms</code>, 500); calls in flight fail with
-503 to S3 clients, which retry, and writes resume once a new leader is
-elected. A leader answers only while a majority has confirmed it leads
-within the last second, so one cut off from the others stops answering
-rather than serve stale state.</p>
+nothing from it for 3–4 s (its 2 s lease and a random 1–2 s timeout,
+<code>--raft-election-ms</code>, 1000, with heartbeats every <code>--raft-heartbeat-ms</code>,
+500); calls in flight fail with 503 to S3 clients, which retry, and
+writes resume once a new leader is elected. A leader answers only while a
+majority has confirmed it leads within the last half second, so one cut
+off from the others stops answering rather than serve stale state.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Watch the others elect a new leader after the leader's pod is killed:</span>
 <span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">2</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
 <span class="w">  </span>curl<span class="w"> </span>-s<span class="w"> </span>http://&lt;name&gt;-meta-<span class="nv">$i</span>.&lt;name&gt;-meta-headless:9102/status

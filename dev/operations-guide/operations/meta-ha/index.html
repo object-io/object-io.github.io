@@ -3016,11 +3016,11 @@ at it.</p>
 </tr>
 <tr>
 <td>The leader</td>
-<td>The others stand for election after hearing nothing from it for 2–4 s (<code>--raft-election-ms</code>, 2000; heartbeats every 500 ms), and elect a new one. Writes resume within a few seconds; calls in flight at the moment of loss fail (503) and are retried. No acknowledged write is lost.</td>
+<td>The others stand for election after hearing nothing from it for 3–4 s (its 2 s lease and a random 1–2 s timeout, <code>--raft-election-ms</code>, 1000; heartbeats every 500 ms), and elect a new one. Writes resume within a few seconds; calls in flight at the moment of loss fail (503) and are retried. No acknowledged write is lost.</td>
 </tr>
 <tr>
 <td>The leader, cut off (frozen, partitioned)</td>
-<td>As above. While cut off it answers nothing from its own state: within about 3 seconds its calls fail (503) and clients go to the others. When it returns it finds a newer term and steps down: it never leads a second cluster.</td>
+<td>As above. While cut off it answers nothing from its own state: within about 2 seconds its calls fail (503) and clients go to the others. When it returns it finds a newer term and steps down: it never leads a second cluster.</td>
 </tr>
 <tr>
 <td>A majority</td>

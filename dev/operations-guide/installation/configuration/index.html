@@ -3818,12 +3818,12 @@ and <a href="../../operations/meta-ha/">meta HA</a>.</p>
 <tr>
 <td><code>--raft-heartbeat-ms &lt;n&gt;</code></td>
 <td><code>500</code></td>
-<td>Raft heartbeat interval</td>
+<td>Raft heartbeat interval; also how long the leader waits for a follower to take entries</td>
 </tr>
 <tr>
 <td><code>--raft-election-ms &lt;n&gt;</code></td>
-<td><code>2000</code></td>
-<td>A follower that hears no leader for a random time in [this, 2 × this] stands for election</td>
+<td><code>1000</code></td>
+<td>Election timeout <code>E</code>: a follower that hears nothing from its leader for the leader lease (2E) plus a timeout drawn from [E, 2E] stands for election, 3–4 s at the default. Set the same on every meta node. Lower risks elections under load with no fault (at 500, a busy follower's delayed heartbeats caused them); higher makes a lost leader take longer to replace</td>
 </tr>
 <tr>
 <td><code>--log-level &lt;lvl&gt;</code></td>

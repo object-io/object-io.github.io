@@ -3516,6 +3516,19 @@ the same core. Apache-2.0, every feature.</p>
 <ul>
 <li><strong>The container images' default commands start their service</strong>: the
   meta, OSD and gateway images passed <code>--bind</code>, which none of them has.</li>
+<li><strong>A lost meta leader is replaced in about 4 s, not 7–12 s.</strong> The
+  followers stand for election after 3–4.75 s without a heartbeat, where
+  they waited 6–8.75 s, and a round lost to a candidate whose log was
+  behind costs 1–2.75 s more, where it cost up to 4.75 s: with three meta
+  nodes under writes, killing the leader paused writes for 3.6–4.4 s,
+  against 6.7–8.7 s (12.5 s seen with a lost round). <code>--raft-election-ms</code>
+  now defaults to 1000, with a 2 s leader lease; give every meta node the
+  same value. A follower still tolerates 3 s of silence before standing,
+  twice what caused elections under load with no fault, and the leader
+  still answers only within a quorum confirmation that no other leader
+  can be elected inside. A cluster mixing upgraded and older nodes is safe
+  (<a href="../../operations-guide/operations/meta-ha/">meta HA</a>,
+  <a href="../../operations-guide/installation/configuration/">configuration</a>).</li>
 </ul>
 <h2 id="changes-since-010-rc1">Changes since 0.1.0-rc.1<a class="headerlink" href="#changes-since-010-rc1" title="Permanent link">&para;</a></h2>
 <h3 id="upgrading-a-010-rc1-cluster">Upgrading a 0.1.0-rc.1 cluster<a class="headerlink" href="#upgrading-a-010-rc1-cluster" title="Permanent link">&para;</a></h3>
@@ -3681,12 +3694,11 @@ performance comparison ran on 0.1.0-rc.1's.</p>
 <li><strong>Meta's memory grows under sustained load:</strong> from about 37 MB to
   190–340 MB over the 48-hour soak, 498 MB at the peak. It doesn't grow
   with uptime alone; a heap profile is next.</li>
-<li><strong>A partitioned meta leader pauses writes longer than before:</strong> 13.2 s
+<li><strong>A partitioned meta leader paused writes longer than before:</strong> 13.2 s
   in the chaos suite, against 5.4 s on 2026-10-04; within the suite's
-  60 s limit. Part of it is the election: the followers stand for leader
-  only after the old leader's 4 s lease and a 2–4 s election timeout have
-  run out, about 7 s after its last heartbeat, and a split vote adds a
-  round.</li>
+  60 s limit. Most of it was the election, which then began about 7 s
+  after the leader's last heartbeat and now begins 3–4.75 s after it
+  (below); the suite hasn't been run again since.</li>
 <li><strong>A write can fail with <code>503</code> when an OSD connection drops</strong> just after
   another OSD stops, seen once in the test suite: the write had one shard
   too few for its quorum, and the client's retry succeeds. Not yet
