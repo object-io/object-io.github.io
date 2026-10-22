@@ -3838,6 +3838,11 @@
   is at its memory budget or its limit of requests in flight; SDKs retry
   it with backoff. A request body that sends nothing for 30 s gets <code>400
   RequestTimeout</code> (<a href="../../operations/production/#gateway-memory-and-overload">gateway memory</a>).</li>
+<li><strong>A write with no room answers <code>507 StorageFull</code></strong> (MinIO's
+  <code>XMinioStorageFull</code>; AWS has no such error): the OSDs it needs are past
+  their full ratio, or the filesystem under their disks or metadata is
+  full (ENOSPC, EDQUOT). SDKs don't retry it, as they do a <code>503</code>
+  (<a href="../../operations/failure-recovery/#full-disks">full disks</a>).</li>
 </ul>
 <h3 id="virtual-hosted-addressing">Virtual-hosted addressing<a class="headerlink" href="#virtual-hosted-addressing" title="Permanent link">&para;</a></h3>
 <p>The gateway reads a bucket from the host name once it is told the

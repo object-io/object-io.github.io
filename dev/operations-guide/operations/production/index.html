@@ -3719,6 +3719,13 @@ skipped.</p>
 <li>Everything full: add capacity. Deletes free space within a minute.</li>
 <li>Don't raise <code>--full-ratio</code> to get writes going: it spends the room
     repair needs after the next failure.</li>
+<li><strong>The filesystem under an OSD full</strong> (its sparse disk files, or its
+  state directory): writes it holds get 507 and the OSD logs <code>no room</code>.
+  Free space on that filesystem, or grow it; writes resume without a
+  restart. Keep disk files on a filesystem with room for their full size,
+  or on raw devices. If the OSD logs that its metadata log <code>takes no
+  writes after an earlier failure</code>, an <code>fsync</code> failed: restart it once
+  there is room.</li>
 </ul>
 <h3 id="a-gateway-refuses-writes-for-clock-skew">A gateway refuses writes for clock skew<a class="headerlink" href="#a-gateway-refuses-writes-for-clock-skew" title="Permanent link">&para;</a></h3>
 <p>Its clock is more than 500 ms from meta's

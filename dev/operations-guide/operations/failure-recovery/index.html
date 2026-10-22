@@ -3749,6 +3749,21 @@ once evacuated, start it afresh on the disks it has left
 <li><strong>Nothing acknowledged is lost,</strong> and reads and deletes go on.</li>
 <li><strong>Deleting frees the space,</strong> and writes are admitted again.</li>
 </ul>
+<p><strong>The filesystem under an OSD filling</strong> is answered the same way. A
+file-backed disk is sparse, so its filesystem can run out before the disk
+reaches its ratio; the filesystem of the OSD's state directory, which
+holds its metadata, can fill too. A write the filesystem refuses for lack
+of room (ENOSPC, or EDQUOT on a quota) fails with <strong>507 <code>StorageFull</code></strong>,
+and nothing of it is kept. The OSD keeps serving reads, isn't reported
+unhealthy for it, and takes writes again as soon as there is room,
+without a restart. One exception: if an <code>fsync</code> of the OSD's metadata log
+fails, even for lack of room, the OSD takes no more writes until it is
+restarted, because nothing written since the last good sync can then be
+trusted to be on disk.</p>
+<p>When some of a write's OSDs are full and others are unreachable, the
+answer depends on whether the unreachable ones could still make the
+quorum: if they could, it's 503 (a retry may succeed once they're back);
+if the full ones alone keep the write short, it's 507.</p>
 <p>Watch for it before it happens. Alert when an OSD passes about 85%:</p>
 <div class="highlight"><pre><span></span><code><span class="nv">objectio_osd_used_bytes</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nv">objectio_osd_capacity_bytes</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0.85</span>
 </code></pre></div>
