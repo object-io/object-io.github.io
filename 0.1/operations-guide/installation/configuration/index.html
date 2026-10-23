@@ -1570,6 +1570,148 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_8_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_8_7" id="__nav_5_8_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026 10 23
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_8_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_8_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2026 10 23
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_8_7_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_8_7_1" id="__nav_5_8_7_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux amd64
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_5_8_7_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_8_7_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Linux amd64
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developer-guide/s3-compatibility/2026-10-23/linux-amd64/summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ceph s3-tests results
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -3315,11 +3457,6 @@ Pass every address explicitly.</p>
 <td>Meta nodes: one address, or every meta node's, comma-separated. Any node serves any call (a follower forwards it to the Raft leader), and one that stops answering is skipped. See <a href="../../operations/meta-ha/">Meta high availability</a>.</td>
 </tr>
 <tr>
-<td><code>--osd-endpoint &lt;url&gt;</code></td>
-<td><code>http://localhost:9200</code></td>
-<td>Initial OSD peer</td>
-</tr>
-<tr>
 <td><code>--ec-k &lt;n&gt;</code></td>
 <td><code>4</code></td>
 <td>EC data shards</td>
@@ -3410,11 +3547,6 @@ Pass every address explicitly.</p>
 <td>Small-object packing</td>
 </tr>
 <tr>
-<td><code>--heal-interval-secs &lt;n&gt;</code></td>
-<td><code>10</code></td>
-<td>How often this gateway works its heal queue (<code>0</code> off)</td>
-</tr>
-<tr>
 <td><code>--replication-scan-secs &lt;n&gt;</code></td>
 <td><code>30</code></td>
 <td>How often the <a href="../../administration/replication/">replication</a> scanner looks for unsent versions</td>
@@ -3423,6 +3555,26 @@ Pass every address explicitly.</p>
 <td><code>--trusted-proxies &lt;cidrs&gt;</code></td>
 <td>empty</td>
 <td>Proxies whose <code>X-Forwarded-For</code> / <code>X-Forwarded-Proto</code> are believed for <code>aws:SourceIp</code> / <code>aws:SecureTransport</code>. Env <code>OBJECTIO_TRUSTED_PROXIES</code>. Set it when TLS ends at an ingress.</td>
+</tr>
+<tr>
+<td><code>--memory-budget &lt;size&gt;</code></td>
+<td>half the memory limit, else <code>512MiB</code></td>
+<td>Memory for request bodies and GET read-ahead (<code>512MiB</code>, <code>2GiB</code>); a request that doesn't fit gets <code>503 SlowDown</code>. Unset: half the process's cgroup memory limit when it has one. Env <code>OBJECTIO_MEMORY_BUDGET</code>. See <a href="../../operations/production/#gateway-memory-and-overload">gateway memory</a>.</td>
+</tr>
+<tr>
+<td><code>--max-requests &lt;n&gt;</code></td>
+<td><code>1024</code></td>
+<td>Requests served at once, each until its response is sent; more get <code>503 SlowDown</code>. <code>/health</code>, <code>/_ready</code> and <code>/metrics</code> aren't counted. Env <code>OBJECTIO_MAX_REQUESTS</code>.</td>
+</tr>
+<tr>
+<td><code>--header-timeout-secs &lt;n&gt;</code></td>
+<td><code>30</code></td>
+<td>How long a request's headers may take to arrive, and an idle keep-alive connection waits for its next request. Env <code>OBJECTIO_HEADER_TIMEOUT_SECS</code>.</td>
+</tr>
+<tr>
+<td><code>--body-timeout-secs &lt;n&gt;</code></td>
+<td><code>30</code></td>
+<td>How long a request body may send no byte (<code>400 RequestTimeout</code>), and a client may read no byte of a response (disconnected). Env <code>OBJECTIO_BODY_TIMEOUT_SECS</code>.</td>
 </tr>
 <tr>
 <td><code>--shutdown-delay-secs &lt;n&gt;</code></td>
@@ -3437,12 +3589,17 @@ Pass every address explicitly.</p>
 <tr>
 <td><code>--region &lt;name&gt;</code></td>
 <td><code>us-east-1</code></td>
-<td>SigV4 verification region</td>
+<td>The region requests are signed for (SigV4), and the one GetBucketLocation answers for every bucket</td>
 </tr>
 <tr>
 <td><code>--external-endpoint &lt;url&gt;</code></td>
 <td>empty</td>
 <td>Public URL (Iceberg vended creds, Delta Sharing presign, OIDC callback)</td>
+</tr>
+<tr>
+<td><code>--s3-domain &lt;domain&gt;</code></td>
+<td>none</td>
+<td>A domain clients address buckets under by host name, e.g. <code>s3.example.com</code>: <code>photos.s3.example.com</code> is bucket <code>photos</code>. Repeatable, or comma-separated. Env <code>OBJECTIO_S3_DOMAIN</code>. Needs wildcard DNS and a wildcard certificate for the domain; see <a href="../../administration/s3-api/#virtual-hosted-addressing">virtual-hosted addressing</a>.</td>
 </tr>
 <tr>
 <td><code>--master-key-env &lt;name&gt;</code></td>
@@ -3751,11 +3908,6 @@ and <a href="../../operations/meta-ha/">meta HA</a>.</p>
 <td>gRPC listen — MetadataService + Raft RPC</td>
 </tr>
 <tr>
-<td><code>--peers &lt;list&gt;</code></td>
-<td>empty</td>
-<td>Accepted and not used: membership is set over the admin port</td>
-</tr>
-<tr>
 <td><code>--ec-k &lt;n&gt;</code></td>
 <td><code>4</code></td>
 <td>Default EC data shards</td>
@@ -3811,6 +3963,11 @@ and <a href="../../operations/meta-ha/">meta HA</a>.</p>
 <td>Drain sweeps, and shards moved per draining OSD per sweep</td>
 </tr>
 <tr>
+<td><code>--min-free-mib &lt;n&gt;</code></td>
+<td><code>1024</code></td>
+<td>Free space meta keeps on the filesystem of <code>--data-dir</code>: below it the leader refuses writes (507) and a follower takes its leader's entries down to half of it; reads go on, and writes resume once there is room (<a href="../../operations/failure-recovery/#metas-disk-filling">meta's disk filling</a>)</td>
+</tr>
+<tr>
 <td><code>--raft-snapshot-every &lt;n&gt;</code></td>
 <td><code>500000</code></td>
 <td>Log entries between snapshots; the log is compacted into each</td>
@@ -3828,12 +3985,12 @@ and <a href="../../operations/meta-ha/">meta HA</a>.</p>
 <tr>
 <td><code>--raft-heartbeat-ms &lt;n&gt;</code></td>
 <td><code>500</code></td>
-<td>Raft heartbeat interval</td>
+<td>Raft heartbeat interval; also how long the leader waits for a follower to take entries</td>
 </tr>
 <tr>
 <td><code>--raft-election-ms &lt;n&gt;</code></td>
-<td><code>2000</code></td>
-<td>A follower that hears no leader for a random time in [this, 2 × this] stands for election</td>
+<td><code>1000</code></td>
+<td>Election timeout <code>E</code>: a follower that hears nothing from its leader for the leader lease (2E) plus a timeout drawn from [E, 2E] stands for election, 3–4 s at the default. Set the same on every meta node. Lower risks elections under load with no fault (at 500, a busy follower's delayed heartbeats caused them); higher makes a lost leader take longer to replace</td>
 </tr>
 <tr>
 <td><code>--log-level &lt;lvl&gt;</code></td>
@@ -3877,7 +4034,7 @@ keys to <code>&lt;data-dir&gt;/admin-creds.env</code>.</p>
 <tr>
 <td><code>-c, --config &lt;path&gt;</code></td>
 <td><code>/etc/objectio/osd.toml</code></td>
-<td>TOML config file, read if it exists; one that doesn't parse stops the OSD</td>
+<td>TOML config file, read if it exists; one that doesn't parse, or names a key the OSD doesn't know, stops the OSD</td>
 </tr>
 <tr>
 <td><code>-l, --listen &lt;addr&gt;</code></td>
@@ -3985,6 +4142,10 @@ keys to <code>&lt;data-dir&gt;/admin-creds.env</code>.</p>
 <span class="k">[logging]</span>
 <span class="n">level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"info"</span>
 </code></pre></div>
+<p>A config file that doesn't parse, or names a key the OSD doesn't know
+(a misspelt <code>[osd.failure_domain]</code>, say), stops the OSD with the file's
+name and the error; with no file at the <code>--config</code> path, every setting
+is its default.</p>
 <p><strong>Disk discovery vs explicit disks.</strong> <code>--disks</code> is the production
 path — list the devices this OSD owns. <code>--disk-filter</code> is for fleets
 where device names aren't stable (use <code>by-id</code> paths). Without
@@ -4122,6 +4283,11 @@ missing disk
 <td>Forwarded to the gateway</td>
 </tr>
 <tr>
+<td><code>--s3-domain &lt;domain&gt;</code></td>
+<td>none</td>
+<td>Forwarded to the gateway. Env <code>OBJECTIO_S3_DOMAIN</code>.</td>
+</tr>
+<tr>
 <td><code>--block-port &lt;n&gt;</code></td>
 <td><code>0</code> (off)</td>
 <td>Run the block gateway too (NBD on <code>--nbd-port</code>, 10809)</td>
@@ -4165,6 +4331,11 @@ missing disk
 <td><code>--audit-log &lt;path&gt;</code></td>
 <td>unset</td>
 <td>Mirror of the gateway's <code>--audit-log</code>.</td>
+</tr>
+<tr>
+<td><code>--memory-budget &lt;size&gt;</code>, <code>--max-requests &lt;n&gt;</code>, <code>--header-timeout-secs &lt;n&gt;</code>, <code>--body-timeout-secs &lt;n&gt;</code></td>
+<td>the gateway's</td>
+<td>Forwarded to the gateway</td>
 </tr>
 <tr>
 <td><code>--log-level &lt;lvl&gt;</code></td>
@@ -4308,6 +4479,11 @@ refused. Run again, it rewrites the files it writes and keeps the data.</p>
 <td><code>--external-endpoint &lt;url&gt;</code></td>
 <td>unset</td>
 <td>The gateway's <code>--external-endpoint</code></td>
+</tr>
+<tr>
+<td><code>--s3-domain &lt;domain&gt;</code></td>
+<td>none</td>
+<td>The gateway's <code>--s3-domain</code> (repeatable, or comma-separated)</td>
 </tr>
 <tr>
 <td><code>--meta-port</code>, <code>--meta-admin-port</code>, <code>--meta-metrics-port</code></td>

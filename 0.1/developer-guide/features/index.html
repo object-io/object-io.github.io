@@ -1582,6 +1582,148 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_8_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_8_7" id="__nav_5_8_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026 10 23
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_8_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_8_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2026 10 23
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_8_7_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_8_7_1" id="__nav_5_8_7_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux amd64
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_5_8_7_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_8_7_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Linux amd64
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../s3-compatibility/2026-10-23/linux-amd64/summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ceph s3-tests results
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -2987,7 +3129,7 @@ its notes (<a href="../../releases/0.1.0/">0.1.0</a>).</p>
 <li><strong>Slow path (decrypt → re-encrypt)</strong>: when SSE settings differ (plaintext → SSE-S3, SSE-S3 → SSE-KMS, SSE-KMS → plaintext, SSE-KMS with different key, or explicit override via request headers), the gateway reads the source through its normal decrypt path, then re-PUTs through the normal encrypt path so the destination bucket's default — or the copy request's <code>x-amz-server-side-encryption*</code> headers — controls the new encryption.</li>
 <li><strong>SSE-C on copy</strong>: not yet supported; returns <code>NotImplemented 501</code> when either side is SSE-C (needs the AWS-specific <code>x-amz-copy-source-server-side-encryption-customer-*</code> header set).</li>
 </ul>
-<p>A re-encrypting CopyObject buffers the object in memory, as a single-part PUT does.</p>
+<p>A re-encrypting CopyObject takes the source as a PUT takes its body: a source up to 16 MiB is held in memory, reserved from the gateway's memory budget; a larger one, up to S3's 5 GiB, is streamed from the source's stripes to the copy's, never held whole. A source over 5 GiB gets <code>400 InvalidRequest</code>, as S3 answers; with no room in the budget, <code>503 SlowDown</code>.</p>
 <hr />
 <h1 id="2-data-protection-erasure-coding">2. Data Protection (Erasure Coding)<a class="headerlink" href="#2-data-protection-erasure-coding" title="Permanent link">&para;</a></h1>
 <h3 id="reed-solomon-mds">Reed-Solomon (MDS)<a class="headerlink" href="#reed-solomon-mds" title="Permanent link">&para;</a></h3>
@@ -3469,13 +3611,16 @@ backbone, and the same admin gate.</p>
 <ul>
 <li><strong>Create/List/Delete shares</strong> via admin API and console: <code>GET/POST /_admin/shares</code>, <code>DELETE /_admin/shares/{share}</code>, <code>GET/POST /_admin/shares/{share}/tables</code>, <code>DELETE /_admin/shares/{share}/schemas/{schema}/tables/{table}</code></li>
 <li><strong>Tenant-scoped shares</strong>: Filtered by authenticated user's tenant; managed by the system admin or the share tenant's admins</li>
-<li><strong>A share exposes its own tenant's data</strong>: a table in another tenant's bucket or warehouse is added only by the system admin</li>
+<li><strong>A share exposes its own tenant's data</strong>: a table in another tenant's bucket is added only by the system admin</li>
 </ul>
 <h3 id="table-types">Table Types<a class="headerlink" href="#table-types" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Delta Lake</strong>: Share Delta tables by S3 bucket + path (<code>table_type: "delta"</code>)</li>
-<li><strong>Iceberg UniForm</strong>: Share Iceberg tables via Delta Sharing protocol (<code>table_type: "uniform"</code>)</li>
-<li><strong>Mixed sharing</strong>: Both Delta and Iceberg tables in the same share</li>
+<li><strong>Iceberg tables are refused</strong> (<code>table_type</code> <code>iceberg</code>, <code>uniform</code> or none):
+  adding one answers 400, and the version, metadata and query calls refuse
+  one already in a share. A share serves the files of a Delta log, which an
+  Iceberg table doesn't have. Read Iceberg tables through the Iceberg REST
+  catalog.</li>
 </ul>
 <h3 id="recipient-token-management">Recipient &amp; Token Management<a class="headerlink" href="#recipient-token-management" title="Permanent link">&para;</a></h3>
 <ul>
@@ -3524,9 +3669,10 @@ What exists today is file-like access through S3:</p>
 </ul>
 <h3 id="qos-quality-of-service">QoS (Quality of Service)<a class="headerlink" href="#qos-quality-of-service" title="Permanent link">&para;</a></h3>
 <ul>
-<li>A volume carries QoS settings (IOPS and bandwidth limits, priority), and the
-  <code>objectio-block</code> crate has a token-bucket limiter, but the block gateway
-  does not enforce them yet.</li>
+<li>Not built. <code>UpdateVolumeQos</code>, and a <code>CreateVolume</code> that carries QoS
+  settings, answer <code>UNIMPLEMENTED</code> rather than accept limits nothing
+  enforces; so do <code>GetVolumeStats</code> and the OSD, cluster and I/O-trace
+  calls (the block gateway's <code>/metrics</code> has its I/O).</li>
 </ul>
 <h3 id="protocol-support">Protocol Support<a class="headerlink" href="#protocol-support" title="Permanent link">&para;</a></h3>
 <ul>
@@ -3615,7 +3761,7 @@ What exists today is file-like access through S3:</p>
 </tr>
 <tr>
 <td><strong>Table Sharing</strong></td>
-<td>Share/table/recipient CRUD, UniForm type support, token + profile.share generation</td>
+<td>Share/table/recipient CRUD (Delta tables), token + profile.share generation</td>
 </tr>
 <tr>
 <td><strong>Monitoring</strong></td>

@@ -1570,6 +1570,148 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_8_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_8_7" id="__nav_5_8_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026 10 23
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_8_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_8_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2026 10 23
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_8_7_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_8_7_1" id="__nav_5_8_7_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux amd64
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_5_8_7_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_8_7_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Linux amd64
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developer-guide/s3-compatibility/2026-10-23/linux-amd64/summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ceph s3-tests results
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -3390,7 +3532,7 @@ estimate).</p>
 </tr>
 <tr>
 <td>Gateway</td>
-<td>4 GB, plus 2 GB per GB/s it carries (buffers for objects in flight)</td>
+<td>4 GB, plus 2 GB per GB/s it carries (buffers for objects in flight). Set it as the gateway's memory limit: half of it becomes its <a href="../../operations/production/#gateway-memory-and-overload">memory budget</a>, and load beyond that gets <code>503 SlowDown</code></td>
 </tr>
 <tr>
 <td>Meta</td>
@@ -3425,8 +3567,11 @@ metadata. <strong>Measured</strong> on the soak cluster:</p>
 </tr>
 </tbody>
 </table>
-<p>Meta also keeps its Raft log and one snapshot of the database beside it:
-plan <strong>2.2 × the database</strong> on each meta node's disk.</p>
+<p>Meta also keeps its Raft log and one snapshot of the database beside it,
+a second while the next snapshot is built, and a reserve free
+(<code>--min-free-mib</code>, 1 GiB) under which it takes no writes: plan <strong>3.2 × the
+database, plus 1 GiB</strong>, on each meta node's disk
+(<a href="../../operations/failure-recovery/#metas-disk-filling">meta's disk filling</a>).</p>
 <p>Each drive's metadata partition must hold its share of copies:</p>
 <div class="highlight"><pre><span></span><code>index per drive ≈ objects × (k+m) ÷ drives × 1.5 KB
 </code></pre></div>

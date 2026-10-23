@@ -1705,6 +1705,148 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_8_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_8_7" id="__nav_5_8_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026 10 23
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_8_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_8_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2026 10 23
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_8_7_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_8_7_1" id="__nav_5_8_7_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux amd64
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_5_8_7_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_8_7_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Linux amd64
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../developer-guide/s3-compatibility/2026-10-23/linux-amd64/summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ceph s3-tests results
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -3064,9 +3206,9 @@ release notes say when they do.</p>
 </thead>
 <tbody>
 <tr>
-<td>Buckets: create, delete, head, list</td>
+<td>Buckets: create, delete, head, list, location</td>
 <td>✅</td>
-<td></td>
+<td>GetBucketLocation answers the gateway's <code>--region</code> (us-east-1 as the empty constraint, as S3 does)</td>
 <td><a href="../operations-guide/administration/s3-api/">S3 API</a></td>
 <td></td>
 </tr>
@@ -3086,23 +3228,37 @@ release notes say when they do.</p>
 </tr>
 <tr>
 <td>Multipart upload (every call, 10,000 parts)</td>
-<td>🟡</td>
-<td>Completion is two-phase in meta. A single PUT or a part is at most 100 MiB today (S3 allows 5 GiB), so an object at most about 976 GiB</td>
-<td><a href="../operations-guide/administration/s3-api/">S3 API</a></td>
+<td>✅</td>
+<td>Completion is two-phase in meta. Parts up to 5 GiB, objects up to 5 TiB, as S3</td>
+<td><a href="../operations-guide/administration/s3-api/#limits-and-behavior">S3 API</a></td>
 <td></td>
 </tr>
 <tr>
-<td>Addressing</td>
-<td>🟡</td>
-<td>Path-style (<code>/bucket/key</code>) only; a virtual-hosted request is not yet refused, and is misread</td>
-<td><a href="../operations-guide/administration/s3-api/">S3 API</a></td>
+<td>A single PUT and an upload part up to S3's 5 GiB</td>
+<td>✅</td>
+<td>A body over 16 MiB is streamed to the shards stripe by stripe, never held whole: the gateway holds a few stripes of it whatever its size. Committed only once all of it has arrived and passed its payload hash, chunk signatures and checksums; a larger body gets <code>400 EntityTooLarge</code> before it is read. A gateway that stops mid-upload leaves its shards until the orphan scan (roadmap)</td>
+<td><a href="../operations-guide/administration/s3-api/#large-uploads">S3 API</a></td>
+<td></td>
+</tr>
+<tr>
+<td>Addressing: path-style, and virtual-hosted under the gateway's S3 domains</td>
+<td>✅</td>
+<td>Virtual-hosted needs <code>--s3-domain</code>, wildcard DNS and a wildcard certificate. A request whose bucket can't be told for certain is refused, not misread; without a domain, a bare <code>GET /</code> is still ListBuckets</td>
+<td><a href="../operations-guide/administration/s3-api/#virtual-hosted-addressing">S3 API</a></td>
 <td></td>
 </tr>
 <tr>
 <td>CopyObject, UploadPartCopy, copy by reference</td>
 <td>✅</td>
+<td>A copy that changes the encryption rewrites the bytes, streamed as a large PUT is, from a source of up to 5 GiB</td>
+<td><a href="../operations-guide/administration/s3-api/#copyobject">S3 API</a></td>
 <td></td>
-<td><a href="../operations-guide/administration/s3-api/">S3 API</a></td>
+</tr>
+<tr>
+<td>Gateway memory bounded under any load</td>
+<td>✅</td>
+<td>A GET streams stripe by stripe, and so does a large PUT or upload part; request bodies and read-ahead come from a memory budget; requests over the budget or the in-flight limit get <code>503 SlowDown</code>; slow clients are cut off by timeouts</td>
+<td><a href="../operations-guide/operations/production/#gateway-memory-and-overload">production</a></td>
 <td></td>
 </tr>
 <tr>
@@ -3234,8 +3390,8 @@ release notes say when they do.</p>
 <tr>
 <td>Static website hosting, inventory, analytics, transfer acceleration, torrent</td>
 <td>✖</td>
-<td>Refused with 501, never misread</td>
-<td></td>
+<td>Refused with 501, never misread; so is a bucket GET naming any sub-resource the gateway doesn't answer</td>
+<td><a href="../operations-guide/administration/s3-api/#not-yet-implemented">S3 API</a></td>
 <td></td>
 </tr>
 </tbody>
@@ -3269,7 +3425,7 @@ release notes say when they do.</p>
 <tr>
 <td>One write quorum for every stripe</td>
 <td>✅</td>
-<td>PUTs, multipart parts, packs and block chunks alike: k + 1 shards (MDS), two copies, or all but g − 1 (LRC), counted on distinct OSDs; 503 short of it (507 when the OSDs are full). Every shard carries its placement group's epoch, and a write placed under an old one is placed again</td>
+<td>PUTs, multipart parts, packs and block chunks alike: k + 1 shards (MDS), two copies, or all but g − 1 (LRC), counted on distinct OSDs; 503 short of it (507 when full OSDs kept it short). Every shard carries its placement group's epoch, and a write placed under an old one is placed again</td>
 <td><a href="../operations-guide/administration/s3-api/">S3 API</a></td>
 <td>data protection</td>
 </tr>
@@ -3451,7 +3607,7 @@ release notes say when they do.</p>
 <tr>
 <td>Full-disk behaviour</td>
 <td>✅</td>
-<td>Client writes stop at the full ratio (507 <code>StorageFull</code>); the rest is kept for repair; space returns after deletes</td>
+<td>Client writes stop at the full ratio (507 <code>StorageFull</code>); the rest is kept for repair; space returns after deletes. A full filesystem under an OSD (ENOSPC, EDQUOT) is 507 too, and writes resume once there is room</td>
 <td><a href="../operations-guide/operations/production/">production</a></td>
 <td></td>
 </tr>
@@ -3559,7 +3715,7 @@ items).</p>
 <tr>
 <td>Delta Sharing (shares, recipients, presigned query)</td>
 <td>🟡</td>
-<td>Unit tests only; a share exposes its own tenant's data, and only the system admin adds a table of another tenant</td>
+<td>Unit tests only; Delta tables only (an Iceberg table is refused); a share exposes its own tenant's data, and only the system admin adds a table of another tenant</td>
 <td><a href="../developer-guide/features/#3c-table-sharing-delta-sharing-protocol">feature reference</a></td>
 <td></td>
 </tr>
@@ -3828,6 +3984,13 @@ the <a href="../ROADMAP/">roadmap</a>.</p>
 <td></td>
 </tr>
 <tr>
+<td>Meta backup and restore</td>
+<td>✅</td>
+<td><code>obioctl meta export</code> backs up every table of meta's state from a live cluster, checked as it downloads; <code>objectio-meta restore</code> makes a new group from it, which lists again the objects written after it. A survivor of a meta majority lost for good can lead alone (<code>objectio-meta force-single-voter</code>), the last resort. Meta's own changes after the backup, and objects packed after it, are not recovered</td>
+<td><a href="../operations-guide/operations/failure-recovery/#losing-a-meta-majority">failure recovery</a></td>
+<td>meta</td>
+</tr>
+<tr>
 <td>Management SDKs (Go, Python) for the whole admin API</td>
 <td>✅</td>
 <td></td>
@@ -3865,7 +4028,7 @@ the <a href="../ROADMAP/">roadmap</a>.</p>
 <tr>
 <td>Performance check on every change</td>
 <td>✅</td>
-<td>Release builds of a change and its base on one runner; a drop in any cell fails it</td>
+<td>Release builds of a change and its base on one runner (in the merge queue, a dedicated one: a fresh container per job, no reach into its host's network); a drop in any cell fails it</td>
 <td><a href="../developer-guide/performance/#the-regression-check-in-ci">performance</a></td>
 <td></td>
 </tr>

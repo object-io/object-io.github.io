@@ -1570,6 +1570,148 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_8_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_8_7" id="__nav_5_8_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026 10 23
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_8_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_8_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2026 10 23
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_8_7_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_8_7_1" id="__nav_5_8_7_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux amd64
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_5_8_7_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_8_7_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Linux amd64
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developer-guide/s3-compatibility/2026-10-23/linux-amd64/summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ceph s3-tests results
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -3323,7 +3465,7 @@ blocks), not ext4/xfs — <code>mkfs</code>-ing first is <em>not</em> required a
 archive of the service binaries. Those are in the container image
 (<code>ghcr.io/object-io/objectio</code>, see <a href="../docker/">Docker</a>) or
 <a href="#3-build-from-source">built from source</a>.</p>
-<div class="highlight"><pre><span></span><code><span class="nv">TAG</span><span class="o">=</span>v0.1.0-rc.2
+<div class="highlight"><pre><span></span><code><span class="nv">TAG</span><span class="o">=</span>v0.1.0-rc.3
 <span class="nv">ARCH</span><span class="o">=</span><span class="k">$(</span>uname<span class="w"> </span>-m<span class="w"> </span><span class="p">|</span><span class="w"> </span>sed<span class="w"> </span><span class="s1">'s/x86_64/amd64/;s/aarch64/arm64/'</span><span class="k">)</span>
 <span class="nv">BASE</span><span class="o">=</span>https://github.com/object-io/objectio/releases/download/<span class="nv">$TAG</span>
 curl<span class="w"> </span>-LO<span class="w"> </span><span class="nv">$BASE</span>/objectio-aio-<span class="nv">$TAG</span>-linux-<span class="nv">$ARCH</span>
@@ -3333,7 +3475,7 @@ sudo<span class="w"> </span>install<span class="w"> </span>-m<span class="w"> </
 objectio-aio<span class="w"> </span>--version
 </code></pre></div>
 <p><code>releases/latest/download/…</code> doesn't work for a pre-release such as
-<code>v0.1.0-rc.2</code>: name the tag.</p>
+<code>v0.1.0-rc.3</code>: name the tag.</p>
 <p>The release binary needs <strong>glibc 2.28 or later</strong> and nothing else. It
 is built on AlmaLinux 8 (glibc 2.28); PCRE2 is linked in, and its TLS
 is rustls, so it loads no OpenSSL. The only shared libraries it loads
@@ -3385,7 +3527,7 @@ the container image there.</p>
 certificates, which are built in, and the system's certificate store,
 so a private CA added there (<code>update-ca-certificates</code>,
 <code>update-ca-trust</code>) is trusted too.</p>
-<p><code>v0.1.0-rc.2</code>'s binaries are the exception: built on Ubuntu 24.04, they
+<p><code>v0.1.0-rc.1</code>'s binaries are the exception: built on Ubuntu 24.04, they
 need glibc 2.39, <code>libssl3</code> and <code>libpcre2-8-0</code>.</p>
 <hr />
 <h2 id="2-a-cluster-under-systemd">2. A cluster under systemd<a class="headerlink" href="#2-a-cluster-under-systemd" title="Permanent link">&para;</a></h2>

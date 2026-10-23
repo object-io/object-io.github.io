@@ -1570,6 +1570,148 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_8_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_8_7" id="__nav_5_8_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026 10 23
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_8_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_8_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2026 10 23
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_8_7_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_8_7_1" id="__nav_5_8_7_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux amd64
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_5_8_7_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_8_7_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Linux amd64
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developer-guide/s3-compatibility/2026-10-23/linux-amd64/summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ceph s3-tests results
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -2677,6 +2819,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#gateway-memory-and-overload" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gateway memory and overload
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#alerts" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3079,6 +3232,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#gateway-memory-and-overload" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gateway memory and overload
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#alerts" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3396,7 +3560,63 @@ short:</p>
 <li><strong>Metadata:</strong> about 1.5 KB per object copy in each OSD's index, on a
   partition of the same drive; about 750 bytes per object on each meta
   node.</li>
+<li><strong>Meta's volume:</strong> 3.2 × its database plus 1 GiB: the database, its Raft
+  log, the snapshot it keeps and, while the next one is built, that one
+  too, and the reserve meta keeps free (<code>--min-free-mib</code>, 1 GiB). Under
+  the reserve, meta takes no writes
+  (<a href="../failure-recovery/#metas-disk-filling">meta's disk filling</a>). Give it
+  a volume of its own.</li>
 </ul>
+<h2 id="gateway-memory-and-overload">Gateway memory and overload<a class="headerlink" href="#gateway-memory-and-overload" title="Permanent link">&para;</a></h2>
+<p>A gateway's memory is bounded by what it lets in, not by the load it is
+offered. Under too much load it answers <code>503 SlowDown</code> (with
+<code>Retry-After: 1</code>), which S3 SDKs retry with backoff, rather than queueing
+without end or running out of memory.</p>
+<ul>
+<li><strong>GET streams.</strong> An object is read, decoded and sent one stripe at a
+  time, the next stripe read while the client takes the last, so a GET of
+  any size holds about two stripes. The first stripe is read before the
+  response headers are sent: a failure there is still an error status. A
+  stripe that can't be read after the headers ends the connection short
+  of <code>Content-Length</code>, never with wrong bytes, and is counted in
+  <code>objectio_gateway_get_aborted_total</code>. A client sees a short read, which
+  SDKs retry.</li>
+<li><strong>Large uploads stream.</strong> A PUT or an UploadPart over 16 MiB (up to
+  S3's 5 GiB) is never held whole: its body is erasure-coded and written
+  stripe by stripe as it arrives, two stripes in flight while the next is
+  read, so an upload of any size holds about three stripes (48 MiB with
+  4+2). It is committed only once all of it has arrived and passed its
+  checks (<a href="../../administration/s3-api/#large-uploads">large uploads</a>).</li>
+<li><strong>A memory budget</strong> (<code>--memory-budget</code>) holds request bodies and GET
+  read-ahead. A body read whole (an upload up to 16 MiB; any other request,
+  at most 100 MiB) reserves its whole declared length before a byte of it
+  is read, after the request is authenticated; a streamed upload reserves
+  the stripes it holds at once (or its length, if less); a GET reserves
+  each stripe before reading it and frees it once the client has been sent
+  it. A new request that doesn't fit gets <code>503 SlowDown</code>; a
+  GET already sending waits for room for its next stripe, up to the body
+  timeout. The default is half the process's memory limit (its cgroup's:
+  a container's <code>resources.limits.memory</code>), or 512 MiB without one. The
+  budget counts what requests bring in and take out, not every buffer that
+  handles them (erasure coding's shards, socket buffers), which is why it
+  is half the limit and not all of it.</li>
+<li><strong>An in-flight limit</strong> (<code>--max-requests</code>, 1024): a request holds a slot
+  until its response has been sent; beyond it, <code>503 SlowDown</code>.</li>
+<li><strong>Timeouts.</strong> Request headers must arrive within
+  <code>--header-timeout-secs</code> (30), which is also how long an idle keep-alive
+  connection is kept. A request body that sends no byte for
+  <code>--body-timeout-secs</code> (30) gets <code>400 RequestTimeout</code>; a client that
+  reads no byte of a response for as long is disconnected, and what its
+  GET held is freed.</li>
+</ul>
+<p><code>/health</code>, <code>/_ready</code> and <code>/metrics</code> are outside every limit, so a probe or
+a scrape always reaches an overloaded gateway.</p>
+<p>To size it: a gateway needs about twice its budget, plus its baseline
+(about 100 MB). Give each gateway a memory limit; the budget follows it.
+Steady <code>SlowDown</code>s, seen in <code>objectio_gateway_requests_rejected_total</code>
+by <code>reason</code>, mean the gateway is short of memory (<code>memory</code>) or of request
+slots (<code>requests</code>): add gateways, or raise the limit. The budget in use is
+<code>objectio_gateway_memory_budget_in_use_bytes</code>.</p>
 <h2 id="alerts">Alerts<a class="headerlink" href="#alerts" title="Permanent link">&para;</a></h2>
 <p>The chart ships the rules in <code>deploy/helm/objectio/alerts/objectio-rules.yaml</code>:
 - its own Prometheus loads them when <code>monitoring.enabled</code> is set;
@@ -3498,6 +3718,16 @@ short:</p>
 <td><a href="#meta-has-no-leader-or-elects-often">Meta</a></td>
 </tr>
 <tr>
+<td>ObjectIOMetaDiskLow</td>
+<td>warning</td>
+<td><a href="#disks-filling-or-full">Disks filling</a></td>
+</tr>
+<tr>
+<td>ObjectIOMetaDiskFull</td>
+<td>critical</td>
+<td><a href="#disks-filling-or-full">Disks filling</a></td>
+</tr>
+<tr>
 <td>ObjectIOGatewayClockSkewed</td>
 <td>critical</td>
 <td><a href="#a-gateway-refuses-writes-for-clock-skew">Clock skew</a></td>
@@ -3555,8 +3785,7 @@ short:</p>
 </tbody>
 </table>
 <p><strong>Not covered by any alert yet:</strong> certificate expiry (no metric; watch
-cert-manager's own), meta data-dir free space (watch with node_exporter),
-and the audit spool's size.</p>
+cert-manager's own) and the audit spool's size.</p>
 <h2 id="runbooks">Runbooks<a class="headerlink" href="#runbooks" title="Permanent link">&para;</a></h2>
 <p>Commands are <code>obioctl</code> (a SigV4 client of the gateway's admin API,
 <code>bin/cli/README.md</code> in the code repo) and meta's admin port (9102;
@@ -3647,6 +3876,31 @@ skipped.</p>
 <li>Everything full: add capacity. Deletes free space within a minute.</li>
 <li>Don't raise <code>--full-ratio</code> to get writes going: it spends the room
     repair needs after the next failure.</li>
+<li><strong>The filesystem under an OSD full</strong> (its sparse disk files, or its
+  state directory): writes it holds get 507 and the OSD logs <code>no room</code>.
+  Free space on that filesystem, or grow it; writes resume without a
+  restart. Keep disk files on a filesystem with room for their full size,
+  or on raw devices. If the OSD logs that its metadata log <code>takes no
+  writes after an earlier failure</code>, an <code>fsync</code> failed: restart it once
+  there is room.</li>
+<li><strong>Meta's disk low or full</strong> (<code>ObjectIOMetaDiskLow</code>: under twice the
+  reserve for 10 minutes; <code>ObjectIOMetaDiskFull</code>: under the reserve).
+  Under the reserve (<code>--min-free-mib</code>, 1 GiB) the meta leader refuses
+  writes that need meta, 507, and a follower falls behind; reads and
+  object PUTs go on
+  (<a href="../failure-recovery/#metas-disk-filling">meta's disk filling</a>).</li>
+<li>Which node, and why: <code>curl http://&lt;meta&gt;:9102/status</code> on each, for
+    <code>disk_free</code>, <code>disk_reserve</code> and <code>disk_full</code>.</li>
+<li>Grow the meta volume (on Kubernetes, the meta PVC, if its storage
+    class allows expansion), or free space on that filesystem if
+    something else shares it. Don't delete files under meta's data
+    directory. Writes resume by themselves.</li>
+<li>A meta node that exited with <code>raft checkpoint failed</code> or <code>Raft
+    stopped</code> and a <code>No space left on device</code> in its log met a full
+    filesystem anyway (something else took the reserve): it starts again,
+    and catches up, once there is room.</li>
+<li>Don't lower <code>--min-free-mib</code> to get writes going: it spends the room
+    meta needs to finish what it has under way.</li>
 </ul>
 <h3 id="a-gateway-refuses-writes-for-clock-skew">A gateway refuses writes for clock skew<a class="headerlink" href="#a-gateway-refuses-writes-for-clock-skew" title="Permanent link">&para;</a></h3>
 <p>Its clock is more than 500 ms from meta's
@@ -3733,6 +3987,9 @@ fsync.</p>
 <li>503s during a fault are expected: clients retry.</li>
 <li>Persistent 503s mean meta has no leader, OSDs are unreachable, or a
   gateway refuses writes for clock skew. See those runbooks.</li>
+<li><code>503 SlowDown</code> is a gateway at its memory budget or its in-flight limit
+  (<a href="#gateway-memory-and-overload">gateway memory and overload</a>):
+  <code>objectio_gateway_requests_rejected_total</code> says which.</li>
 <li>A 500 is a bug: report it with the gateway's log line for the request
   id.</li>
 </ul>

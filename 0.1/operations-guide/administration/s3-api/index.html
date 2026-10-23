@@ -1570,6 +1570,148 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_8_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_8_7" id="__nav_5_8_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026 10 23
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_8_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_8_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2026 10 23
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_8_7_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_8_7_1" id="__nav_5_8_7_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux amd64
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_5_8_7_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_8_7_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Linux amd64
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developer-guide/s3-compatibility/2026-10-23/linux-amd64/summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ceph s3-tests results
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -2101,6 +2243,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Addressing and signing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#virtual-hosted-addressing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Virtual-hosted addressing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2275,6 +2434,17 @@
     <span class="md-ellipsis">
       
         Limits and Behavior
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#large-uploads" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Large uploads
       
     </span>
   </a>
@@ -3287,6 +3457,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Addressing and signing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#virtual-hosted-addressing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Virtual-hosted addressing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -3461,6 +3648,17 @@
     <span class="md-ellipsis">
       
         Limits and Behavior
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#large-uploads" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Large uploads
       
     </span>
   </a>
@@ -3761,15 +3959,16 @@
 <p>Supported S3 API operations in ObjectIO.</p>
 <h2 id="addressing-and-signing">Addressing and signing<a class="headerlink" href="#addressing-and-signing" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Path-style only.</strong> Requests name the bucket in the path
-  (<code>https://s3.example.com/bucket/key</code>). A virtual-hosted-style request
-  (<code>https://bucket.s3.example.com/key</code>) is not recognised: the bucket in
-  the host is ignored and the path is read as bucket and key
-  (<a href="https://github.com/object-io/objectio/issues/65">objectio#65</a>). Set
-  path style in clients: boto3
-  <code>Config(s3={"addressing_style": "path"})</code>, the AWS CLI
-  <code>aws configure set default.s3.addressing_style path</code>, the Java and Go
-  SDKs <code>forcePathStyle</code> / <code>UsePathStyle</code>, Iceberg and Spark
+<li><strong>Path-style always; virtual-hosted where the gateway has an S3
+  domain.</strong> A request names its bucket in the path
+  (<code>https://s3.example.com/bucket/key</code>), or, once the operator has set
+  the gateway's S3 domain, in the host
+  (<code>https://bucket.s3.example.com/key</code>): see
+  <a href="#virtual-hosted-addressing">Virtual-hosted addressing</a> below. Path
+  style works with any setup, so it is the safe choice for a client that
+  doesn't know: boto3 <code>Config(s3={"addressing_style": "path"})</code>, the AWS
+  CLI <code>aws configure set default.s3.addressing_style path</code>, the Java and
+  Go SDKs <code>forcePathStyle</code> / <code>UsePathStyle</code>, Iceberg and Spark
   <code>s3.path-style-access=true</code>.</li>
 <li><strong>SigV4 only</strong>, for requests and presigned URLs; SigV2 is refused with
   <code>400</code>. Against a custom endpoint, boto3 without
@@ -3777,7 +3976,98 @@
   SigV2 presigned URLs: set
   <code>Config(signature_version="s3v4")</code> in boto3, and
   <code>aws configure set default.s3.signature_version s3v4</code> for the CLI.</li>
+<li><strong>Overload answers <code>503 SlowDown</code></strong> (with <code>Retry-After</code>), when a gateway
+  is at its memory budget or its limit of requests in flight; SDKs retry
+  it with backoff. A request body that sends nothing for 30 s gets <code>400
+  RequestTimeout</code> (<a href="../../operations/production/#gateway-memory-and-overload">gateway memory</a>).</li>
+<li><strong>A write with no room answers <code>507 StorageFull</code></strong> (MinIO's
+  <code>XMinioStorageFull</code>; AWS has no such error): the OSDs it needs are past
+  their full ratio, or the filesystem under their disks or metadata is
+  full (ENOSPC, EDQUOT). SDKs don't retry it, as they do a <code>503</code>
+  (<a href="../../operations/failure-recovery/#full-disks">full disks</a>).</li>
 </ul>
+<h3 id="virtual-hosted-addressing">Virtual-hosted addressing<a class="headerlink" href="#virtual-hosted-addressing" title="Permanent link">&para;</a></h3>
+<p>The gateway reads a bucket from the host name once it is told the
+domains buckets are named under: <code>--s3-domain</code> on the gateway (repeat
+it, or separate domains with commas; env <code>OBJECTIO_S3_DOMAIN</code>),
+<code>--s3-domain</code> on <code>objectio-aio</code> and <code>objectio-install</code>, and
+<code>gateway.s3Domains</code> in the Helm chart
+(<a href="../../installation/configuration/">configuration</a>). With
+<code>--s3-domain s3.example.com</code>, a request's <code>Host</code> is read as S3 reads it:</p>
+<table>
+<thead>
+<tr>
+<th><code>Host</code></th>
+<th>Addressing</th>
+<th>Bucket</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>photos.s3.example.com</code></td>
+<td>virtual-hosted; the path is the key</td>
+<td><code>photos</code></td>
+</tr>
+<tr>
+<td><code>my.photos.s3.example.com</code></td>
+<td>virtual-hosted; a bucket name may hold dots</td>
+<td><code>my.photos</code></td>
+</tr>
+<tr>
+<td><code>s3.example.com</code></td>
+<td>path-style</td>
+<td>the path's first segment</td>
+</tr>
+<tr>
+<td>an address, <code>localhost</code>, any name not under a domain</td>
+<td>path-style</td>
+<td>the path's first segment</td>
+</tr>
+</tbody>
+</table>
+<p>The port is ignored and case doesn't matter. With several domains, the
+longest one a host is under is used (<code>s3.example.com</code> before
+<code>example.com</code>). Everything after works on the bucket from the host:
+signatures (the path and host signed are the ones sent), presigned URLs,
+bucket policies and IAM policies, CORS, metrics, the audit log. Bucket
+operations go to the bucket's own host: <code>PUT /</code> creates the bucket,
+<code>GET /?list-type=2</code> lists it, <code>POST /?delete</code> is DeleteObjects,
+<code>DELETE /</code> deletes it. The domain itself stays path-style, so the admin
+API, the console, the Iceberg catalog and Delta Sharing are reached on it
+as before.</p>
+<p>Two things the gateway doesn't provide, for each domain:</p>
+<ul>
+<li><strong>Wildcard DNS</strong>: <code>*.s3.example.com</code> resolving to the gateway (its load
+  balancer or ingress), and, behind an ingress, a host rule for the
+  wildcard (<code>gateway.ingress.hosts</code>, <code>host: "*.s3.example.com"</code>).</li>
+<li><strong>A TLS certificate covering <code>*.s3.example.com</code></strong> where TLS ends. A
+  wildcard covers one label only, so a bucket name with dots
+  (<code>my.photos.s3.example.com</code>) fails certificate checks over HTTPS, as on
+  AWS: address such buckets path-style.</li>
+</ul>
+<p>The domains are not taken from <code>--external-endpoint</code>: that would make
+every name under the endpoint's host a bucket, and a gateway reached at a
+name under it (<code>gw1.s3.example.com</code>) would stop working.</p>
+<p><strong>What's refused rather than guessed.</strong> A request whose bucket can't be
+told for certain gets an S3 error, never another request's answer:</p>
+<ul>
+<li><code>400 InvalidBucketName</code>: a host under a domain whose bucket part isn't
+  a valid bucket name (<code>Bad_Name.s3.example.com</code>).</li>
+<li><code>400 InvalidRequest</code>: on a path-style host, a bucket operation on <code>/</code> —
+  <code>PUT /</code>, <code>DELETE /</code>, <code>HEAD /</code>, <code>POST /?delete</code>, a form upload to <code>/</code>,
+  or <code>GET /</code> with a listing's parameters (<code>list-type</code>, <code>encoding-type</code>,
+  <code>location</code>, …). Only a client that put the bucket in the host sends
+  these; read path-style they would name no bucket, and a listing would
+  have come back as the caller's buckets. The message says to set
+  <code>--s3-domain</code> (or names the domains the host isn't under), or to use
+  path style. ListBuckets (<code>GET /</code>, with <code>max-buckets</code>, <code>prefix</code>,
+  <code>continuation-token</code>, <code>bucket-region</code>), the IAM and STS query API
+  (<code>Action=</code>) and CORS preflights on <code>/</code> are unchanged.</li>
+</ul>
+<p>Without a domain the gateway can't tell <code>bucket.s3.example.com</code> from
+<code>s3.example.com</code>, so a request that is also valid path-style is read
+path-style: a bare <code>GET /</code> is ListBuckets, and <code>/key</code> is bucket <code>key</code>.
+If any client addresses buckets by host name, set <code>--s3-domain</code>.</p>
 <h2 id="bucket-operations">Bucket Operations<a class="headerlink" href="#bucket-operations" title="Permanent link">&para;</a></h2>
 <h3 id="listbuckets">ListBuckets<a class="headerlink" href="#listbuckets" title="Permanent link">&para;</a></h3>
 <p>List all buckets owned by the authenticated user.</p>
@@ -3833,13 +4123,21 @@ encryption and public access settings, in the same commit.</p>
 <p><strong>Response:</strong> 200 OK (bucket exists) or 404 Not Found</p>
 <hr />
 <h3 id="getbucketlocation">GetBucketLocation<a class="headerlink" href="#getbucketlocation" title="Permanent link">&para;</a></h3>
-<p>Get the region of a bucket.</p>
+<p>Get the region of a bucket: the gateway's <code>--region</code>
+(<a href="../../installation/configuration/">configuration</a>), which every bucket
+is in. Authorized as <code>s3:GetBucketLocation</code>.</p>
 <div class="highlight"><pre><span></span><code>GET /{bucket}?location
 </code></pre></div>
-<p><strong>Response:</strong></p>
+<p><strong>Response</strong> (a gateway started with <code>--region eu-west-1</code>):</p>
 <div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
-<span class="nt">&lt;LocationConstraint&gt;</span>us-east-1<span class="nt">&lt;/LocationConstraint&gt;</span>
+<span class="nt">&lt;LocationConstraint</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">"http://s3.amazonaws.com/doc/2006-03-01/"</span><span class="nt">&gt;</span>eu-west-1<span class="nt">&lt;/LocationConstraint&gt;</span>
 </code></pre></div>
+<p>In <code>us-east-1</code>, the default, the constraint is empty, as S3 answers it;
+SDKs read an empty constraint as <code>us-east-1</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;LocationConstraint</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">"http://s3.amazonaws.com/doc/2006-03-01/"</span><span class="nt">/&gt;</span>
+</code></pre></div>
+<p>A bucket that doesn't exist is <code>404 NoSuchBucket</code>.</p>
 <hr />
 <h2 id="object-operations">Object Operations<a class="headerlink" href="#object-operations" title="Permanent link">&para;</a></h2>
 <h3 id="putobject">PutObject<a class="headerlink" href="#putobject" title="Permanent link">&para;</a></h3>
@@ -3860,6 +4158,8 @@ encryption and public access settings, in the same commit.</p>
 <p>Conditional writes are checked and applied atomically: of two writers
 racing with <code>If-None-Match: *</code>, exactly one wins. <code>CompleteMultipartUpload</code>
 takes the same headers.</p>
+<p>A body may be up to 5 GiB, as S3 allows (<a href="#large-uploads">large uploads</a>);
+a larger one gets <code>400 EntityTooLarge</code> before any of it is read.</p>
 <p><strong>Response:</strong></p>
 <div class="highlight"><pre><span></span><code>HTTP/1.1 200 OK
 ETag: "d41d8cd98f00b204e9800998ecf8427e"
@@ -3885,6 +4185,11 @@ ETag: "d41d8cd98f00b204e9800998ecf8427e"
 <p><strong>Range Request:</strong></p>
 <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">"Range: bytes=0-99"</span><span class="w"> </span>http://localhost:9000/my-bucket/file.txt
 </code></pre></div>
+<p>The object is streamed stripe by stripe, never held whole in the
+gateway. A failure reading the first stripe is an error status; one after
+the headers have gone out closes the connection short of
+<code>Content-Length</code> (never with wrong bytes), which clients see as a short
+read and retry.</p>
 <hr />
 <h3 id="headobject">HeadObject<a class="headerlink" href="#headobject" title="Permanent link">&para;</a></h3>
 <p>Get object metadata without body.</p>
@@ -3914,6 +4219,11 @@ x-amz-copy-source: /source-bucket/source-key
 <span class="w">    </span><span class="nt">&lt;ETag&gt;</span>"d41d8cd98f00b204e9800998ecf8427e"<span class="nt">&lt;/ETag&gt;</span>
 <span class="nt">&lt;/CopyObjectResult&gt;</span>
 </code></pre></div>
+<p>A copy whose source and destination are encrypted alike shares the
+source's stripes, at any size. A copy that changes the encryption reads
+the source and writes it again, streamed as a large PUT is, so its source
+(or, for UploadPartCopy, its range) may be at most 5 GiB, as S3 allows; a
+larger one gets <code>400 InvalidRequest</code>, as S3 answers.</p>
 <hr />
 <h3 id="listobjectsv2">ListObjectsV2<a class="headerlink" href="#listobjectsv2" title="Permanent link">&para;</a></h3>
 <p>List objects in a bucket.</p>
@@ -3944,9 +4254,7 @@ x-amz-copy-source: /source-bucket/source-key
 <hr />
 <h2 id="multipart-upload">Multipart Upload<a class="headerlink" href="#multipart-upload" title="Permanent link">&para;</a></h2>
 <p>Multipart upload allows uploading large objects in parts. It is
-required for objects over 100 MiB: the gateway takes a request body of
-at most 100 MiB, so a larger single PUT, or a larger part, is refused
-with <code>413</code> (<a href="https://github.com/object-io/objectio/issues/64">objectio#64</a>).</p>
+required for objects over 5 GiB, the most a single PUT takes, as in S3.</p>
 <h3 id="limits-and-behavior">Limits and Behavior<a class="headerlink" href="#limits-and-behavior" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -3959,18 +4267,18 @@ with <code>413</code> (<a href="https://github.com/object-io/objectio/issues/64"
 <tbody>
 <tr>
 <td>Minimum part size</td>
-<td>5 MB</td>
-<td>Except last part</td>
+<td>5 MiB</td>
+<td>Except the last part (<code>400 EntityTooSmall</code> at completion)</td>
 </tr>
 <tr>
 <td>Maximum part size</td>
-<td>100 MiB</td>
-<td>S3's is 5 GiB; a larger part gets <code>413</code></td>
+<td>5 GiB</td>
+<td>As S3; a larger part gets <code>400 EntityTooLarge</code> before its body is read</td>
 </tr>
 <tr>
 <td>Maximum single PUT</td>
-<td>100 MiB</td>
-<td>S3's is 5 GiB</td>
+<td>5 GiB</td>
+<td>As S3; a larger one gets <code>400 EntityTooLarge</code> before its body is read</td>
 </tr>
 <tr>
 <td>Maximum parts</td>
@@ -3979,16 +4287,45 @@ with <code>413</code> (<a href="https://github.com/object-io/objectio/issues/64"
 </tr>
 <tr>
 <td>Maximum object size</td>
-<td>about 976 GiB</td>
-<td>10,000 × 100 MiB (S3's is 5 TiB)</td>
+<td>5 TiB</td>
+<td>As S3; a completion whose parts make more gets <code>400 EntityTooLarge</code></td>
 </tr>
 <tr>
 <td>Default AWS CLI part size</td>
 <td>8 MB</td>
-<td><code>multipart_chunksize</code> in the CLI's S3 config; keep it at most 100 MiB</td>
+<td><code>multipart_chunksize</code> in the CLI's S3 config; up to 5 GiB</td>
 </tr>
 </tbody>
 </table>
+<h3 id="large-uploads">Large uploads<a class="headerlink" href="#large-uploads" title="Permanent link">&para;</a></h3>
+<p>A single PUT or an UploadPart over 16 MiB is not held in the gateway's
+memory: its body is streamed to the OSDs stripe by stripe as it arrives,
+each stripe erasure-coded (and encrypted, with SSE) and written while the
+next is read, a couple of stripes in flight at once. However large the
+upload, the gateway holds a few stripes of it (about 48 MiB with 4+2),
+reserved from its <a href="../../operations/production/#gateway-memory-and-overload">memory budget</a>
+before the body is read: with no room, the request gets <code>503 SlowDown</code>
+and the client retries.</p>
+<p>The upload is acknowledged (<code>200</code>) only once every stripe is on stable
+storage at write quorum and the object's metadata is committed. The object
+becomes visible only then, after the whole body has arrived and passed
+every check it carries:</p>
+<ul>
+<li>its signed payload hash (<code>x-amz-content-sha256</code>), computed over the
+  bytes as they stream (<code>400 XAmzContentSHA256Mismatch</code>);</li>
+<li>with <code>aws-chunked</code>, each chunk's signature, checked as each chunk ends
+  (<code>403 SignatureDoesNotMatch</code>), and the checksum trailer;</li>
+<li><code>Content-MD5</code> (<code>400 BadDigest</code>) and an <code>x-amz-checksum-*</code> header or
+  trailer (<code>400 BadDigest</code>).</li>
+</ul>
+<p>A body that fails a check, or a client that goes away mid-body, stores
+nothing: the shards already written are freed at once (as for any failed
+write, a shard an OSD can't be reached to free is retried for a while). A
+gateway that stops mid-upload leaves its shards allocated until the
+orphan scan on the roadmap reclaims them. An upload that meets a
+placement group whose acting set changed under it gets <code>503</code>, which
+clients retry; a body small enough to be held whole is placed again
+without the client seeing it.</p>
 <h3 id="multi-stripe-chunking">Multi-Stripe Chunking<a class="headerlink" href="#multi-stripe-chunking" title="Permanent link">&para;</a></h3>
 <p>ObjectIO uses a 4MB internal block size. When a part exceeds 4MB, it is automatically split into multiple stripes:</p>
 <div class="highlight"><pre><span></span><code>8 MB Part Upload:
@@ -4288,8 +4625,8 @@ and every S3 form library work.</p>
   signature, <code>file</code>, <code>policy</code> and <code>x-ignore-*</code>) must be covered by one of
   its conditions: exact match, <code>eq</code>, <code>starts-with</code>, <code>content-length-range</code>.
   The signature and policy are checked before any of the file is read, and
-  the file is read only up to the policy's size limit (and the single-PUT
-  limit, 100 MiB).</li>
+  the file is read only up to the policy's size limit (and 100 MiB: a
+  form's file is held whole, unlike a PUT's body).</li>
 <li><strong>Authorization</strong> is the signer's, exactly as for a PUT: scoped keys,
   the tenant boundary, policies and Block Public Access all apply. The
   object is written by the same path a PUT takes (default encryption, Object
@@ -4402,12 +4739,62 @@ back only what it selects.</p>
 <hr />
 <h2 id="not-yet-implemented">Not Yet Implemented<a class="headerlink" href="#not-yet-implemented" title="Permanent link">&para;</a></h2>
 <p>A request naming one of these sub-resources is refused with <code>501
-NotImplemented</code> (rather than, say, <code>GET /b?website</code> listing the bucket).
-Bucket logging (<code>?logging</code>) is supported: see <a href="../bucket-logging/">Bucket Logging</a>.</p>
+NotImplemented</code> rather than handled as something else (<code>GET /b?website</code>
+used to list the bucket):</p>
+<table>
+<thead>
+<tr>
+<th>Sub-resource</th>
+<th>S3 calls</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>?website</code></td>
+<td>Get/Put/DeleteBucketWebsite</td>
+</tr>
+<tr>
+<td><code>?notification</code></td>
+<td>Get/PutBucketNotificationConfiguration</td>
+</tr>
+<tr>
+<td><code>?inventory</code>, <code>?analytics</code>, <code>?metrics</code>, <code>?intelligent-tiering</code></td>
+<td>the bucket's inventory, analytics, metrics and Intelligent-Tiering configurations</td>
+</tr>
+<tr>
+<td><code>?accelerate</code></td>
+<td>Get/PutBucketAccelerateConfiguration</td>
+</tr>
+<tr>
+<td><code>?requestPayment</code></td>
+<td>Get/PutBucketRequestPayment</td>
+</tr>
+<tr>
+<td><code>?session</code></td>
+<td>CreateSession (S3 Express directory buckets)</td>
+</tr>
+<tr>
+<td><code>?metadataTable</code>, <code>?metadataConfiguration</code></td>
+<td>S3 Metadata configurations</td>
+</tr>
+<tr>
+<td><code>?abac</code></td>
+<td>Get/PutBucketAbac</td>
+</tr>
+<tr>
+<td><code>?restore</code>, <code>?torrent</code></td>
+<td>RestoreObject, GetObjectTorrent</td>
+</tr>
+</tbody>
+</table>
+<p>A <code>GET</code> on a bucket is also <code>501</code> when it names, without a value, any
+other parameter that is neither a sub-resource the gateway answers nor a
+listing parameter (<code>GET /b?made-up</code>): S3 names sub-resources that way, and
+answering one with the bucket's listing would report a success that
+wasn't one. Parameters with a value, such as an SDK's <code>x-id=ListObjects</code>,
+are left to the listing, as S3 does. Bucket logging (<code>?logging</code>) is
+supported: see <a href="../bucket-logging/">Bucket Logging</a>.</p>
 <ul>
-<li>Inventory, Analytics, Metrics configuration</li>
-<li>Website configuration</li>
-<li>Accelerate configuration, Request Payment</li>
 <li>SigV2 — refused with <code>400</code>; use SigV4</li>
 </ul>
 

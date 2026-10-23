@@ -1570,6 +1570,148 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_8_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_8_7" id="__nav_5_8_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026 10 23
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_8_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_8_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2026 10 23
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_8_7_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_8_7_1" id="__nav_5_8_7_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux amd64
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_5_8_7_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_8_7_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Linux amd64
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developer-guide/s3-compatibility/2026-10-23/linux-amd64/summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ceph s3-tests results
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -3063,7 +3205,15 @@ cluster's CA:</p>
 </ul>
 <p>A peer without such a certificate is refused when it connects: a plaintext
 client, a TLS client with no certificate, or one with a certificate from
-another CA.</p>
+another CA. The node that refused it logs a warning naming the peer's
+address (<code>gRPC: refused &lt;address&gt;: TLS handshake: …</code>). A peer that
+connects and never completes the handshake is disconnected 10 s after it
+connected, on every gRPC port and on meta's admin port, so it holds
+neither a connection nor anything else on the node. The other way round, a
+node connecting to another gives up when its connect timeout is out (5 s,
+less for the probes), the TLS handshake included: a peer that takes the
+connection and then answers nothing, such as a frozen process, fails the
+attempt rather than holding it.</p>
 <p>Each certificate also names its <strong>role</strong>, and each call is checked
 against it: an OSD's certificate can't read a user's secret key from meta,
 a gateway's can't purge an OSD. Meta's admin port (Raft bootstrap and
@@ -3277,7 +3427,10 @@ time so they pick up the new certificates:</p>
 gets a test CA's certificate for its role. Tests check that:</p>
 <ul>
 <li>a node refuses a plaintext client, a client with no certificate and one
-  with another CA's certificate, and serves the cluster's own;</li>
+  with another CA's certificate, each within a bound, and serves the
+  cluster's own;</li>
+<li>meta and an OSD disconnect a client that connects and never starts a
+  TLS handshake once the handshake timeout is out;</li>
 <li>meta refuses the STS signing key and a user's secret key to every role
   but a gateway's, and to a certificate naming none, and an OSD refuses
   placement-group calls and purges from anyone but meta;</li>
@@ -3292,7 +3445,12 @@ gets a test CA's certificate for its role. Tests check that:</p>
 <p>Unit tests check that every method of every service has a rule, that a
 certificate naming no role is any role only before the upgrade is
 finalized, and that on the admin port only reading the node's state is
-open to a client without an <code>admin</code> certificate. The rolling-upgrade test
+open to a client without an <code>admin</code> certificate. Others check that a gRPC
+server serves only a peer with a certificate the CA signed and hands that
+certificate to the call, that a peer silent or stopped part way through
+its handshake is disconnected while others are served, and that
+connecting to a server that never answers the handshake fails at the
+connect timeout. The rolling-upgrade test
 runs plain. <code>OBJECTIO_E2E_PLAIN=1</code> runs the whole suite plain; the mTLS
 tests then fail, since they have nothing to test.</p>
 

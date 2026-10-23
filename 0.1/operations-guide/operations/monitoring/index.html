@@ -1570,6 +1570,148 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_8_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_8_7" id="__nav_5_8_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026 10 23
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_8_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_8_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2026 10 23
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_8_7_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_8_7_1" id="__nav_5_8_7_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux amd64
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_5_8_7_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_8_7_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Linux amd64
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developer-guide/s3-compatibility/2026-10-23/linux-amd64/summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ceph s3-tests results
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -3082,7 +3224,7 @@ setting on it are in the <a href="../metrics/">metrics reference</a>.</p>
 <tr>
 <td>Block gateway</td>
 <td><code>:9301/metrics</code> (<code>--metrics-listen</code>, empty = off)</td>
-<td>—</td>
+<td><code>:9301/health</code></td>
 </tr>
 </tbody>
 </table>
@@ -3216,8 +3358,12 @@ with its runbook. It covers:
   answers 503 again (<code>"status": "stopping"</code>) once the gateway is shutting
   down, while it still serves (see
   <a href="../upgrades/#how-a-node-stops">how a node stops</a>).</li>
-<li><strong><code>GET /health</code></strong> on the OSDs' metrics port answers 200 while the
-  process is up.</li>
+<li><strong><code>GET /health</code></strong> on an OSD's metrics port answers 200 while every one
+  of its disks is healthy, and 503 (<code>UNHEALTHY</code>) once one has had a
+  failed read, write or flush, or a checksum mismatch, since the OSD
+  started (<code>objectio_disk_errors_total</code>, <code>objectio_disk_healthy</code>).</li>
+<li><strong><code>GET /health</code></strong> on the block gateway's metrics port answers 200
+  while the process is up.</li>
 <li><strong><code>GET /health</code></strong> on meta's metrics port and on its admin port (9102)
   answers 200 while the process is up and its Raft runs, and 503 (with
   the reason) once its Raft has stopped for good, after a storage error.

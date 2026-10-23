@@ -1570,6 +1570,148 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_8_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_8_7" id="__nav_5_8_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026 10 23
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_8_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_8_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2026 10 23
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_8_7_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_8_7_1" id="__nav_5_8_7_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux amd64
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_5_8_7_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_8_7_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Linux amd64
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developer-guide/s3-compatibility/2026-10-23/linux-amd64/summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ceph s3-tests results
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -3123,7 +3265,7 @@ be built locally.</p>
 <tr>
 <td><code>block-gateway</code></td>
 <td><code>objectio-block-gateway</code></td>
-<td>9300 (gRPC), 10809 (NBD)</td>
+<td>9300 (gRPC), 9301 (metrics), 10809 (NBD)</td>
 <td>Block volumes over NBD and gRPC</td>
 </tr>
 <tr>
@@ -3141,14 +3283,14 @@ binary's defaults (<a href="../configuration/#ports">ports</a>).</p>
 <p>One multi-arch image (<code>linux/amd64</code>, <code>linux/arm64</code>) is published on
 GHCR, and it carries every service:</p>
 <ul>
-<li><code>ghcr.io/object-io/objectio:&lt;tag&gt;</code> (for example <code>v0.1.0-rc.2</code>), also
+<li><code>ghcr.io/object-io/objectio:&lt;tag&gt;</code> (for example <code>v0.1.0-rc.3</code>), also
   tagged <code>latest</code> — the <code>all</code> target</li>
 </ul>
 <p>It has no entrypoint: name the binary to run, as the Helm chart does.
 The per-service targets (<code>gateway</code>, <code>meta</code>, <code>osd</code>, <code>cli</code>,
 <code>block-gateway</code>) are not published; build them locally if you want them.
-Their default commands pass flags the binaries don't have (<code>--bind</code>,
-<code>--raft-bind</code>), so always give the arguments yourself:</p>
+Each runs its binary with the cluster's ports by default and checks its
+own health (<a href="#health-checks">health checks</a>):</p>
 <div class="highlight"><pre><span></span><code>docker<span class="w"> </span>build<span class="w"> </span>--target<span class="w"> </span>gateway<span class="w"> </span>-t<span class="w"> </span>objectio-gateway<span class="w"> </span>.
 </code></pre></div>
 <p>Both <code>linux/amd64</code> and <code>linux/arm64</code> erasure-code with ISA-L and write
@@ -3160,11 +3302,11 @@ choose the binary at <code>docker run</code> time:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># The admin CLI against an existing cluster</span>
 docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>--network<span class="w"> </span>host<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-e<span class="w"> </span>OBJECTIO_ACCESS_KEY<span class="w"> </span>-e<span class="w"> </span>OBJECTIO_SECRET_KEY<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>ghcr.io/object-io/objectio:v0.1.0-rc.2<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>ghcr.io/object-io/objectio:v0.1.0-rc.3<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>obioctl<span class="w"> </span>--endpoint<span class="w"> </span>http://localhost:9000<span class="w"> </span>user<span class="w"> </span>list
 
 <span class="c1"># A service: the flags are the binary's own (see configuration.md)</span>
-docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>ghcr.io/object-io/objectio:v0.1.0-rc.2<span class="w"> </span>objectio-gateway<span class="w"> </span>--help
+docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>ghcr.io/object-io/objectio:v0.1.0-rc.3<span class="w"> </span>objectio-gateway<span class="w"> </span>--help
 </code></pre></div>
 <p>The image runs as the non-root user <code>objectio</code>, declares
 <code>/var/lib/objectio</code> as a volume, and has no <code>curl</code>.</p>
@@ -3180,7 +3322,7 @@ bootstrap calls to its admin port; OSDs with an <code>osd.toml</code> mounted at
 capability to open them with <code>O_DIRECT</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">services</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">osd1</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ghcr.io/object-io/objectio:v0.1.0-rc.2</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ghcr.io/object-io/objectio:v0.1.0-rc.3</span>
 <span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"objectio-osd"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"--config"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"/etc/objectio/osd.toml"</span><span class="p p-Indicator">]</span>
 <span class="w">    </span><span class="nt">cap_add</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">SYS_RAWIO</span><span class="p p-Indicator">]</span>
 <span class="w">    </span><span class="nt">devices</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">/dev/nvme1n1</span><span class="p p-Indicator">:</span><span class="nv">/dev/nvme1n1</span><span class="p p-Indicator">]</span>
@@ -3307,15 +3449,46 @@ of settings is also reachable via env vars (the full list is in
 </table>
 <hr />
 <h2 id="health-checks">Health checks<a class="headerlink" href="#health-checks" title="Permanent link">&para;</a></h2>
-<ul>
-<li><strong>Gateway:</strong> <code>GET /health</code> answers 200 while the process is up;
-  <code>GET /_ready</code> answers 200 once meta and enough OSDs answer
-  (<a href="../../operations/monitoring/#health-endpoints">monitoring</a>).</li>
-<li><strong>Meta and OSDs:</strong> <code>GET /health</code> on their metrics ports (9101, 9201).</li>
-</ul>
-<p>The <code>all</code> image declares no <code>HEALTHCHECK</code>: use these in your
-orchestrator. The per-service targets declare one, but the gateway's
-calls <code>curl</code>, which the image lacks, and the others always succeed.</p>
+<p>Each service image checks its own <code>/health</code> (see
+<a href="../../operations/monitoring/#health-endpoints">health endpoints</a>) with
+<code>healthcheck.sh PORT</code>, a GET over bash's <code>/dev/tcp</code> (the images carry no
+HTTP client):</p>
+<table>
+<thead>
+<tr>
+<th>Image</th>
+<th>Checks</th>
+<th>Default command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>gateway</code></td>
+<td><code>:9000/health</code> (<code>/_ready</code> is the readiness check)</td>
+<td><code>--listen 0.0.0.0:9000</code></td>
+</tr>
+<tr>
+<td><code>meta</code></td>
+<td><code>:9101/health</code></td>
+<td><code>--listen 0.0.0.0:9100 --data-dir /var/lib/objectio/meta</code></td>
+</tr>
+<tr>
+<td><code>osd</code></td>
+<td><code>:9201/health</code> (503 once a disk has had an I/O or checksum error)</td>
+<td><code>--listen 0.0.0.0:9200 --data-dir /var/lib/objectio/osd</code></td>
+</tr>
+<tr>
+<td><code>block-gateway</code></td>
+<td><code>:9301/health</code></td>
+<td><code>--listen 0.0.0.0:9300 --nbd-listen 0.0.0.0:10809 --data-dir /var/lib/objectio/block-gw</code></td>
+</tr>
+</tbody>
+</table>
+<p>A command that moves a port (<code>--listen</code>, <code>--metrics-port</code>,
+<code>--metrics-listen</code>) moves what the check must ask: override the
+HEALTHCHECK with it. The <code>all</code> image (the published one) declares no
+<code>HEALTHCHECK</code>: it runs any service, so use these endpoints in your
+orchestrator; the Helm chart has its own probes.</p>
 <hr />
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
 <h3 id="operation-not-permitted-on-an-osd">"operation not permitted" on an OSD<a class="headerlink" href="#operation-not-permitted-on-an-osd" title="Permanent link">&para;</a></h3>

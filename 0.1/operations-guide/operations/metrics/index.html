@@ -1570,6 +1570,148 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_8_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_8_7" id="__nav_5_8_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026 10 23
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_8_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_8_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2026 10 23
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_8_7_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_8_7_1" id="__nav_5_8_7_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux amd64
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_5_8_7_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_8_7_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Linux amd64
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developer-guide/s3-compatibility/2026-10-23/linux-amd64/summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ceph s3-tests results
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -2732,6 +2874,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#meta-disk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Meta disk
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#repair" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3168,6 +3321,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#meta-disk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Meta disk
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#repair" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3496,6 +3660,12 @@ once per gateway. With several gateways, aggregate them with <code>max</code>, n
 <td>CopyObject requests completed, by mode: reference (shares the source's stripes) or bytes (rewritten)</td>
 </tr>
 <tr>
+<td><code>objectio_gateway_get_aborted_total</code></td>
+<td>counter</td>
+<td><code>reason</code></td>
+<td>GETs cut off after their headers were sent: <code>read</code> (a stripe could not be read), <code>length</code> (a stripe read back other than its recorded size), <code>memory</code> (no room in the budget for the next stripe in time)</td>
+</tr>
+<tr>
 <td><code>objectio_gateway_inline_bytes_total</code></td>
 <td>counter</td>
 <td>—</td>
@@ -3506,6 +3676,18 @@ once per gateway. With several gateways, aggregate them with <code>max</code>, n
 <td>counter</td>
 <td>—</td>
 <td>Objects small enough to be stored in their metadata, with no shards</td>
+</tr>
+<tr>
+<td><code>objectio_gateway_memory_budget_bytes</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>The memory budget for request bodies and GET read-ahead (<code>--memory-budget</code>)</td>
+</tr>
+<tr>
+<td><code>objectio_gateway_memory_budget_in_use_bytes</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Bytes of the memory budget held by requests now</td>
 </tr>
 <tr>
 <td><code>objectio_gateway_osd_request_errors_total</code></td>
@@ -3562,6 +3744,24 @@ once per gateway. With several gateways, aggregate them with <code>max</code>, n
 <td>Time spent in each phase of a request, by operation and phase</td>
 </tr>
 <tr>
+<td><code>objectio_gateway_requests_admitted</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Requests admitted and not yet finished, response bodies included</td>
+</tr>
+<tr>
+<td><code>objectio_gateway_requests_limit</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Requests the gateway serves at once (<code>--max-requests</code>)</td>
+</tr>
+<tr>
+<td><code>objectio_gateway_requests_rejected_total</code></td>
+<td>counter</td>
+<td><code>reason</code></td>
+<td>Requests refused with <code>503 SlowDown</code>, by the limit they hit (<code>requests</code> or <code>memory</code>)</td>
+</tr>
+<tr>
 <td><code>objectio_gateway_shard_checksum_mismatches_total</code></td>
 <td>counter</td>
 <td><code>direction</code></td>
@@ -3590,6 +3790,12 @@ once per gateway. With several gateways, aggregate them with <code>max</code>, n
 <td>counter</td>
 <td><code>reason</code></td>
 <td>Shards deleted because nothing references them any more</td>
+</tr>
+<tr>
+<td><code>objectio_gateway_timeouts_total</code></td>
+<td>counter</td>
+<td><code>kind</code></td>
+<td>Requests or connections cut off by a timeout: <code>body</code> (a request body stopped arriving), <code>send</code> (a client stopped reading)</td>
 </tr>
 <tr>
 <td><code>objectio_gateway_uptime_seconds</code></td>
@@ -4303,6 +4509,51 @@ once per gateway. With several gateways, aggregate them with <code>max</code>, n
 </tr>
 </tbody>
 </table>
+<h3 id="meta-disk">Meta disk<a class="headerlink" href="#meta-disk" title="Permanent link">&para;</a></h3>
+<p>Exported by: meta, each node. See <a href="../failure-recovery/#metas-disk-filling">meta's disk
+filling</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Type</th>
+<th>Labels</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>objectio_meta_disk_free_bytes</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Bytes free on the filesystem of meta's data directory; -1 when it can't be told</td>
+</tr>
+<tr>
+<td><code>objectio_meta_disk_reserve_bytes</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>The reserve meta keeps free (<code>--min-free-mib</code>): under it the leader refuses writes</td>
+</tr>
+<tr>
+<td><code>objectio_meta_disk_full</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>1 while the node is under its reserve, or a write of its own found the filesystem full in the last 10 s</td>
+</tr>
+<tr>
+<td><code>objectio_meta_writes_refused_no_room_total</code></td>
+<td>counter</td>
+<td>—</td>
+<td>Writes this node refused, as leader, for want of room (507 to S3 clients)</td>
+</tr>
+<tr>
+<td><code>objectio_meta_disk_out_of_space_total</code></td>
+<td>counter</td>
+<td>—</td>
+<td>Writes to the Raft log or a snapshot that found the filesystem full (ENOSPC, EDQUOT) and waited</td>
+</tr>
+</tbody>
+</table>
 <h3 id="repair">Repair<a class="headerlink" href="#repair" title="Permanent link">&para;</a></h3>
 <p>Exported by: meta (leader).</p>
 <table>
@@ -4338,12 +4589,6 @@ once per gateway. With several gateways, aggregate them with <code>max</code>, n
 <td>gauge</td>
 <td>—</td>
 <td>When the last repair pass completed (Unix time; 0: none yet on this node)</td>
-</tr>
-<tr>
-<td><code>objectio_meta_repair_listings_restored_total</code></td>
-<td>counter</td>
-<td>—</td>
-<td>Listing entries restored for objects missing from ListObjects</td>
 </tr>
 <tr>
 <td><code>objectio_meta_repair_objects_checked_total</code></td>
@@ -4749,7 +4994,7 @@ nodes. The states are peering's (<code>Down</code>, <code>Incomplete</code>,
 <td><code>objectio_disk_errors_total</code></td>
 <td>counter</td>
 <td><code>disk, type</code></td>
-<td>IO errors and checksum mismatches</td>
+<td><code>read</code>: failed reads; <code>write</code>: failed writes and flushes; <code>checksum</code>: checksum mismatches</td>
 </tr>
 <tr>
 <td><code>objectio_disk_healthy</code></td>
