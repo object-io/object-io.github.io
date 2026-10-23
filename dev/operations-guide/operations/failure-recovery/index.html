@@ -2666,6 +2666,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#how-long-repair-takes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How long repair takes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#manual-recovery" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3365,6 +3376,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#how-long-repair-takes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How long repair takes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#manual-recovery" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3891,6 +3913,38 @@ volume of its own, so nothing else can fill it.</p>
    back <code>in</code> with its old data.</li>
 </ol>
 <p>See the <a href="../production/#an-osd-is-down">production runbooks</a>.</p>
+<h3 id="how-long-repair-takes">How long repair takes<a class="headerlink" href="#how-long-repair-takes" title="Permanent link">&para;</a></h3>
+<p>How long repair takes depends on how much there is to rebuild, not on
+how long the OSD was away:</p>
+<ul>
+<li><strong>An OSD back after a short outage</strong> (a restart, or a host off or cut
+  off for a minute) gets only the writes it missed. With six OSDs and
+  4+2, one OSD was stopped or frozen for 60 s while about 2,300 objects
+  were written. Every placement group was <code>Clean</code> 19–29 s after it was
+  back. On the chaos VMs, cutting the meta leader's host (and its OSD)
+  off the network for 60 s took 151 s, with writes going on throughout.</li>
+<li><strong>A replaced or lost drive</strong> has everything it held rebuilt. With six
+  OSDs and 4+2 every placement group has a shard on every OSD, so that is
+  a shard of nearly every object. On the chaos VMs a blank replacement
+  disk took 482 s to fill, and a lost drive's 72,738 shards took 1,129 s
+  to move to the OSD that replaced it. That is about 60–150 shards a
+  second, at the pace of those VMs' disks and network.</li>
+</ul>
+<p>Objects stay readable and writable throughout. Until a placement group
+is <code>Clean</code> again, some of its objects have less redundancy than the
+pool's scheme gives. To watch the rebuild, use the commands
+<a href="#replacing-a-disk">above</a>: <code>obioctl pg list --state Degraded</code> shows
+what is left, and <code>objectio_meta_pg_recovery_objects_remaining</code> and
+<code>objectio_meta_pg_recovery_bytes_remaining</code> show how much.</p>
+<p>Each OSD takes part in at most two placement groups' recovery at once
+(config <code>pg/backfills_per_osd</code>), so that client I/O keeps priority. When
+every placement group has a member on every OSD, as with six OSDs and
+4+2, that means two placement groups at a time across the whole cluster.
+On disks with I/O to spare, raise it to rebuild faster:</p>
+<div class="highlight"><pre><span></span><code>obioctl<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>pg/backfills_per_osd<span class="w"> </span>--value<span class="w"> </span><span class="m">4</span>
+</code></pre></div>
+<p><code>pg/recover_at_once</code> (8) caps how many placement groups the meta leader
+recovers at once, whatever each OSD allows.</p>
 <h3 id="manual-recovery">Manual Recovery<a class="headerlink" href="#manual-recovery" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>obioctl<span class="w"> </span>node<span class="w"> </span>list<span class="w">                  </span><span class="c1"># status and admin state of every OSD</span>
 obioctl<span class="w"> </span>node<span class="w"> </span>show<span class="w"> </span>&lt;osd-id&gt;<span class="w">         </span><span class="c1"># its disks and capacity</span>

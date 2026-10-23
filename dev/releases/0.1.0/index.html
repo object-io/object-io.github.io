@@ -3870,10 +3870,17 @@ performance comparison ran on 0.1.0-rc.1's.</p>
   another OSD stops, seen once in the test suite: the write had one shard
   too few for its quorum, and the client's retry succeeds. Not yet
   explained.</li>
-<li><strong>Repair after a short outage is slow on small machines:</strong> on the chaos
-  VMs, every placement group took up to 8 minutes to be clean again after
-  a one-minute outage. Objects stay readable meanwhile, but until repair
-  is done some have less redundancy than their pool's scheme gives.</li>
+<li><strong>Rebuilding a replaced drive takes minutes even on a small cluster.</strong>
+  With six OSDs and 4+2, a blank replacement disk lacks a shard of nearly
+  every object. On the chaos VMs, filling one took 482 s; this was first
+  reported as repair after a one-minute outage, which took 151 s there
+  and takes under 30 s in the test suite. Each OSD recovers two placement
+  groups at a time by default, so that client I/O keeps priority, and
+  <code>pg/backfills_per_osd</code> raises it. Objects stay readable meanwhile, but
+  until repair is done some have less redundancy than their pool's
+  scheme gives
+  (<a href="../../operations-guide/operations/failure-recovery/#how-long-repair-takes">how long repair takes</a>).
+  Faster rebuilds are planned for 0.2.0.</li>
 </ul>
 
 
