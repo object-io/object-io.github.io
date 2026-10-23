@@ -3656,6 +3656,22 @@ the same core. Apache-2.0, every feature.</p>
   unreachable ones could still make its quorum, and 507 only when the
   full ones keep it short
   (<a href="../../operations-guide/operations/failure-recovery/#full-disks">full disks</a>).</li>
+<li><strong>A meta node whose disk fills refuses writes, <code>507 StorageFull</code>,
+  instead of exiting.</strong> A write the filesystem under meta's data refused
+  stopped the node's Raft, and the node exited, to be restarted on the
+  same full disk; with the leader's or a majority's disk full, the
+  cluster took no writes and, while nodes restarted, answered nothing.
+  Meta now keeps 1 GiB free (<code>--min-free-mib</code>): below it the leader
+  refuses writes that need meta (creating a bucket, IAM, multipart
+  uploads, settings), while reads and object PUTs go on; a follower falls
+  behind and catches up; a snapshot waits for room. Writes resume once
+  there is room, with no restart. If something else on the filesystem
+  takes the last bytes, a Raft log write waits for room rather than stop
+  the node, and a failed database write still stops it, to be started
+  again with nothing acknowledged lost. Meta reports its free space
+  (<code>objectio_meta_disk_free_bytes</code>, <code>objectio_meta_disk_full</code>, <code>/status</code>),
+  and the chart alerts on it
+  (<a href="../../operations-guide/operations/failure-recovery/#metas-disk-filling">meta's disk filling</a>).</li>
 <li><strong>GetBucketLocation answers the bucket's region</strong>, the gateway's
   <code>--region</code> (us-east-1 as the empty constraint, as S3 answers it), in
   path-style and virtual-hosted addressing alike. <code>GET /bucket?location</code>

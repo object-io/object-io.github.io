@@ -3418,6 +3418,12 @@ short:</p>
 <li><strong>Metadata:</strong> about 1.5 KB per object copy in each OSD's index, on a
   partition of the same drive; about 750 bytes per object on each meta
   node.</li>
+<li><strong>Meta's volume:</strong> 3.2 × its database plus 1 GiB: the database, its Raft
+  log, the snapshot it keeps and, while the next one is built, that one
+  too, and the reserve meta keeps free (<code>--min-free-mib</code>, 1 GiB). Under
+  the reserve, meta takes no writes
+  (<a href="../failure-recovery/#metas-disk-filling">meta's disk filling</a>). Give it
+  a volume of its own.</li>
 </ul>
 <h2 id="gateway-memory-and-overload">Gateway memory and overload<a class="headerlink" href="#gateway-memory-and-overload" title="Permanent link">&para;</a></h2>
 <p>A gateway's memory is bounded by what it lets in, not by the load it is
@@ -3570,6 +3576,16 @@ slots (<code>requests</code>): add gateways, or raise the limit. The budget in u
 <td><a href="#meta-has-no-leader-or-elects-often">Meta</a></td>
 </tr>
 <tr>
+<td>ObjectIOMetaDiskLow</td>
+<td>warning</td>
+<td><a href="#disks-filling-or-full">Disks filling</a></td>
+</tr>
+<tr>
+<td>ObjectIOMetaDiskFull</td>
+<td>critical</td>
+<td><a href="#disks-filling-or-full">Disks filling</a></td>
+</tr>
+<tr>
 <td>ObjectIOGatewayClockSkewed</td>
 <td>critical</td>
 <td><a href="#a-gateway-refuses-writes-for-clock-skew">Clock skew</a></td>
@@ -3627,8 +3643,7 @@ slots (<code>requests</code>): add gateways, or raise the limit. The budget in u
 </tbody>
 </table>
 <p><strong>Not covered by any alert yet:</strong> certificate expiry (no metric; watch
-cert-manager's own), meta data-dir free space (watch with node_exporter),
-and the audit spool's size.</p>
+cert-manager's own) and the audit spool's size.</p>
 <h2 id="runbooks">Runbooks<a class="headerlink" href="#runbooks" title="Permanent link">&para;</a></h2>
 <p>Commands are <code>obioctl</code> (a SigV4 client of the gateway's admin API,
 <code>bin/cli/README.md</code> in the code repo) and meta's admin port (9102;
@@ -3726,6 +3741,24 @@ skipped.</p>
   or on raw devices. If the OSD logs that its metadata log <code>takes no
   writes after an earlier failure</code>, an <code>fsync</code> failed: restart it once
   there is room.</li>
+<li><strong>Meta's disk low or full</strong> (<code>ObjectIOMetaDiskLow</code>: under twice the
+  reserve for 10 minutes; <code>ObjectIOMetaDiskFull</code>: under the reserve).
+  Under the reserve (<code>--min-free-mib</code>, 1 GiB) the meta leader refuses
+  writes that need meta, 507, and a follower falls behind; reads and
+  object PUTs go on
+  (<a href="../failure-recovery/#metas-disk-filling">meta's disk filling</a>).</li>
+<li>Which node, and why: <code>curl http://&lt;meta&gt;:9102/status</code> on each, for
+    <code>disk_free</code>, <code>disk_reserve</code> and <code>disk_full</code>.</li>
+<li>Grow the meta volume (on Kubernetes, the meta PVC, if its storage
+    class allows expansion), or free space on that filesystem if
+    something else shares it. Don't delete files under meta's data
+    directory. Writes resume by themselves.</li>
+<li>A meta node that exited with <code>raft checkpoint failed</code> or <code>Raft
+    stopped</code> and a <code>No space left on device</code> in its log met a full
+    filesystem anyway (something else took the reserve): it starts again,
+    and catches up, once there is room.</li>
+<li>Don't lower <code>--min-free-mib</code> to get writes going: it spends the room
+    meta needs to finish what it has under way.</li>
 </ul>
 <h3 id="a-gateway-refuses-writes-for-clock-skew">A gateway refuses writes for clock skew<a class="headerlink" href="#a-gateway-refuses-writes-for-clock-skew" title="Permanent link">&para;</a></h3>
 <p>Its clock is more than 500 ms from meta's

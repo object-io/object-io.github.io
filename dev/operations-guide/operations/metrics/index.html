@@ -2732,6 +2732,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#meta-disk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Meta disk
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#repair" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3161,6 +3172,17 @@
     <span class="md-ellipsis">
       
         Meta Raft
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#meta-disk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Meta disk
       
     </span>
   </a>
@@ -4342,6 +4364,51 @@ once per gateway. With several gateways, aggregate them with <code>max</code>, n
 <td>gauge</td>
 <td>—</td>
 <td>Voting members of the Raft cluster</td>
+</tr>
+</tbody>
+</table>
+<h3 id="meta-disk">Meta disk<a class="headerlink" href="#meta-disk" title="Permanent link">&para;</a></h3>
+<p>Exported by: meta, each node. See <a href="../failure-recovery/#metas-disk-filling">meta's disk
+filling</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Type</th>
+<th>Labels</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>objectio_meta_disk_free_bytes</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>Bytes free on the filesystem of meta's data directory; -1 when it can't be told</td>
+</tr>
+<tr>
+<td><code>objectio_meta_disk_reserve_bytes</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>The reserve meta keeps free (<code>--min-free-mib</code>): under it the leader refuses writes</td>
+</tr>
+<tr>
+<td><code>objectio_meta_disk_full</code></td>
+<td>gauge</td>
+<td>—</td>
+<td>1 while the node is under its reserve, or a write of its own found the filesystem full in the last 10 s</td>
+</tr>
+<tr>
+<td><code>objectio_meta_writes_refused_no_room_total</code></td>
+<td>counter</td>
+<td>—</td>
+<td>Writes this node refused, as leader, for want of room (507 to S3 clients)</td>
+</tr>
+<tr>
+<td><code>objectio_meta_disk_out_of_space_total</code></td>
+<td>counter</td>
+<td>—</td>
+<td>Writes to the Raft log or a snapshot that found the filesystem full (ENOSPC, EDQUOT) and waited</td>
 </tr>
 </tbody>
 </table>

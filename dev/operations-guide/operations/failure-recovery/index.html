@@ -2612,6 +2612,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Full disks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#metas-disk-filling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Meta's disk filling
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -3294,6 +3311,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Full disks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#metas-disk-filling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Meta's disk filling
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -3772,6 +3806,44 @@ suite: a 4+2 cluster on 1 GiB disks is filled with 4 MiB objects until
 writes are refused. The refusals are <code>StorageFull</code>, no OSD passes about
 95%, the acknowledged objects read back intact, and deleting half lets
 writes in again.</p>
+<h3 id="metas-disk-filling">Meta's disk filling<a class="headerlink" href="#metas-disk-filling" title="Permanent link">&para;</a></h3>
+<p>Each meta node keeps a <strong>reserve</strong> free on the filesystem of its data
+directory: <code>--min-free-mib</code>, 1 GiB by default. Its database, Raft log and
+snapshots all live there.</p>
+<ul>
+<li><strong>Under the reserve on the leader, writes that need meta are refused</strong>
+  with <strong>507 <code>StorageFull</code></strong>, its message naming the node's free space:
+  creating a bucket, IAM changes, multipart uploads, settings. An
+  object's PUT still succeeds, since its metadata is kept on its OSDs; it
+  shows in listings once meta has room again.</li>
+<li><strong>Reads go on</strong>: GETs, listings, HEADs, the admin API's reads.</li>
+<li><strong>A follower</strong> takes its leader's entries down to half the reserve,
+  then falls behind, and catches up once there is room. Writes go on
+  while a majority has room; with a majority short they are refused,
+  507, as above.</li>
+<li><strong>Room back, writes resume</strong> within a second or two. Nothing is
+  restarted and nothing acknowledged is lost.</li>
+<li><strong>A snapshot</strong> (every <code>--raft-snapshot-every</code> entries) is taken only
+  with room for it above the reserve; until then the log isn't compacted
+  and the node logs <code>raft snapshot waits</code>.</li>
+</ul>
+<p>What to do: free space on that filesystem (nothing of meta's own is safe
+to delete by hand) or grow the volume. <code>curl http://&lt;meta&gt;:9102/status</code>
+shows <code>disk_free</code>, <code>disk_reserve</code>, and <code>disk_full</code> with the reason while
+the node is short; the metrics are <code>objectio_meta_disk_free_bytes</code> and
+<code>objectio_meta_disk_full</code>, and the chart's alerts <code>ObjectIOMetaDiskLow</code>
+and <code>ObjectIOMetaDiskFull</code> fire before and when it happens
+(<a href="../production/#disks-filling-or-full">production</a>).</p>
+<p>The reserve covers what meta writes after it stops taking writes. If
+something else on the same filesystem takes the last bytes too, a write
+of meta's own can still find it full. A Raft log write then waits, and
+is tried again every second (the node logs <code>raft log: no room for an
+append</code>): a follower falls behind, a leader stops answering and the
+others elect a new one. A write to meta's database that fails stops the
+node, which exits, and its supervisor starts it again: it applies its
+log again from its last checkpoint, and is back once there is room.
+Nothing acknowledged is lost either way. Keep meta's data directory on a
+volume of its own, so nothing else can fill it.</p>
 <h2 id="osd-failures">OSD Failures<a class="headerlink" href="#osd-failures" title="Permanent link">&para;</a></h2>
 <h3 id="types-of-osd-failures">Types of OSD Failures<a class="headerlink" href="#types-of-osd-failures" title="Permanent link">&para;</a></h3>
 <table>

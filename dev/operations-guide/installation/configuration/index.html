@@ -3821,6 +3821,11 @@ and <a href="../../operations/meta-ha/">meta HA</a>.</p>
 <td>Drain sweeps, and shards moved per draining OSD per sweep</td>
 </tr>
 <tr>
+<td><code>--min-free-mib &lt;n&gt;</code></td>
+<td><code>1024</code></td>
+<td>Free space meta keeps on the filesystem of <code>--data-dir</code>: below it the leader refuses writes (507) and a follower takes its leader's entries down to half of it; reads go on, and writes resume once there is room (<a href="../../operations/failure-recovery/#metas-disk-filling">meta's disk filling</a>)</td>
+</tr>
+<tr>
 <td><code>--raft-snapshot-every &lt;n&gt;</code></td>
 <td><code>500000</code></td>
 <td>Log entries between snapshots; the log is compacted into each</td>

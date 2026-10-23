@@ -3425,8 +3425,11 @@ metadata. <strong>Measured</strong> on the soak cluster:</p>
 </tr>
 </tbody>
 </table>
-<p>Meta also keeps its Raft log and one snapshot of the database beside it:
-plan <strong>2.2 × the database</strong> on each meta node's disk.</p>
+<p>Meta also keeps its Raft log and one snapshot of the database beside it,
+a second while the next snapshot is built, and a reserve free
+(<code>--min-free-mib</code>, 1 GiB) under which it takes no writes: plan <strong>3.2 × the
+database, plus 1 GiB</strong>, on each meta node's disk
+(<a href="../../operations/failure-recovery/#metas-disk-filling">meta's disk filling</a>).</p>
 <p>Each drive's metadata partition must hold its share of copies:</p>
 <div class="highlight"><pre><span></span><code>index per drive ≈ objects × (k+m) ÷ drives × 1.5 KB
 </code></pre></div>

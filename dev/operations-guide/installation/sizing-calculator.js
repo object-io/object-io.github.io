@@ -8,7 +8,8 @@
   const FULL_RATIO = 0.95; // --full-ratio
   const INLINE_MAX = 4096; // --inline-max-size: smaller objects live in metadata
   const META_BYTES_PER_OBJECT = 750; // measured: meta.redb per object
-  const META_DISK_FACTOR = 2.2; // database + Raft log + one snapshot
+  const META_DISK_FACTOR = 3.2; // database + Raft log + the snapshot kept + the one being built
+  const META_RESERVE = 1073741824; // --min-free-mib: meta takes no writes under it
   const INDEX_BYTES_PER_COPY = 1536; // measured: OSD index per object copy
   const SMALL_SHARD_MAX = 16384; // --small-shard-max: smaller shards live in metadata
   const OSD_RAM_GB = 1.5; // per drive, default --meta-cache-mib
@@ -193,7 +194,7 @@
       );
     }
     const metaDb = objects * META_BYTES_PER_OBJECT;
-    const metaDisk = Math.max(metaDb * META_DISK_FACTOR, 240e9);
+    const metaDisk = Math.max(metaDb * META_DISK_FACTOR + META_RESERVE, 240e9);
     const metaRam = objects > 5e8 ? 32 : 16;
     if (objects > 1e9) {
       notes.push(
