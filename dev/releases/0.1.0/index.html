@@ -3666,6 +3666,20 @@ the same core. Apache-2.0, every feature.</p>
   (<code>?session</code>, <code>?metadataTable</code>, or any other without a value, besides
   those already refused) is <code>501 NotImplemented</code>, not a listing
   (<a href="../../operations-guide/administration/s3-api/#getbucketlocation">S3 API</a>).</li>
+<li><strong>An OSD that stops answering holds requests for about 3 s, once.</strong> A
+  gateway took an OSD as up again when it accepted a connection, which
+  the kernel of a frozen process (a stopped container, a hung host, one
+  cut off without a reset) still does. Without mTLS, the chart's default,
+  every request that touched a frozen OSD then opened a new connection to
+  it and waited 5 s on that (a DELETE 15 s, a HEAD of a missing key 10 s)
+  for as long as it stayed frozen, though the other OSDs held every
+  quorum; with mTLS the first requests waited 5 s, and every DELETE 3 s.
+  The gateway now probes an OSD with a call it must answer, and abandons a
+  call that has run 2 s to an OSD that doesn't: the first requests to
+  meet a frozen OSD wait about 3 s, those after them not at all. Version
+  listings and the shard frees after a DELETE are bounded the same way.
+  Nothing is acknowledged with fewer copies than before
+  (an OSD that stops answering).</li>
 </ul>
 <h2 id="changes-since-010-rc1">Changes since 0.1.0-rc.1<a class="headerlink" href="#changes-since-010-rc1" title="Permanent link">&para;</a></h2>
 <h3 id="upgrading-a-010-rc1-cluster">Upgrading a 0.1.0-rc.1 cluster<a class="headerlink" href="#upgrading-a-010-rc1-cluster" title="Permanent link">&para;</a></h3>
