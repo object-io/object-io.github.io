@@ -1568,6 +1568,148 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_8_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_8_7" id="__nav_5_8_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026 10 23
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_8_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_8_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2026 10 23
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_8_7_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_8_7_1" id="__nav_5_8_7_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux amd64
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_5_8_7_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_8_7_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Linux amd64
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer-guide/s3-compatibility/2026-10-23/linux-amd64/summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ceph s3-tests results
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -3272,8 +3414,8 @@
 Rust, on one storage core (erasure coding, failure-domain-aware placement,
 repair, metadata on Raft), with data lake catalogs and block volumes on
 the same core. Apache-2.0, every feature.</p>
-<p><strong>Status:</strong> release candidate 0.1.0-rc.2, 2026-10-21 (0.1.0-rc.1:
-2026-10-18). What remains before
+<p><strong>Status:</strong> release candidate 0.1.0-rc.3, 2026-10-23 (0.1.0-rc.2:
+2026-10-21; 0.1.0-rc.1: 2026-10-18). What remains before
 0.1.0 is final is in the <a href="../../ROADMAP/#010-the-first-release-release-candidate">roadmap</a>.</p>
 <h2 id="an-early-release">An early release<a class="headerlink" href="#an-early-release" title="Permanent link">&para;</a></h2>
 <p>0.1.0 is early, and says so in its number. What that means:</p>
@@ -3815,7 +3957,7 @@ format level 10; 0.1.0-rc.1 is 8. Before finalizing:</p>
   published.</li>
 </ul>
 <h2 id="how-it-was-tested">How it was tested<a class="headerlink" href="#how-it-was-tested" title="Permanent link">&para;</a></h2>
-<p>On 0.1.0-rc.2's code: the first row, on every change, and ceph s3-tests
+<p>On 0.1.0-rc.3's code: the first row, on every change, and ceph s3-tests
 on Linux x86_64. The soak, the chaos suite, s3-tests on arm64 and the
 performance comparison ran on 0.1.0-rc.1's.</p>
 <table>
@@ -3866,10 +4008,14 @@ performance comparison ran on 0.1.0-rc.1's.</p>
   60 s limit. Most of it was the election, which then began about 7 s
   after the leader's last heartbeat and now begins 3–4.75 s after it
   (below); the suite hasn't been run again since.</li>
-<li><strong>A write can fail with <code>503</code> when an OSD connection drops</strong> just after
-  another OSD stops, seen once in the test suite: the write had one shard
-  too few for its quorum, and the client's retry succeeds. Not yet
-  explained.</li>
+<li><strong>A write can fail with <code>503</code> when its host stalls:</strong> seen once in the
+  test suite, on a busy CI runner, right after a test had written and read
+  back 1.3 GB. A delete reached none of its six metadata copies within
+  their 10 s deadline, all six on OSDs in the same process, and was
+  answered <code>503</code>, as it should be with no copy reachable; the client's
+  retry succeeds. It doesn't happen locally. One OSD stopping, restarting
+  or freezing under load fails no request (tested); an OSD that answers
+  slowly but still answers is not yet handled (on the roadmap).</li>
 <li><strong>Rebuilding a replaced drive takes minutes even on a small cluster.</strong>
   With six OSDs and 4+2, a blank replacement disk lacks a shard of nearly
   every object. On the chaos VMs, filling one took 482 s; this was first

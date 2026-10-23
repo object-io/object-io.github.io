@@ -1570,6 +1570,148 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_8_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_8_7" id="__nav_5_8_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026 10 23
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_8_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_8_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2026 10 23
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_8_7_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_8_7_1" id="__nav_5_8_7_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux amd64
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_5_8_7_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_8_7_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Linux amd64
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developer-guide/s3-compatibility/2026-10-23/linux-amd64/summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ceph s3-tests results
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -3141,7 +3283,7 @@ binary's defaults (<a href="../configuration/#ports">ports</a>).</p>
 <p>One multi-arch image (<code>linux/amd64</code>, <code>linux/arm64</code>) is published on
 GHCR, and it carries every service:</p>
 <ul>
-<li><code>ghcr.io/object-io/objectio:&lt;tag&gt;</code> (for example <code>v0.1.0-rc.2</code>), also
+<li><code>ghcr.io/object-io/objectio:&lt;tag&gt;</code> (for example <code>v0.1.0-rc.3</code>), also
   tagged <code>latest</code> — the <code>all</code> target</li>
 </ul>
 <p>It has no entrypoint: name the binary to run, as the Helm chart does.
@@ -3160,11 +3302,11 @@ choose the binary at <code>docker run</code> time:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># The admin CLI against an existing cluster</span>
 docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>--network<span class="w"> </span>host<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-e<span class="w"> </span>OBJECTIO_ACCESS_KEY<span class="w"> </span>-e<span class="w"> </span>OBJECTIO_SECRET_KEY<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>ghcr.io/object-io/objectio:v0.1.0-rc.2<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>ghcr.io/object-io/objectio:v0.1.0-rc.3<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>obioctl<span class="w"> </span>--endpoint<span class="w"> </span>http://localhost:9000<span class="w"> </span>user<span class="w"> </span>list
 
 <span class="c1"># A service: the flags are the binary's own (see configuration.md)</span>
-docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>ghcr.io/object-io/objectio:v0.1.0-rc.2<span class="w"> </span>objectio-gateway<span class="w"> </span>--help
+docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>ghcr.io/object-io/objectio:v0.1.0-rc.3<span class="w"> </span>objectio-gateway<span class="w"> </span>--help
 </code></pre></div>
 <p>The image runs as the non-root user <code>objectio</code>, declares
 <code>/var/lib/objectio</code> as a volume, and has no <code>curl</code>.</p>
@@ -3180,7 +3322,7 @@ bootstrap calls to its admin port; OSDs with an <code>osd.toml</code> mounted at
 capability to open them with <code>O_DIRECT</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">services</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">osd1</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ghcr.io/object-io/objectio:v0.1.0-rc.2</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ghcr.io/object-io/objectio:v0.1.0-rc.3</span>
 <span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"objectio-osd"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"--config"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"/etc/objectio/osd.toml"</span><span class="p p-Indicator">]</span>
 <span class="w">    </span><span class="nt">cap_add</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">SYS_RAWIO</span><span class="p p-Indicator">]</span>
 <span class="w">    </span><span class="nt">devices</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">/dev/nvme1n1</span><span class="p p-Indicator">:</span><span class="nv">/dev/nvme1n1</span><span class="p p-Indicator">]</span>
